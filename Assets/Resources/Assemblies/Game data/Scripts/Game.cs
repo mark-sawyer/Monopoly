@@ -20,7 +20,7 @@ public class Game {
         movePlayer(turnPlayer, dice.getValue());
         updateTurnPlayer();
     }
-    public PlayerVisualDataGetter[] getPlayerVisuals() {
+    public Player[] getPlayers() {
         return players;
     }
 
@@ -98,7 +98,7 @@ public class Game {
     private Player[] initialisePlayers(int playerNum) {
         Player[] players = new Player[playerNum];
         for (int i = 0; i < playerNum; i++) {
-            players[i] = new Player(spaces[0]);
+            players[i] = new Player(spaces[0], (Token)i);
             spaces[0].addPlayer(players[i]);
         }
         return players;

@@ -1,13 +1,15 @@
 
 using System.Collections.Generic;
 
-internal class Player : PlayerVisualDataGetter {
-    public Space space { get; set; }
+public class Player {
+    internal Space space { get; set; }
     private List<Property> properties = new List<Property>();
     private int money = 1500;
+    private Token token;
 
-    public Player(Space space) {
+    internal Player(Space space, Token token) {
         this.space = space;
+        this.token = token;
     }
     private void buyProperty(Property property) {
         money -= property.cost;
@@ -17,8 +19,11 @@ internal class Player : PlayerVisualDataGetter {
 
 
 
-    /* PlayerVisualDataGetter */
-    public float getPlayerPosition() {
+    /* Public interface */
+    public int getSpaceIndex() {
         return space.getIndex();
+    }
+    public Token getToken() {
+        return token;
     }
 }
