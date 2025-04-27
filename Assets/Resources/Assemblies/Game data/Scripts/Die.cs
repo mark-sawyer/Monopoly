@@ -1,13 +1,20 @@
 using UnityEngine;
 
-internal class Die {
-    public int value { get; private set; }
+internal class Die : DieValueReader {
+    private int value;
 
-    public Die() {
+
+
+    internal Die() {
         roll();
     }
-
-    public void roll() {
+    internal void roll() {
         value = Random.Range(1, 7);
+    }
+
+
+
+    public int getValue() {
+        return value;
     }
 }

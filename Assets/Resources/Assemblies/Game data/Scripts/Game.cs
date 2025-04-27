@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class Game {
@@ -22,6 +23,15 @@ public class Game {
     }
     public Player[] getPlayers() {
         return players;
+    }
+    public DieValueReader getDie(int index) {
+        return dice.getDie(index);
+    }
+    public Player getTurnPlayer() {
+        return turnPlayer;
+    }
+    public int getPlayerIndex(Player player) {
+        return Array.FindIndex(players, x => x == player);
     }
 
 

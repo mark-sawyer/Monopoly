@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerPanels : MonoBehaviour {
     public void setupPanels(Player[] players) {
