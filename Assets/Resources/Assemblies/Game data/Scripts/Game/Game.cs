@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
-public class Game {
+public class Game : GameStateInfo, GamePlayer {
     private Dice dice = new Dice();
     private Space[] spaces;
     private Player[] players;
@@ -10,38 +9,45 @@ public class Game {
 
 
 
+    /* GameStateInfo */
     public Game(int playerNum) {
         spaces = initialiseSpaces();
         players = initialisePlayers(playerNum);
         initialiseProperties();
         turnPlayer = players[0];
     }
-    public void turn() {
-        rollDice();
-        movePlayer(turnPlayer, dice.getValue());
-        updateTurnPlayer();
-    }
-    public Player[] getPlayers() {
+    public PlayerInfo[] getPlayers() {
         return players;
     }
     public DieValueReader getDie(int index) {
         return dice.getDie(index);
     }
-    public Player getTurnPlayer() {
+    public PlayerInfo getTurnPlayer() {
         return turnPlayer;
     }
-    public int getPlayerIndex(Player player) {
+    public int getPlayerIndex(PlayerInfo player) {
         return Array.FindIndex(players, x => x == player);
     }
 
 
 
+    /* GamePlayer */
+    public void turn() {
+        rollDice();
+        movePlayer(turnPlayer, dice.getValue());
+        updateTurnPlayer();
+    }
+
+
+
+    /* internal */
     internal int getSpaceIndex(Space space) {
         return Array.IndexOf(spaces, space);
     }
 
 
 
+    /* private */
     private void updateTurnPlayer() {
         int turnPlayerIndex = Array.IndexOf(players, turnPlayer);
         int nextTurnPlayer = (turnPlayerIndex + 1) % players.Length;

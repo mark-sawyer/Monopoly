@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class PlayerPanel : MonoBehaviour {
     [SerializeField] private Image image;
-    private Player player;
+    private PlayerInfo player;
 
-    public void setup(Player player) {
+    public void setup(PlayerInfo player) {
         this.player = player;
         Sprite tokenSprite = UIUtilities.tokenTypeToSprite(player.getToken());
         image.sprite = tokenSprite;

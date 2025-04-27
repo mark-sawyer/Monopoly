@@ -1,13 +1,13 @@
 using UnityEngine;
 
 public class TokenVisual : MonoBehaviour {
-    private Player player;
+    private PlayerInfo player;
 
     private void Start() {
         GameEvents.visualUpdateTriggered.AddListener(updatePosition);
     }
 
-    public void assignPlayer(Player player) {
+    public void assignPlayer(PlayerInfo player) {
         this.player = player;
     }
 

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DieVisual : MonoBehaviour {
+    [SerializeField] private int dieIndex;
     [SerializeField] private Button rollButton;
     [SerializeField] private Image image;
     private Sprite[] settledSprites;
@@ -11,15 +12,9 @@ public class DieVisual : MonoBehaviour {
 
 
 
-    /* public */
-    public void setDie(DieValueReader die) {
-        this.die = die;
-    }
-
-
-
     /* MonoBehaviour */
     private void Start() {
+        die = GameState.game.getDie(dieIndex);
         rollButton.onClick.AddListener(updateSprite);
         settledSprites = getSettledSprites();
         rollingSprites = getRollingSprites();

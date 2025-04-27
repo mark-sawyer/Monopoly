@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PreRollState : GameState {
+public class PreRollState : State {
+    private GamePlayer gamePlayer;
     private Button rollButton;
     private bool rollButtonClicked;
 
@@ -20,16 +21,17 @@ public class PreRollState : GameState {
     }
     public override void exitState() {
         rollButton.enabled = false;
-        game.turn();
+        gamePlayer.turn();
     }
-    public override GameState getNextState() {
-        return possibleNextState[0];
+    public override State getNextState() {
+        return possibleNextStates[0];
     }
 
 
 
     /* public */
-    public PreRollState(Game game, Button rollButton) : base(game) {
+    public PreRollState(GamePlayer gamePlayer, Button rollButton) {
+        this.gamePlayer = gamePlayer;
         this.rollButton = rollButton;
         rollButton.onClick.AddListener(rollButtonListener);
     }

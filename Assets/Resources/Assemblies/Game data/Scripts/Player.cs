@@ -1,7 +1,6 @@
-
 using System.Collections.Generic;
 
-public class Player {
+internal class Player : PlayerInfo {
     internal Space space { get; set; }
     private List<Property> properties = new List<Property>();
     private int money = 1500;
