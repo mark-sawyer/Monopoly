@@ -21,4 +21,7 @@ internal abstract class Space : ScriptableObject {
     public int getIndex() {
         return game.getSpaceIndex(this);
     }
+    public IEnumerable<PlayerInfo> getVisitingPlayers() {
+        return playersVisiting;
+    }
 }

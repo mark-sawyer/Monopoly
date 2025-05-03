@@ -1,20 +1,29 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class DieVisual : MonoBehaviour {
     [SerializeField] private int dieIndex;
     [SerializeField] private Button rollButton;
     [SerializeField] private Image image;
+    private UnityEvent animationOver = new UnityEvent();
     private Sprite[] settledSprites;
     private Sprite[] rollingSprites;
-    private DieValueReader die;
+    private DiceInfo dice;
+
+
+
+    /* Public */
+    public void listenForAnimationOver(UnityAction a) {
+        animationOver.AddListener(a);
+    }
 
 
 
     /* MonoBehaviour */
     private void Start() {
-        die = GameState.game.getDie(dieIndex);
+        dice = GameState.game.getDiceInfo();
         rollButton.onClick.AddListener(updateSprite);
         settledSprites = getSettledSprites();
         rollingSprites = getRollingSprites();
@@ -38,7 +47,8 @@ public class DieVisual : MonoBehaviour {
             }
             yield return null;
         }
-        image.sprite = settledSprites[die.getValue() - 1];
+        animationOver.Invoke();
+        image.sprite = settledSprites[dice.getDieValue(dieIndex) - 1];
     }
     private void updateSprite() {
         StartCoroutine(rollDieAnimation());

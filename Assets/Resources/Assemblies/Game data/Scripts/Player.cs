@@ -18,11 +18,12 @@ internal class Player : PlayerInfo {
 
 
 
-    /* Public interface */
+    #region PlayerInfo
     public int getSpaceIndex() {
         return space.getIndex();
     }
     public Token getToken() {
         return token;
     }
+    #endregion
 }

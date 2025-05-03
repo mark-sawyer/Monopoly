@@ -3,21 +3,27 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerPanel : MonoBehaviour {
-    [SerializeField] private Image image;
+    [SerializeField] private Image pieceImage;
+    [SerializeField] private Image silouhetteImage;
     private PlayerInfo player;
 
     public void setup(PlayerInfo player) {
         this.player = player;
-        Sprite tokenSprite = UIUtilities.tokenTypeToSprite(player.getToken());
-        image.sprite = tokenSprite;
-        resizeTokenObject(tokenSprite);
+
+        Sprite silouhetteSprite = UIUtilities.tokenTypeToSpriteBackground(player.getToken());
+        silouhetteImage.sprite = silouhetteSprite;
+        resizeTokenObject(silouhetteSprite, 2, "silouhette");
+
+        Sprite tokenSprite = UIUtilities.tokenTypeToSpriteForeground(player.getToken());
+        pieceImage.sprite = tokenSprite;
+        resizeTokenObject(tokenSprite, 3, "token");
     }
 
-    private void resizeTokenObject(Sprite tokenSprite) {
+    private void resizeTokenObject(Sprite tokenSprite, int childIndex, string gameObjectName) {
         float width = tokenSprite.rect.width;
         float height = tokenSprite.rect.height;
-        RectTransform tokenTransform = (RectTransform)transform.GetChild(2);
-        if (tokenTransform.name != "token") throw new Exception("Incorrect child referenced.");
+        RectTransform tokenTransform = (RectTransform)transform.GetChild(childIndex);
+        if (tokenTransform.name != gameObjectName) throw new Exception("Incorrect child referenced.");
         tokenTransform.sizeDelta = InterfaceConstants.PANEL_TOKEN_SIZE_SCALAR * new Vector2(width, height);
     }
 }

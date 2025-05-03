@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Game : GameStateInfo, GamePlayer {
@@ -9,18 +10,18 @@ public class Game : GameStateInfo, GamePlayer {
 
 
 
-    /* GameStateInfo */
+    #region GameStateInfo
     public Game(int playerNum) {
         spaces = initialiseSpaces();
         players = initialisePlayers(playerNum);
         initialiseProperties();
         turnPlayer = players[0];
     }
-    public PlayerInfo[] getPlayers() {
+    public IEnumerable<PlayerInfo> getPlayers() {
         return players;
     }
-    public DieValueReader getDie(int index) {
-        return dice.getDie(index);
+    public DiceInfo getDiceInfo() {
+        return dice;
     }
     public PlayerInfo getTurnPlayer() {
         return turnPlayer;
@@ -28,40 +29,54 @@ public class Game : GameStateInfo, GamePlayer {
     public int getPlayerIndex(PlayerInfo player) {
         return Array.FindIndex(players, x => x == player);
     }
-
-
-
-    /* GamePlayer */
-    public void turn() {
-        rollDice();
-        movePlayer(turnPlayer, dice.getValue());
-        updateTurnPlayer();
+    public int getNumberOfPlayers() {
+        return players.Length;
     }
-
-
-
-    /* internal */
-    internal int getSpaceIndex(Space space) {
-        return Array.IndexOf(spaces, space);
+    public int getIndexOfTurnPlayer() {
+        return getPlayerIndex(turnPlayer);
     }
+    public IEnumerable<PlayerInfo> getPlayersOnSpace(int spaceIndex) {
+        Space space = spaces[spaceIndex];
+        return space.getVisitingPlayers();
+    }
+    public int getSpaceIndexOfTurnPlayer() {
+        return turnPlayer.getSpaceIndex();
+    }
+    #endregion
 
 
 
-    /* private */
-    private void updateTurnPlayer() {
+    #region GamePlayer
+    public void rollDice() {
+        dice.roll();
+    }
+    public void moveTurnPlayerDiceValues() {
+        movePlayer(turnPlayer, dice.getTotalValue());
+    }
+    public void updateTurnPlayer() {
         int turnPlayerIndex = Array.IndexOf(players, turnPlayer);
         int nextTurnPlayer = (turnPlayerIndex + 1) % players.Length;
         turnPlayer = players[nextTurnPlayer];
     }
+    #endregion
+
+
+
+    #region internal
+    internal int getSpaceIndex(Space space) {
+        return Array.IndexOf(spaces, space);
+    }
+    #endregion
+
+
+
+    #region private
     private void movePlayer(Player player, int spacesMoved) {
-        int currentIndex = Array.FindIndex<Space>(spaces, x => x.containsPlayer(player));
+        int currentIndex = Array.FindIndex(spaces, x => x.containsPlayer(player));
         int newIndex = (currentIndex + spacesMoved) % GameConstants.GAME_SPACES;
         spaces[currentIndex].removePlayer(player);
         spaces[newIndex].addPlayer(player);
         player.space = spaces[newIndex];
-    }
-    private void rollDice() {
-        dice.roll();
     }
     private Space[] initialiseSpaces() {
         Space[] spaces = new Space[] {
@@ -188,4 +203,5 @@ public class Game : GameStateInfo, GamePlayer {
             estateGroup.setEstateReferencesToThis();
         }
     }
+    #endregion
 }

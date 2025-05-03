@@ -1,19 +1,23 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerPanels : MonoBehaviour {
     private void Start() {
-        PlayerInfo[] players = GameState.game.getPlayers();
+        IEnumerable<PlayerInfo> players = GameState.game.getPlayers();
         destroyExtraPanels(players);
         associateWithPlayers(players);
     }
-    private void destroyExtraPanels(PlayerInfo[] players) {
-        for (int i = players.Length; i < GameConstants.MAX_PLAYERS; i++) {
+    private void destroyExtraPanels(IEnumerable<PlayerInfo> players) {
+        for (int i = players.Count(); i < GameConstants.MAX_PLAYERS; i++) {
             Destroy(transform.GetChild(i).gameObject);
         }
     }
-    private void associateWithPlayers(PlayerInfo[] players) {
-        for (int i = 0; i < players.Length; i++) {
-            transform.GetChild(i).GetComponent<PlayerPanel>().setup(players[i]);
+    private void associateWithPlayers(IEnumerable<PlayerInfo> players) {
+        int i = 0;
+        foreach (PlayerInfo player in players) {
+            transform.GetChild(i).GetComponent<PlayerPanel>().setup(player);
+            i += 1;
         }
     }
 }

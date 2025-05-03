@@ -8,10 +8,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - BoardToken
   - Water
   - UI
-  - 
+  - MovingToken
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Board
+    uniqueID: 2285992143
+    locked: 0
+  - name: Tokens
+    uniqueID: 2865246279
     locked: 0

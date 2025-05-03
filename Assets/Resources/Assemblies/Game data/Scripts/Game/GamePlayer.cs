@@ -1,4 +1,6 @@
 
 public interface GamePlayer {
-    public void turn();
+    public void rollDice();
+    public void moveTurnPlayerDiceValues();
+    public void updateTurnPlayer();
 }

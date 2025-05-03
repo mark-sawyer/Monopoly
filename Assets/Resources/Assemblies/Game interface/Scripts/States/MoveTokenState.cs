@@ -1,64 +1,75 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MoveTokenState : State {
-    private Transform tokensParent;
+    private GamePlayer gamePlayer;
     private Transform spacesParent;
-    private Transform token;
-    private Vector3 targetPosition;
+    private TokenVisualManager tokenVisualManager;
+    private TokenVisual tokenVisual;
+    private bool tokenMadeIt;
+    private int waitFrames;
 
 
 
-    /* GameState */
+    #region GameState
     public override void enterState() {
-        token = getTokenToMove();
-        targetPosition = getTargetPosition();
+        gamePlayer.moveTurnPlayerDiceValues();
+
+        tokenMadeIt = false;
+        waitFrames = 30;
+
+        tokenVisual = tokenVisualManager.getTurnTokenVisual();
+        tokenVisual.listenForMadeItToTargetSpace(tokenMadeItCalled);
+
+        updateTokenVisualTargetSpace(tokenVisual);
     }
     public override void update() {
-        Vector3 dir = getDirectionVector().normalized;
-        token.position = token.position + (100 * Time.deltaTime * dir);
+        if (tokenMadeIt) {
+            waitFrames -= 1;
+        }
     }
     public override bool exitConditionMet() {
-        return getDirectionVector().magnitude < 1f;
+        return waitFrames <= 0;
+    }
+    public override void exitState() {
+        tokenVisual.removeListenersForMadeItToTargetSpace();
+        tokenVisual.changeLayer(false);
+        shrinkTokenVisualsOnSpace();
     }
     public override State getNextState() {
         return possibleNextStates[0];
     }
+    #endregion
 
 
 
-    /* public */
-    public MoveTokenState(Transform tokensParent, Transform spacesParent) {
-        this.tokensParent = tokensParent;
+    #region public
+    public MoveTokenState(Transform spacesParent, TokenVisualManager tokenVisuals, GamePlayer gamePlayer) {
         this.spacesParent = spacesParent;
+        this.tokenVisualManager = tokenVisuals;
+        this.gamePlayer = gamePlayer;
     }
+    #endregion
 
 
 
-
-    /* private */
-    private Transform getTokenToMove() {
-        int playerIndex = getPlayerToMoveIndex();
-        return tokensParent.GetChild(playerIndex);
+    #region private
+    private void updateTokenVisualTargetSpace(TokenVisual tokenVisual) {
+        int spaceIndex = GameState.game.getTurnPlayer().getSpaceIndex();
+        SpaceVisual spaceVisual = spacesParent.GetChild(spaceIndex).GetComponent<SpaceVisual>();
+        tokenVisual.updateTargetSpace(spaceVisual);
     }
-    private Vector3 getTargetPosition() {
-        int playerIndex = getPlayerToMoveIndex();
-        PlayerInfo[] players = GameState.game.getPlayers();
-        PlayerInfo movingPlayer = players[playerIndex];
-        int spaceIndex = movingPlayer.getSpaceIndex();
-        Transform spaceTransform = spacesParent.GetChild(spaceIndex);
-        return new Vector3(
-            spaceTransform.position.x,
-            spaceTransform.position.y,
-            token.position.z
-        );
+    private void tokenMadeItCalled() {
+        tokenMadeIt = true;
     }
-    private int getPlayerToMoveIndex() {
-        PlayerInfo turnPlayer = GameState.game.getTurnPlayer();
-        int playerIndex = GameState.game.getPlayerIndex(turnPlayer) - 1;
-        if (playerIndex < 0) playerIndex += GameState.game.getPlayers().Length;
-        return playerIndex;
+    private void shrinkTokenVisualsOnSpace() {
+        int spaceIndex = GameState.game.getSpaceIndexOfTurnPlayer();
+        IEnumerable<TokenVisual> tokenVisualsOnSpace = tokenVisualManager.getTokenVisualsOnSpace(spaceIndex);
+        float scale = UIUtilities.scaleForTokens(tokenVisualsOnSpace.Count());
+        foreach (TokenVisual tv in tokenVisualsOnSpace) {
+            tv.startChangingScale(scale);
+        }
     }
-    private Vector3 getDirectionVector() {
-        return targetPosition - token.position;
-    }
+    #endregion
 }
