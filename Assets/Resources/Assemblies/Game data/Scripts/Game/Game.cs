@@ -73,7 +73,7 @@ public class Game : GameStateInfo, GamePlayer {
     #region private
     private void movePlayer(Player player, int spacesMoved) {
         int currentIndex = Array.FindIndex(spaces, x => x.containsPlayer(player));
-        int newIndex = (currentIndex + spacesMoved) % GameConstants.GAME_SPACES;
+        int newIndex = (currentIndex + spacesMoved) % GameConstants.TOTAL_SPACES;
         spaces[currentIndex].removePlayer(player);
         spaces[newIndex].addPlayer(player);
         player.space = spaces[newIndex];

@@ -1,41 +1,35 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Events;
 
 public class TokenVisual : MonoBehaviour {
     [SerializeField] private SpriteRenderer tokenSpriteRenderer;
     [SerializeField] private SpriteRenderer silouhetteSpriteRenderer;
-    [SerializeField] private Rigidbody2D rb2D;
     [SerializeField] private int boardLayer;
     [SerializeField] private int movingLayer;
-    private UnityEvent madeItToTargetSpace = new UnityEvent();
-    private SpaceVisual targetSpace;
+    private SpaceVisualManager spaceVisualManager;
+    private AttractivePointManager attractivePointManager;
     private PlayerInfo player;
-    private bool isInSpace;
 
 
 
     #region MonoBehaviour
     private void Start() {
+        attractivePointManager = new AttractivePointManager(transform, spaceVisualManager);
         setSprites();
         setSpriteLayerOrders();
-        setScale();
+        setStartingScale();
     }
     private void Update() {
-        if (!isInSpace) {
-            Vector3 dir = (targetSpace.getTargetPosition() - transform.position).normalized;
-            Vector3 velocityIncrease = InterfaceConstants.TOKEN_SPEED_INCREASE * dir * Time.fixedDeltaTime;
-            rb2D.velocity = Vector3.ClampMagnitude((Vector3)rb2D.velocity + velocityIncrease, InterfaceConstants.TOKEN_MAX_SPEED);
-        }
+        attractivePointManager.update();
     }
     #endregion
 
 
 
     #region public
-    public void setup(PlayerInfo player, SpaceVisual startingTargetSpace) {
+    public void setup(PlayerInfo player, SpaceVisualManager spaceVisualManager) {
         this.player = player;
-        targetSpace = startingTargetSpace;
+        this.spaceVisualManager = spaceVisualManager;
     }
     public void changeLayer(bool isMovingLayer) {
         if (isMovingLayer) gameObject.layer = movingLayer;
@@ -44,15 +38,10 @@ public class TokenVisual : MonoBehaviour {
     public void startChangingScale(float targetScale) {
         StartCoroutine(changeScale(targetScale));
     }
-    public void updateTargetSpace(SpaceVisual newTargetSpace) {
-        targetSpace = newTargetSpace;
-        isInSpace = false;
-    }
-    public void listenForMadeItToTargetSpace(UnityAction a) {
-        madeItToTargetSpace.AddListener(a);
-    }
-    public void removeListenersForMadeItToTargetSpace() {
-        madeItToTargetSpace.RemoveAllListeners();
+    public void updateSpace(int roll) {
+        int currentIndex = player.getSpaceIndex();
+        int priorIndex = Modulus.exe(currentIndex - roll, GameConstants.TOTAL_SPACES);
+        attractivePointManager.updateAttractivePoints(priorIndex, roll);
     }
     #endregion
 
@@ -70,9 +59,8 @@ public class TokenVisual : MonoBehaviour {
         tokenSpriteRenderer.sortingOrder = foregroundOrder;
         silouhetteSpriteRenderer.sortingOrder = foregroundOrder - 1;
     }
-    private void setScale() {
-        int totalPlayers = GameState.game.getNumberOfPlayers();
-        float scale = UIUtilities.scaleForTokens(totalPlayers);
+    private void setStartingScale() {
+        float scale = spaceVisualManager.getStartingScale();
         transform.localScale = new Vector3(scale, scale, scale);
     }
     private IEnumerator changeScale(float targetScale) {
@@ -83,17 +71,6 @@ public class TokenVisual : MonoBehaviour {
             float scale = startScale + slope * i;
             transform.localScale = new Vector3(scale, scale, scale);
             yield return null;
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.GetComponent<SpaceVisual>() == targetSpace) {
-            isInSpace = true;
-            madeItToTargetSpace.Invoke();
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.GetComponent<SpaceVisual>() == targetSpace) {
-            isInSpace = false;
         }
     }
     #endregion

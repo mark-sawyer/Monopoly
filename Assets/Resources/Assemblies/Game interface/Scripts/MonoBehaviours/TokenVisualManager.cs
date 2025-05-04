@@ -1,11 +1,12 @@
 using UnityEngine;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 public class TokenVisualManager : MonoBehaviour {
     [SerializeField] private GameObject tokenPrefab;
-    [SerializeField] private SpaceVisual startingSpaceVisual;
+    [SerializeField] private SpaceVisualManager spaceVisualManager;
+
+
 
     #region MonoBehaviour
     private void Start() {
@@ -13,13 +14,15 @@ public class TokenVisualManager : MonoBehaviour {
         int i = 0;
         foreach (PlayerInfo pi in players) {
             PlayerInfo player = pi;
-            Vector3 startingPosition = getStartingPosition(i);
+            Vector3 startingPosition = spaceVisualManager.getStartingPosition(i);
             GameObject newToken = Instantiate(tokenPrefab, startingPosition, Quaternion.identity, transform);
-            newToken.GetComponent<TokenVisual>().setup(player, startingSpaceVisual);
+            newToken.GetComponent<TokenVisual>().setup(player, spaceVisualManager);
             i += 1;
         }
     }
     #endregion
+
+
 
     #region public
     public TokenVisual getTurnTokenVisual() {
@@ -35,14 +38,4 @@ public class TokenVisualManager : MonoBehaviour {
         return indices.Select(x => getTokenVisual(x));
     }
     #endregion
-
-    #region private
-    private Vector3 getStartingPosition(int i) {
-        float angle = (2f * Mathf.PI * i) / GameState.game.getNumberOfPlayers();
-        float xOffSet = -Mathf.Cos(angle);
-        float yOffSet = Mathf.Sin(angle);
-        return startingSpaceVisual.getTargetPosition() + 2f * new Vector3(xOffSet, yOffSet, 0f);
-    }
-    #endregion
-
 }

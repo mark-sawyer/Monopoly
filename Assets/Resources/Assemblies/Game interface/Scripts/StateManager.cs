@@ -26,8 +26,8 @@ public class StateManager {
 
     private void instantiateGameStates(ReferencePasser r, GamePlayer gamePlayer) {
         preRollState = new PreRollState(r.getRollButton());
-        rollAnimationState = new RollAnimationState(r.getDieVisual(), r.getTokenVisuals(), gamePlayer);
-        moveTokenState = new MoveTokenState(r.getBoardTransform(), r.getTokenVisuals(), gamePlayer);
+        rollAnimationState = new RollAnimationState(r.getDieVisual(), r.getTokenVisualManager(), gamePlayer);
+        moveTokenState = new MoveTokenState(r.getSpaceVisualManager(), r.getTokenVisualManager(), gamePlayer);
         resolveTurnState = new ResolveTurnState(gamePlayer);
     }
     private void assignPossibleNextStates() {
