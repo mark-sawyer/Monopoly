@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5569528268957450302}
   - component: {fileID: 2394204894446407367}
   - component: {fileID: 4292433205566116993}
+  - component: {fileID: 8637144024682536685}
+  - component: {fileID: 8963674078663022694}
   m_Layer: 3
   m_Name: token
   m_TagString: Untagged
@@ -100,8 +102,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tokenSpriteRenderer: {fileID: 2394204894446407367}
   silouhetteSpriteRenderer: {fileID: 3267387124221133272}
+  tokenMover: {fileID: 8637144024682536685}
   boardLayer: 3
   movingLayer: 6
+--- !u!114 &8637144024682536685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5488300525574815777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a455b1e2e35901f49b41f1dc2edc6618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tokenScaler: {fileID: 8963674078663022694}
+--- !u!114 &8963674078663022694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5488300525574815777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b75e9d2f9e0994392f9bff36160372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8307175267806944830
 GameObject:
   m_ObjectHideFlags: 0

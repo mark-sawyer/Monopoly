@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TokenMover {
-    private TokenVisual tv;
+public class TokenMover : MonoBehaviour {
+    [SerializeField] private TokenScaler tokenScaler;
+    public PlayerInfo player { get; private set; }
     private SpaceVisualManager spaceVisualManager;
     private List<Vector3> queue = new();
     private Vector3 attractivePoint;
@@ -11,14 +12,12 @@ public class TokenMover {
 
 
 
-    #region public
-    public TokenMover(TokenVisual TokenVisual, SpaceVisualManager spaceVisualManager) {
-        tv = TokenVisual;
-        this.spaceVisualManager = spaceVisualManager;
+    #region MonoBehaviour
+    private void Start() {
         GameEvents.tokenOnSpaceChanged.AddListener(tokenOnSpaceChanged);
-        attractivePoint = tv.transform.position;
+        attractivePoint = transform.position;
     }
-    public void updatePosition() {
+    private void Update() {
         moveToAttractivePoint();
         if (queue.Count > 0 && directionVector().magnitude < InterfaceConstants.DISTANCE_TO_SPACE_THRESHOLD) {
             attractivePoint = queue[0];
@@ -26,13 +25,22 @@ public class TokenMover {
             if (queue.Count == 0) {
                 GameEvents.tokenOnSpaceChanged.Invoke(this, getSpaceIndex());
                 SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(getSpaceIndex());
-                tv.beginScaleChange();
+                tokenScaler.beginScaleChange();
             }
         }
         else if (passesSettledTest()) {
             settled = true;
             GameEvents.tokenSettled.Invoke();
         }
+    }
+    #endregion
+
+
+
+    #region public
+    public void setup(PlayerInfo player, SpaceVisualManager spaceVisualManager) {
+        this.player = player;
+        this.spaceVisualManager = spaceVisualManager;
     }
     public void startMoving(int startingSpaceIndex, int roll) {
         List<int> spaceIndices = getSpaceIndices(startingSpaceIndex, roll);
@@ -57,8 +65,9 @@ public class TokenMover {
     private List<int> getSpaceIndices(int currentIndex, int remaining) {
         List<int> indices = new List<int>();
         void updateValues(int added) {
-            indices.Add(currentIndex + added);
-            currentIndex += added;
+            int nextIndex = (currentIndex + added) % GameConstants.TOTAL_SPACES;
+            indices.Add(nextIndex);
+            currentIndex = nextIndex;
             remaining -= added;
         }
 
@@ -88,26 +97,25 @@ public class TokenMover {
         float accelerationConstant = InterfaceConstants.TOKEN_ACCELERATION_CONSTANT;
         Vector3 acceleration = (directionVector() - velocityConstant * velocity) * accelerationConstant;
         velocity = velocity + acceleration;
-        tv.transform.position = (tv.transform.position + velocity * Time.deltaTime);
+        transform.position = (transform.position + velocity * Time.deltaTime);
     }
     private void tokenOnSpaceChanged(TokenMover caller, int spaceIndex) {
         if (caller == this) return;
         if (spaceIndex != getSpaceIndex()) return;
 
-        tv.beginScaleChange();
+        tokenScaler.beginScaleChange();
         attractivePoint = getMinorPoint(spaceIndex, getSpaceOrderIndex());
     }
     private Vector3 directionVector() {
-        return attractivePoint - tv.transform.position;
+        return attractivePoint - transform.position;
     }
     private int getSpaceIndex() {
-        return tv.player.getSpaceIndex();
+        return player.getSpaceIndex();
     }
     private int getSpaceOrderIndex() {
         SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(getSpaceIndex());
         SpaceInfo spaceInfo = spaceVisual.spaceInfo;
-        PlayerInfo playerInfo = tv.player;
-        int playerOnSpaceIndex = spaceInfo.getPlayerOrderIndex(playerInfo);
+        int playerOnSpaceIndex = spaceInfo.getPlayerOrderIndex(player);
         int totalPlayersOnSpace = spaceInfo.getNumberOfPlayersOnSpace();
         return totalPlayersOnSpace - playerOnSpaceIndex - 1;
     }

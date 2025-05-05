@@ -11,7 +11,8 @@ public class MoveTokenState : State {
     #region GameState
     public override void enterState() {
         gamePlayer.moveTurnPlayerDiceValues();
-        tokenVisual = tokenVisualManager.getTurnTokenVisual();
+        int turnIndex = GameState.game.getIndexOfTurnPlayer();
+        tokenVisual = tokenVisualManager.getTokenVisual(turnIndex);
         tokenVisual.beginMovingToNewSpace();
         tokenSettled = false;
     }
@@ -19,7 +20,7 @@ public class MoveTokenState : State {
         return tokenSettled;
     }
     public override void exitState() {
-        tokenVisual.changeLayer(false);
+        tokenVisual.changeLayer(InterfaceConstants.BOARD_TOKEN_LAYER_NAME);
     }
     public override State getNextState() {
         return possibleNextStates[0];

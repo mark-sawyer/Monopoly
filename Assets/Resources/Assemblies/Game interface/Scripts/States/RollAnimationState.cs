@@ -11,15 +11,14 @@ public class RollAnimationState : State {
     public override void enterState() {
         gamePlayer.rollDice();
         animationOver = false;
-        TokenVisual turnToken = tokenVisualManager.getTurnTokenVisual();
-        turnToken.beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
-        turnToken.changeLayer(true);
+        int turnIndex = GameState.game.getIndexOfTurnPlayer();
+        TokenScaler turnTokenScaler = tokenVisualManager.getTokenScaler(turnIndex);
+        TokenVisual turnTokenVisual = tokenVisualManager.getTokenVisual(turnIndex);
+        turnTokenScaler.beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
+        turnTokenVisual.changeLayer(InterfaceConstants.MOVING_TOKEN_LAYER_NAME);
     }
     public override bool exitConditionMet() {
         return animationOver;
-    }
-    public override void exitState() {
-        TokenVisual turnToken = tokenVisualManager.getTurnTokenVisual();
     }
     public override State getNextState() {
         return possibleNextStates[0];
