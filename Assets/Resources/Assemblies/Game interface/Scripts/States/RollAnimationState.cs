@@ -12,7 +12,7 @@ public class RollAnimationState : State {
         gamePlayer.rollDice();
         animationOver = false;
         TokenVisual turnToken = tokenVisualManager.getTurnTokenVisual();
-        turnToken.startChangingScale(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
+        turnToken.beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
         turnToken.changeLayer(true);
     }
     public override bool exitConditionMet() {

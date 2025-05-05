@@ -1,16 +1,36 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpaceVisual : MonoBehaviour {
-    [SerializeField] TokenParameters tokenParameters;
+    public SpaceInfo spaceInfo { get; private set; }
+    [SerializeField] private TokenParameters tokenParameters;
+    private TokenVisualManager tokenVisualManager;
 
-    public Vector3 transformPoint(Vector3 point) {
-        return transform.TransformPoint(point);
+
+
+    public void setup(SpaceInfo spaceInfo, TokenVisualManager tokenVisualManager) {
+        this.spaceInfo = spaceInfo;
+        this.tokenVisualManager = tokenVisualManager;
     }
-    public float getScale(int playersOnSpace) {
+    public float getScale() {
+        int playersOnSpace = spaceInfo.getNumberOfPlayersOnSpace();
         return tokenParameters.getScaleValue(playersOnSpace);
     }
-    public Vector3 getPosition(int playersOnSpace, int order) {
-        Vector3 position = tokenParameters.getPositionOffset(playersOnSpace, order);
+    public Vector3 getFinalPosition(int playersOnSpace, int order) {
+        Vector3 position = tokenParameters.getTotalPositionOffset(playersOnSpace, order);
         return transform.TransformPoint(position);
+    }
+    public Vector3 getCentralPosition() {
+        Vector3 position = tokenParameters.getMajorPositionOffset();
+        return transform.TransformPoint(position);
+    }
+    public IEnumerable<TokenVisual> getTokenVisualsOnSpace() {
+        IEnumerable<PlayerInfo> playerInfos = spaceInfo.getVisitingPlayers();
+        IEnumerable<int> indices = playerInfos.Select(x => GameState.game.getPlayerIndex(x));
+        foreach (int index in indices) {
+            Debug.Log(index);
+        }
+        return indices.Select(x => tokenVisualManager.getTokenVisual(x));
     }
 }

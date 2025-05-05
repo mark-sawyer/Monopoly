@@ -7,20 +7,20 @@ public class TokenVisual : MonoBehaviour {
     [SerializeField] private int boardLayer;
     [SerializeField] private int movingLayer;
     private SpaceVisualManager spaceVisualManager;
-    private AttractivePointManager attractivePointManager;
-    private PlayerInfo player;
+    public PlayerInfo player { get; private set; }
+    private TokenMover tokenMover;
 
 
 
     #region MonoBehaviour
     private void Start() {
-        attractivePointManager = new AttractivePointManager(transform, spaceVisualManager);
+        tokenMover = new TokenMover(this, spaceVisualManager);
         setSprites();
         setSpriteLayerOrders();
         setStartingScale();
     }
     private void Update() {
-        attractivePointManager.update();
+        tokenMover.updatePosition();
     }
     #endregion
 
@@ -35,13 +35,19 @@ public class TokenVisual : MonoBehaviour {
         if (isMovingLayer) gameObject.layer = movingLayer;
         else gameObject.layer = boardLayer;
     }
-    public void startChangingScale(float targetScale) {
+    public void beginScaleChange(float targetScale) {
         StartCoroutine(changeScale(targetScale));
     }
-    public void updateSpace(int roll) {
-        int currentIndex = player.getSpaceIndex();
-        int priorIndex = Modulus.exe(currentIndex - roll, GameConstants.TOTAL_SPACES);
-        attractivePointManager.updateAttractivePoints(priorIndex, roll);
+    public void beginScaleChange() {
+        SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(player.getSpaceIndex());
+        StartCoroutine(changeScale(spaceVisual.getScale()));
+    }
+    public void beginMovingToNewSpace() {
+        DiceInfo diceInfo = GameState.game.getDiceInfo();
+        int roll = diceInfo.getTotalValue();
+        int newSpaceIndex = player.getSpaceIndex();
+        int priorSpaceIndex = Modulus.exe(newSpaceIndex - roll, GameConstants.TOTAL_SPACES);
+        tokenMover.startMoving(priorSpaceIndex, roll);
     }
     #endregion
 

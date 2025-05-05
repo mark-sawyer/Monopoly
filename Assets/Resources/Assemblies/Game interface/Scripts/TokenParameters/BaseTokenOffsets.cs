@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public abstract class BaseTokenOffsets : ScriptableObject {
-    protected abstract Vector2 MajorOffset { get; }
+    public abstract Vector2 MajorOffset { get; }
     protected abstract Vector2[] MinorOffsetOne { get; }
     protected abstract Vector2[] MinorOffsetTwo  { get; }
     protected abstract Vector2[] MinorOffsetThree  { get; }

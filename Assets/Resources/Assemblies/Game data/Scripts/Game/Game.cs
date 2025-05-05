@@ -26,6 +26,12 @@ public class Game : GameStateInfo, GamePlayer {
     public PlayerInfo getTurnPlayer() {
         return turnPlayer;
     }
+    public SpaceInfo getSpaceInfo(int index) {
+        return spaces[index];
+    }
+    public int getSpaceIndex(SpaceInfo space) {
+        return Array.IndexOf(spaces, space);
+    }
     public int getPlayerIndex(PlayerInfo player) {
         return Array.FindIndex(players, x => x == player);
     }
@@ -34,10 +40,6 @@ public class Game : GameStateInfo, GamePlayer {
     }
     public int getIndexOfTurnPlayer() {
         return getPlayerIndex(turnPlayer);
-    }
-    public IEnumerable<PlayerInfo> getPlayersOnSpace(int spaceIndex) {
-        Space space = spaces[spaceIndex];
-        return space.getVisitingPlayers();
     }
     public int getSpaceIndexOfTurnPlayer() {
         return turnPlayer.getSpaceIndex();
@@ -57,14 +59,6 @@ public class Game : GameStateInfo, GamePlayer {
         int turnPlayerIndex = Array.IndexOf(players, turnPlayer);
         int nextTurnPlayer = (turnPlayerIndex + 1) % players.Length;
         turnPlayer = players[nextTurnPlayer];
-    }
-    #endregion
-
-
-
-    #region internal
-    internal int getSpaceIndex(Space space) {
-        return Array.IndexOf(spaces, space);
     }
     #endregion
 

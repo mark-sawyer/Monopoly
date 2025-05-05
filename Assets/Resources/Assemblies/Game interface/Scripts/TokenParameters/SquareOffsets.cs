@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New SquareOffsets", menuName = "SquareOffsets")]
 public class SquareOffsets : BaseTokenOffsets {
     #region properties
-    protected override Vector2 MajorOffset => majorOffset;
+    public override Vector2 MajorOffset => majorOffset;
     protected override Vector2[] MinorOffsetOne {
         get => new Vector2[1] { new Vector2(0f, 0f) };
     }
@@ -65,9 +65,9 @@ public class SquareOffsets : BaseTokenOffsets {
                 angleCoords(5f, points, mag),
                 angleCoords(0f, points, mag),
                 angleCoords(1f, points, mag),
-                new Vector2(0f, 0f),
                 angleCoords(4f, points, mag),
-                angleCoords(2f, points, mag),
+                new Vector2(0f, 0f),
+                angleCoords(2f, points, mag)
             };
             Vector2[] scaled = scale(x, scalar, scalar * 1.3f);
             return translate(x, 0f, -1.35f);

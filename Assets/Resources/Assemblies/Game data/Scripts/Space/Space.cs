@@ -1,10 +1,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-internal abstract class Space : ScriptableObject {
+internal abstract class Space : ScriptableObject, SpaceInfo {
     private Game game;
     private List<Player> playersVisiting;
 
+
+
+    #region SpaceInfo
+    public IEnumerable<PlayerInfo> getVisitingPlayers() {
+        return playersVisiting;
+    }
+    public int getNumberOfPlayersOnSpace() {
+        return playersVisiting.Count;
+    }
+    public int getIndex() {
+        return game.getSpaceIndex(this);
+    }
+    public int getPlayerOrderIndex(PlayerInfo playerInfo) {
+        return playersVisiting.IndexOf((Player)playerInfo);
+    }
+    #endregion
+
+
+    #region public
     public void setupSpace(Game game) {
         this.game = game;
         playersVisiting = new List<Player>();
@@ -18,10 +37,5 @@ internal abstract class Space : ScriptableObject {
     public bool containsPlayer(Player player) {
         return playersVisiting.Contains(player);
     }
-    public int getIndex() {
-        return game.getSpaceIndex(this);
-    }
-    public IEnumerable<PlayerInfo> getVisitingPlayers() {
-        return playersVisiting;
-    }
+    #endregion
 }

@@ -32,10 +32,5 @@ public class TokenVisualManager : MonoBehaviour {
     public TokenVisual getTokenVisual(int index) {
         return transform.GetChild(index).GetComponent<TokenVisual>();
     }
-    public IEnumerable<TokenVisual> getTokenVisualsOnSpace(int spaceIndex) {
-        IEnumerable<PlayerInfo> players = GameState.game.getPlayersOnSpace(spaceIndex);
-        IEnumerable<int> indices = players.Select(x => GameState.game.getPlayerIndex(x));
-        return indices.Select(x => getTokenVisual(x));
-    }
     #endregion
 }

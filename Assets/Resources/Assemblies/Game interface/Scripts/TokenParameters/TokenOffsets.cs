@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New TokenOffsets", menuName = "TokenOffsets")]
 public class TokenOffsets : BaseTokenOffsets {
     #region properties
-    protected override Vector2 MajorOffset => majorOffset;
+    public override Vector2 MajorOffset => majorOffset;
     protected override Vector2[] MinorOffsetOne => minorOffsetOne;
     protected override Vector2[] MinorOffsetTwo => minorOffsetTwo;
     protected override Vector2[] MinorOffsetThree => minorOffsetThree;

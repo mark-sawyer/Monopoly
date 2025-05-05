@@ -20,6 +20,6 @@ public class TestTokenPosition : MonoBehaviour {
     public void adjustScaleAndSize() {
         Vector3 position = baseTokenOffsets.getTotalOffset(tokens, order);
         transform.localPosition = position;
-        transform.localScale = new Vector3(tokenScales.getScaleValue(tokens - 1), tokenScales.getScaleValue(tokens - 1), 1f);
+        transform.localScale = new Vector3(tokenScales.getScaleValue(tokens), tokenScales.getScaleValue(tokens), 1f);
     }
 }

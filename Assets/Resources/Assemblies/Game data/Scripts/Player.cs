@@ -22,6 +22,9 @@ internal class Player : PlayerInfo {
     public int getSpaceIndex() {
         return space.getIndex();
     }
+    public SpaceInfo getSpaceInfo() {
+        return space;
+    }
     public Token getToken() {
         return token;
     }
