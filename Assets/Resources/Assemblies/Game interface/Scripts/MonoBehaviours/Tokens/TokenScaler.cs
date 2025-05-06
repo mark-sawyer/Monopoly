@@ -5,6 +5,7 @@ using UnityEngine;
 public class TokenScaler : MonoBehaviour {
     public PlayerInfo player { get; private set; }
     private SpaceVisualManager spaceVisualManager;
+    private const int FRAMES_FOR_TOKEN_GROWING = 50;
 
 
 
@@ -35,7 +36,7 @@ public class TokenScaler : MonoBehaviour {
     #region private
     private IEnumerator changeScale(float targetScale) {
         float startScale = transform.localScale.x;
-        int frames = InterfaceConstants.FRAMES_FOR_TOKEN_GROWING;
+        int frames = FRAMES_FOR_TOKEN_GROWING;
         float slope = (targetScale - startScale) / frames;
         for (int i = 0; i < frames; i++) {
             float scale = startScale + slope * i;

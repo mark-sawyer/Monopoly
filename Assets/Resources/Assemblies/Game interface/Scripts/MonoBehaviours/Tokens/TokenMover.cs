@@ -9,6 +9,13 @@ public class TokenMover : MonoBehaviour {
     private Vector3 attractivePoint;
     private Vector3 velocity = new();
     private bool settled;
+    #region consts
+    private const float ACCELERATION_CONSTANT = 0.1f;
+    private const float VELOCITY_CONSTANT = 0.5f;
+    private const float DISTANCE_TO_SPACE_THRESHOLD = 5f;
+    private const float DISTANCE_FOR_SETTLING_THRESHOLD = 0.2f;
+    private const float VELOCITY_FOR_SETTLING_THRESHOLD = 0.2f;
+    #endregion
 
 
 
@@ -19,7 +26,7 @@ public class TokenMover : MonoBehaviour {
     }
     private void Update() {
         moveToAttractivePoint();
-        if (queue.Count > 0 && directionVector().magnitude < InterfaceConstants.DISTANCE_TO_SPACE_THRESHOLD) {
+        if (queue.Count > 0 && directionVector().magnitude < DISTANCE_TO_SPACE_THRESHOLD) {
             attractivePoint = queue[0];
             queue.RemoveAt(0);
             if (queue.Count == 0) {
@@ -93,9 +100,7 @@ public class TokenMover : MonoBehaviour {
         return spaceVisual.getFinalPosition(playersOnSpace, order);
     }
     private void moveToAttractivePoint() {
-        float velocityConstant = InterfaceConstants.TOKEN_VELOCITY_CONSTANT;
-        float accelerationConstant = InterfaceConstants.TOKEN_ACCELERATION_CONSTANT;
-        Vector3 acceleration = (directionVector() - velocityConstant * velocity) * accelerationConstant;
+        Vector3 acceleration = (directionVector() - VELOCITY_CONSTANT * velocity) * ACCELERATION_CONSTANT;
         velocity = velocity + acceleration;
         transform.position = (transform.position + velocity * Time.deltaTime);
     }
@@ -122,8 +127,8 @@ public class TokenMover : MonoBehaviour {
     private bool passesSettledTest() {
         return queue.Count == 0 &&
             !settled &&
-            velocity.magnitude < InterfaceConstants.VELOCITY_FOR_SETTLING_THRESHOLD &&
-            directionVector().magnitude < InterfaceConstants.DISTANCE_FOR_SETTLING_THRESHOLD;
+            velocity.magnitude < VELOCITY_FOR_SETTLING_THRESHOLD &&
+            directionVector().magnitude < DISTANCE_FOR_SETTLING_THRESHOLD;
     }
     #endregion
 }
