@@ -7,6 +7,7 @@ public class TokenVisual : MonoBehaviour {
     [SerializeField] private TokenMover tokenMover;
     public PlayerInfo player { get; private set; }
     private SpaceVisualManager spaceVisualManager;
+    private TokenSprites tokenSprites;
 
 
 
@@ -20,9 +21,10 @@ public class TokenVisual : MonoBehaviour {
 
 
     #region public
-    public void setup(PlayerInfo player, SpaceVisualManager spaceVisualManager) {
+    public void setup(PlayerInfo player, SpaceVisualManager spaceVisualManager, TokenSprites tokenSprites) {
         this.player = player;
         this.spaceVisualManager = spaceVisualManager;
+        this.tokenSprites = tokenSprites;
     }
     public void changeLayer(string layerName) {
         tokenSpriteRenderer.sortingLayerName = layerName;
@@ -41,8 +43,8 @@ public class TokenVisual : MonoBehaviour {
 
     #region private
     private void setSprites() {
-        silouhetteSpriteRenderer.sprite = UIUtilities.tokenTypeToSpriteBackground(player.getToken());
-        tokenSpriteRenderer.sprite = UIUtilities.tokenTypeToSpriteForeground(player.getToken());
+        silouhetteSpriteRenderer.sprite = tokenSprites.SilouhetteSprite;
+        tokenSpriteRenderer.sprite = tokenSprites.ForegroundSprite;
     }
     private void setSpriteLayerOrders() {
         int turnOrder = GameState.game.getPlayerIndex(player);

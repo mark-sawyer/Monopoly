@@ -5,4 +5,5 @@ public static class InterfaceConstants {
     public const string BOARD_TOKEN_LAYER_NAME = "Tokens";
     public const string MOVING_TOKEN_LAYER_NAME = "MovingToken";
     public const float SCALE_FOR_MOVING_TOKEN = 3f;
+    public const int FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION = 30;
 }

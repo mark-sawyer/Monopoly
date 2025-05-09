@@ -10,12 +10,31 @@ public class TitleDeed : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI[] costTexts;
     private EstateInfo estateInfo;
 
+
+
+    #region MonoBehaviour
     private void Start() {
         estateInfo = (EstateInfo)estate;
+        updateVisual();
+    }
+    #endregion
+
+
+
+    #region public
+    public void updateProperty(EstateInfo estateInfo) {
+        this.estateInfo = estateInfo;
+        updateVisual();
+    }
+    #endregion
+
+
+
+    #region private
+    private void updateVisual() {
         colourBandImage.color = estateInfo.EstateColour;
         setTexts();
     }
-
     private void setTexts() {
         propertyNameText.text = estateInfo.Name.ToString().ToUpper();
         costTexts[0].text = "$" + estateInfo.getRent(0).ToString();
@@ -28,4 +47,5 @@ public class TitleDeed : MonoBehaviour {
         costTexts[7].text = "$" + estateInfo.BuildingCost.ToString() + " each";
         costTexts[8].text = "$" + estateInfo.BuildingCost.ToString() + " each";
     }
+    #endregion
 }

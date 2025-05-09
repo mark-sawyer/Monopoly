@@ -8,7 +8,6 @@ public class MultiGraphicButton : Button {
 
     protected override void DoStateTransition(SelectionState state, bool instant) {
         if (!IsActive() || additionalGraphics == null) return;
-        //if (state == SelectionState.Selected) state = SelectionState.Normal;
 
         Color targetColor = getTargetColour(state);
         targetColor *= colors.colorMultiplier;
@@ -24,7 +23,6 @@ public class MultiGraphicButton : Button {
             }
         }
 
-        // Call base to handle targetGraphic normally
         base.DoStateTransition(state, instant);
     }
     public override void OnSelect(BaseEventData eventData) { }

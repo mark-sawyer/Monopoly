@@ -7,14 +7,16 @@ public class PlayerPanel : MonoBehaviour {
     [SerializeField] private Image silouhetteImage;
     private PlayerInfo player;
 
-    public void setup(PlayerInfo player) {
+    public void setup(PlayerInfo player, TokenVisualManager tokenVisualManager) {
         this.player = player;
+        TokenSprites tokenSprites = tokenVisualManager.tokenTypeToTokenSprites(player.getToken());
 
-        Sprite silouhetteSprite = UIUtilities.tokenTypeToSpriteBackground(player.getToken());
+
+        Sprite silouhetteSprite = tokenSprites.SilouhetteSprite;
         silouhetteImage.sprite = silouhetteSprite;
         resizeTokenObject(silouhetteSprite, 2, "silouhette");
-
-        Sprite tokenSprite = UIUtilities.tokenTypeToSpriteForeground(player.getToken());
+        
+        Sprite tokenSprite = tokenSprites.ForegroundSprite;
         pieceImage.sprite = tokenSprite;
         resizeTokenObject(tokenSprite, 3, "token");
     }
