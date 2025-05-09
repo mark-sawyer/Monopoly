@@ -14,7 +14,6 @@ public class Game : GameStateInfo, GamePlayer {
     public Game(int playerNum) {
         spaces = initialiseSpaces();
         players = initialisePlayers(playerNum);
-        initialiseProperties();
         turnPlayer = players[0];
     }
     public IEnumerable<PlayerInfo> getPlayers() {
@@ -127,75 +126,6 @@ public class Game : GameStateInfo, GamePlayer {
             spaces[0].addPlayer(players[i]);
         }
         return players;
-    }
-    private void initialiseProperties() {
-        Property[] properties = new Property[] {
-            Resources.Load<Estate>("ScriptableObjects/Properties/00_OldKentRoad"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/01_WhiteChapelRoad"),
-            Resources.Load<Railroad>("ScriptableObjects/Properties/02_KingsCrossStation"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/03_TheAngelIslington"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/04_EustonRoad"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/05_PentonvilleRoad"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/06_PallMall"),
-            Resources.Load<Utility>("ScriptableObjects/Properties/07_ElectricCompany"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/08_Whitehall"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/09_NorthumberlandAvenue"),
-            Resources.Load<Railroad>("ScriptableObjects/Properties/10_MaryleboneStation"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/11_BowStreet"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/12_MarlboroughStreet"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/13_VineStreet"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/14_Strand"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/15_FleetStreet"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/16_TrafalgarSquare"),
-            Resources.Load<Railroad>("ScriptableObjects/Properties/17_FenchurchStStation"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/18_LeicesterSquare"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/19_CoventryStreet"),
-            Resources.Load<Utility>("ScriptableObjects/Properties/20_WaterWorks"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/21_Piccadilly"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/22_RegentStreet"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/23_OxfordStreet"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/24_BondStreet"),
-            Resources.Load<Railroad>("ScriptableObjects/Properties/25_LiverpoolStreetStation"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/26_ParkLane"),
-            Resources.Load<Estate>("ScriptableObjects/Properties/27_Mayfair")
-        };
-        EstateGroup[] estateGroups = new EstateGroup[] {
-            new EstateGroup(
-                EstateColour.BROWN,
-                new Estate[] { (Estate)properties[0], (Estate)properties[1] }
-            ),
-            new EstateGroup(
-                EstateColour.LIGHT_BLUE,
-                new Estate[] { (Estate)properties[3], (Estate)properties[4], (Estate)properties[5] }
-            ),
-            new EstateGroup(
-                EstateColour.PINK,
-                new Estate[] { (Estate)properties[6], (Estate)properties[8], (Estate)properties[9] }
-            ),
-            new EstateGroup(
-                EstateColour.ORANGE,
-                new Estate[] { (Estate)properties[11], (Estate)properties[12], (Estate)properties[13] }
-            ),
-            new EstateGroup(
-                EstateColour.RED,
-                new Estate[] { (Estate)properties[14], (Estate)properties[15], (Estate)properties[16] }
-            ),
-            new EstateGroup(
-                EstateColour.YELLOW,
-                new Estate[] { (Estate)properties[18], (Estate)properties[19], (Estate)properties[21] }
-            ),
-            new EstateGroup(
-                EstateColour.GREEN,
-                new Estate[] { (Estate)properties[22], (Estate)properties[23], (Estate)properties[24] }
-            ),
-            new EstateGroup(
-                EstateColour.DARK_BLUE,
-                new Estate[] { (Estate)properties[26], (Estate)properties[27] }
-            )
-        };
-        foreach (EstateGroup estateGroup in estateGroups) {
-            estateGroup.setEstateReferencesToThis();
-        }
     }
     #endregion
 }

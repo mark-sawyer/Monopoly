@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public interface EstateInfo : PropertyInfo {
-    public EstateColour EstateColour { get; }
+    public Color EstateColour { get; }
+    public int BuildingCost { get; }
+    public int getRent(int index);
 }

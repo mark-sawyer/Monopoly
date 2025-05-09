@@ -8,7 +8,7 @@ public class Manager : MonoBehaviour {
 
 
     private void Awake() {
-        int playerNum = 5;
+        int playerNum = 1;
         game = new Game(playerNum);
         GameState.game = game;
         stateManager = new StateManager(game, referencePasser);

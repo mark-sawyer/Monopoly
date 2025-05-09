@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New estate", menuName = "Estate")]
 internal class Estate : Property, EstateInfo {
-    private EstateGroup estateGroup;
+    [SerializeField] private EstateGroup estateGroup;
     [SerializeField] private int[] rent;
     [SerializeField] private int mortgage;
     [SerializeField] private int buildingCost;
@@ -11,15 +10,10 @@ internal class Estate : Property, EstateInfo {
 
 
     #region EstateInfo
-    public EstateColour EstateColour { get => estateGroup.estateColour; }
-    #endregion
-
-
-
-    #region internal
-    internal void assignEstateGroup(EstateGroup estateGroupBeingAssigned) {
-        if (estateGroup is null) estateGroup = estateGroupBeingAssigned;
-        else throw new InvalidOperationException("EstateGroup already assigned");
+    public Color EstateColour { get => estateGroup.EstateColour; }
+    public int BuildingCost { get => buildingCost; }
+    public int getRent(int index) {
+        return rent[index];
     }
     #endregion
 }

@@ -27,9 +27,9 @@ public class RollAnimationState : State {
 
 
     #region public
-    public RollAnimationState(DieVisual dieVisual, TokenVisualManager tokenVisuals, GamePlayer gamePlayer) {
+    public RollAnimationState(DieVisual dieVisual, TokenVisualManager tokenVisualManager, GamePlayer gamePlayer) {
         dieVisual.listenForAnimationOver(animationOverCalled);
-        this.tokenVisualManager = tokenVisuals;
+        this.tokenVisualManager = tokenVisualManager;
         this.gamePlayer = gamePlayer;
     }
     #endregion

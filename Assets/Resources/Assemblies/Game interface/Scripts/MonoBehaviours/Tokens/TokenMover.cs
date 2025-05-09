@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TokenMover : MonoBehaviour {
@@ -100,7 +101,8 @@ public class TokenMover : MonoBehaviour {
         return spaceVisual.getFinalPosition(playersOnSpace, order);
     }
     private void moveToAttractivePoint() {
-        Vector3 acceleration = (directionVector() - VELOCITY_CONSTANT * velocity) * ACCELERATION_CONSTANT;
+        Vector3 dirVec = queue.Count > 0 ? directionVector().normalized * finalPositionMagnitude() : directionVector();
+        Vector3 acceleration = (dirVec - VELOCITY_CONSTANT * velocity) * ACCELERATION_CONSTANT;
         velocity = velocity + acceleration;
         transform.position = (transform.position + velocity * Time.deltaTime);
     }
@@ -113,6 +115,9 @@ public class TokenMover : MonoBehaviour {
     }
     private Vector3 directionVector() {
         return attractivePoint - transform.position;
+    }
+    private float finalPositionMagnitude() {
+        return (queue.Last() - transform.position).magnitude;
     }
     private int getSpaceIndex() {
         return player.getSpaceIndex();

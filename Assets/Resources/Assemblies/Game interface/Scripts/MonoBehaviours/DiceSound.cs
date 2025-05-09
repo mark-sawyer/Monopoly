@@ -2,16 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DiceSound : MonoBehaviour {
-    [SerializeField] private Button rollButton;
     [SerializeField] private AudioClip[] diceRollSounds;
     [SerializeField] private AudioSource audioSource;
 
 
 
-    private void Start() {
-        rollButton.onClick.AddListener(playSound);
-    }
-    private void playSound() {
+    public void playSound() {
         audioSource.clip = getRandomSound();
         audioSource.Play();
     }

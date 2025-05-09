@@ -184,7 +184,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: MONOPOLY STREET
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 13917ed095309da409c4efb12532eb45, type: 2}
   m_sharedMaterial: {fileID: -807284213181856288, guid: 13917ed095309da409c4efb12532eb45, type: 2}
@@ -289,37 +289,6 @@ Transform:
   m_Father: {fileID: 6072064767439386191}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4140109450130672378
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6833171582269307731}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6833171582269307731
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140109450130672378}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.4116955, y: -8.155483, z: -10.245138}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6072064767439386191}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4472342489763841803
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +389,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $200
+  m_text: $100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 13917ed095309da409c4efb12532eb45, type: 2}
   m_sharedMaterial: {fileID: -807284213181856288, guid: 13917ed095309da409c4efb12532eb45, type: 2}
@@ -524,7 +493,6 @@ Transform:
   m_Children:
   - {fileID: 8786255017265218632}
   - {fileID: 4599377120711486215}
-  - {fileID: 6833171582269307731}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -595,5 +563,5 @@ MonoBehaviour:
   tokenParameters: {fileID: 0}
   colourBand: {fileID: 8077830558131591102}
   estateSO: {fileID: 0}
-  name: {fileID: 2789306542448415284}
+  estateName: {fileID: 2789306542448415284}
   cost: {fileID: 6535261235238357323}

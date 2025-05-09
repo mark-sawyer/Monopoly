@@ -2,48 +2,6 @@ using System;
 using UnityEngine;
 
 public static class UIUtilities {
-    public static Color estateColourToColour(EstateColour estateColour) {
-        Color getColor(string s) {
-            string redString = s.Substring(0, 2);
-            string greenString = s.Substring(2, 2);
-            string blueString = s.Substring(4, 2);
-
-            float redFloat = Int32.Parse(redString, System.Globalization.NumberStyles.HexNumber);
-            float greenFloat = Int32.Parse(greenString, System.Globalization.NumberStyles.HexNumber);
-            float blueFloat = Int32.Parse(blueString, System.Globalization.NumberStyles.HexNumber);
-
-            return new Color(redFloat / 255f, greenFloat / 255f, blueFloat / 255f);
-        }
-
-        Color colour = Color.black;
-        switch (estateColour) {
-            case EstateColour.BROWN:
-                colour = getColor("945232");
-                break;
-            case EstateColour.LIGHT_BLUE:
-                colour = getColor("aee0fb");
-                break;
-            case EstateColour.PINK:
-                colour = getColor("df3c97");
-                break;
-            case EstateColour.ORANGE:
-                colour = getColor("f89418");
-                break;
-            case EstateColour.RED:
-                colour = getColor("f61d26");
-                break;
-            case EstateColour.YELLOW:
-                colour = getColor("fef907");
-                break;
-            case EstateColour.GREEN:
-                colour = getColor("27c066");
-                break;
-            case EstateColour.DARK_BLUE:
-                colour = getColor("0171bb");
-                break;
-        }
-        return colour;
-    }
     public static Sprite tokenTypeToSpriteForeground(Token tokenType) {
         Sprite sprite = null;
         switch (tokenType) {

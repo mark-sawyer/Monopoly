@@ -4,15 +4,14 @@ using TMPro;
 public class EstateVisual : SpaceVisual {
     [SerializeField] SpriteRenderer colourBand;
     [SerializeField] ScriptableObject estateSO;
-    [SerializeField] TextMeshPro name;
+    [SerializeField] TextMeshPro estateName;
     [SerializeField] TextMeshPro cost;
     EstateInfo estate;
 
     private void Start() {
         estate = (EstateInfo)estateSO;
-        EstateColour estateColour = estate.EstateColour;
-        name.text = estate.Name.ToUpper();
+        if (estate.Name != "Northumberland Avenue") estateName.text = estate.Name.ToUpper();
         cost.text = "$" + estate.Cost.ToString();
-        colourBand.color = UIUtilities.estateColourToColour(estateColour);        
+        colourBand.color = estate.EstateColour; 
     }
 }
