@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New TokenSprites", menuName = "TokenSprites")]
 public class TokenSprites : ScriptableObject {
     public Sprite SilouhetteSprite { get => silouhetteSprite; }
     public Sprite ForegroundSprite { get => foregroundSprite; }
