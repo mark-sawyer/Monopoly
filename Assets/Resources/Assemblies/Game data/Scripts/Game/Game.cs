@@ -10,39 +10,38 @@ public class Game : GameStateInfo, GamePlayer {
 
 
 
-    #region GameStateInfo
+    #region public
     public Game(int playerNum) {
         spaces = initialiseSpaces();
         players = initialisePlayers(playerNum);
         turnPlayer = players[0];
     }
-    public IEnumerable<PlayerInfo> getPlayers() {
-        return players;
+    public PropertyInfo DELETE_THIS_LATER() {
+        return ((PropertySpace)spaces[11]).Property;
     }
-    public DiceInfo getDiceInfo() {
-        return dice;
-    }
-    public PlayerInfo getTurnPlayer() {
-        return turnPlayer;
-    }
+    #endregion
+
+
+
+    #region GameStateInfo
     public SpaceInfo getSpaceInfo(int index) {
         return spaces[index];
     }
     public int getSpaceIndex(SpaceInfo space) {
         return Array.IndexOf(spaces, space);
     }
+    public PlayerInfo getPlayerInfo(int index) {
+        return players[index];
+    }
     public int getPlayerIndex(PlayerInfo player) {
         return Array.FindIndex(players, x => x == player);
     }
-    public int getNumberOfPlayers() {
-        return players.Length;
-    }
-    public int getIndexOfTurnPlayer() {
-        return getPlayerIndex(turnPlayer);
-    }
-    public int getSpaceIndexOfTurnPlayer() {
-        return turnPlayer.getSpaceIndex();
-    }
+    public IEnumerable<PlayerInfo> PlayerInfos => players;
+    public DiceInfo DiceInfo => dice;
+    public PlayerInfo TurnPlayer => turnPlayer;
+    public int NumberOfPlayers => players.Length;
+    public int IndexOfTurnPlayer => getPlayerIndex(turnPlayer);
+    public int SpaceIndexOfTurnPlayer => turnPlayer.SpaceIndex;
     #endregion
 
 
@@ -122,7 +121,11 @@ public class Game : GameStateInfo, GamePlayer {
     private Player[] initialisePlayers(int playerNum) {
         Player[] players = new Player[playerNum];
         for (int i = 0; i < playerNum; i++) {
-            players[i] = new Player(spaces[0], (Token)i);
+            players[i] = new Player(
+                spaces[0],
+                (Token)i,
+                (PlayerColour)UnityEngine.Random.Range(0, 8)
+            );
             spaces[0].addPlayer(players[i]);
         }
         return players;

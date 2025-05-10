@@ -1,21 +1,29 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System;
 
 public class TokenVisualManager : MonoBehaviour {
     [SerializeField] private GameObject tokenPrefab;
     [SerializeField] private SpaceVisualManager spaceVisualManager;
     [SerializeField] private TokenSprites[] tokenSprites;
+    [SerializeField] private TokenColours[] tokenColours;
 
 
 
     #region MonoBehaviour
     private void Start() {
-        IEnumerable<PlayerInfo> players = GameState.game.getPlayers();
+        IEnumerable<PlayerInfo> players = GameState.game.PlayerInfos;
         int i = 0;
         foreach (PlayerInfo player in players) {
             Vector3 startingPosition = getStartingPosition(i);
             GameObject newToken = Instantiate(tokenPrefab, startingPosition, Quaternion.identity, transform);
-            newToken.GetComponent<TokenVisual>().setup(player, spaceVisualManager, tokenTypeToTokenSprites(player.getToken()));
+            newToken.GetComponent<TokenVisual>().setup(
+                player,
+                spaceVisualManager,
+                tokenTypeToTokenSprites(player.Token),
+                playerColourToTokenColours(player.Colour)
+            );
             newToken.GetComponent<TokenMover>().setup(player, spaceVisualManager);
             newToken.GetComponent<TokenScaler>().setup(player, spaceVisualManager);
             i += 1;
@@ -47,13 +55,25 @@ public class TokenVisualManager : MonoBehaviour {
             default: return tokenSprites[7];
         }
     }
+    public TokenColours playerColourToTokenColours(PlayerColour colour) {
+        switch (colour) {
+            case PlayerColour.BLUE: return tokenColours[0];
+            case PlayerColour.GREEN: return tokenColours[1];
+            case PlayerColour.MAGENTA: return tokenColours[2];
+            case PlayerColour.ORANGE: return tokenColours[3];
+            case PlayerColour.PURPLE: return tokenColours[4];
+            case PlayerColour.RED: return tokenColours[5];
+            case PlayerColour.WHITE: return tokenColours[6];
+            default: return tokenColours[7];
+        }
+    }
     #endregion
 
 
 
     #region private
     public Vector3 getStartingPosition(int order) {
-        int totalPlayers = GameState.game.getNumberOfPlayers();
+        int totalPlayers = GameState.game.NumberOfPlayers;
         SpaceVisual startingSpaceVisual = spaceVisualManager.getSpaceVisual(0);
         return startingSpaceVisual.getFinalPosition(totalPlayers, order);
     }

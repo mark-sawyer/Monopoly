@@ -8360,6 +8360,7 @@ GameObject:
   - component: {fileID: 2048746891}
   - component: {fileID: 2048746890}
   - component: {fileID: 2048746889}
+  - component: {fileID: 2048746893}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -8451,6 +8452,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2048746893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048746888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14be84448f9a24442a5bcd1519f9d9db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tokenVisualManager: {fileID: 2087281311}
+  purchaseQuestionPrefab: {fileID: 3442082075229922575, guid: a5eff3b5040c5544792f1c76786733b7, type: 3}
+  incomeTaxQuestionPrefab: {fileID: 3442082075229922575, guid: 0aba535f26865804d8a80444771af625, type: 3}
+  unmortgageQuestionPrefab: {fileID: 3442082075229922575, guid: 3d635fb9e185688458c45cb79651c5c6, type: 3}
 --- !u!1 &2087281310
 GameObject:
   m_ObjectHideFlags: 0
@@ -8491,6 +8508,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47c027980b8c3ef4da43a3e7e1906bb8, type: 2}
   - {fileID: 11400000, guid: 23e81094e7fec7d4a985873baef490ed, type: 2}
   - {fileID: 11400000, guid: a0704a25045bd354d920647b6eea70fe, type: 2}
+  tokenColours:
+  - {fileID: 11400000, guid: 575b94c595b4cfd4b98b37195ac7bf7f, type: 2}
+  - {fileID: 11400000, guid: e662b3cb3a9f18840b7da0e9ae79f5e7, type: 2}
+  - {fileID: 11400000, guid: aa1963dd2349257498afcc7488420887, type: 2}
+  - {fileID: 11400000, guid: c35356d34207ef143a966a926f6586e9, type: 2}
+  - {fileID: 11400000, guid: e0f845f17e3175b4585e47ba351e3600, type: 2}
+  - {fileID: 11400000, guid: afc0195d3d5364141943e1f4a3731eaf, type: 2}
+  - {fileID: 11400000, guid: 100eb9556b4868b40b80a48b3a025e00, type: 2}
+  - {fileID: 11400000, guid: f493be6ba6b15d749a0f2266a795dc4b, type: 2}
 --- !u!4 &2087281312
 Transform:
   m_ObjectHideFlags: 0

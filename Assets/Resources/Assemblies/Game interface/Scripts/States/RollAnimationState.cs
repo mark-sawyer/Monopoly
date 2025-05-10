@@ -10,7 +10,7 @@ public class RollAnimationState : State {
     public override void enterState() {
         gamePlayer.rollDice();
         animationOver = false;
-        int turnIndex = GameState.game.getIndexOfTurnPlayer();
+        int turnIndex = GameState.game.IndexOfTurnPlayer;
         TokenScaler turnTokenScaler = tokenVisualManager.getTokenScaler(turnIndex);
         TokenVisual turnTokenVisual = tokenVisualManager.getTokenVisual(turnIndex);
         turnTokenScaler.beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);

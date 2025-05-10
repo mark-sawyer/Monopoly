@@ -8,18 +8,12 @@ internal abstract class Space : ScriptableObject, SpaceInfo {
 
 
     #region SpaceInfo
-    public IEnumerable<PlayerInfo> getVisitingPlayers() {
-        return playersVisiting;
-    }
-    public int getNumberOfPlayersOnSpace() {
-        return playersVisiting.Count;
-    }
-    public int getIndex() {
-        return game.getSpaceIndex(this);
-    }
     public int getPlayerOrderIndex(PlayerInfo playerInfo) {
         return playersVisiting.IndexOf((Player)playerInfo);
     }
+    public IEnumerable<PlayerInfo> VisitingPlayers => playersVisiting;
+    public int NumberOfPlayersOnSpace => playersVisiting.Count;
+    public int Index => game.getSpaceIndex(this);
     #endregion
 
 

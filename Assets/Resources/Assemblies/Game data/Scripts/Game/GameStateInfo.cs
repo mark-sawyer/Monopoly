@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 
 public interface GameStateInfo {
-    public IEnumerable<PlayerInfo> getPlayers();
-    public PlayerInfo getTurnPlayer();
-    public DiceInfo getDiceInfo();
     public SpaceInfo getSpaceInfo(int index);
     public int getSpaceIndex(SpaceInfo space);
+    public PlayerInfo getPlayerInfo(int index);
     public int getPlayerIndex(PlayerInfo player);
-    public int getIndexOfTurnPlayer();
-    public int getNumberOfPlayers();
-    public int getSpaceIndexOfTurnPlayer();
+    public IEnumerable<PlayerInfo> PlayerInfos { get; }
+    public PlayerInfo TurnPlayer { get; }
+    public DiceInfo DiceInfo { get; }
+    public int IndexOfTurnPlayer { get; }
+    public int NumberOfPlayers { get; }
+    public int SpaceIndexOfTurnPlayer { get; }
 }

@@ -26,7 +26,7 @@ public class DieVisual : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        dice = GameState.game.getDiceInfo();
+        dice = GameState.game.DiceInfo;
     }
     #endregion
 

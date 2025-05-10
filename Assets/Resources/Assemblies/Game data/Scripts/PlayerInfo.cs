@@ -1,6 +1,7 @@
 
 public interface PlayerInfo {
-    public int getSpaceIndex();
-    public SpaceInfo getSpaceInfo();
-    public Token getToken();
+    public int SpaceIndex { get; }
+    public SpaceInfo SpaceInfo { get; }
+    public Token Token { get; }
+    public PlayerColour Colour { get; }
 }

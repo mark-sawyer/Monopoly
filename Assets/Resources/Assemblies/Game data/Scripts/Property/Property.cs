@@ -4,13 +4,15 @@ internal abstract class Property: ScriptableObject, PropertyInfo {
     [SerializeField] private string propertyName;
     [SerializeField] private PropertySpace space;
     [SerializeField] private int cost;
+    [SerializeField] private int mortgageValue;
     private Player owner;
 
 
 
     #region PropertyInfo
-    public int Cost { get => cost; }
-    public string Name { get => propertyName; }
+    public int Cost => cost;
+    public string Name => propertyName;
+    public int MortgageValue => mortgageValue;
     #endregion
 
 

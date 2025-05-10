@@ -51,6 +51,33 @@ public class TokenMover : MonoBehaviour {
         this.spaceVisualManager = spaceVisualManager;
     }
     public void startMoving(int startingSpaceIndex, int roll) {
+        List<int> getSpaceIndices(int currentIndex, int remaining) {
+            List<int> indices = new List<int>();
+            void updateValues(int added) {
+                int nextIndex = (currentIndex + added) % GameConstants.TOTAL_SPACES;
+                indices.Add(nextIndex);
+                currentIndex = nextIndex;
+                remaining -= added;
+            }
+
+            int toCorner = GameConstants.SPACES_ON_EDGE - (currentIndex % GameConstants.SPACES_ON_EDGE);
+            if (toCorner <= remaining) updateValues(toCorner);
+            while (remaining >= GameConstants.SPACES_ON_EDGE) updateValues(GameConstants.SPACES_ON_EDGE);
+            if (remaining > 0) updateValues(remaining);
+            return indices;
+        }
+        List<Vector3> getMajorPoints(List<int> spaceIndices) {
+            List<Vector3> majorPoints = new();
+            for (int i = 0; i < spaceIndices.Count; i++) {
+                int spaceIndex = spaceIndices[i];
+                Vector3 majorPoint = spaceVisualManager.getSpaceVisual(spaceIndex).getCentralPosition();
+                majorPoints.Add(majorPoint);
+            }
+            return majorPoints;
+        }
+
+
+
         List<int> spaceIndices = getSpaceIndices(startingSpaceIndex, roll);
 
         List<Vector3> majorPoints = getMajorPoints(spaceIndices);
@@ -70,37 +97,18 @@ public class TokenMover : MonoBehaviour {
 
 
     #region private
-    private List<int> getSpaceIndices(int currentIndex, int remaining) {
-        List<int> indices = new List<int>();
-        void updateValues(int added) {
-            int nextIndex = (currentIndex + added) % GameConstants.TOTAL_SPACES;
-            indices.Add(nextIndex);
-            currentIndex = nextIndex;
-            remaining -= added;
-        }
-
-        int toCorner = GameConstants.SPACES_ON_EDGE - (currentIndex % GameConstants.SPACES_ON_EDGE);
-        if (toCorner <= remaining) updateValues(toCorner);
-        while (remaining >= GameConstants.SPACES_ON_EDGE) updateValues(GameConstants.SPACES_ON_EDGE);
-        if (remaining > 0) updateValues(remaining);
-        return indices;
-    }
-    private List<Vector3> getMajorPoints(List<int> spaceIndices) {
-        List<Vector3> majorPoints = new();
-        for (int i = 0; i < spaceIndices.Count; i++) {
-            int spaceIndex = spaceIndices[i];
-            Vector3 majorPoint = spaceVisualManager.getSpaceVisual(spaceIndex).getCentralPosition();
-            majorPoints.Add(majorPoint);
-        }
-        return majorPoints;
-    }
     private Vector3 getMinorPoint(int spaceIndex, int order) {
         SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(spaceIndex);
         SpaceInfo spaceInfo = spaceVisual.spaceInfo;
-        int playersOnSpace = spaceInfo.getNumberOfPlayersOnSpace();
+        int playersOnSpace = spaceInfo.NumberOfPlayersOnSpace;
         return spaceVisual.getFinalPosition(playersOnSpace, order);
     }
     private void moveToAttractivePoint() {
+        float finalPositionMagnitude() {
+            return (queue.Last() - transform.position).magnitude;
+        }
+
+
         Vector3 dirVec = queue.Count > 0 ? directionVector().normalized * finalPositionMagnitude() : directionVector();
         Vector3 acceleration = (dirVec - VELOCITY_CONSTANT * velocity) * ACCELERATION_CONSTANT;
         velocity = velocity + acceleration;
@@ -110,24 +118,23 @@ public class TokenMover : MonoBehaviour {
         if (caller == this) return;
         if (spaceIndex != getSpaceIndex()) return;
 
+
+        int getSpaceOrderIndex() {
+            SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(getSpaceIndex());
+            SpaceInfo spaceInfo = spaceVisual.spaceInfo;
+            int playerOnSpaceIndex = spaceInfo.getPlayerOrderIndex(player);
+            int totalPlayersOnSpace = spaceInfo.NumberOfPlayersOnSpace;
+            return totalPlayersOnSpace - playerOnSpaceIndex - 1;
+        }
+
         tokenScaler.beginScaleChange();
         attractivePoint = getMinorPoint(spaceIndex, getSpaceOrderIndex());
     }
     private Vector3 directionVector() {
         return attractivePoint - transform.position;
     }
-    private float finalPositionMagnitude() {
-        return (queue.Last() - transform.position).magnitude;
-    }
     private int getSpaceIndex() {
-        return player.getSpaceIndex();
-    }
-    private int getSpaceOrderIndex() {
-        SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(getSpaceIndex());
-        SpaceInfo spaceInfo = spaceVisual.spaceInfo;
-        int playerOnSpaceIndex = spaceInfo.getPlayerOrderIndex(player);
-        int totalPlayersOnSpace = spaceInfo.getNumberOfPlayersOnSpace();
-        return totalPlayersOnSpace - playerOnSpaceIndex - 1;
+        return player.SpaceIndex;
     }
     private bool passesSettledTest() {
         return queue.Count == 0 &&

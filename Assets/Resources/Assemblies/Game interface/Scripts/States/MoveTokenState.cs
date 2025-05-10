@@ -11,7 +11,7 @@ public class MoveTokenState : State {
     #region GameState
     public override void enterState() {
         gamePlayer.moveTurnPlayerDiceValues();
-        int turnIndex = GameState.game.getIndexOfTurnPlayer();
+        int turnIndex = GameState.game.IndexOfTurnPlayer;
         tokenVisual = tokenVisualManager.getTokenVisual(turnIndex);
         tokenVisual.beginMovingToNewSpace();
         tokenSettled = false;

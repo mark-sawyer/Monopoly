@@ -5,10 +5,14 @@ internal class Player : PlayerInfo {
     private List<Property> properties = new List<Property>();
     private int money = 1500;
     private Token token;
+    private PlayerColour colour;
 
-    internal Player(Space space, Token token) {
+
+
+    internal Player(Space space, Token token, PlayerColour colour) {
         this.space = space;
         this.token = token;
+        this.colour = colour;
     }
     private void buyProperty(Property property) {
         money -= property.Cost;
@@ -19,14 +23,9 @@ internal class Player : PlayerInfo {
 
 
     #region PlayerInfo
-    public int getSpaceIndex() {
-        return space.getIndex();
-    }
-    public SpaceInfo getSpaceInfo() {
-        return space;
-    }
-    public Token getToken() {
-        return token;
-    }
+    public int SpaceIndex { get => space.Index; }
+    public SpaceInfo SpaceInfo { get => space; }
+    public Token Token { get => token; }
+    public PlayerColour Colour { get => colour; }
     #endregion
 }

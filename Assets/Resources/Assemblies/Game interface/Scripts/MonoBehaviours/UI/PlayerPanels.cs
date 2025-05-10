@@ -6,7 +6,7 @@ public class PlayerPanels : MonoBehaviour {
     [SerializeField] TokenVisualManager tokenVisualManager;
 
     private void Start() {
-        IEnumerable<PlayerInfo> players = GameState.game.getPlayers();
+        IEnumerable<PlayerInfo> players = GameState.game.PlayerInfos;
         destroyExtraPanels(players);
         associateWithPlayers(players);
     }

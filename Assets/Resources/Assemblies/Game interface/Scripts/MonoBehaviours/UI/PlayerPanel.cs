@@ -9,7 +9,7 @@ public class PlayerPanel : MonoBehaviour {
 
     public void setup(PlayerInfo player, TokenVisualManager tokenVisualManager) {
         this.player = player;
-        TokenSprites tokenSprites = tokenVisualManager.tokenTypeToTokenSprites(player.getToken());
+        TokenSprites tokenSprites = tokenVisualManager.tokenTypeToTokenSprites(player.Token);
 
 
         Sprite silouhetteSprite = tokenSprites.SilouhetteSprite;

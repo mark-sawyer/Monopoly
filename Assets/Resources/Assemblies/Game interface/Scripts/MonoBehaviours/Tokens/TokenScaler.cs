@@ -26,7 +26,7 @@ public class TokenScaler : MonoBehaviour {
         StartCoroutine(changeScale(targetScale));
     }
     public void beginScaleChange() {
-        SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(player.getSpaceIndex());
+        SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(player.SpaceIndex);
         StartCoroutine(changeScale(spaceVisual.getScale()));
     }
     #endregion

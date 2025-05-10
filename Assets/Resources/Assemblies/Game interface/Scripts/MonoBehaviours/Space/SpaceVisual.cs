@@ -14,7 +14,7 @@ public class SpaceVisual : MonoBehaviour {
         this.tokenVisualManager = tokenVisualManager;
     }
     public float getScale() {
-        int playersOnSpace = spaceInfo.getNumberOfPlayersOnSpace();
+        int playersOnSpace = spaceInfo.NumberOfPlayersOnSpace;
         return tokenParameters.getScaleValue(playersOnSpace);
     }
     public Vector3 getFinalPosition(int playersOnSpace, int order) {
@@ -26,7 +26,7 @@ public class SpaceVisual : MonoBehaviour {
         return transform.TransformPoint(position);
     }
     public IEnumerable<TokenVisual> getTokenVisualsOnSpace() {
-        IEnumerable<PlayerInfo> playerInfos = spaceInfo.getVisitingPlayers();
+        IEnumerable<PlayerInfo> playerInfos = spaceInfo.VisitingPlayers;
         IEnumerable<int> indices = playerInfos.Select(x => GameState.game.getPlayerIndex(x));
         foreach (int index in indices) {
             Debug.Log(index);

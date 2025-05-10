@@ -10,13 +10,7 @@ public class TokenIcon : MonoBehaviour {
     [SerializeField] private Image outerCircleImage;
     [SerializeField] private Image innerCircleImage;
 
-    private void OnEnable() {
-        setup();
-    }
-    private void Update() {
-        setup();
-    }
-    private void setup() {
+    public void setup(PlayerInfo player, TokenVisualManager tokenVisualManager) {
         void setAndAdjustImages(RectTransform rt, Image image, Sprite sprite, Color color) {
             image.sprite = sprite;
             float width = image.sprite.rect.width;
@@ -26,6 +20,9 @@ public class TokenIcon : MonoBehaviour {
             rt.pivot = spritePivotNormalized;
             image.color = color;
         }
+
+        tokenSprites = tokenVisualManager.tokenTypeToTokenSprites(player.Token);
+        tokenColours = tokenVisualManager.playerColourToTokenColours(player.Colour);
         setAndAdjustImages(
             (RectTransform)silouhetteImage.transform,
             silouhetteImage,

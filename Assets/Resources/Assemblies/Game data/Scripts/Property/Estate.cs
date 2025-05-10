@@ -4,7 +4,6 @@ using UnityEngine;
 internal class Estate : Property, EstateInfo {
     [SerializeField] private EstateGroup estateGroup;
     [SerializeField] private int[] rent;
-    [SerializeField] private int mortgage;
     [SerializeField] private int buildingCost;
 
 
