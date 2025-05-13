@@ -314,7 +314,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6104856140976315372}
   - component: {fileID: 6104856140976315373}
-  - component: {fileID: 6104856140976315370}
   - component: {fileID: 6104856140976315368}
   m_Layer: 5
   m_Name: button_panel
@@ -360,19 +359,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6104856140976315375}
   m_CullTransparentMesh: 1
---- !u!114 &6104856140976315370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6104856140976315375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93e20a26e4f0e4d4a95542ece9491351, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelSprites: {fileID: 11400000, guid: e1a7af183dba6d042b128696e75ce830, type: 2}
 --- !u!114 &6104856140976315368
 MonoBehaviour:
   m_ObjectHideFlags: 0
