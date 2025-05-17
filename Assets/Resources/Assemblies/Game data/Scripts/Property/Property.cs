@@ -15,6 +15,7 @@ internal abstract class Property: ScriptableObject, PropertyInfo {
     public string Name => propertyName;
     public string AbbreviatedName => abbreviatedName;
     public int MortgageValue => mortgageValue;
+    public bool IsBought => owner != null;
     #endregion
 
 

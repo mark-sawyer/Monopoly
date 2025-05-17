@@ -1,0 +1,56 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerPanelManager : MonoBehaviour {
+    [SerializeField] private GameObject playerPanelPrefab;
+    private const float GAP = 3;
+
+
+
+    #region MonoBehaviour
+    private void Start() {
+        instantiatePanels();
+        scalePanels();
+        associateWithPlayers();
+    }
+    #endregion
+
+
+
+    #region private
+    private void instantiatePanels() {
+        for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
+            GameObject newPanel = Instantiate(playerPanelPrefab, transform);
+            RectTransform rt = (RectTransform)newPanel.transform;
+            float yPos = -GAP - (rt.rect.height + GAP) * i;
+            rt.anchoredPosition = new Vector3(0f, yPos);
+        }
+    }
+    private void scalePanels() {
+        Rect panelRect = ((RectTransform)transform.GetChild(0)).rect;
+        Rect canvasRect = ((RectTransform)transform.parent).rect;
+
+        float panelsHeight = (panelRect.height + GAP) * GameState.game.NumberOfPlayers + GAP;
+        float panelsWidth = panelRect.width + (2 * GAP);
+
+        float maxHeightForPlayerPanels = canvasRect.height;
+        float maxWidthForPlayerPanels = (canvasRect.width - canvasRect.height) / 2f;
+        
+        float scaleForHeight = maxHeightForPlayerPanels / panelsHeight;
+        float scaleForWidth = maxWidthForPlayerPanels / panelsWidth;
+
+        float heightIfScaledForWidth = panelsHeight * scaleForWidth;
+        float scaleUsed = heightIfScaledForWidth <= canvasRect.height ? scaleForWidth : scaleForHeight;
+
+        transform.localScale = new Vector3(scaleUsed, scaleUsed, scaleUsed);
+    }
+    private void associateWithPlayers() {
+        IEnumerable<PlayerInfo> players = GameState.game.PlayerInfos;
+        int i = 0;
+        foreach (PlayerInfo player in players) {
+            transform.GetChild(i).GetComponent<PlayerPanel>().setup(player);
+            i += 1;
+        }
+    }
+    #endregion
+}
