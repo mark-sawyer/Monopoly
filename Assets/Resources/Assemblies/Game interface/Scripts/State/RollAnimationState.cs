@@ -1,7 +1,7 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "State/RollAnimationState")]
 public class RollAnimationState : State {
-    private GamePlayer gamePlayer;
     private TokenVisualManager tokenVisualManager;
     private bool animationOver;
 
@@ -9,7 +9,6 @@ public class RollAnimationState : State {
 
     #region GameState
     public override void enterState() {
-        gamePlayer.rollDice();
         animationOver = false;
         int turnIndex = GameState.game.IndexOfTurnPlayer;
         TokenScaler turnTokenScaler = tokenVisualManager.getTokenScaler(turnIndex);
@@ -28,10 +27,9 @@ public class RollAnimationState : State {
 
 
     #region public
-    public void setup(DieVisual dieVisual, TokenVisualManager tokenVisualManager, GamePlayer gamePlayer) {
+    public void setup(DieVisual dieVisual, TokenVisualManager tokenVisualManager) {
         dieVisual.listenForAnimationOver(animationOverCalled);
         this.tokenVisualManager = tokenVisualManager;
-        this.gamePlayer = gamePlayer;
     }
     #endregion
 

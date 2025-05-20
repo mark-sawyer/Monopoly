@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 
 public class QuestionDropper : MonoBehaviour {
-    [SerializeField] private TokenVisualManager tokenVisualManager;
     [SerializeField] private GameObject purchaseQuestionPrefab;
     [SerializeField] private GameObject incomeTaxQuestionPrefab;
     [SerializeField] private GameObject unmortgageQuestionPrefab;
@@ -13,9 +12,9 @@ public class QuestionDropper : MonoBehaviour {
 
 
     private void Start() {
-        incomeTaxQuestionEvent.EventOccurred += askIncomeTaxQuestion;
-        purchaseQuestionEvent.EventOccurred += askPurchaseQuestion;
-        unmortgageQuestionEvent.EventOccurred += askUnmortgageQuestion;
+        incomeTaxQuestionEvent.Listeners += askIncomeTaxQuestion;
+        purchaseQuestionEvent.Listeners += askPurchaseQuestion;
+        unmortgageQuestionEvent.Listeners += askUnmortgageQuestion;
     }
 
 
@@ -25,7 +24,7 @@ public class QuestionDropper : MonoBehaviour {
     private void askPurchaseQuestion(PlayerInfo player, PropertyInfo property) {
         GameObject question = Instantiate(purchaseQuestionPrefab, transform);
         PurchaseQuestion purchaseQuestion = question.GetComponent<PurchaseQuestion>();
-        purchaseQuestion.setup(player, property, tokenVisualManager);
+        purchaseQuestion.setup(player, property);
         StartCoroutine(bringDownQuestion((RectTransform)question.transform));
     }
     private void askIncomeTaxQuestion(PlayerInfo player) {
@@ -37,7 +36,7 @@ public class QuestionDropper : MonoBehaviour {
     private void askUnmortgageQuestion(PlayerInfo player, PropertyInfo property) {
         GameObject question = Instantiate(unmortgageQuestionPrefab, transform);
         UnmortgageQuestion unmortgageQuestion = question.GetComponent<UnmortgageQuestion>();
-        unmortgageQuestion.setup(player, property, tokenVisualManager);
+        unmortgageQuestion.setup(player, property);
         StartCoroutine(bringDownQuestion((RectTransform)question.transform));
     }
     private IEnumerator bringDownQuestion(RectTransform rt) {

@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New EstateGroup", menuName = "EstateGroup")]
 internal class EstateGroup : ScriptableObject, EstateGroupInfo {
     [SerializeField] private string groupName;
     [SerializeField] private Estate[] estates;

@@ -6,7 +6,7 @@ public class UnmortgageQuestion : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI keepMortgagedCostText;
     [SerializeField] private TokenIcon tokenIcon;
 
-    public void setup(PlayerInfo player, PropertyInfo property, TokenVisualManager tokenVisualManager) {
+    public void setup(PlayerInfo player, PropertyInfo property) {
         unmortgageCostText.text = "$" + getCostString(1.1f, property.MortgageValue);
         keepMortgagedCostText.text = "$" + getCostString(0.1f, property.MortgageValue);
         tokenIcon.setup(player);

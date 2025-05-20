@@ -56,6 +56,11 @@ public class Game : GameStateInfo, GamePlayer {
         int nextTurnPlayer = (turnPlayerIndex + 1) % players.Length;
         turnPlayer = players[nextTurnPlayer];
     }
+    public void purchaseProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
+        Player player = (Player)playerInfo;
+        Property property = (Property)propertyInfo;
+        player.buyProperty(property);
+    }
     #endregion
 
 

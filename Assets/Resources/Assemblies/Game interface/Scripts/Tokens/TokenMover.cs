@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TokenMover : MonoBehaviour {
     [SerializeField] private TokenScaler tokenScaler;
+    [SerializeField] private GameEvent tokenSettled;
+    [SerializeField] private GameEvent<TokenMover, int> tokenOnSpaceChangedEvent;
     public PlayerInfo player { get; private set; }
     private SpaceVisualManager spaceVisualManager;
     private List<Vector3> queue = new();
@@ -22,7 +24,7 @@ public class TokenMover : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        GameEvents.tokenOnSpaceChanged.AddListener(tokenOnSpaceChanged);
+        tokenOnSpaceChangedEvent.Listeners += tokenOnSpaceChanged;
         attractivePoint = transform.position;
     }
     private void Update() {
@@ -31,14 +33,14 @@ public class TokenMover : MonoBehaviour {
             attractivePoint = queue[0];
             queue.RemoveAt(0);
             if (queue.Count == 0) {
-                GameEvents.tokenOnSpaceChanged.Invoke(this, getSpaceIndex());
+                tokenOnSpaceChangedEvent.invoke(this, getSpaceIndex());
                 SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(getSpaceIndex());
                 tokenScaler.beginScaleChange();
             }
         }
         else if (passesSettledTest()) {
             settled = true;
-            GameEvents.tokenSettled.Invoke();
+            tokenSettled.invoke();
         }
     }
     #endregion
@@ -89,7 +91,7 @@ public class TokenMover : MonoBehaviour {
         attractivePoint = queue[0];
         queue.RemoveAt(0);
 
-        GameEvents.tokenOnSpaceChanged.Invoke(this, startingSpaceIndex);
+        tokenOnSpaceChangedEvent.invoke(this, startingSpaceIndex);
         settled = false;
     }
     #endregion
@@ -137,8 +139,8 @@ public class TokenMover : MonoBehaviour {
         return player.SpaceIndex;
     }
     private bool passesSettledTest() {
-        return queue.Count == 0 &&
-            !settled &&
+        return !settled &&
+            queue.Count == 0 &&
             velocity.magnitude < VELOCITY_FOR_SETTLING_THRESHOLD &&
             directionVector().magnitude < DISTANCE_FOR_SETTLING_THRESHOLD;
     }

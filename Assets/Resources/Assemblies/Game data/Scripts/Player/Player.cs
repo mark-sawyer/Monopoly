@@ -14,7 +14,7 @@ internal class Player : PlayerInfo {
         this.token = token;
         this.colour = colour;
     }
-    private void buyProperty(Property property) {
+    internal void buyProperty(Property property) {
         money -= property.Cost;
         properties.Add(property);
         property.changeOwner(this);

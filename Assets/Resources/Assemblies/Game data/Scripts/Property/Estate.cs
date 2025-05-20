@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New estate", menuName = "Estate")]
 internal class Estate : Property, EstateInfo {
     [SerializeField] private EstateGroup estateGroup;
     [SerializeField] private int[] rent;

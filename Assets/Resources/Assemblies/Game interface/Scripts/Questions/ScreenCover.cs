@@ -5,18 +5,23 @@ using UnityEngine.UI;
 [ExecuteAlways]
 public class ScreenCover : MonoBehaviour {
     [SerializeField] private Image image;
-    [SerializeField] NoDataEvent fadeInEvent;
+    [SerializeField] GameEvent questionAsked;
+    [SerializeField] GameEvent questionAnswered;
     private const float maxAlpha = 220f;
 
 
 
     private void Start() {
-        fadeInEvent.EventOccurred += startFadeIn;
+        questionAsked.Listeners += startFadeIn;
+        questionAnswered.Listeners += startFadeOut;
     }
 
 
     private void startFadeIn() {
         StartCoroutine(fadeIn());
+    }
+    private void startFadeOut() {
+        StartCoroutine(fadeOut());
     }
     private IEnumerator fadeIn() {
         float slope = maxAlpha / InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION;

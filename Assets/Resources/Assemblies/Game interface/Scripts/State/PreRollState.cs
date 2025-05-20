@@ -1,10 +1,11 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+[CreateAssetMenu(menuName = "State/PreRollState")]
 public class PreRollState : State {
+    [SerializeField] GameEvent rollButtonClickedEvent;
     private Button rollButton;
-    [SerializeField] private bool rollButtonClicked = false;
+    private bool rollButtonClicked;
 
 
 
@@ -12,6 +13,7 @@ public class PreRollState : State {
     public override void enterState() {
         rollButton.enabled = true;
         rollButtonClicked = false;
+        rollButtonClickedEvent.Listeners += rollButtonListener;
     }
     public override void update() {
         Debug.Log("PreRollState");
@@ -21,6 +23,7 @@ public class PreRollState : State {
     }
     public override void exitState() {
         rollButton.enabled = false;
+        rollButtonClickedEvent.Listeners -= rollButtonListener;
     }
     public override State getNextState() {
         return possibleNextStates[0];
@@ -32,7 +35,6 @@ public class PreRollState : State {
     #region public
     public void setup(Button rollButton) {
         this.rollButton = rollButton;
-        rollButton.onClick.AddListener(rollButtonListener);
     }
     #endregion
 

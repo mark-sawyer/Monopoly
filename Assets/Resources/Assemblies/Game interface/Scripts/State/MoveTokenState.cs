@@ -1,7 +1,8 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "State/MoveTokenState")]
 public class MoveTokenState : State {
-    private GamePlayer gamePlayer;
+    [SerializeField] private GameEvent tokenSettledEvent;
     private SpaceVisualManager spacesVisualManager;
     private TokenVisualManager tokenVisualManager;
     private TokenVisual tokenVisual;
@@ -13,17 +14,18 @@ public class MoveTokenState : State {
 
     #region GameState
     public override void enterState() {
-        gamePlayer.moveTurnPlayerDiceValues();
         int turnIndex = GameState.game.IndexOfTurnPlayer;
         tokenVisual = tokenVisualManager.getTokenVisual(turnIndex);
         tokenVisual.beginMovingToNewSpace();
         tokenSettled = false;
+        tokenSettledEvent.Listeners += heardTokenSettle;
     }
     public override bool exitConditionMet() {
         return tokenSettled;
     }
     public override void exitState() {
         tokenVisual.changeLayer(InterfaceConstants.BOARD_TOKEN_LAYER_NAME);
+        tokenSettledEvent.Listeners -= heardTokenSettle;
     }
     public override State getNextState() {
         SpaceInfo spaceInfo = GameState.game.SpaceInfoOfTurnPlayer;
@@ -41,11 +43,9 @@ public class MoveTokenState : State {
 
 
     #region public
-    public void setup(SpaceVisualManager spacesVisualManager, TokenVisualManager tokenVisualManager, GamePlayer gamePlayer) {
+    public void setup(SpaceVisualManager spacesVisualManager, TokenVisualManager tokenVisualManager) {
         this.spacesVisualManager = spacesVisualManager;
         this.tokenVisualManager = tokenVisualManager;
-        this.gamePlayer = gamePlayer;
-        GameEvents.tokenSettled.AddListener(heardTokenSettle);
     }
     #endregion
 

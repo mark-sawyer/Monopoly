@@ -103,8 +103,6 @@ MonoBehaviour:
   tokenSpriteRenderer: {fileID: 2394204894446407367}
   silouhetteSpriteRenderer: {fileID: 3267387124221133272}
   tokenMover: {fileID: 8637144024682536685}
-  boardLayer: 3
-  movingLayer: 6
 --- !u!114 &8637144024682536685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tokenScaler: {fileID: 8963674078663022694}
+  tokenSettled: {fileID: 11400000, guid: 89c3c09748a18f04f97dde544eeb9785, type: 2}
+  tokenOnSpaceChangedEvent: {fileID: 11400000, guid: 1f2fd157f0cd023498bffc372461579a, type: 2}
 --- !u!114 &8963674078663022694
 MonoBehaviour:
   m_ObjectHideFlags: 0
