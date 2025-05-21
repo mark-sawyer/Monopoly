@@ -64,8 +64,6 @@ MonoBehaviour:
   backText: {fileID: 7089959392099258920}
   floatingMoneyPrefab: {fileID: 2181148461048596713, guid: 4dd44fbcda8870f40bd600c78091e951, type: 3}
   floatingMoneySpawnPoint: {fileID: 3917372531185729612}
-  xOffset: 100
-  yOffset: 100
 --- !u!1 &904731787890748109
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +446,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 69.2, y: 11.8}
+  m_AnchoredPosition: {x: 23.6, y: 11.8}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8112778389990996119
@@ -707,6 +705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tokenIcon: {fileID: 5026845771961990318}
+  moneyAdjuster: {fileID: 2933946246032520938}
 --- !u!1 &9157315293995827910
 GameObject:
   m_ObjectHideFlags: 0

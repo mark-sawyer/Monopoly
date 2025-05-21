@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerPanelManager : MonoBehaviour {
     [SerializeField] private GameObject playerPanelPrefab;
+    [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustment;
+    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerPurchasedProperty;
     private const float GAP = 3;
 
 
@@ -12,12 +14,13 @@ public class PlayerPanelManager : MonoBehaviour {
         instantiatePanels();
         scalePanels();
         associateWithPlayers();
+        subscribeToEvents();
     }
     #endregion
 
 
 
-    #region private
+    #region Start functions
     private void instantiatePanels() {
         for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
             GameObject newPanel = Instantiate(playerPanelPrefab, transform);
@@ -51,6 +54,19 @@ public class PlayerPanelManager : MonoBehaviour {
             transform.GetChild(i).GetComponent<PlayerPanel>().setup(player);
             i += 1;
         }
+    }
+    private void subscribeToEvents() {
+        moneyAdjustment.Listeners += adjustMoneyVisual;
+    }
+    #endregion
+
+
+
+    #region Events
+    private void adjustMoneyVisual(PlayerInfo playerInfo, int difference) {
+        int playerIndex = GameState.game.getPlayerIndex(playerInfo);
+        PlayerPanel playerPanel = transform.GetChild(playerIndex).GetComponent<PlayerPanel>();
+        playerPanel.adjustMoney(difference);
     }
     #endregion
 }

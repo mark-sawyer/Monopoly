@@ -101,7 +101,7 @@ public class TokenMover : MonoBehaviour {
     #region private
     private Vector3 getMinorPoint(int spaceIndex, int order) {
         SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(spaceIndex);
-        SpaceInfo spaceInfo = spaceVisual.spaceInfo;
+        SpaceInfo spaceInfo = spaceVisual.SpaceInfo;
         int playersOnSpace = spaceInfo.NumberOfPlayersOnSpace;
         return spaceVisual.getFinalPosition(playersOnSpace, order);
     }
@@ -123,7 +123,7 @@ public class TokenMover : MonoBehaviour {
 
         int getSpaceOrderIndex() {
             SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(getSpaceIndex());
-            SpaceInfo spaceInfo = spaceVisual.spaceInfo;
+            SpaceInfo spaceInfo = spaceVisual.SpaceInfo;
             int playerOnSpaceIndex = spaceInfo.getPlayerOrderIndex(player);
             int totalPlayersOnSpace = spaceInfo.NumberOfPlayersOnSpace;
             return totalPlayersOnSpace - playerOnSpaceIndex - 1;

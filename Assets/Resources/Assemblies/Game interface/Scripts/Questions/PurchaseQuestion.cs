@@ -4,8 +4,9 @@ using UnityEngine;
 public class PurchaseQuestion : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI purchaseText;
     [SerializeField] private TokenIcon tokenIcon;
-    [SerializeField] private PlayerPropertyEvent playerPurchasedProperty;
+    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerPurchasedProperty;
     [SerializeField] private GameEvent playerDeclinedPurchase;
+    [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustment;
     [SerializeField] private GameEvent questionAnswered;
     private PlayerInfo player;
     private PropertyInfo property;
@@ -30,6 +31,7 @@ public class PurchaseQuestion : MonoBehaviour {
     public void yesClicked() {
         questionAnswered.invoke();
         playerPurchasedProperty.invoke(player, property);
+        moneyAdjustment.invoke(player, -property.Cost);
     }
     public void noClicked() {
         questionAnswered.invoke();

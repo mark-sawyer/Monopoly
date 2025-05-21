@@ -2,6 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/RollAnimationState")]
 public class RollAnimationState : State {
+    [SerializeField] private GameEvent diceAnimationOver;
     private TokenVisualManager tokenVisualManager;
     private bool animationOver;
 
@@ -28,7 +29,7 @@ public class RollAnimationState : State {
 
     #region public
     public void setup(DieVisual dieVisual, TokenVisualManager tokenVisualManager) {
-        dieVisual.listenForAnimationOver(animationOverCalled);
+        diceAnimationOver.Listeners += animationOverCalled;
         this.tokenVisualManager = tokenVisualManager;
     }
     #endregion

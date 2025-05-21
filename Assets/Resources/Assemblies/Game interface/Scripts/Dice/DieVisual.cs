@@ -8,25 +8,16 @@ public class DieVisual : MonoBehaviour {
     [SerializeField] private Image image;
     [SerializeField] private Sprite[] settledSprites;
     [SerializeField] private Sprite[] rollingSprites;
-    private UnityEvent animationOver = new UnityEvent();
-    private DiceInfo dice;
+    [SerializeField] private GameEvent animationOver;
 
 
 
     #region Public
-    public void listenForAnimationOver(UnityAction a) {
-        animationOver.AddListener(a);
-    }
+    //public void listenForAnimationOver(UnityAction a) {
+    //    animationOver.AddListener(a);
+    //}
     public void startDieRoll() {
         StartCoroutine(rollDieAnimation());
-    }
-    #endregion
-
-
-
-    #region MonoBehaviour
-    private void Start() {
-        dice = GameState.game.DiceInfo;
     }
     #endregion
 
@@ -48,8 +39,8 @@ public class DieVisual : MonoBehaviour {
             }
             yield return null;
         }
-        animationOver.Invoke();
-        image.sprite = settledSprites[dice.getDieValue(dieIndex) - 1];
+        if (dieIndex == 0) animationOver.invoke();
+        image.sprite = settledSprites[GameState.game.DiceInfo.getDieValue(dieIndex) - 1];
     }
     #endregion
 }

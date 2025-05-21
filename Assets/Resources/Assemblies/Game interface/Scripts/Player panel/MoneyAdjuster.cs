@@ -1,51 +1,46 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MoneyAdjuster : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI frontText;
     [SerializeField] private TextMeshProUGUI backText;
     [SerializeField] private GameObject floatingMoneyPrefab;
     [SerializeField] private Transform floatingMoneySpawnPoint;
-    private string moneyString = "S1500";
+    private string moneyString = "$1500";
     private const int FRAMES = 90;
     private const float AMPLITUDE = 0.06f;
 
 
 
-    #region MonoBehaviour
-    private void Update() {
-        int adjustment = 0;
-        if (Input.GetKeyDown(KeyCode.UpArrow)) adjustment = 100;
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) adjustment = -100;
-        if (adjustment != 0) {
-            GameObject floatingMoney = Instantiate(
-                floatingMoneyPrefab,
-                floatingMoneySpawnPoint.position,
-                Quaternion.identity,
-                floatingMoneySpawnPoint
-            );
-            floatingMoney.GetComponent<FloatingMoneyDifference>().floatAway(adjustment);
-            adjustMoney(adjustment);
-            startMoneyWobble(adjustment);
-        }
+    #region public
+    public void adjustMoney(int difference) {
+        GameObject floatingMoney = Instantiate(
+            floatingMoneyPrefab,
+            floatingMoneySpawnPoint.position,
+            Quaternion.identity,
+            floatingMoneySpawnPoint
+        );
+        floatingMoney.GetComponent<FloatingMoneyDifference>().floatAway(difference);
+        changeMoneyVisual(difference);
+        startMoneyWobble(difference > 0);
     }
     #endregion
 
 
 
-    private void adjustMoney(int adjustment) {
+
+
+    private void changeMoneyVisual(int adjustment) {
         int moneyInt = int.Parse(moneyString.Substring(1));
         int newMoney = moneyInt + adjustment;
         moneyString = "$" + newMoney.ToString();
         frontText.text = moneyString;
         backText.text = moneyString;
     }
-    private void startMoneyWobble(int adjustment) {
+    private void startMoneyWobble(bool isPositive) {
         StartCoroutine(wobbleText());
-        if (adjustment > 0) StartCoroutine(glowGreen());
+        if (isPositive) StartCoroutine(glowGreen());
         else StartCoroutine(glowRed());
     }
     private float getGlowVal(float x, float scalar) {

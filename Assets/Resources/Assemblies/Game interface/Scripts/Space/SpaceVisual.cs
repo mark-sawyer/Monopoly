@@ -1,20 +1,18 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class SpaceVisual : MonoBehaviour {
-    public SpaceInfo spaceInfo { get; private set; }
-    [SerializeField] private TokenParameters tokenParameters;
+    public SpaceInfo SpaceInfo { get; private set; }
     private TokenVisualManager tokenVisualManager;
+    [SerializeField] private TokenParameters tokenParameters;
 
 
 
     public void setup(SpaceInfo spaceInfo, TokenVisualManager tokenVisualManager) {
-        this.spaceInfo = spaceInfo;
+        SpaceInfo = spaceInfo;
         this.tokenVisualManager = tokenVisualManager;
     }
     public float getScale() {
-        int playersOnSpace = spaceInfo.NumberOfPlayersOnSpace;
+        int playersOnSpace = SpaceInfo.NumberOfPlayersOnSpace;
         return tokenParameters.getScaleValue(playersOnSpace);
     }
     public Vector3 getFinalPosition(int playersOnSpace, int order) {
@@ -24,13 +22,5 @@ public class SpaceVisual : MonoBehaviour {
     public Vector3 getCentralPosition() {
         Vector3 position = tokenParameters.getMajorPositionOffset();
         return transform.TransformPoint(position);
-    }
-    public IEnumerable<TokenVisual> getTokenVisualsOnSpace() {
-        IEnumerable<PlayerInfo> playerInfos = spaceInfo.VisitingPlayers;
-        IEnumerable<int> indices = playerInfos.Select(x => GameState.game.getPlayerIndex(x));
-        foreach (int index in indices) {
-            Debug.Log(index);
-        }
-        return indices.Select(x => tokenVisualManager.getTokenVisual(x));
     }
 }

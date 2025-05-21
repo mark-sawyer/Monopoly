@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [ExecuteAlways]
-public class TitleDeed : MonoBehaviour {
+public class EstateDeed : MonoBehaviour {
     [SerializeField] private Image colourBandImage;
     [SerializeField] private ScriptableObject estate;
     [SerializeField] private TextMeshProUGUI propertyNameText;
