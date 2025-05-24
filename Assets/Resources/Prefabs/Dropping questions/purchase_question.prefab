@@ -54,9 +54,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   purchaseText: {fileID: 3442082075917985112}
   tokenIcon: {fileID: 5226957929243277730}
-  playerPurchasedProperty: {fileID: 11400000, guid: 28d25c3afd0d0a442bc66e9b44ef254b, type: 2}
-  playerDeclinedPurchase: {fileID: 11400000, guid: 94e264217f9897447a46ad88ce7c184f, type: 2}
-  moneyAdjustment: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
+  playerObtainedPropertyData: {fileID: 11400000, guid: 28d25c3afd0d0a442bc66e9b44ef254b, type: 2}
+  playerObtainedPropertyUI: {fileID: 11400000, guid: da436c0660695a24788a498d9ead8ee8, type: 2}
+  moneyAdjustmentData: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
+  moneyAdjustmentUI: {fileID: 11400000, guid: c0db97d160185d34f9e63f01c0c66949, type: 2}
   questionAnswered: {fileID: 11400000, guid: f63a59fd9cd37634a96a502daf1cc482, type: 2}
 --- !u!1 &3442082075917985114
 GameObject:

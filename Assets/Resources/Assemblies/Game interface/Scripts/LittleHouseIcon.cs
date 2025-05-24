@@ -7,18 +7,18 @@ public class LittleHouseIcon : MonoBehaviour {
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI textMesh;
     [SerializeField] private int number;
-    [SerializeField] private BuildingType type;
-    private Color houseColour = new Color(33f / 255f, 156f / 255f, 0f / 255f);
-    private Color hotelColour = new Color(214f / 255f, 38f / 255f, 31f / 255f);
+    [SerializeField] private bool isHouse;
+    [SerializeField] private GameColour houseColour;
+    [SerializeField] private GameColour hotelColour;
 
     private void Start() {
-        if (type == BuildingType.HOUSE) {
-            image.color = houseColour;
+        if (isHouse) {
+            image.color = houseColour.Colour;
             textMesh.text = number.ToString();
             ((RectTransform)textMesh.transform).anchoredPosition = getHousePosition(number);
         }
         else {
-            image.color = hotelColour;
+            image.color = hotelColour.Colour;
             textMesh.text = "";
         }
     }

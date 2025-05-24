@@ -1,2 +1,2 @@
 
-public class FloatSetter : TypeSetter<float> { }
+internal class FloatSetter : TypeSetter<float> { }

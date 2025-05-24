@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Game : GameStateInfo, GamePlayer {
@@ -7,13 +8,17 @@ public class Game : GameStateInfo, GamePlayer {
     private Space[] spaces;
     private Player[] players;
     private Player turnPlayer;
-
+    private Queue<House> houses;
+    private Queue<Hotel> hotels;
+    
 
 
     #region public
     public Game(int playerNum) {
         spaces = initialiseSpaces();
         players = initialisePlayers(playerNum);
+        houses = initialiseHouses();
+        hotels = initialiseHotels();
         turnPlayer = players[0];
     }
     #endregion
@@ -56,10 +61,22 @@ public class Game : GameStateInfo, GamePlayer {
         int nextTurnPlayer = (turnPlayerIndex + 1) % players.Length;
         turnPlayer = players[nextTurnPlayer];
     }
-    public void purchaseProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
+    public void obtainProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         Player player = (Player)playerInfo;
         Property property = (Property)propertyInfo;
-        player.buyProperty(property);
+        player.obtainProperty(property);
+    }
+    public void addBuilding(EstateInfo estateInfo) {
+        Estate estate = (Estate)estateInfo;
+        if (estate.BuildingCount == 4) {
+            for (int i = 0; i < 4; i++) houses.Enqueue((House)estate.removeBuilding());
+            estate.addBuilding(hotels.Dequeue());
+        }
+        else estate.addBuilding(houses.Dequeue());
+    }
+    public void adjustPlayerMoney(PlayerInfo playerInfo, int difference) {
+        Player player = (Player)playerInfo;
+        player.adjustMoney(difference);
     }
     #endregion
 
@@ -132,6 +149,20 @@ public class Game : GameStateInfo, GamePlayer {
             spaces[0].addPlayer(players[i]);
         }
         return players;
+    }
+    private Queue<House> initialiseHouses() {
+        Queue<House> houseQueue = new Queue<House>(GameConstants.TOTAL_HOUSES);
+        for (int i = 0; i < GameConstants.TOTAL_HOUSES; i++) {
+            houseQueue.Enqueue(new House());
+        }
+        return houseQueue;
+    }
+    private Queue<Hotel> initialiseHotels() {
+        Queue<Hotel> hotelQueue = new Queue<Hotel>(GameConstants.TOTAL_HOTELS);
+        for (int i = 0; i < GameConstants.TOTAL_HOTELS; i++) {
+            hotelQueue.Enqueue(new Hotel());
+        }
+        return hotelQueue;
     }
     #endregion
 }

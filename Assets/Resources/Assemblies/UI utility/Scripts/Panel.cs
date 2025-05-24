@@ -21,16 +21,16 @@ internal class Panel : UIAutoUpdater, TypeSettable<Color>, TypeSettable<float> {
         }
     }
     #endregion
-    #region private properties
-    private RectTransform TopLeft { get => (RectTransform)transform.GetChild(0).GetChild(0); }
-    private RectTransform Top { get => (RectTransform)transform.GetChild(0).GetChild(1); }
-    private RectTransform TopRight { get => (RectTransform)transform.GetChild(0).GetChild(2); }
-    private RectTransform Left { get => (RectTransform)transform.GetChild(0).GetChild(3); }
-    private RectTransform Centre { get => (RectTransform)transform.GetChild(0).GetChild(4); }
-    private RectTransform Right { get => (RectTransform)transform.GetChild(0).GetChild(5); }
-    private RectTransform BottomLeft { get => (RectTransform)transform.GetChild(0).GetChild(6); }
-    private RectTransform Bottom { get => (RectTransform)transform.GetChild(0).GetChild(7); }
-    private RectTransform BottomRight { get => (RectTransform)transform.GetChild(0).GetChild(8); }
+    #region protected properties
+    protected virtual RectTransform TopLeft { get => (RectTransform)transform.GetChild(0).GetChild(0); }
+    protected virtual RectTransform Top { get => (RectTransform)transform.GetChild(0).GetChild(1); }
+    protected virtual RectTransform TopRight { get => (RectTransform)transform.GetChild(0).GetChild(2); }
+    protected virtual RectTransform Left { get => (RectTransform)transform.GetChild(0).GetChild(3); }
+    protected virtual RectTransform Centre { get => (RectTransform)transform.GetChild(0).GetChild(4); }
+    protected virtual RectTransform Right { get => (RectTransform)transform.GetChild(0).GetChild(5); }
+    protected virtual RectTransform BottomLeft { get => (RectTransform)transform.GetChild(0).GetChild(6); }
+    protected virtual RectTransform Bottom { get => (RectTransform)transform.GetChild(0).GetChild(7); }
+    protected virtual RectTransform BottomRight { get => (RectTransform)transform.GetChild(0).GetChild(8); }
     #endregion
 
 
@@ -73,14 +73,19 @@ internal class Panel : UIAutoUpdater, TypeSettable<Color>, TypeSettable<float> {
         BottomLeft.sizeDelta = cornerSize;
         BottomRight.sizeDelta = cornerSize;
     }
-    private void setEdgeAndCentreSizes(float width, float height) {
+    #endregion
+
+
+
+    #region protected
+    protected virtual void setEdgeAndCentreSizes(float width, float height) {
         Top.sizeDelta = new Vector2(width - 2 * Radius, Radius);
         Left.sizeDelta = new Vector2(Radius, height - 2 * Radius);
         Right.sizeDelta = new Vector2(Radius, height - 2 * Radius);
         Centre.sizeDelta = new Vector2(width - 2 * Radius, height - 2 * Radius);
         Bottom.sizeDelta = new Vector2(width - 2 * Radius, Radius);
     }
-    private void setColours() {
+    protected virtual void setColours() {
         for (int i = 0; i < 9; i++) {
             Image image = transform.GetChild(0).GetChild(i).GetComponent<Image>();
             if (image != null) image.color = colour;

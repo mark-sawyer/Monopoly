@@ -37,13 +37,13 @@ public class EstateDeed : MonoBehaviour {
     }
     private void setTexts() {
         propertyNameText.text = estateInfo.Name.ToString().ToUpper();
-        costTexts[0].text = "$" + estateInfo.getRent(0).ToString();
-        costTexts[1].text = "$" + (2 * estateInfo.getRent(0)).ToString();
-        costTexts[2].text = "$" + estateInfo.getRent(1).ToString();
-        costTexts[3].text = "$" + estateInfo.getRent(2).ToString();
-        costTexts[4].text = "$" + estateInfo.getRent(3).ToString();
-        costTexts[5].text = "$" + estateInfo.getRent(4).ToString();
-        costTexts[6].text = "$" + estateInfo.getRent(5).ToString();
+        costTexts[0].text = "$" + estateInfo.getSpecificRent(0).ToString();
+        costTexts[1].text = "$" + (2 * estateInfo.getSpecificRent(0)).ToString();
+        costTexts[2].text = "$" + estateInfo.getSpecificRent(1).ToString();
+        costTexts[3].text = "$" + estateInfo.getSpecificRent(2).ToString();
+        costTexts[4].text = "$" + estateInfo.getSpecificRent(3).ToString();
+        costTexts[5].text = "$" + estateInfo.getSpecificRent(4).ToString();
+        costTexts[6].text = "$" + estateInfo.getSpecificRent(5).ToString();
         costTexts[7].text = "$" + estateInfo.BuildingCost.ToString() + " each";
         costTexts[8].text = "$" + estateInfo.BuildingCost.ToString() + " each";
     }

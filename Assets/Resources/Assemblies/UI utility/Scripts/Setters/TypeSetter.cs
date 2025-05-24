@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class TypeSetter<T> : UIAutoUpdater {
+internal abstract class TypeSetter<T> : UIAutoUpdater {
     [SerializeField] private List<MonoBehaviour> typeSettables;
     [SerializeField] private T value;
     private T lastValue;

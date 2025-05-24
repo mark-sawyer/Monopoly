@@ -1,3 +1,3 @@
 using UnityEngine;
 
-public class ColourSetter : TypeSetter<Color> { }
+internal class ColourSetter : TypeSetter<Color> { }

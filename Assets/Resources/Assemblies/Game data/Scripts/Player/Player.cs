@@ -9,16 +9,20 @@ internal class Player : PlayerInfo {
 
 
 
+    #region internal
     internal Player(Space space, Token token, PlayerColour colour) {
         this.space = space;
         this.token = token;
         this.colour = colour;
     }
-    internal void buyProperty(Property property) {
-        money -= property.Cost;
+    internal void obtainProperty(Property property) {
         properties.Add(property);
         property.changeOwner(this);
     }
+    internal void adjustMoney(int difference) {
+        money += difference;
+    }
+    #endregion
 
 
 
@@ -27,5 +31,6 @@ internal class Player : PlayerInfo {
     public SpaceInfo SpaceInfo { get => space; }
     public Token Token { get => token; }
     public PlayerColour Colour { get => colour; }
+    public int Money => money;
     #endregion
 }

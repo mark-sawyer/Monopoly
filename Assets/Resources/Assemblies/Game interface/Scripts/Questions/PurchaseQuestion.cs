@@ -4,20 +4,13 @@ using UnityEngine;
 public class PurchaseQuestion : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI purchaseText;
     [SerializeField] private TokenIcon tokenIcon;
-    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerPurchasedProperty;
-    [SerializeField] private GameEvent playerDeclinedPurchase;
-    [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustment;
+    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerObtainedPropertyData;
+    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerObtainedPropertyUI;
+    [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustmentData;
+    [SerializeField] private GameEvent<PlayerInfo> moneyAdjustmentUI;
     [SerializeField] private GameEvent questionAnswered;
     private PlayerInfo player;
     private PropertyInfo property;
-
-
-
-    #region MonoBehaviour
-    private void Start() {
-        questionAnswered.Listeners += destroySelf;
-    }
-    #endregion
 
 
 
@@ -30,20 +23,14 @@ public class PurchaseQuestion : MonoBehaviour {
     }
     public void yesClicked() {
         questionAnswered.invoke();
-        playerPurchasedProperty.invoke(player, property);
-        moneyAdjustment.invoke(player, -property.Cost);
+        playerObtainedPropertyData.invoke(player, property);
+        playerObtainedPropertyUI.invoke(player, property);
+        moneyAdjustmentData.invoke(player, -property.Cost);
+        moneyAdjustmentUI.invoke(player);
+        Destroy(gameObject);
     }
     public void noClicked() {
         questionAnswered.invoke();
-        playerDeclinedPurchase.invoke();
-    }
-    #endregion
-
-
-
-    #region private
-    private void destroySelf() {
-        questionAnswered.Listeners -= destroySelf;
         Destroy(gameObject);
     }
     #endregion

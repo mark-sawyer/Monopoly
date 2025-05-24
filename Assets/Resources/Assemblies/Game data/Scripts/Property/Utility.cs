@@ -1,6 +1,6 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New utility", menuName = "Utility")]
-internal class Utility : Property {
+internal class Utility : Property, UtilityInfo {
 
 }

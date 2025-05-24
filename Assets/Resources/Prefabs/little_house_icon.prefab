@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1.76}
+  m_AnchoredPosition: {x: -0.88, y: -1.76}
   m_SizeDelta: {x: 7.3, y: 8.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4046097947561755621
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f4f064144540b87408385ef8bb51c8b6, type: 2}
   m_sharedMaterial: {fileID: -7391217007233378510, guid: f4f064144540b87408385ef8bb51c8b6, type: 2}
@@ -228,4 +228,6 @@ MonoBehaviour:
   image: {fileID: 2748696523070076337}
   textMesh: {fileID: 4728272036225738001}
   number: 1
-  type: 0
+  isHouse: 1
+  houseColour: {fileID: 11400000, guid: 17e96350264746c4c961060f8fed965e, type: 2}
+  hotelColour: {fileID: 11400000, guid: f6cb57a11f127d341bf9d7bb341d9f30, type: 2}

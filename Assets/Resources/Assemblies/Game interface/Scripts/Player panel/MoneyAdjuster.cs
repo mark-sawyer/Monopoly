@@ -14,7 +14,11 @@ public class MoneyAdjuster : MonoBehaviour {
 
 
     #region public
-    public void adjustMoney(int difference) {
+    public void adjustMoney(PlayerInfo playerInfo) {
+        int currentMoney = playerInfo.Money;
+        int priorMoney = int.Parse(frontText.text.Substring(1));
+        int difference = currentMoney - priorMoney;
+
         GameObject floatingMoney = Instantiate(
             floatingMoneyPrefab,
             floatingMoneySpawnPoint.position,
@@ -22,19 +26,16 @@ public class MoneyAdjuster : MonoBehaviour {
             floatingMoneySpawnPoint
         );
         floatingMoney.GetComponent<FloatingMoneyDifference>().floatAway(difference);
-        changeMoneyVisual(difference);
+        changeMoneyVisual(currentMoney);
         startMoneyWobble(difference > 0);
     }
     #endregion
 
 
 
-
-
-    private void changeMoneyVisual(int adjustment) {
-        int moneyInt = int.Parse(moneyString.Substring(1));
-        int newMoney = moneyInt + adjustment;
-        moneyString = "$" + newMoney.ToString();
+    #region private
+    private void changeMoneyVisual(int money) {
+        moneyString = "$" + money.ToString();
         frontText.text = moneyString;
         backText.text = moneyString;
     }
@@ -78,4 +79,5 @@ public class MoneyAdjuster : MonoBehaviour {
         }
         transform.localScale = new Vector3(0.9f, 1f, 1f);
     }
+    #endregion
 }
