@@ -2,9 +2,9 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New EstateGroup", menuName = "PropertyGroups/EstateGroup")]
 internal class EstateGroup : ScriptableObject, EstateGroupInfo {
     [SerializeField] private int groupID;
-    [SerializeField] private string groupName;
     [SerializeField] private Estate[] estates;
     [SerializeField] private Color estateColour;
     [SerializeField] private Color highlightColour;

@@ -2,6 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New railroad", menuName = "Railroad")]
 internal class Railroad : Property, RailroadInfo {
+    [SerializeField] private int railroadID;
     private const int rentOne = 25;
     private const int rentTwo = 50;
     private const int rentThree = 100;
@@ -10,6 +11,7 @@ internal class Railroad : Property, RailroadInfo {
 
 
     #region RailroadInfo
+    public int ID => railroadID;
     public int getRent(int railwaysOwned) {
         switch (railwaysOwned) {
             case 1: return rentOne;

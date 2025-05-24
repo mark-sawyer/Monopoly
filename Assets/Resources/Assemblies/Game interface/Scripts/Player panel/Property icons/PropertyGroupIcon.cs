@@ -4,7 +4,12 @@ using UnityEngine.UI;
 
 public abstract class PropertyGroupIcon : MonoBehaviour {
     [SerializeField] Canvas canvas;
+    private const float ZERO_PROPERTIES_ALPHA = 0.125f;
+    private const float NON_ZERO_PROPERTIES_ALPHA = 1f;
 
+
+
+    #region public
     public abstract void updateVisual(PlayerInfo playerInfo);
     public IEnumerator pulseAndUpdate(PlayerInfo playerInfo) {
         float getScale(float x) {
@@ -24,9 +29,17 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
         canvas.overrideSorting = false;
         canvas.sortingOrder = 0;
     }
+    #endregion
+
+
+
+    #region protected
     protected void updatePanelColour(Color colour) {
         for (int i = 0; i < 9; i++) {
             transform.GetChild(0).GetChild(i).GetComponent<Image>().color = colour;
         }
     }
+    protected float ZeroPropertiesAlpha => ZERO_PROPERTIES_ALPHA;
+    protected float NonZeroPropertiesAlpha => NON_ZERO_PROPERTIES_ALPHA;
+    #endregion
 }

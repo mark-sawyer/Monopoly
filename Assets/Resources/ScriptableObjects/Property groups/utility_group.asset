@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df47daf55dc0a8b45ab63ada94179bf4, type: 3}
-  m_Name: 10_MaryleboneStation
+  m_Script: {fileID: 11500000, guid: 88f46e54974aea94bbb6c5b801ea642f, type: 3}
+  m_Name: utility_group
   m_EditorClassIdentifier: 
-  propertyName: Marylebone Station
-  space: {fileID: 11400000, guid: cebbef511b06a1443a8c7a807f575d93, type: 2}
-  cost: 200
-  mortgageValue: 100
-  railroadID: 2
+  utilities:
+  - {fileID: 11400000, guid: c43f5a5d48628fc4ca4f964dc11a9982, type: 2}
+  - {fileID: 11400000, guid: 8a8072c3246e7fa418618ffc2c61e64f, type: 2}
