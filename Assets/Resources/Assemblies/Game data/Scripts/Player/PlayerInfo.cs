@@ -5,4 +5,5 @@ public interface PlayerInfo {
     public Token Token { get; }
     public PlayerColour Colour { get; }
     public int Money { get; }
+    public int IncomeTaxAmount { get; }
 }

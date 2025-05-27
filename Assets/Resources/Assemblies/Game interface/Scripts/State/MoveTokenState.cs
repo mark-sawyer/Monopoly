@@ -30,6 +30,11 @@ public class MoveTokenState : State {
     public override State getNextState() {
         SpaceInfo spaceInfo = GameState.game.SpaceInfoOfTurnPlayer;
 
+        if (spaceInfo is TaxSpaceInfo taxSpaceInfo && taxSpaceInfo.TaxSpaceType == TaxSpaceType.INCOME_TAX) {
+            return getStateType<IncomeTaxState>();
+        }
+
+
         PropertySpaceInfo propertySpaceInfo = spaceInfo as PropertySpaceInfo;
         if (propertySpaceInfo == null) return ResolveTurnState;
 

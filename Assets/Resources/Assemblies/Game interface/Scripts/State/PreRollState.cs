@@ -15,9 +15,6 @@ public class PreRollState : State {
         rollButtonClicked = false;
         rollButtonClickedEvent.Listeners += rollButtonListener;
     }
-    public override void update() {
-        Debug.Log("PreRollState");
-    }
     public override bool exitConditionMet() {
         return rollButtonClicked;
     }

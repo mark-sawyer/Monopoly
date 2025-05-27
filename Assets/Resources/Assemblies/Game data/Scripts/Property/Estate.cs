@@ -43,6 +43,14 @@ internal class Estate : Property, EstateInfo {
 
 
 
+    #region Property
+    internal override int getWorth() {
+        return Cost + (buildingCost * buildings.Count);
+    }
+    #endregion
+
+
+
     #region internal
     internal void addBuilding(Building building) {
         buildings.Enqueue(building);

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "new TokenColours", menuName = "Token/TokenColours")]
 public class TokenColours : ScriptableObject {
     public Color OutlineColour { get => outlineColour; }
     public Color TokenColour { get => tokenColour; }

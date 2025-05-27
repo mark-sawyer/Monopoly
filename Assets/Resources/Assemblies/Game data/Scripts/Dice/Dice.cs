@@ -1,6 +1,6 @@
 using UnityEngine;
 
-internal class Dice : DiceInfo {
+internal class Dice : DiceInterface {
     private Vector2Int[] lastThreeRolls = new Vector2Int[3];
     private Die[] dice = { new Die(), new Die() };
 
@@ -17,8 +17,8 @@ internal class Dice : DiceInfo {
 
 
 
-    #region internal
-    internal void roll() {
+    #region DiceInterface
+    public void roll() {
         dice[0].roll();
         dice[1].roll();
         lastThreeRolls[2] = lastThreeRolls[1];

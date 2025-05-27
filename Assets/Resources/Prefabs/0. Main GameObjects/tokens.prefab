@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7770468146990906747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7770468146990906693}
+  - component: {fileID: 7770468146990906746}
+  m_Layer: 0
+  m_Name: tokens
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7770468146990906693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7770468146990906747}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7770468146990906746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7770468146990906747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b187d3bc2fef604c953e59f460db043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tokenPrefab: {fileID: 5488300525574815777, guid: 1e5c45a7ee43c8545b4b842791e69e7a, type: 3}
+  spaceVisualManager: {fileID: 0}
+  tokenSprites:
+  - {fileID: 11400000, guid: 3f87c64908843034d9913ac6365ac07c, type: 2}
+  - {fileID: 11400000, guid: 6a7de022c83810c42bd09455b5c33da8, type: 2}
+  - {fileID: 11400000, guid: 98efe8fdeec7fd648900530a15ec476e, type: 2}
+  - {fileID: 11400000, guid: ff219a1cdd7c48b439e32223f30ebced, type: 2}
+  - {fileID: 11400000, guid: ba2b3d4619764ca42bb8c46c42b755bc, type: 2}
+  - {fileID: 11400000, guid: 47c027980b8c3ef4da43a3e7e1906bb8, type: 2}
+  - {fileID: 11400000, guid: 23e81094e7fec7d4a985873baef490ed, type: 2}
+  - {fileID: 11400000, guid: a0704a25045bd354d920647b6eea70fe, type: 2}
+  tokenColours:
+  - {fileID: 11400000, guid: 575b94c595b4cfd4b98b37195ac7bf7f, type: 2}
+  - {fileID: 11400000, guid: e662b3cb3a9f18840b7da0e9ae79f5e7, type: 2}
+  - {fileID: 11400000, guid: aa1963dd2349257498afcc7488420887, type: 2}
+  - {fileID: 11400000, guid: c35356d34207ef143a966a926f6586e9, type: 2}
+  - {fileID: 11400000, guid: e0f845f17e3175b4585e47ba351e3600, type: 2}
+  - {fileID: 11400000, guid: afc0195d3d5364141943e1f4a3731eaf, type: 2}
+  - {fileID: 11400000, guid: 100eb9556b4868b40b80a48b3a025e00, type: 2}
+  - {fileID: 11400000, guid: f493be6ba6b15d749a0f2266a795dc4b, type: 2}

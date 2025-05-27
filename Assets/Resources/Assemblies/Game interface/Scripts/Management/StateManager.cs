@@ -35,7 +35,7 @@ public class StateManager : MonoBehaviour {
     #region private
     private void setupGameStates() {
         PreRollState.setup(rp.RollButton);
-        RollAnimationState.setup(rp.DieVisual, rp.TokenVisualManager);
+        RollAnimationState.setup(rp.TokenVisualManager);
         MoveTokenState.setup(rp.SpaceVisualManager, rp.TokenVisualManager);
     }
     private State getStateType<T>() {

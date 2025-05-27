@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "new TokenScales", menuName = "Token/TokenScales")]
 public class TokenScales : ScriptableObject {
     [SerializeField] private float[] scaleValues;
 

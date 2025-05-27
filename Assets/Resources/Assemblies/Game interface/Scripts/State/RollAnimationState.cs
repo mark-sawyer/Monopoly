@@ -28,7 +28,7 @@ public class RollAnimationState : State {
 
 
     #region public
-    public void setup(DieVisual dieVisual, TokenVisualManager tokenVisualManager) {
+    public void setup(TokenVisualManager tokenVisualManager) {
         diceAnimationOver.Listeners += animationOverCalled;
         this.tokenVisualManager = tokenVisualManager;
     }

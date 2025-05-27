@@ -31,13 +31,14 @@ public class TestPropertyObtaining : MonoBehaviour {
 
     #region MonoBehaviour
     private void Awake() {
-        Game game = new Game(1);
-        playerInfo = game.TurnPlayer;
+        GameFactory gameFactory = new GameFactory();
+        gameFactory.makeGame(1);
+        playerInfo = gameFactory.GameStateInfo.TurnPlayer;
         playerPanel.setup(playerInfo);
         estateGroups = estateGroupSOs.Cast<EstateGroupInfo>().ToArray();
         railroads = railroadSOs.Cast<RailroadInfo>().ToArray();
         utilities = utilitySOs.Cast<UtilityInfo>().ToArray();
-        testGameDataUpdater.setGamePlayer(game);
+        testGameDataUpdater.setGamePlayer(gameFactory.GamePlayer);
     }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Return)) {

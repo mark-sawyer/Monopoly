@@ -12,7 +12,7 @@ public class PlayerPanel : MonoBehaviour {
     #region public
     public void setup(PlayerInfo player) {
         this.player = player;
-        tokenIcon.setup(player);
+        tokenIcon.setup(player.Token, player.Colour);
     }
     public void adjustMoney(PlayerInfo player) {
         moneyAdjuster.adjustMoney(player);

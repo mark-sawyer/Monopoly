@@ -7,6 +7,7 @@ public class BuyPropertyOptionState : State {
     private bool questionAnswered;
 
 
+
     #region GameState
     public override void enterState() {
         questionAnswered = false;
@@ -18,14 +19,17 @@ public class BuyPropertyOptionState : State {
     public override bool exitConditionMet() {
         return questionAnswered;
     }
+    public override void exitState() {
+        questionAnsweredEvent.Listeners -= listenForAnswer;
+    }
     public override State getNextState() {
         return possibleNextStates[0];
     }
     #endregion
 
 
+
     private void listenForAnswer() {
         questionAnswered = true;
-
     }
 }

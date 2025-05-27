@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class Game : GameStateInfo, GamePlayer {
-    private Dice dice = new Dice();
+internal class Game : GameStateInfo, GamePlayer {
+    private DiceInterface dice;
     private Space[] spaces;
     private Player[] players;
     private Player turnPlayer;
@@ -14,7 +13,8 @@ public class Game : GameStateInfo, GamePlayer {
 
 
     #region public
-    public Game(int playerNum) {
+    internal Game(int playerNum, DiceInterface dice) {
+        this.dice = dice;
         spaces = initialiseSpaces();
         players = initialisePlayers(playerNum);
         houses = initialiseHouses();
@@ -26,6 +26,13 @@ public class Game : GameStateInfo, GamePlayer {
 
 
     #region GameStateInfo
+    public IEnumerable<PlayerInfo> PlayerInfos => players;
+    public DiceInfo DiceInfo => dice;
+    public PlayerInfo TurnPlayer => turnPlayer;
+    public int IndexOfTurnPlayer => getPlayerIndex(turnPlayer);
+    public int SpaceIndexOfTurnPlayer => turnPlayer.SpaceIndex;
+    public SpaceInfo SpaceInfoOfTurnPlayer => turnPlayer.SpaceInfo;
+    public int NumberOfPlayers => players.Length;
     public SpaceInfo getSpaceInfo(int index) {
         return spaces[index];
     }
@@ -38,13 +45,6 @@ public class Game : GameStateInfo, GamePlayer {
     public int getPlayerIndex(PlayerInfo player) {
         return Array.FindIndex(players, x => x == player);
     }
-    public IEnumerable<PlayerInfo> PlayerInfos => players;
-    public DiceInfo DiceInfo => dice;
-    public PlayerInfo TurnPlayer => turnPlayer;
-    public int IndexOfTurnPlayer => getPlayerIndex(turnPlayer);
-    public int SpaceIndexOfTurnPlayer => turnPlayer.SpaceIndex;
-    public SpaceInfo SpaceInfoOfTurnPlayer => turnPlayer.SpaceInfo;
-    public int NumberOfPlayers => players.Length;
     #endregion
 
 

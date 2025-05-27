@@ -7,6 +7,7 @@ public class GameDataUpdater : MonoBehaviour {
     [SerializeField] private GameEvent rollButtonClicked;
     [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerPurchasedProperty;
     [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustment;
+    [SerializeField] private GameEvent turnOver;
     #endregion
 
 
@@ -17,6 +18,7 @@ public class GameDataUpdater : MonoBehaviour {
         rollButtonClicked.Listeners += rollDiceAndMovePlayer;
         playerPurchasedProperty.Listeners += purchasedProperty;
         moneyAdjustment.Listeners += adjustMoney;
+        turnOver.Listeners += updateTurnPlayer;
     }
     #endregion
 
@@ -32,6 +34,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void adjustMoney(PlayerInfo playerInfo, int difference) {
         gamePlayer.adjustPlayerMoney(playerInfo, difference);
+    }
+    private void updateTurnPlayer() {
+        gamePlayer.updateTurnPlayer();
     }
     #endregion
 }

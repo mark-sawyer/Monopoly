@@ -1,4 +1,6 @@
+using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 internal class Player : PlayerInfo {
     internal Space space { get; set; }
@@ -32,5 +34,13 @@ internal class Player : PlayerInfo {
     public Token Token { get => token; }
     public PlayerColour Colour { get => colour; }
     public int Money => money;
+    public int IncomeTaxAmount {
+        get {
+            int totalWorth = money + properties.Sum(x => x.getWorth());
+            float tenPercent = totalWorth * 0.1f;
+            int rounded = Mathf.RoundToInt(tenPercent + 0.001f);
+            return rounded;
+        }
+    }
     #endregion
 }

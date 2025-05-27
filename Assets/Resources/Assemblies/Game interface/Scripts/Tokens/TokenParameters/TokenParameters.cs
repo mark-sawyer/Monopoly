@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "new TokenParameters", menuName = "Token/TokenParameters")]
 public class TokenParameters : ScriptableObject {
     [SerializeField] private BaseTokenOffsets tokenOffsets;
     [SerializeField] private TokenScales tokenScales;

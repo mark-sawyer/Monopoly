@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "new SquareOffsets", menuName = "Token/Offsets/SquareOffsets")]
 public class SquareOffsets : BaseTokenOffsets {
     #region properties
     public override Vector2 MajorOffset => majorOffset;
