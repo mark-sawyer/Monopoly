@@ -23,7 +23,7 @@ public class PreRollState : State {
         rollButtonClickedEvent.Listeners -= rollButtonListener;
     }
     public override State getNextState() {
-        return possibleNextStates[0];
+        return getState<RollAnimationState>();
     }
     #endregion
 

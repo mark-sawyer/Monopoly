@@ -206,12 +206,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14be84448f9a24442a5bcd1519f9d9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purchaseQuestionPrefab: {fileID: 3442082075229922575, guid: a5eff3b5040c5544792f1c76786733b7, type: 3}
-  incomeTaxQuestionPrefab: {fileID: 3442082075229922575, guid: 0aba535f26865804d8a80444771af625, type: 3}
-  unmortgageQuestionPrefab: {fileID: 3442082075229922575, guid: 3d635fb9e185688458c45cb79651c5c6, type: 3}
-  incomeTaxQuestionEvent: {fileID: 11400000, guid: 78f50cfbec166e0408237475a1081cc3, type: 2}
-  purchaseQuestionEvent: {fileID: 11400000, guid: a5b1acb66b7f35843b93252bd2942388, type: 2}
-  unmortgageQuestionEvent: {fileID: 11400000, guid: ee7c4ea39dce04a4eb3a57fe3f7423ba, type: 2}
+  screenCover: {fileID: 2196481103385590348}
+  qRefs: {fileID: 11400000, guid: a55563091decee94aba3b9d0eed682b6, type: 2}
+  questionAsked: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
+  questionAnswered: {fileID: 11400000, guid: f63a59fd9cd37634a96a502daf1cc482, type: 2}
+  allQuestionsAnswered: {fileID: 11400000, guid: 915426820e887234fa0a1177f256715f, type: 2}
 --- !u!1 &1146611173080635446
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +442,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1266324190073575548, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266324190073575548, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266324190073575548, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266324190073575548, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -490,6 +501,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1266324190073575548, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1266324190073575549, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
       propertyPath: m_Name
       value: fading_image
@@ -501,6 +516,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1266324190073575548, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
   m_PrefabInstance: {fileID: 1146611171906167348}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2196481103385590348 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1266324190073575544, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
+  m_PrefabInstance: {fileID: 1146611171906167348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e287bf3a9802f7e4c9dde385a2009c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1146611172876807981
 PrefabInstance:
   m_ObjectHideFlags: 0

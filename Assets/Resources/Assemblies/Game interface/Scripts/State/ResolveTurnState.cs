@@ -11,6 +11,6 @@ public class ResolveTurnState : State {
         turnOver.invoke();
     }
     public override State getNextState() {
-        return possibleNextStates[0];
+        return getState<PreRollState>();
     }
 }

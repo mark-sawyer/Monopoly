@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class UnmortgageQuestion : MonoBehaviour {
+public class UnmortgageQuestion : DroppedQuestion {
     [SerializeField] private TextMeshProUGUI unmortgageCostText;
     [SerializeField] private TextMeshProUGUI keepMortgagedCostText;
     [SerializeField] private TokenIcon tokenIcon;

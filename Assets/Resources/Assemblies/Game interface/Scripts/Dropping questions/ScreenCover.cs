@@ -2,25 +2,16 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteAlways]
 public class ScreenCover : MonoBehaviour {
     [SerializeField] private Image image;
-    [SerializeField] GameEvent questionAsked;
-    [SerializeField] GameEvent questionAnswered;
     private const float maxAlpha = 220f;
 
 
 
-    private void Start() {
-        questionAsked.Listeners += startFadeIn;
-        questionAnswered.Listeners += startFadeOut;
-    }
-
-
-    private void startFadeIn() {
+    public void startFadeIn() {
         StartCoroutine(fadeIn());
     }
-    private void startFadeOut() {
+    public void startFadeOut() {
         StartCoroutine(fadeOut());
     }
     private IEnumerator fadeIn() {

@@ -7,8 +7,8 @@ public class MoveTokenState : State {
     private TokenVisualManager tokenVisualManager;
     private TokenVisual tokenVisual;
     private bool tokenSettled;
-    private State ResolveTurnState { get => getStateType<ResolveTurnState>(); }
-    private State BuyPropertyOptionState { get => getStateType<BuyPropertyOptionState>(); }
+    private State ResolveTurnState { get => getState<ResolveTurnState>(); }
+    private State BuyPropertyOptionState { get => getState<BuyPropertyOptionState>(); }
 
 
 
@@ -31,7 +31,7 @@ public class MoveTokenState : State {
         SpaceInfo spaceInfo = GameState.game.SpaceInfoOfTurnPlayer;
 
         if (spaceInfo is TaxSpaceInfo taxSpaceInfo && taxSpaceInfo.TaxSpaceType == TaxSpaceType.INCOME_TAX) {
-            return getStateType<IncomeTaxState>();
+            return getState<IncomeTaxState>();
         }
 
 

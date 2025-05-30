@@ -21,7 +21,7 @@ public class RollAnimationState : State {
         return animationOver;
     }
     public override State getNextState() {
-        return possibleNextStates[0];
+        return getState<MoveTokenState>();
     }
     #endregion
 

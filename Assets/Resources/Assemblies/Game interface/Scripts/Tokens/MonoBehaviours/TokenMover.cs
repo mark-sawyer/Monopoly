@@ -21,8 +21,6 @@ public class TokenMover : MonoBehaviour {
     private const float MAX_VELOCITY = 100f;
     #endregion
 
-    private float maxVelocity = 0;
-
 
     #region MonoBehaviour
     private void Start() {

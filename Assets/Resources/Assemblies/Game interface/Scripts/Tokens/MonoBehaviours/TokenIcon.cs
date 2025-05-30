@@ -8,10 +8,18 @@ public class TokenIcon : MonoBehaviour {
     [SerializeField] private Image tokenImage;
     [SerializeField] private Image outerCircleImage;
     [SerializeField] private Image innerCircleImage;
+    private Token token;
+    private PlayerColour colour;
 
-    public void setup(Token token, PlayerColour playerColour) {
+
+
+    public Token Token => token;
+    public PlayerColour Colour => colour;
+    public void setup(Token token, PlayerColour colour) {
+        this.token = token;
+        this.colour = colour;
         TokenSprites tokenSprites = tokenDictionary.getSprites(token);
-        TokenColours tokenColours = tokenDictionary.getColours(playerColour);
+        TokenColours tokenColours = tokenDictionary.getColours(colour);
         setAndAdjustImages(
             (RectTransform)silouhetteImage.transform,
             silouhetteImage,

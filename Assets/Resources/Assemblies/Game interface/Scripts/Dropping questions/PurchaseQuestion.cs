@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class PurchaseQuestion : MonoBehaviour {
+public class PurchaseQuestion : DroppedQuestion {
     [SerializeField] private TextMeshProUGUI purchaseText;
     [SerializeField] private TokenIcon tokenIcon;
     #region GameEvents
@@ -9,7 +9,6 @@ public class PurchaseQuestion : MonoBehaviour {
     [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerObtainedPropertyUI;
     [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustmentData;
     [SerializeField] private GameEvent<PlayerInfo> moneyAdjustmentUI;
-    [SerializeField] private GameEvent questionAnswered;
     [SerializeField] private GameEvent moneyChangedHands;
     #endregion
     private PlayerInfo player;
@@ -31,11 +30,11 @@ public class PurchaseQuestion : MonoBehaviour {
         moneyAdjustmentData.invoke(player, -property.Cost);
         moneyAdjustmentUI.invoke(player);
         moneyChangedHands.invoke();
-        Destroy(gameObject);
+        disappear();
     }
     public void noClicked() {
         questionAnswered.invoke();
-        Destroy(gameObject);
+        disappear();
     }
     #endregion
 }

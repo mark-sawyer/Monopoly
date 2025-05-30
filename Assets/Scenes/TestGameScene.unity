@@ -3177,7 +3177,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rollButton: {fileID: 1580446093}
-  dieVisual: {fileID: 0}
   tokenVisualManager: {fileID: 2087281311}
   spaceVisualManager: {fileID: 1926244003}
 --- !u!114 &909752624
@@ -3334,7 +3333,7 @@ MonoBehaviour:
   ching: {fileID: 8300000, guid: ca6f69fea85ef0541853432d007c3015, type: 3}
   rollClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
   questionAsked: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
-  moneyChangedHands: {fileID: 0}
+  moneyChangedHands: {fileID: 11400000, guid: 21c3d5d806e9f9143b126ea7a841731c, type: 2}
 --- !u!114 &909752629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5193,7 +5192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4054646366065154876, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4054646366065154876, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_AnchorMax.x
