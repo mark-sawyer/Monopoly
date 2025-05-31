@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "State/RollAnimationState")]
 public class RollAnimationState : State {
     [SerializeField] private GameEvent diceAnimationOver;
+    private DiceInfo diceInfo;
     private TokenVisualManager tokenVisualManager;
     private bool animationOver;
 

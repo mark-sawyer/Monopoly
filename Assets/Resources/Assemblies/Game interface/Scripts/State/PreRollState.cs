@@ -11,7 +11,7 @@ public class PreRollState : State {
 
     #region GameState
     public override void enterState() {
-        rollButton.enabled = true;
+        rollButton.interactable = true;
         rollButtonClicked = false;
         rollButtonClickedEvent.Listeners += rollButtonListener;
     }
@@ -19,7 +19,7 @@ public class PreRollState : State {
         return rollButtonClicked;
     }
     public override void exitState() {
-        rollButton.enabled = false;
+        rollButton.interactable = false;
         rollButtonClickedEvent.Listeners -= rollButtonListener;
     }
     public override State getNextState() {

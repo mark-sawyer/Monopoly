@@ -54,7 +54,7 @@ internal class Game : GameStateInfo, GamePlayer {
         dice.roll();
     }
     public void moveTurnPlayerDiceValues() {
-        movePlayer(turnPlayer, dice.getTotalValue());
+        movePlayer(turnPlayer, dice.TotalValue);
     }
     public void updateTurnPlayer() {
         int turnPlayerIndex = Array.IndexOf(players, turnPlayer);

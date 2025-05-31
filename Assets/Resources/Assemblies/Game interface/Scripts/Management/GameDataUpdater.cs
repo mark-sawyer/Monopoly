@@ -18,7 +18,7 @@ public class GameDataUpdater : MonoBehaviour {
         rollButtonClicked.Listeners += rollDiceAndMovePlayer;
         playerPurchasedProperty.Listeners += purchasedProperty;
         moneyAdjustment.Listeners += adjustMoney;
-        turnOver.Listeners += updateTurnPlayer;
+        turnOver.Listeners += maybeUpdateTurnPlayer;
     }
     #endregion
 
@@ -35,8 +35,10 @@ public class GameDataUpdater : MonoBehaviour {
     private void adjustMoney(PlayerInfo playerInfo, int difference) {
         gamePlayer.adjustPlayerMoney(playerInfo, difference);
     }
-    private void updateTurnPlayer() {
-        gamePlayer.updateTurnPlayer();
+    private void maybeUpdateTurnPlayer() {
+        if (!GameState.game.DiceInfo.RolledDoubles) {
+            gamePlayer.updateTurnPlayer();
+        }
     }
     #endregion
 }

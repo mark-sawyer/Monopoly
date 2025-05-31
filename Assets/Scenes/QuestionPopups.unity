@@ -642,10 +642,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14be84448f9a24442a5bcd1519f9d9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tokenVisualManager: {fileID: 0}
-  purchaseQuestionPrefab: {fileID: 0}
-  incomeTaxQuestionPrefab: {fileID: 0}
-  unmortgageQuestionPrefab: {fileID: 0}
+  screenCover: {fileID: 0}
+  qRefs: {fileID: 0}
+  questionAsked: {fileID: 0}
+  questionAnswered: {fileID: 0}
+  allQuestionsAnswered: {fileID: 0}
 --- !u!4 &1012891633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6072064767439386191, guid: b045ae835bf9cb144ba1f4d858d9c499, type: 3}

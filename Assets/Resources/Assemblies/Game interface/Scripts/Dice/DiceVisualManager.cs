@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DieVisualManager : MonoBehaviour {
+public class DiceVisualManager : MonoBehaviour {
     [SerializeField] private GameEvent rollClicked;
     [SerializeField] private DieVisual die1;
     [SerializeField] private DieVisual die2;

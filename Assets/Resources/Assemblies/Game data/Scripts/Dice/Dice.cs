@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 internal class Dice : DiceInterface {
@@ -7,12 +8,12 @@ internal class Dice : DiceInterface {
 
 
     #region DiceInfo
-    public int getTotalValue() {
-        return dice[0].getValue() + dice[1].getValue();
-    }
     public int getDieValue(int i) {
         return dice[i].getValue();
     }
+    public int TotalValue => dice[0].getValue() + dice[1].getValue();
+    public bool RolledDoubles => dice[0].getValue() == dice[1].getValue();
+    public bool ThreeDoublesInARow => lastThreeRolls.All(x => x[0] == x[1]);
     #endregion
 
 

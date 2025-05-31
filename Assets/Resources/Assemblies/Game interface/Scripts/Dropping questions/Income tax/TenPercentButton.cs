@@ -2,11 +2,11 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class TenPercentButtonText : MonoBehaviour {
+public class TenPercentButton : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI textMesh;
 
-    public void updateText() {
-        textMesh.text = "$" + GameState.game.TurnPlayer.IncomeTaxAmount.ToString();
+    public void updateText(int amount) {
+        textMesh.text = "$" + amount.ToString();
         StartCoroutine(pulse());
     }
 

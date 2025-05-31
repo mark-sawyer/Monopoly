@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Codice.CM.Common.CmCallContext;
 
 public class IncomeTaxQuestion : DroppedQuestion {
     [SerializeField] private TokenIcon tokenIcon;
@@ -6,9 +7,11 @@ public class IncomeTaxQuestion : DroppedQuestion {
     [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustmentData;
     [SerializeField] private GameEvent<PlayerInfo> moneyAdjustmentUI;
     [SerializeField] private GameEvent moneyChangedHands;
+    [SerializeField] private GameEvent correct;
+    [SerializeField] private GameEvent incorrect;
     #endregion
     [SerializeField] private QuestionCircle questionCircle;
-    [SerializeField] private TenPercentButtonText tenPercentButtonText;
+    [SerializeField] private TenPercentButton tenPercentButtonText;
     private PlayerInfo player;
     private const int WAITED_FRAMES = 150;
 
@@ -19,11 +22,17 @@ public class IncomeTaxQuestion : DroppedQuestion {
         tokenIcon.setup(player.Token, player.Colour);
     }
     public void twoHundredClicked() {
-        tenPercentButtonText.updateText();
+        int amount = GameState.game.TurnPlayer.IncomeTaxAmount;
+        tenPercentButtonText.updateText(amount);
+        if (amount > 200) correct.invoke();
+        else incorrect.invoke();
         StartCoroutine(WaitFrames.exe(WAITED_FRAMES, completeQuestion, 200));
     }
     public void tenPercentClicked() {
-        tenPercentButtonText.updateText();
+        int amount = GameState.game.TurnPlayer.IncomeTaxAmount;
+        tenPercentButtonText.updateText(amount);
+        if (amount <= 200) correct.invoke();
+        else incorrect.invoke();
         StartCoroutine(WaitFrames.exe(WAITED_FRAMES, completeQuestion, player.IncomeTaxAmount));
     }
 

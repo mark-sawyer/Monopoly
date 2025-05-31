@@ -35,7 +35,7 @@ public class TokenVisual : MonoBehaviour {
     }
     public void beginMovingToNewSpace() {
         DiceInfo diceInfo = GameState.game.DiceInfo;
-        int roll = diceInfo.getTotalValue();
+        int roll = diceInfo.TotalValue;
         int newSpaceIndex = player.SpaceIndex;
         int priorSpaceIndex = Modulus.exe(newSpaceIndex - roll, GameConstants.TOTAL_SPACES);
         tokenMover.startMoving(priorSpaceIndex, roll);
