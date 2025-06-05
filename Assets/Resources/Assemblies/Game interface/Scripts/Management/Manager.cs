@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class Manager : MonoBehaviour {
-    [SerializeField] private ReferencePasser referencePasser;
+    [SerializeField] private GameDataUpdater gameDataUpdater;
 
 
 
@@ -9,8 +9,8 @@ public class Manager : MonoBehaviour {
         int playerNum = 4;
         GameFactory gameFactory = new GameFactory();
         gameFactory.makeGame(playerNum);
-        referencePasser.GamePlayer = gameFactory.GamePlayer;
         GameState.game = gameFactory.GameStateInfo;
+        gameDataUpdater.setup(gameFactory.GamePlayer);
     }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {

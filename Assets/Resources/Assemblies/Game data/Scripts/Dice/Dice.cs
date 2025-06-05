@@ -2,7 +2,12 @@ using System.Linq;
 using UnityEngine;
 
 internal class Dice : DiceInterface {
-    private Vector2Int[] lastThreeRolls = new Vector2Int[3];
+    private Vector2Int[] lastThreeRolls = new Vector2Int[3] {
+        // Initialising to non-doubles to avoid triggering ThreeDoublesInARow.
+        new Vector2Int(-99, -88),
+        new Vector2Int(-99, -88),
+        new Vector2Int(-99, -88)
+    };
     private Die[] dice = { new Die(), new Die() };
 
 
@@ -25,6 +30,13 @@ internal class Dice : DiceInterface {
         lastThreeRolls[2] = lastThreeRolls[1];
         lastThreeRolls[1] = lastThreeRolls[0];
         lastThreeRolls[0] = new Vector2Int(dice[0].getValue(), dice[1].getValue());
+    }
+    public void resetDoublesCount() {
+        lastThreeRolls = new Vector2Int[3] {
+            new Vector2Int(-99, -88),
+            new Vector2Int(-99, -88),
+            new Vector2Int(-99, -88)
+        };
     }
     #endregion
 }

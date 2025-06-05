@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TokenScaler : MonoBehaviour {
-    public PlayerInfo player { get; private set; }
-    private SpaceVisualManager spaceVisualManager;
     private const int FRAMES_FOR_TOKEN_GROWING = 50;
 
 
@@ -18,16 +16,16 @@ public class TokenScaler : MonoBehaviour {
 
 
     #region public
-    public void setup(PlayerInfo player, SpaceVisualManager spaceVisualManager) {
-        this.player = player;
-        this.spaceVisualManager = spaceVisualManager;
+    public PlayerInfo PlayerInfo { get; private set; }
+    public void setup(PlayerInfo player) {
+        PlayerInfo = player;
     }
     public void beginScaleChange(float targetScale) {
         StartCoroutine(changeScale(targetScale));
     }
     public void beginScaleChange() {
-        SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(player.SpaceIndex);
-        StartCoroutine(changeScale(spaceVisual.getScale()));
+        SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(PlayerInfo.SpaceIndex);
+        StartCoroutine(changeScale(spaceVisual.getScale(PlayerInfo)));
     }
     #endregion
 
@@ -45,7 +43,7 @@ public class TokenScaler : MonoBehaviour {
         }
     }
     private void setStartingScale() {
-        float scale = spaceVisualManager.getSpaceVisual(0).getScale();
+        float scale = SpaceVisualManager.Instance.getSpaceVisual(0).getScale(PlayerInfo);
         transform.localScale = new Vector3(scale, scale, scale);
     }
     #endregion

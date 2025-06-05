@@ -4,34 +4,29 @@ using UnityEngine;
 public class RollAnimationState : State {
     [SerializeField] private GameEvent diceAnimationOver;
     private DiceInfo diceInfo;
-    private TokenVisualManager tokenVisualManager;
     private bool animationOver;
 
 
 
     #region GameState
     public override void enterState() {
+        diceAnimationOver.Listeners += animationOverCalled;
         animationOver = false;
         int turnIndex = GameState.game.IndexOfTurnPlayer;
-        TokenScaler turnTokenScaler = tokenVisualManager.getTokenScaler(turnIndex);
-        TokenVisual turnTokenVisual = tokenVisualManager.getTokenVisual(turnIndex);
+        TokenScaler turnTokenScaler = TokenVisualManager.Instance.getTokenScaler(turnIndex);
+        TokenVisual turnTokenVisual = TokenVisualManager.Instance.getTokenVisual(turnIndex);
         turnTokenScaler.beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
         turnTokenVisual.changeLayer(InterfaceConstants.MOVING_TOKEN_LAYER_NAME);
     }
     public override bool exitConditionMet() {
         return animationOver;
     }
-    public override State getNextState() {
-        return getState<MoveTokenState>();
+    public override void exitState() {
+        diceAnimationOver.Listeners -= animationOverCalled;
     }
-    #endregion
-
-
-
-    #region public
-    public void setup(TokenVisualManager tokenVisualManager) {
-        diceAnimationOver.Listeners += animationOverCalled;
-        this.tokenVisualManager = tokenVisualManager;
+    public override State getNextState() {
+        if (GameState.game.DiceInfo.ThreeDoublesInARow) return getState<PoliceAnimationState>();
+        else return getState<MoveTokenState>();
     }
     #endregion
 

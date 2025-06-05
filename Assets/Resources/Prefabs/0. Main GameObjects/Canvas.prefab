@@ -65,6 +65,7 @@ GameObject:
   - component: {fileID: 1146611172415108033}
   - component: {fileID: 1146611172415108034}
   - component: {fileID: 1146611172415108038}
+  - component: {fileID: 7805128175505535997}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -173,6 +174,20 @@ MonoBehaviour:
   questionAsked: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
   questionAnswered: {fileID: 11400000, guid: f63a59fd9cd37634a96a502daf1cc482, type: 2}
   allQuestionsAnswered: {fileID: 11400000, guid: 915426820e887234fa0a1177f256715f, type: 2}
+--- !u!114 &7805128175505535997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146611172415108035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 292f587cb242f144c8b67c0148b8e2a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinningPolicemanPrefab: {fileID: 5747658771908631661, guid: 53c3f0a8d879d7b4783fe1b660d5bb43, type: 3}
+  spinningPolicemanEvent: {fileID: 11400000, guid: 2a6a4c2feb367e04dbb32f056bf22f91, type: 2}
 --- !u!1001 &1146611171906167348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -180,18 +195,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1146611172415108039}
     m_Modifications:
-    - target: {fileID: 1266324190073575544, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
-      propertyPath: fadeInEvent
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1266324190073575544, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
-      propertyPath: questionAsked
-      value: 
-      objectReference: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
-    - target: {fileID: 1266324190073575544, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
-      propertyPath: questionAnswered
-      value: 
-      objectReference: {fileID: 11400000, guid: f63a59fd9cd37634a96a502daf1cc482, type: 2}
     - target: {fileID: 1266324190073575548, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -325,6 +328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: game_ui
       objectReference: {fileID: 0}
+    - target: {fileID: 7171931576187737397, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: nextPlayerTurn
+      value: 
+      objectReference: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
     - target: {fileID: 7235366046681798078, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -409,6 +416,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8167315050177127996, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: button
+      value: 
+      objectReference: {fileID: 3614679878956571051}
+    - target: {fileID: 8167315050177127996, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: turnOver
+      value: 
+      objectReference: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
+    - target: {fileID: 8167315050177127996, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: nextPlayerTurn
+      value: 
+      objectReference: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
+    - target: {fileID: 8167315050177127996, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: samePlayerTurn
+      value: 
+      objectReference: {fileID: 11400000, guid: 4c7a252050a310e46ae33c00f413b87d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
 --- !u!224 &854333133532034190 stripped
@@ -416,3 +439,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7235366046681798078, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
   m_PrefabInstance: {fileID: 8048526686337229104}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3614679878956571051 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6745249102056175771, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+  m_PrefabInstance: {fileID: 8048526686337229104}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8a792feebb19054a9f09a8bc28b226a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,26 +1,26 @@
 using UnityEngine;
 
 public class SpaceVisual : MonoBehaviour {
-    public SpaceInfo SpaceInfo { get; private set; }
-    private TokenVisualManager tokenVisualManager;
+    [SerializeField] private ScriptableObject spaceInfoSO;
     [SerializeField] private TokenParameters tokenParameters;
 
 
 
-    public void setup(SpaceInfo spaceInfo, TokenVisualManager tokenVisualManager) {
-        SpaceInfo = spaceInfo;
-        this.tokenVisualManager = tokenVisualManager;
-    }
-    public float getScale() {
+    public SpaceInfo SpaceInfo => (SpaceInfo)spaceInfoSO;
+    public TokenParameters TokenParameters => tokenParameters;
+    public virtual float getScale(PlayerInfo playerInfo) {
         int playersOnSpace = SpaceInfo.NumberOfPlayersOnSpace;
         return tokenParameters.getScaleValue(playersOnSpace);
     }
-    public Vector3 getFinalPosition(int playersOnSpace, int order) {
-        Vector3 position = tokenParameters.getTotalPositionOffset(playersOnSpace, order);
+    public virtual Vector3 getMajorPoint(PlayerInfo playerInfo) {
+        Vector3 position = tokenParameters.getMajorPositionOffset();
         return transform.TransformPoint(position);
     }
-    public Vector3 getCentralPosition() {
-        Vector3 position = tokenParameters.getMajorPositionOffset();
+    public virtual Vector3 getMinorPoint(PlayerInfo playerInfo) {
+        SpaceInfo spaceInfo = playerInfo.SpaceInfo;
+        int playersOnSpace = spaceInfo.NumberOfPlayersOnSpace;
+        int order = spaceInfo.getPlayerOrderIndex(playerInfo);
+        Vector3 position = tokenParameters.getTotalPositionOffset(playersOnSpace, order);
         return transform.TransformPoint(position);
     }
 }

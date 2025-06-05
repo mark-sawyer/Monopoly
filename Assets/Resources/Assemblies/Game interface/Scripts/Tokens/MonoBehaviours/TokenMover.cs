@@ -6,9 +6,7 @@ public class TokenMover : MonoBehaviour {
     [SerializeField] private TokenScaler tokenScaler;
     [SerializeField] private GameEvent tokenSettled;
     [SerializeField] private GameEvent<TokenMover, int> tokenOnSpaceChangedEvent;
-    public PlayerInfo player { get; private set; }
-    private SpaceVisualManager spaceVisualManager;
-    private List<Vector3> queue = new();
+    private Queue<Vector3> queue = new();
     private Vector3 attractivePoint;
     private Vector3 velocity = new();
     private bool settled;
@@ -22,6 +20,7 @@ public class TokenMover : MonoBehaviour {
     #endregion
 
 
+
     #region MonoBehaviour
     private void Start() {
         tokenOnSpaceChangedEvent.Listeners += tokenOnSpaceChanged;
@@ -30,11 +29,10 @@ public class TokenMover : MonoBehaviour {
     private void Update() {
         moveToAttractivePoint();
         if (queue.Count > 0 && directionVector().magnitude < DISTANCE_TO_SPACE_THRESHOLD) {
-            attractivePoint = queue[0];
-            queue.RemoveAt(0);
+            attractivePoint = queue.Dequeue();
             if (queue.Count == 0) {
-                tokenOnSpaceChangedEvent.invoke(this, getSpaceIndex());
-                SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(getSpaceIndex());
+                tokenOnSpaceChangedEvent.invoke(this, PlayerInfo.SpaceIndex);
+                SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(PlayerInfo.SpaceIndex);
                 tokenScaler.beginScaleChange();
             }
         }
@@ -48,9 +46,9 @@ public class TokenMover : MonoBehaviour {
 
 
     #region public
-    public void setup(PlayerInfo player, SpaceVisualManager spaceVisualManager) {
-        this.player = player;
-        this.spaceVisualManager = spaceVisualManager;
+    public PlayerInfo PlayerInfo { get; private set; }
+    public void setup(PlayerInfo player) {
+        PlayerInfo = player;
     }
     public void startMoving(int startingSpaceIndex, int roll) {
         List<int> getSpaceIndices(int currentIndex, int remaining) {
@@ -72,7 +70,8 @@ public class TokenMover : MonoBehaviour {
             List<Vector3> majorPoints = new();
             for (int i = 0; i < spaceIndices.Count; i++) {
                 int spaceIndex = spaceIndices[i];
-                Vector3 majorPoint = spaceVisualManager.getSpaceVisual(spaceIndex).getCentralPosition();
+                SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(spaceIndex);
+                Vector3 majorPoint = spaceVisual.getMajorPoint(PlayerInfo);
                 majorPoints.Add(majorPoint);
             }
             return majorPoints;
@@ -83,14 +82,21 @@ public class TokenMover : MonoBehaviour {
         List<int> spaceIndices = getSpaceIndices(startingSpaceIndex, roll);
 
         List<Vector3> majorPoints = getMajorPoints(spaceIndices);
-        foreach (Vector3 point in majorPoints) queue.Add(point);
+        Vector3 minorPoint = getMinorPoint();
 
-        Vector3 minorPoint = getMinorPoint(spaceIndices[spaceIndices.Count - 1], 0);
-        queue.Add(minorPoint);
-
-        attractivePoint = queue[0];
-        queue.RemoveAt(0);
-
+        foreach (Vector3 point in majorPoints) queue.Enqueue(point);
+        queue.Enqueue(minorPoint);
+        attractivePoint = queue.Dequeue();
+        tokenOnSpaceChangedEvent.invoke(this, startingSpaceIndex);
+        settled = false;
+    }
+    public void startMovingToJail(int startingSpaceIndex) {
+        JailVisual jailVisual = SpaceVisualManager.Instance.JailVisual;
+        Vector3 majorPoint = jailVisual.getMajorPoint(PlayerInfo);
+        Vector3 minorPoint = jailVisual.getMinorPoint(PlayerInfo);
+        queue.Enqueue(majorPoint);
+        queue.Enqueue(minorPoint);
+        attractivePoint = queue.Dequeue();
         tokenOnSpaceChangedEvent.invoke(this, startingSpaceIndex);
         settled = false;
     }
@@ -99,11 +105,9 @@ public class TokenMover : MonoBehaviour {
 
 
     #region private
-    private Vector3 getMinorPoint(int spaceIndex, int order) {
-        SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(spaceIndex);
-        SpaceInfo spaceInfo = spaceVisual.SpaceInfo;
-        int playersOnSpace = spaceInfo.NumberOfPlayersOnSpace;
-        return spaceVisual.getFinalPosition(playersOnSpace, order);
+    private Vector3 getMinorPoint() {
+        SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(PlayerInfo.SpaceIndex);
+        return spaceVisual.getMinorPoint(PlayerInfo);
     }
     private void moveToAttractivePoint() {
         float finalPositionMagnitude() {
@@ -118,25 +122,15 @@ public class TokenMover : MonoBehaviour {
     }
     private void tokenOnSpaceChanged(TokenMover caller, int spaceIndex) {
         if (caller == this) return;
-        if (spaceIndex != getSpaceIndex()) return;
+        if (spaceIndex != PlayerInfo.SpaceIndex) return;
 
 
-        int getSpaceOrderIndex() {
-            SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(getSpaceIndex());
-            SpaceInfo spaceInfo = spaceVisual.SpaceInfo;
-            int playerOnSpaceIndex = spaceInfo.getPlayerOrderIndex(player);
-            int totalPlayersOnSpace = spaceInfo.NumberOfPlayersOnSpace;
-            return totalPlayersOnSpace - playerOnSpaceIndex - 1;
-        }
-
+        SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(spaceIndex);
         tokenScaler.beginScaleChange();
-        attractivePoint = getMinorPoint(spaceIndex, getSpaceOrderIndex());
+        attractivePoint = spaceVisual.getMinorPoint(PlayerInfo);
     }
     private Vector3 directionVector() {
         return attractivePoint - transform.position;
-    }
-    private int getSpaceIndex() {
-        return player.SpaceIndex;
     }
     private bool passesSettledTest() {
         return !settled &&

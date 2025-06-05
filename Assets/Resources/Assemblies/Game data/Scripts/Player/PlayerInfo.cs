@@ -6,4 +6,5 @@ public interface PlayerInfo {
     public PlayerColour Colour { get; }
     public int Money { get; }
     public int IncomeTaxAmount { get; }
+    public bool InJail { get; }
 }

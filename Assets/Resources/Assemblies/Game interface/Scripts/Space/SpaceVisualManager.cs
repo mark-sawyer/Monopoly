@@ -1,15 +1,14 @@
 using UnityEngine;
 
 public class SpaceVisualManager : MonoBehaviour {
-    [SerializeField] TokenVisualManager tokenVisualManager;
-
-    #region MonoBehaviour
-    private void Start() {
-        for (int i = 0; i < transform.childCount; i++) {
-            Transform child = transform.GetChild(i);
-            SpaceVisual spaceVisual = child.GetComponent<SpaceVisual>();
-            spaceVisual.setup(GameState.game.getSpaceInfo(i), tokenVisualManager);
-        }
+    #region Singleton boilerplate
+    public static SpaceVisualManager Instance { get; private set; }
+    private void OnEnable() {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+    private void OnDestroy() {
+        if (Instance == this) Instance = null;
     }
     #endregion
 
@@ -19,5 +18,6 @@ public class SpaceVisualManager : MonoBehaviour {
     public SpaceVisual getSpaceVisual(int index) {
         return transform.GetChild(index).GetComponent<SpaceVisual>();
     }
+    public JailVisual JailVisual => transform.GetChild(10).GetComponent<JailVisual>();
     #endregion
 }

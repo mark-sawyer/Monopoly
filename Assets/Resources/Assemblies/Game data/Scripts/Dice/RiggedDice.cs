@@ -3,7 +3,12 @@ using UnityEngine;
 
 internal class RiggedDice : DiceInterface, DiceValueStorer {
     private int[] storedValues = new int[2] { 1, 1 };
-    private Vector2Int[] lastThreeRolls = new Vector2Int[3];
+    private Vector2Int[] lastThreeRolls = new Vector2Int[3] {
+        // Initialising to non-doubles to avoid triggering ThreeDoublesInARow.
+        new Vector2Int(-99, -88),
+        new Vector2Int(-99, -88),
+        new Vector2Int(-99, -88)
+    };
     private int[] diceValues = new int[2];
 
 
@@ -26,6 +31,13 @@ internal class RiggedDice : DiceInterface, DiceValueStorer {
         lastThreeRolls[2] = lastThreeRolls[1];
         lastThreeRolls[1] = lastThreeRolls[0];
         lastThreeRolls[0] = new Vector2Int(diceValues[0], diceValues[1]);
+    }
+    public void resetDoublesCount() {
+        lastThreeRolls = new Vector2Int[3] {
+            new Vector2Int(-99, -88),
+            new Vector2Int(-99, -88),
+            new Vector2Int(-99, -88)
+        };
     }
     #endregion
 

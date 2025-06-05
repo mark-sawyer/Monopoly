@@ -3,9 +3,21 @@ using System.Collections.Generic;
 
 public class TokenVisualManager : MonoBehaviour {
     [SerializeField] private GameObject tokenPrefab;
-    [SerializeField] private SpaceVisualManager spaceVisualManager;
     [SerializeField] private TokenSprites[] tokenSprites;
     [SerializeField] private TokenColours[] tokenColours;
+
+
+
+    #region Singleton boilerplate
+    public static TokenVisualManager Instance { get; private set; }
+    private void OnEnable() {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+    private void OnDestroy() {
+        if (Instance == this) Instance = null;
+    }
+    #endregion
 
 
 
@@ -14,11 +26,11 @@ public class TokenVisualManager : MonoBehaviour {
         IEnumerable<PlayerInfo> players = GameState.game.PlayerInfos;
         int i = 0;
         foreach (PlayerInfo player in players) {
-            Vector3 startingPosition = getStartingPosition(i);
+            Vector3 startingPosition = getStartingPosition(player);
             GameObject newToken = Instantiate(tokenPrefab, startingPosition, Quaternion.identity, transform);
-            newToken.GetComponent<TokenVisual>().setup(player, spaceVisualManager);
-            newToken.GetComponent<TokenMover>().setup(player, spaceVisualManager);
-            newToken.GetComponent<TokenScaler>().setup(player, spaceVisualManager);
+            newToken.GetComponent<TokenVisual>().setup(player);
+            newToken.GetComponent<TokenMover>().setup(player);
+            newToken.GetComponent<TokenScaler>().setup(player);
             i += 1;
         }
     }
@@ -41,10 +53,9 @@ public class TokenVisualManager : MonoBehaviour {
 
 
     #region private
-    public Vector3 getStartingPosition(int order) {
-        int totalPlayers = GameState.game.NumberOfPlayers;
-        SpaceVisual startingSpaceVisual = spaceVisualManager.getSpaceVisual(0);
-        return startingSpaceVisual.getFinalPosition(totalPlayers, order);
+    public Vector3 getStartingPosition(PlayerInfo player) {
+        SpaceVisual startingSpaceVisual = SpaceVisualManager.Instance.getSpaceVisual(0);
+        return startingSpaceVisual.getMinorPoint(player);
     }
     #endregion
 }

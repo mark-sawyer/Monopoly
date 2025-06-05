@@ -9,10 +9,10 @@ internal class Game : GameStateInfo, GamePlayer {
     private Player turnPlayer;
     private Queue<House> houses;
     private Queue<Hotel> hotels;
-    
 
 
-    #region public
+
+    #region internal
     internal Game(int playerNum, DiceInterface dice) {
         this.dice = dice;
         spaces = initialiseSpaces();
@@ -78,6 +78,13 @@ internal class Game : GameStateInfo, GamePlayer {
         Player player = (Player)playerInfo;
         player.adjustMoney(difference);
     }
+    public void sendPlayerToJail(PlayerInfo playerInfo) {
+        Player player = (Player)playerInfo;
+        player.goToJail();
+    }
+    public void resetDoublesCount() {
+        dice.resetDoublesCount();
+    }
     #endregion
 
 
@@ -88,21 +95,21 @@ internal class Game : GameStateInfo, GamePlayer {
         int newIndex = (currentIndex + spacesMoved) % GameConstants.TOTAL_SPACES;
         spaces[currentIndex].removePlayer(player);
         spaces[newIndex].addPlayer(player);
-        player.space = spaces[newIndex];
+        player.Space = spaces[newIndex];
     }
     private Space[] initialiseSpaces() {
         Space[] spaces = new Space[] {
-            Resources.Load<Space>("ScriptableObjects/Spaces/00_cornerspace"),
+            Resources.Load<Space>("ScriptableObjects/Spaces/00_goSpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/01_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/02_cardSpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/03_propertySpace"),
-            Resources.Load<Space>("ScriptableObjects/Spaces/04_taxSpace"),
+            Resources.Load<Space>("ScriptableObjects/Spaces/04_incomeTaxSpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/05_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/06_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/07_cardSpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/08_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/09_propertySpace"),
-            Resources.Load<Space>("ScriptableObjects/Spaces/10_cornerspace"),
+            Resources.Load<Space>("ScriptableObjects/Spaces/10_jailspace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/11_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/12_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/13_propertySpace"),
@@ -112,7 +119,7 @@ internal class Game : GameStateInfo, GamePlayer {
             Resources.Load<Space>("ScriptableObjects/Spaces/17_cardSpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/18_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/19_propertySpace"),
-            Resources.Load<Space>("ScriptableObjects/Spaces/20_cornerspace"),
+            Resources.Load<Space>("ScriptableObjects/Spaces/20_freeParkingspace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/21_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/22_cardSpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/23_propertySpace"),
@@ -122,7 +129,7 @@ internal class Game : GameStateInfo, GamePlayer {
             Resources.Load<Space>("ScriptableObjects/Spaces/27_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/28_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/29_propertySpace"),
-            Resources.Load<Space>("ScriptableObjects/Spaces/30_cornerspace"),
+            Resources.Load<Space>("ScriptableObjects/Spaces/30_goToJailspace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/31_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/32_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/33_cardSpace"),
@@ -130,7 +137,7 @@ internal class Game : GameStateInfo, GamePlayer {
             Resources.Load<Space>("ScriptableObjects/Spaces/35_propertySpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/36_cardSpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/37_propertySpace"),
-            Resources.Load<Space>("ScriptableObjects/Spaces/38_taxSpace"),
+            Resources.Load<Space>("ScriptableObjects/Spaces/38_luxuryTaxSpace"),
             Resources.Load<Space>("ScriptableObjects/Spaces/39_propertySpace")
         };
         foreach (Space space in spaces) {
@@ -148,6 +155,7 @@ internal class Game : GameStateInfo, GamePlayer {
             );
             spaces[0].addPlayer(players[i]);
         }
+        Player.jailSpace = spaces[10];
         return players;
     }
     private Queue<House> initialiseHouses() {

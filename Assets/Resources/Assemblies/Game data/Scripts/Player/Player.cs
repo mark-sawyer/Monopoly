@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 
 internal class Player : PlayerInfo {
-    internal Space space { get; set; }
+    internal static Space jailSpace;
     private List<Property> properties = new List<Property>();
     private int money = 1500;
     private Token token;
     private PlayerColour colour;
+    private bool inJail = false;
 
 
 
     #region internal
+    internal Space Space { get; set; }
     internal Player(Space space, Token token, PlayerColour colour) {
-        this.space = space;
+        Space = space;
         this.token = token;
         this.colour = colour;
     }
@@ -24,13 +26,22 @@ internal class Player : PlayerInfo {
     internal void adjustMoney(int difference) {
         money += difference;
     }
+    internal void goToJail() {
+        Space.removePlayer(this);
+        Space = jailSpace;
+        Space.addPlayer(this);
+        inJail = true;
+    }
+    internal void exitJail() {
+        inJail = false;
+    }
     #endregion
 
 
 
     #region PlayerInfo
-    public int SpaceIndex { get => space.Index; }
-    public SpaceInfo SpaceInfo { get => space; }
+    public int SpaceIndex { get => Space.Index; }
+    public SpaceInfo SpaceInfo { get => Space; }
     public Token Token { get => token; }
     public PlayerColour Colour { get => colour; }
     public int Money => money;
@@ -42,5 +53,6 @@ internal class Player : PlayerInfo {
             return rounded;
         }
     }
+    public bool InJail => inJail;
     #endregion
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class TokenVisual : MonoBehaviour {
     [SerializeField] private TokenDictionary tokenDictionary;
@@ -7,7 +6,6 @@ public class TokenVisual : MonoBehaviour {
     [SerializeField] private SpriteRenderer silouhetteSpriteRenderer;
     [SerializeField] private TokenMover tokenMover;
     public PlayerInfo player { get; private set; }
-    private SpaceVisualManager spaceVisualManager;
     private TokenSprites tokenSprites;
     private TokenColours tokenColours;
 
@@ -23,9 +21,8 @@ public class TokenVisual : MonoBehaviour {
 
 
     #region public
-    public void setup(PlayerInfo player, SpaceVisualManager spaceVisualManager) {
+    public void setup(PlayerInfo player) {
         this.player = player;
-        this.spaceVisualManager = spaceVisualManager;
         tokenSprites = tokenDictionary.getSprites(player.Token);
         tokenColours = tokenDictionary.getColours(player.Colour);
     }
@@ -33,12 +30,13 @@ public class TokenVisual : MonoBehaviour {
         tokenSpriteRenderer.sortingLayerName = layerName;
         silouhetteSpriteRenderer.sortingLayerName = layerName;
     }
-    public void beginMovingToNewSpace() {
+    public void beginMovingToNewSpace(int startingSpaceIndex) {
         DiceInfo diceInfo = GameState.game.DiceInfo;
         int roll = diceInfo.TotalValue;
-        int newSpaceIndex = player.SpaceIndex;
-        int priorSpaceIndex = Modulus.exe(newSpaceIndex - roll, GameConstants.TOTAL_SPACES);
-        tokenMover.startMoving(priorSpaceIndex, roll);
+        tokenMover.startMoving(startingSpaceIndex, roll);
+    }
+    public void beginMovingToJail(int startingSpaceIndex) {
+        tokenMover.startMovingToJail(startingSpaceIndex);
     }
     #endregion
 

@@ -266,7 +266,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4095811442423946731}
   - component: {fileID: 4095811442423946728}
-  - component: {fileID: 4095811442423946730}
   - component: {fileID: 4095811442423946741}
   - component: {fileID: 4095811442423946740}
   - component: {fileID: 4095811442423946742}
@@ -308,22 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1842ddf449f95d4f9de3381b95c8d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referencePasser: {fileID: 4095811442423946730}
---- !u!114 &4095811442423946730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4095811442423946729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a9cbb0adec954644956d9f804d55876, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rollButton: {fileID: 0}
-  tokenVisualManager: {fileID: 0}
-  spaceVisualManager: {fileID: 0}
+  gameDataUpdater: {fileID: 4095811442423946740}
 --- !u!114 &4095811442423946741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,13 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0412cc71c115e354f9ec27609869c446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rp: {fileID: 4095811442423946730}
-  states:
-  - {fileID: 11400000, guid: 3de23add850b9c744a5d3ba03512d782, type: 2}
-  - {fileID: 11400000, guid: ad35d2872e701c243a5559be4af51cf6, type: 2}
-  - {fileID: 11400000, guid: 7fd18c35410b6774186eb8b52a872df1, type: 2}
-  - {fileID: 11400000, guid: 7d760c7d8efdc9043b3ed720acc9f94f, type: 2}
-  - {fileID: 11400000, guid: b31fc2102ef08cc49b2c29dee0b6a92c, type: 2}
+  firstState: {fileID: 11400000, guid: 3de23add850b9c744a5d3ba03512d782, type: 2}
 --- !u!114 &4095811442423946740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,11 +333,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e972641a2e8c8c47a235ebea683f6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rp: {fileID: 4095811442423946730}
   rollButtonClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
+  turnPlayerSpaceUpdate: {fileID: 11400000, guid: 8ca636d10ac5ae34eb7c2b18dea38e4d, type: 2}
+  turnPlayerSentToJail: {fileID: 11400000, guid: 1deecc2a6d3cfb04e9ed56096cb3fde3, type: 2}
   playerPurchasedProperty: {fileID: 11400000, guid: 28d25c3afd0d0a442bc66e9b44ef254b, type: 2}
   moneyAdjustment: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
-  turnOver: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
+  nextPlayerTurn: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
 --- !u!114 &4095811442423946742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,12 +366,14 @@ MonoBehaviour:
   chk: {fileID: 8300000, guid: c94be23f642b6884a80fc268175bfd9e, type: 3}
   correctSound: {fileID: 8300000, guid: 65c1371bd3422134f967baa032aad05d, type: 3}
   incorrectSound: {fileID: 8300000, guid: 867d98af3a7a6f242a0a8d278fc90185, type: 3}
+  whistle: {fileID: 8300000, guid: 46835630ab6f1de4183eb23ffef8a129, type: 3}
   rollClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
   questionAsked: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
   moneyChangedHands: {fileID: 11400000, guid: 21c3d5d806e9f9143b126ea7a841731c, type: 2}
   buttonPressed: {fileID: 11400000, guid: 3dcb9379c32144c49851c9b6feceecd5, type: 2}
   correct: {fileID: 11400000, guid: e2cb512c96f9a3a45a6a1d408c5ea556, type: 2}
   incorrect: {fileID: 11400000, guid: c99455678d034184d888a8d88628419a, type: 2}
+  spinningPoliceman: {fileID: 11400000, guid: 2a6a4c2feb367e04dbb32f056bf22f91, type: 2}
 --- !u!1 &5756401574445528174
 GameObject:
   m_ObjectHideFlags: 0

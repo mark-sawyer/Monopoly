@@ -9,6 +9,7 @@ public class SoundPlayer : MonoBehaviour {
     [SerializeField] private AudioClip chk;
     [SerializeField] private AudioClip correctSound;
     [SerializeField] private AudioClip incorrectSound;
+    [SerializeField] private AudioClip whistle;
     #endregion
     #region GameEvents
     [SerializeField] private GameEvent rollClicked;
@@ -17,6 +18,7 @@ public class SoundPlayer : MonoBehaviour {
     [SerializeField] private GameEvent buttonPressed;
     [SerializeField] private GameEvent correct;
     [SerializeField] private GameEvent incorrect;
+    [SerializeField] private GameEvent spinningPoliceman;
     #endregion
 
 
@@ -29,6 +31,7 @@ public class SoundPlayer : MonoBehaviour {
         buttonPressed.Listeners += () => playSound(chk);
         correct.Listeners += () => playSound(correctSound);
         incorrect.Listeners += () => playSound(incorrectSound);
+        spinningPoliceman.Listeners += () => playSound(whistle);
     }
     #endregion
 
