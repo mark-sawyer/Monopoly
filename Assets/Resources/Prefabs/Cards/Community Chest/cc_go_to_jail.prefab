@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 731525934}
   - component: {fileID: 731525933}
   m_Layer: 5
-  m_Name: text_3 (1)
+  m_Name: text_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,6 +412,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -271660421155367914, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
+      propertyPath: CardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 15f23ab0fdea936488ab0fb713ed8146, type: 2}
     - target: {fileID: 424555498287171255, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_Name
       value: cc_go_to_jail
@@ -530,11 +534,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4558932283770536414, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -177.8
+      value: -173
       objectReference: {fileID: 0}
     - target: {fileID: 4558932283770536414, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 124.1
+      value: 151
       objectReference: {fileID: 0}
     - target: {fileID: 6673246058747362754, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_SizeDelta.x

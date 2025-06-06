@@ -9,6 +9,8 @@ internal class Game : GameStateInfo, GamePlayer {
     private Player turnPlayer;
     private Queue<House> houses;
     private Queue<Hotel> hotels;
+    private Queue<CardInstance> communityChestCards;
+    private Queue<CardInstance> chanceCards;
 
 
 
@@ -19,6 +21,8 @@ internal class Game : GameStateInfo, GamePlayer {
         players = initialisePlayers(playerNum);
         houses = initialiseHouses();
         hotels = initialiseHotels();
+        communityChestCards = initialiseCards(CardType.COMMUNITY_CHEST);
+        chanceCards = initialiseCards(CardType.CHANCE);
         turnPlayer = players[0];
     }
     #endregion
@@ -171,6 +175,12 @@ internal class Game : GameStateInfo, GamePlayer {
             hotelQueue.Enqueue(new Hotel());
         }
         return hotelQueue;
+    }
+    private Queue<CardInstance> initialiseCards(CardType cardType) {
+        Deck deck = cardType == CardType.COMMUNITY_CHEST
+            ? Resources.Load<Deck>("ScriptableObjects/Cards/cc_deck")
+            : Resources.Load<Deck>("ScriptableObjects/Cards/chance_deck");
+        return deck.getAsQueue();
     }
     #endregion
 }

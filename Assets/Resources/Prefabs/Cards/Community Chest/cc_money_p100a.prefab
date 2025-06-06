@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197.3, y: -130.3}
+  m_AnchoredPosition: {x: -177.89998, y: -126.500015}
   m_SizeDelta: {x: 286.1, y: 62.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2093662196
@@ -142,6 +142,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -271660421155367914, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
+      propertyPath: CardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: e359081d2adaa45419d858efe57f662e, type: 2}
     - target: {fileID: 424555498287171255, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_Name
       value: cc_money_p100a
@@ -156,11 +160,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 682121414004102070, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -196.4
+      value: -177
       objectReference: {fileID: 0}
     - target: {fileID: 682121414004102070, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -2.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3569891843675076209, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_text
@@ -264,11 +268,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4558932283770536414, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -184.6
+      value: -172
       objectReference: {fileID: 0}
     - target: {fileID: 4558932283770536414, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 124.5
+      value: 153
       objectReference: {fileID: 0}
     - target: {fileID: 6673246058747362754, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_SizeDelta.x

@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -229.99988, y: -48}
+  m_AnchoredPosition: {x: -206.99988, y: -69}
   m_SizeDelta: {x: 200, y: 159.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1209892909
@@ -142,17 +142,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -271660421155367914, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
+      propertyPath: CardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 9def71ad83617a94b9c520de976e9286, type: 2}
     - target: {fileID: 424555498287171255, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_Name
       value: cc_money_p25
       objectReference: {fileID: 0}
     - target: {fileID: 682121414004102070, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -231
+      value: -208
       objectReference: {fileID: 0}
     - target: {fileID: 682121414004102070, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 60
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: 3569891843675076209, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_text
@@ -256,7 +260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4558932283770536414, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 139
+      value: 148
       objectReference: {fileID: 0}
     - target: {fileID: 6673246058747362754, guid: 03ca55eea7e24a542bf1538fce16c418, type: 3}
       propertyPath: m_SizeDelta.x

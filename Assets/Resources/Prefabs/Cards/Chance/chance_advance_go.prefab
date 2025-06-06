@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 197.3, y: -156}
+  m_AnchoredPosition: {x: 200, y: -156}
   m_SizeDelta: {x: 280.5, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8729389015895100859
@@ -142,6 +142,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -937371111253916084, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
+      propertyPath: CardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 55cb221601de7024fadb7085bbbdb5ef, type: 2}
     - target: {fileID: 276266882150197165, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_SizeDelta.x
       value: 670
@@ -156,11 +160,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 682121414004102070, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 236.5
+      value: 232
       objectReference: {fileID: 0}
     - target: {fileID: 682121414004102070, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 104.7
+      value: 118
       objectReference: {fileID: 0}
     - target: {fileID: 3569891843675076209, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_text
@@ -270,11 +274,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4558932283770536414, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -230.2
+      value: -239
       objectReference: {fileID: 0}
     - target: {fileID: 4558932283770536414, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 121.5
+      value: 149
       objectReference: {fileID: 0}
     - target: {fileID: 4738438549183105755, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_SizeDelta.x

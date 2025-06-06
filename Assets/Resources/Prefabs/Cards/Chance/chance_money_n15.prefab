@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -937371111253916084, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
+      propertyPath: CardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 171a379dafa03154ea3549a629f27bc5, type: 2}
     - target: {fileID: 424555498287171255, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_Name
       value: chance_money_n15
@@ -122,8 +126,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4558932283770536414, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -235
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558932283770536414, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 127.2
+      value: 149
       objectReference: {fileID: 0}
     - target: {fileID: 6673246058747362754, guid: 92f9c987e78d45b45b6ca5adf40e5e1d, type: 3}
       propertyPath: m_SizeDelta.x

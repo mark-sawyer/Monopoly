@@ -65,6 +65,7 @@ GameObject:
   - component: {fileID: 1146611172415108033}
   - component: {fileID: 1146611172415108034}
   - component: {fileID: 1146611172415108038}
+  - component: {fileID: 1719689867095146305}
   - component: {fileID: 7805128175505535997}
   m_Layer: 5
   m_Name: Canvas
@@ -174,6 +175,52 @@ MonoBehaviour:
   questionAsked: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
   questionAnswered: {fileID: 11400000, guid: f63a59fd9cd37634a96a502daf1cc482, type: 2}
   allQuestionsAnswered: {fileID: 11400000, guid: 915426820e887234fa0a1177f256715f, type: 2}
+--- !u!114 &1719689867095146305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146611172415108035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1ad6ef8ee25854dad5a2e121f99ada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rt: {fileID: 1146611172415108039}
+  chancePrefabs:
+  - {fileID: 2947730523039505564, guid: 90c14442e70b1fc4a99e8114018b9d4e, type: 3}
+  - {fileID: 2947730523039505564, guid: f3413fb7b55298443b7954240f111b20, type: 3}
+  - {fileID: 2947730523039505564, guid: 2d42c2c32e52e184780a497182c69df8, type: 3}
+  - {fileID: 2947730523039505564, guid: f3348168c0292664b9109ff0aab513f5, type: 3}
+  - {fileID: 2947730523039505564, guid: 7ef6090bb0419a84e83f4596b1d1fc59, type: 3}
+  - {fileID: 2947730523039505564, guid: 18f15f160577dde41a3b0db90d184def, type: 3}
+  - {fileID: 2947730523039505564, guid: d09864221c04bc54797b40696235f661, type: 3}
+  - {fileID: 2947730523039505564, guid: 2333c1a1356d60a4ab674ef8cc89e65b, type: 3}
+  - {fileID: 2947730523039505564, guid: ed2ef4183759c434281f0b6c10268c87, type: 3}
+  - {fileID: 2947730523039505564, guid: 5321cd75d55252f448d6a3d4c4635ea4, type: 3}
+  - {fileID: 2947730523039505564, guid: cb2d1aead9dce8f4ea293fa4cd4dc46e, type: 3}
+  - {fileID: 2947730523039505564, guid: 2a529dcd1b7d5fc44a57de463aa8f80a, type: 3}
+  - {fileID: 2947730523039505564, guid: db12f83b33a8d554f9a677d4fb87c2cf, type: 3}
+  - {fileID: 2947730523039505564, guid: cd048910fc949c94bb82d1d7d0f47ba8, type: 3}
+  - {fileID: 2947730523039505564, guid: 819e68004b417874da4f1ae7d89945e6, type: 3}
+  communityChestPrefabs:
+  - {fileID: 8162811863746969174, guid: a3d5b22b116d28645a188f8c0b29e58c, type: 3}
+  - {fileID: 8906147099261937458, guid: 4268d0574d526c2408aa9f0aa2dd8280, type: 3}
+  - {fileID: 1894734638559025250, guid: 2d2f8d7aa7279574a846e12cdbf486c4, type: 3}
+  - {fileID: 5119209626009892242, guid: 35f105a1ac9ffdb4fbbba918d4b82895, type: 3}
+  - {fileID: 8266462099456496176, guid: caaeee6a2b8052844a49133d8a7146fb, type: 3}
+  - {fileID: 7582290715923790400, guid: 846562cdafd0d0a44876d68d5dd9fdb3, type: 3}
+  - {fileID: 6205312853235554991, guid: 65b31db59200c20409137d1860a2a5cd, type: 3}
+  - {fileID: 547096342961864623, guid: 3cac598772dec1442b5a372b6f79ed5c, type: 3}
+  - {fileID: 5020498451962769093, guid: 89442d0a453d22b4abef14feb6c4df2c, type: 3}
+  - {fileID: 7611375926069600830, guid: f52c293325b68784faebe51bc7adeb43, type: 3}
+  - {fileID: 8845972918956256385, guid: e4e8824647f8ab44b90a9b7abe7fa456, type: 3}
+  - {fileID: 2648125125910709598, guid: 6c0fe2cc29b77394688d7f27d844704b, type: 3}
+  - {fileID: 2958452345454670711, guid: ee60a58c714a3954aa1183b77b5921fc, type: 3}
+  - {fileID: 5915383855866561231, guid: 9ccd4189758f3624b96a06ad766212cf, type: 3}
+  - {fileID: 6497583332892685588, guid: d57e7c1a1d7113a4b8f95acddffa6297, type: 3}
+  - {fileID: 7628197036368909357, guid: 631af9a921c816c408e167e50c7e01f0, type: 3}
 --- !u!114 &7805128175505535997
 MonoBehaviour:
   m_ObjectHideFlags: 0
