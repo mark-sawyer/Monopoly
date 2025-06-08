@@ -1,13 +1,49 @@
+using UnityEngine;
+using System.Collections.Generic;
 
 public class GameFactory {
     public GamePlayer GamePlayer => game;
     public GameStateInfo GameStateInfo => game;
     private Game game;
 
+
+
+    #region Factory
     public void makeGame(int playerNum) {
-        game = new Game(playerNum, new Dice());
+        Queue<CardInstance> communityChestCards = initialiseCards(CardType.COMMUNITY_CHEST);
+        Queue<CardInstance> chanceCards = initialiseCards(CardType.CHANCE);
+        game = new Game(playerNum, new Dice(), communityChestCards, chanceCards);
+        setGameRefForCards(communityChestCards, game);
+        setGameRefForCards(chanceCards, game);
     }
-    public void makeRiggedDiceGame(int playerNum) {
-        game = new Game(playerNum, new RiggedDice());
+    public void makeTestGame(int playerNum) {
+        Queue<CardInstance> communityChestCards = initialiseTestCards(CardType.COMMUNITY_CHEST);
+        Queue<CardInstance> chanceCards = initialiseTestCards(CardType.CHANCE);
+        game = new Game(playerNum, new RiggedDice(), communityChestCards, chanceCards);
+        setGameRefForCards(communityChestCards, game);
+        setGameRefForCards(chanceCards, game);
     }
+    #endregion
+
+
+
+    #region private
+    private Queue<CardInstance> initialiseCards(CardType cardType) {
+        Deck deck = cardType == CardType.COMMUNITY_CHEST
+            ? Resources.Load<Deck>("ScriptableObjects/Cards/cc_deck")
+            : Resources.Load<Deck>("ScriptableObjects/Cards/chance_deck");
+        return deck.getAsQueue();
+    }
+    private Queue<CardInstance> initialiseTestCards(CardType cardType) {
+        Deck deck = cardType == CardType.COMMUNITY_CHEST
+            ? Resources.Load<Deck>("ScriptableObjects/Cards/cc_test_deck")
+            : Resources.Load<Deck>("ScriptableObjects/Cards/chance_test_deck");
+        return deck.getAsQueue();
+    }
+    private void setGameRefForCards(Queue<CardInstance> queue, Game game) {
+        foreach (CardInstance card in queue) {
+            card.setup(game);
+        }
+    }
+    #endregion
 }

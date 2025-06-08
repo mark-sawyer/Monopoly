@@ -269,6 +269,8 @@ GameObject:
   - component: {fileID: 4095811442423946741}
   - component: {fileID: 4095811442423946740}
   - component: {fileID: 4095811442423946742}
+  - component: {fileID: 8060518588690116591}
+  - component: {fileID: 5980539943454841028}
   m_Layer: 0
   m_Name: manager
   m_TagString: Untagged
@@ -339,6 +341,10 @@ MonoBehaviour:
   playerPurchasedProperty: {fileID: 11400000, guid: 28d25c3afd0d0a442bc66e9b44ef254b, type: 2}
   moneyAdjustment: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
   nextPlayerTurn: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
+  cardDrawn: {fileID: 11400000, guid: 628b22fa13344134b8c48b36b0f3b7ad, type: 2}
+  cardResolve: {fileID: 11400000, guid: 6849dc907a5d20a428e39a4ae85f4dae, type: 2}
+  cardRevealed: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
+  cardUnrevealed: {fileID: 11400000, guid: 7d37e45da8185e04d985d91073ab329e, type: 2}
 --- !u!114 &4095811442423946742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,6 +380,32 @@ MonoBehaviour:
   correct: {fileID: 11400000, guid: e2cb512c96f9a3a45a6a1d408c5ea556, type: 2}
   incorrect: {fileID: 11400000, guid: c99455678d034184d888a8d88628419a, type: 2}
   spinningPoliceman: {fileID: 11400000, guid: 2a6a4c2feb367e04dbb32f056bf22f91, type: 2}
+--- !u!114 &8060518588690116591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095811442423946729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5614e411c816a743a996099db142681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardRevealed: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
+  cardUnrevealed: {fileID: 11400000, guid: 7d37e45da8185e04d985d91073ab329e, type: 2}
+--- !u!114 &5980539943454841028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095811442423946729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a7711fa8906fd4dab71e1eb009cd39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5756401574445528174
 GameObject:
   m_ObjectHideFlags: 0

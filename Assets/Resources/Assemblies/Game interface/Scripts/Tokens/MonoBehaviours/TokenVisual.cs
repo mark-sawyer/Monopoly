@@ -30,14 +30,6 @@ public class TokenVisual : MonoBehaviour {
         tokenSpriteRenderer.sortingLayerName = layerName;
         silouhetteSpriteRenderer.sortingLayerName = layerName;
     }
-    public void beginMovingToNewSpace(int startingSpaceIndex) {
-        DiceInfo diceInfo = GameState.game.DiceInfo;
-        int roll = diceInfo.TotalValue;
-        tokenMover.startMoving(startingSpaceIndex, roll);
-    }
-    public void beginMovingToJail(int startingSpaceIndex) {
-        tokenMover.startMovingToJail(startingSpaceIndex);
-    }
     #endregion
 
 

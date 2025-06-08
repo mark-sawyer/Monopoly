@@ -50,7 +50,6 @@ public class CardMonoBehaviour : MonoBehaviour {
             return (1 / detM) * adjugate;
         }
     }
-    private const int FRAMES_FOR_CARD_FLIP = 60;
 
     public void startCoroutines(Transform cameraTransform) {
         StartCoroutine(position());
@@ -64,9 +63,9 @@ public class CardMonoBehaviour : MonoBehaviour {
             yStart,
             0.5f * yStart,
             0f,
-            0.25f * FRAMES_FOR_CARD_FLIP
+            0.25f * InterfaceConstants.FRAMES_FOR_CARD_FLIP
         );
-        for (int i = 1; i <= FRAMES_FOR_CARD_FLIP; i++) {
+        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_CARD_FLIP; i++) {
             transform.localPosition = new Vector3(
                 getLinearValue(xStart, 0f, i),
                 getQuadraticValue(quadraticCoefs, i),
@@ -79,11 +78,11 @@ public class CardMonoBehaviour : MonoBehaviour {
     private IEnumerator rotation(Transform cameraTransform) {
         Quaternion startingRotation = transform.localRotation;
         bool backToggled = false;
-        for (int i = 1; i <= FRAMES_FOR_CARD_FLIP; i++) {
+        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_CARD_FLIP; i++) {
             transform.localRotation = Quaternion.Slerp(
                 startingRotation,
                 Quaternion.identity,
-                (float)i / FRAMES_FOR_CARD_FLIP
+                (float)i / InterfaceConstants.FRAMES_FOR_CARD_FLIP
             );
             if (!backToggled && facingCamera(cameraTransform)) {
                 toggleBack(false);
@@ -93,7 +92,7 @@ public class CardMonoBehaviour : MonoBehaviour {
         }
     }
     private float getLinearValue(float start, float end, float x) {
-        return (x * (end - start) / FRAMES_FOR_CARD_FLIP) + start;
+        return (x * (end - start) / InterfaceConstants.FRAMES_FOR_CARD_FLIP) + start;
     }
     private float getQuadraticValue(Vector3 v, float x) {
         return v.x * Mathf.Pow(x, 2)
@@ -103,7 +102,7 @@ public class CardMonoBehaviour : MonoBehaviour {
     private Vector3 getQuadraticCoefs(float yStart, float yMid, float yEnd, float xMid) {
         Matrix3x3 mat = new Matrix3x3(
             0f, 0f, 1f,
-            Mathf.Pow(FRAMES_FOR_CARD_FLIP, 2), FRAMES_FOR_CARD_FLIP, 1f,
+            Mathf.Pow(InterfaceConstants.FRAMES_FOR_CARD_FLIP, 2), InterfaceConstants.FRAMES_FOR_CARD_FLIP, 1f,
             Mathf.Pow(xMid, 2), xMid, 1
         );
         Matrix3x3 inv = mat.inverse();

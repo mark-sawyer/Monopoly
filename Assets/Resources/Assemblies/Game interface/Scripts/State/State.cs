@@ -9,7 +9,7 @@ public abstract class State : ScriptableObject {
     public abstract bool exitConditionMet();
     public virtual void exitState() { }  // For actions required before going to the next state, not for setting up for next time.
     public abstract State getNextState();
-    public State getState<T>() {
+    protected State getState<T>() {
         return possibleNextStates.First(x => x is T);
     }
 }

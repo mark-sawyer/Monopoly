@@ -18,6 +18,5 @@ public class SpaceVisualManager : MonoBehaviour {
     public SpaceVisual getSpaceVisual(int index) {
         return transform.GetChild(index).GetComponent<SpaceVisual>();
     }
-    public JailVisual JailVisual => transform.GetChild(10).GetComponent<JailVisual>();
     #endregion
 }

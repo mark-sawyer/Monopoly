@@ -26,14 +26,14 @@ public class IncomeTaxQuestion : DroppedQuestion {
         tenPercentButtonText.updateText(amount);
         if (amount > 200) correct.invoke();
         else incorrect.invoke();
-        StartCoroutine(WaitFrames.exe(WAITED_FRAMES, completeQuestion, 200));
+        WaitFrames.Instance.exe(WAITED_FRAMES, completeQuestion, 200);
     }
     public void tenPercentClicked() {
         int amount = GameState.game.TurnPlayer.IncomeTaxAmount;
         tenPercentButtonText.updateText(amount);
         if (amount <= 200) correct.invoke();
         else incorrect.invoke();
-        StartCoroutine(WaitFrames.exe(WAITED_FRAMES, completeQuestion, player.IncomeTaxAmount));
+        WaitFrames.Instance.exe(WAITED_FRAMES, completeQuestion, player.IncomeTaxAmount);
     }
 
 

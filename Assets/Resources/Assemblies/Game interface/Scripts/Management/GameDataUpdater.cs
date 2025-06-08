@@ -2,14 +2,18 @@ using UnityEngine;
 
 public class GameDataUpdater : MonoBehaviour {
     private GamePlayer gamePlayer;
-    #region GameEvents
+    #region Listening GameEvents
     [SerializeField] private GameEvent rollButtonClicked;
     [SerializeField] private GameEvent turnPlayerSpaceUpdate;
     [SerializeField] private GameEvent turnPlayerSentToJail;
     [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerPurchasedProperty;
     [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustment;
     [SerializeField] private GameEvent nextPlayerTurn;
+    [SerializeField] private GameEvent<CardType> cardDrawn;
+    [SerializeField] private GameEvent cardResolve;
     #endregion
+    [SerializeField] private GameEvent<CardInfo> cardRevealed;
+    [SerializeField] private GameEvent cardUnrevealed;
 
 
 
@@ -21,6 +25,8 @@ public class GameDataUpdater : MonoBehaviour {
         moneyAdjustment.Listeners += adjustMoney;
         turnPlayerSentToJail.Listeners += sendTurnPlayerToJail;
         nextPlayerTurn.Listeners += updateTurnPlayer;
+        cardDrawn.Listeners += drawCard;
+        cardResolve.Listeners += resolveRevealedCard;
     }
     #endregion
 
@@ -57,6 +63,17 @@ public class GameDataUpdater : MonoBehaviour {
     private void updateTurnPlayer() {
         gamePlayer.updateTurnPlayer();
         gamePlayer.resetDoublesCount();
+    }
+    private void drawCard(CardType cardType) {
+        CardInfo revealedCard = gamePlayer.drawCard(cardType);
+        cardRevealed.invoke(revealedCard);
+    }
+    private void resolveRevealedCard() {
+        gamePlayer.resolveCard(RevealedCard.card);
+        if (RevealedCard.card is not GetOutOfJailFreeCardInfo) {
+            gamePlayer.bottomDeckCard(RevealedCard.card);
+        }
+        cardUnrevealed.invoke();
     }
     #endregion
 }

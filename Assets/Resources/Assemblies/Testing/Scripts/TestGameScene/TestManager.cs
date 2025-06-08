@@ -9,7 +9,7 @@ public class TestManager : MonoBehaviour {
     private void Awake() {
         int playerNum = 4;
         GameFactory gameFactory = new GameFactory();
-        gameFactory.makeRiggedDiceGame(playerNum);
+        gameFactory.makeTestGame(playerNum);
         GameState.game = gameFactory.GameStateInfo;
         gameDataUpdater.setup(gameFactory.GamePlayer);
     }

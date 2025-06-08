@@ -187,7 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1ad6ef8ee25854dad5a2e121f99ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 0}
   rt: {fileID: 1146611172415108039}
+  screenCover: {fileID: 2196481103385590348}
+  okButtonPrefab: {fileID: 1841864246036263153, guid: 98f37f104f6fd0940a61abbba1e744d3, type: 3}
   chancePrefabs:
   - {fileID: 2947730523039505564, guid: 90c14442e70b1fc4a99e8114018b9d4e, type: 3}
   - {fileID: 2947730523039505564, guid: f3413fb7b55298443b7954240f111b20, type: 3}
@@ -221,6 +224,8 @@ MonoBehaviour:
   - {fileID: 5915383855866561231, guid: 9ccd4189758f3624b96a06ad766212cf, type: 3}
   - {fileID: 6497583332892685588, guid: d57e7c1a1d7113a4b8f95acddffa6297, type: 3}
   - {fileID: 7628197036368909357, guid: 631af9a921c816c408e167e50c7e01f0, type: 3}
+  cardRevealed: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
+  okButtonClicked: {fileID: 11400000, guid: 9e00ad819c8c6ab48a3273fbab91e684, type: 2}
 --- !u!114 &7805128175505535997
 MonoBehaviour:
   m_ObjectHideFlags: 0

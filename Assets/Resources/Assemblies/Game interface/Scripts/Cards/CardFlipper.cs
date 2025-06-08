@@ -4,11 +4,18 @@ using UnityEngine;
 public class CardFlipper : MonoBehaviour {
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private RectTransform rt;
+    [SerializeField] private ScreenCover screenCover;
+    #region GameObjects
+    [SerializeField] private GameObject okButtonPrefab;
     [SerializeField] private GameObject[] chancePrefabs;
     [SerializeField] private GameObject[] communityChestPrefabs;
+    private GameObject cardInstance;
+    private GameObject okButtonInstance;
+    #endregion
+    [SerializeField] private GameEvent<CardInfo> cardRevealed;
+    [SerializeField] private GameEvent okButtonClicked;
     private Dictionary<int, GameObject> chanceIDToPrefabDictionary = new Dictionary<int, GameObject>();
     private Dictionary<int, GameObject> communityChestIDToPrefabDictionary = new Dictionary<int, GameObject>();
-    private GameObject instance;
 
 
 
@@ -16,29 +23,37 @@ public class CardFlipper : MonoBehaviour {
     private void Start() {
         initialiseChanceDictionary();
         initialiseCommunityChestyDictionary();
+        cardRevealed.Listeners += flipCard;
+        okButtonClicked.Listeners += removeVisuals;
     }
     #endregion
 
 
 
-    public void flipCard(CardType cardType, int id) {
-        if (instance != null) Destroy(instance);
-        GameObject prefab = getPrefab(cardType, id);
+    #region private
+    private void flipCard(CardInfo cardInfo) {
+        screenCover.startFadeIn();
+        GameObject prefab = getPrefab(cardInfo.CardType, cardInfo.ID);
         float canvasHeight = rt.rect.height;
         float canvasWidth = rt.rect.width;
-        instance = Instantiate(prefab, transform);
-        instance.transform.localPosition = new Vector3(
+        cardInstance = Instantiate(prefab, transform);
+        cardInstance.transform.localPosition = new Vector3(
             -canvasWidth / 4f,
             -1.1f * canvasHeight / 2f,
             0f
         );
-        instance.transform.localRotation = Quaternion.Euler(-100f, 20, 0);
-        instance.GetComponent<CardMonoBehaviour>().startCoroutines(cameraTransform);
+        cardInstance.transform.localRotation = Quaternion.Euler(-100f, 20, 0);
+        cardInstance.GetComponent<CardMonoBehaviour>().startCoroutines(cameraTransform);
+        okButtonInstance = Instantiate(okButtonPrefab, transform);
+        okButtonInstance.GetComponent<OKButton>().raise((RectTransform)cardInstance.transform);
     }
-
-
-
-    #region private
+    private void removeVisuals() {
+        screenCover.startFadeOut();
+        Destroy(cardInstance);
+        cardInstance = null;
+        Destroy(okButtonInstance);
+        okButtonInstance = null;
+    }
     private GameObject getPrefab(CardType cardType, int id) {
         if (cardType == CardType.CHANCE) return chanceIDToPrefabDictionary[id];
         else return communityChestIDToPrefabDictionary[id];

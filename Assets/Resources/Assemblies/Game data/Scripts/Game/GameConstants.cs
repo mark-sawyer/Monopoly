@@ -6,4 +6,6 @@ public static class GameConstants {
     public const int SPACES_ON_EDGE = 10;
     public const int TOTAL_HOUSES = 32;
     public const int TOTAL_HOTELS = 12;
+    public const int MONEY_FOR_PASSING_GO = 200;
+    public const int JAIL_SPACE_INDEX = 10;
 }

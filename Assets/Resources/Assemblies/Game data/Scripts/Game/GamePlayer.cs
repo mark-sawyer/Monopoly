@@ -8,4 +8,7 @@ public interface GamePlayer {
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference);
     public void sendPlayerToJail(PlayerInfo playerInfo);
     public void resetDoublesCount();
+    public CardInfo drawCard(CardType cardType);
+    public void bottomDeckCard(CardInfo cardInfo);
+    public void resolveCard(CardInfo cardInfo);
 }

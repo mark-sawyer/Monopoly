@@ -15,10 +15,10 @@ public class RollButton : MonoBehaviour {
 
     public void buttonClicked() {
         rollClicked.invoke();
-        StartCoroutine(WaitFrames.exe(
+        WaitFrames.Instance.exe(
             InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING,
-            () => animationOver.invoke()
-        ));
+            animationOver.invoke
+        );
         button.interactable = false;
     }
 }

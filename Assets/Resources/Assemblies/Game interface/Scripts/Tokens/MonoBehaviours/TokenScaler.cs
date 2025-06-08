@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TokenScaler : MonoBehaviour {
-    private const int FRAMES_FOR_TOKEN_GROWING = 50;
-
-
-
     #region MonoBehaviour
     void Start() {
         setStartingScale();
@@ -34,7 +30,7 @@ public class TokenScaler : MonoBehaviour {
     #region private
     private IEnumerator changeScale(float targetScale) {
         float startScale = transform.localScale.x;
-        int frames = FRAMES_FOR_TOKEN_GROWING;
+        int frames = InterfaceConstants.FRAMES_FOR_TOKEN_GROWING;
         float slope = (targetScale - startScale) / frames;
         for (int i = 0; i < frames; i++) {
             float scale = startScale + slope * i;

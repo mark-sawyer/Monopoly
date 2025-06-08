@@ -4,25 +4,31 @@ using UnityEngine;
 public class MoveTokenToJailState : State {
     [SerializeField] private GameEvent turnPlayerSentToJail;
     [SerializeField] private GameEvent tokenSettledEvent;
-    private TokenVisual tokenVisual;
     private bool tokenSettled;
 
 
     #region GameState
     public override void enterState() {
         int turnIndex = GameState.game.IndexOfTurnPlayer;
-        tokenVisual = TokenVisualManager.Instance.getTokenVisual(turnIndex);
+        TokenMover tokenMover = TokenVisualManager.Instance.getTokenMover(turnIndex);
+        TokenVisual tokenVisual = TokenVisualManager.Instance.getTokenVisual(turnIndex);
+        TokenScaler tokenScaler = TokenVisualManager.Instance.getTokenScaler(turnIndex);
+        tokenVisual.changeLayer(InterfaceConstants.MOVING_TOKEN_LAYER_NAME);
         int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
         turnPlayerSentToJail.invoke();
-        tokenVisual.beginMovingToJail(startingIndex);
+        tokenScaler.beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
         tokenSettled = false;
         tokenSettledEvent.Listeners += heardTokenSettle;
+        WaitFrames.Instance.exe(
+            InterfaceConstants.FRAMES_FOR_TOKEN_GROWING,
+            tokenMover.startMovingDirectly,
+            startingIndex, GameConstants.JAIL_SPACE_INDEX
+        );
     }
     public override bool exitConditionMet() {
         return tokenSettled;
     }
     public override void exitState() {
-        tokenVisual.changeLayer(InterfaceConstants.BOARD_TOKEN_LAYER_NAME);
         tokenSettledEvent.Listeners -= heardTokenSettle;
     }
     public override State getNextState() {

@@ -38,6 +38,7 @@ public class TokenMover : MonoBehaviour {
         }
         else if (passesSettledTest()) {
             settled = true;
+            GetComponent<TokenVisual>().changeLayer(InterfaceConstants.BOARD_TOKEN_LAYER_NAME);
             tokenSettled.invoke();
         }
     }
@@ -90,10 +91,10 @@ public class TokenMover : MonoBehaviour {
         tokenOnSpaceChangedEvent.invoke(this, startingSpaceIndex);
         settled = false;
     }
-    public void startMovingToJail(int startingSpaceIndex) {
-        JailVisual jailVisual = SpaceVisualManager.Instance.JailVisual;
-        Vector3 majorPoint = jailVisual.getMajorPoint(PlayerInfo);
-        Vector3 minorPoint = jailVisual.getMinorPoint(PlayerInfo);
+    public void startMovingDirectly(int startingSpaceIndex, int newSpaceIndex) {
+        SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(newSpaceIndex);
+        Vector3 majorPoint = spaceVisual.getMajorPoint(PlayerInfo);
+        Vector3 minorPoint = spaceVisual.getMinorPoint(PlayerInfo);
         queue.Enqueue(majorPoint);
         queue.Enqueue(minorPoint);
         attractivePoint = queue.Dequeue();

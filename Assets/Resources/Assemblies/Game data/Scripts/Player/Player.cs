@@ -35,6 +35,11 @@ internal class Player : PlayerInfo {
     internal void exitJail() {
         inJail = false;
     }
+    internal void changeSpace(Space newSpace) {
+        Space.removePlayer(this);
+        newSpace.addPlayer(this);
+        Space = newSpace;
+    }
     #endregion
 
 

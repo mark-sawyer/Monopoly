@@ -15,14 +15,19 @@ internal class Game : GameStateInfo, GamePlayer {
 
 
     #region internal
-    internal Game(int playerNum, DiceInterface dice) {
+    internal Game(
+        int playerNum,
+        DiceInterface dice,
+        Queue<CardInstance> communityChestCards,
+        Queue<CardInstance> chanceCards
+    ) {
         this.dice = dice;
+        this.communityChestCards = communityChestCards;
+        this.chanceCards = chanceCards;
         spaces = initialiseSpaces();
         players = initialisePlayers(playerNum);
         houses = initialiseHouses();
         hotels = initialiseHotels();
-        communityChestCards = initialiseCards(CardType.COMMUNITY_CHEST);
-        chanceCards = initialiseCards(CardType.CHANCE);
         turnPlayer = players[0];
     }
     #endregion
@@ -88,6 +93,22 @@ internal class Game : GameStateInfo, GamePlayer {
     }
     public void resetDoublesCount() {
         dice.resetDoublesCount();
+    }
+    public CardInfo drawCard(CardType cardType) {
+        if (cardType == CardType.COMMUNITY_CHEST) return communityChestCards.Dequeue();
+        else return chanceCards.Dequeue();
+    }
+    public void bottomDeckCard(CardInfo cardInfo) {
+        if (cardInfo.CardType == CardType.COMMUNITY_CHEST) {
+            communityChestCards.Enqueue((CardInstance)cardInfo);
+        }
+        else {
+            chanceCards.Enqueue((CardInstance)cardInfo);
+        }
+    }
+    public void resolveCard(CardInfo cardInfo) {
+        CardInstance cardInstance = (CardInstance)cardInfo;
+        cardInstance.resolve();
     }
     #endregion
 
@@ -175,12 +196,6 @@ internal class Game : GameStateInfo, GamePlayer {
             hotelQueue.Enqueue(new Hotel());
         }
         return hotelQueue;
-    }
-    private Queue<CardInstance> initialiseCards(CardType cardType) {
-        Deck deck = cardType == CardType.COMMUNITY_CHEST
-            ? Resources.Load<Deck>("ScriptableObjects/Cards/cc_deck")
-            : Resources.Load<Deck>("ScriptableObjects/Cards/chance_deck");
-        return deck.getAsQueue();
     }
     #endregion
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BuildingCostCard", menuName = "Card/Mechanic/BuildingCostCard")]
-internal class BuildingCostCard : CardMechanic {
+internal class BuildingCostCard : CardMechanic, BuildingCostCardInfo {
     [SerializeField] private int houseCost;
     [SerializeField] private int hotelCost;
 
@@ -9,3 +9,5 @@ internal class BuildingCostCard : CardMechanic {
 
     }
 }
+
+public interface BuildingCostCardInfo : CardMechanicInfo { }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class MoveTokenState : State {
     [SerializeField] private GameEvent turnPlayerSpaceUpdate;
     [SerializeField] private GameEvent tokenSettledEvent;
-    private TokenVisual tokenVisual;
     private bool tokenSettled;
 
 
@@ -12,10 +11,11 @@ public class MoveTokenState : State {
     #region GameState
     public override void enterState() {
         int turnIndex = GameState.game.IndexOfTurnPlayer;
-        tokenVisual = TokenVisualManager.Instance.getTokenVisual(turnIndex);
+        TokenMover tokenMover = TokenVisualManager.Instance.getTokenMover(turnIndex);
         int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
         turnPlayerSpaceUpdate.invoke();
-        tokenVisual.beginMovingToNewSpace(startingIndex);
+        DiceInfo diceInfo = GameState.game.DiceInfo;
+        tokenMover.startMoving(startingIndex, diceInfo.TotalValue);
         tokenSettled = false;
         tokenSettledEvent.Listeners += heardTokenSettle;
     }
@@ -23,7 +23,6 @@ public class MoveTokenState : State {
         return tokenSettled;
     }
     public override void exitState() {
-        tokenVisual.changeLayer(InterfaceConstants.BOARD_TOKEN_LAYER_NAME);
         tokenSettledEvent.Listeners -= heardTokenSettle;
     }
     public override State getNextState() {
@@ -31,14 +30,12 @@ public class MoveTokenState : State {
 
         if (spaceInfo is IncomeTaxSpaceInfo) return getState<IncomeTaxState>();
         if (spaceInfo is GoToJailSpaceInfo) return getState<PoliceAnimationState>();
-
-        PropertySpaceInfo propertySpaceInfo = spaceInfo as PropertySpaceInfo;
-        if (propertySpaceInfo == null) return getState<ResolveTurnState>();
-
-        PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
-        if (propertyInfo.IsBought) return getState<ResolveTurnState>();
-
-        return getState<BuyPropertyOptionState>();
+        if (spaceInfo is CardSpaceInfo) return getState<DrawCardState>();
+        if (spaceInfo is PropertySpaceInfo propertySpaceInfo) {
+            PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
+            if (!propertyInfo.IsBought) return getState<BuyPropertyOptionState>();
+        }
+        return getState<ResolveTurnState>();
     }
     #endregion
 

@@ -8,4 +8,6 @@ public static class InterfaceConstants {
     public const int FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION = 30;
     public const int DIE_FRAMES_PER_IMAGE = 10;
     public const int DIE_IMAGES_BEFORE_SETTLING = 7;
+    public const int FRAMES_FOR_CARD_FLIP = 60;
+    public const int FRAMES_FOR_TOKEN_GROWING = 50;
 }
