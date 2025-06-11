@@ -10,6 +10,7 @@ internal abstract class Property: ScriptableObject, PropertyInfo {
 
 
     #region virtual
+    internal abstract int getRent();
     internal virtual int getWorth() {
         return cost;
     }
@@ -23,6 +24,7 @@ internal abstract class Property: ScriptableObject, PropertyInfo {
     public int MortgageValue => mortgageValue;
     public bool IsBought => owner != null;
     public PlayerInfo Owner => owner;
+    public int Rent => getRent();
     #endregion
 
 
@@ -32,4 +34,13 @@ internal abstract class Property: ScriptableObject, PropertyInfo {
         owner = player;
     }
     #endregion
+}
+
+public interface PropertyInfo {
+    public int Cost { get; }
+    public string Name { get; }
+    public int MortgageValue { get; }
+    public bool IsBought { get; }
+    public PlayerInfo Owner { get; }
+    public int Rent { get; }
 }

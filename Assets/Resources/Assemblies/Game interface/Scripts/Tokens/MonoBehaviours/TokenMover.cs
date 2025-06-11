@@ -3,13 +3,17 @@ using System.Linq;
 using UnityEngine;
 
 public class TokenMover : MonoBehaviour {
+    [SerializeField] private TokenVisual tokenVisual;
     [SerializeField] private TokenScaler tokenScaler;
     [SerializeField] private GameEvent tokenSettled;
-    [SerializeField] private GameEvent<TokenMover, int> tokenOnSpaceChangedEvent;
+    [SerializeField] private TokenMoverIntEvent tokenOnSpaceChangedEvent;
+    [SerializeField] private PlayerIntEvent moneyAdjustment;
+    [SerializeField] private GameEvent moneyChangedHands;
     private Queue<Vector3> queue = new();
     private Vector3 attractivePoint;
     private Vector3 velocity = new();
     private bool settled;
+    private Vector3 goMajorPoint;
     #region consts
     private const float ACCELERATION_CONSTANT = 0.1f;
     private const float VELOCITY_CONSTANT = 0.5f;
@@ -23,12 +27,17 @@ public class TokenMover : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
+        goMajorPoint = getGoMajorPoint();
         tokenOnSpaceChangedEvent.Listeners += tokenOnSpaceChanged;
         attractivePoint = transform.position;
     }
     private void Update() {
         moveToAttractivePoint();
         if (queue.Count > 0 && directionVector().magnitude < DISTANCE_TO_SPACE_THRESHOLD) {
+            if (passingGo()) {
+                moneyAdjustment.invoke(tokenVisual.PlayerInfo, GameConstants.MONEY_FOR_PASSING_GO);
+                moneyChangedHands.invoke();
+            }
             attractivePoint = queue.Dequeue();
             if (queue.Count == 0) {
                 tokenOnSpaceChangedEvent.invoke(this, PlayerInfo.SpaceIndex);
@@ -138,6 +147,13 @@ public class TokenMover : MonoBehaviour {
             queue.Count == 0 &&
             velocity.magnitude < VELOCITY_FOR_SETTLING_THRESHOLD &&
             directionVector().magnitude < DISTANCE_FOR_SETTLING_THRESHOLD;
+    }
+    private Vector3 getGoMajorPoint() {
+        return SpaceVisualManager.Instance.getSpaceVisual(0).getMajorPoint(GameState.game.TurnPlayer);
+    }
+    private bool passingGo() {
+        return attractivePoint.x == goMajorPoint.x
+            && attractivePoint.y == goMajorPoint.y;
     }
     #endregion
 }

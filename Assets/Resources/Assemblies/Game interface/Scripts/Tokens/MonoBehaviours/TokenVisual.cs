@@ -5,7 +5,7 @@ public class TokenVisual : MonoBehaviour {
     [SerializeField] private SpriteRenderer tokenSpriteRenderer;
     [SerializeField] private SpriteRenderer silouhetteSpriteRenderer;
     [SerializeField] private TokenMover tokenMover;
-    public PlayerInfo player { get; private set; }
+    public PlayerInfo PlayerInfo { get; private set; }
     private TokenSprites tokenSprites;
     private TokenColours tokenColours;
 
@@ -22,7 +22,7 @@ public class TokenVisual : MonoBehaviour {
 
     #region public
     public void setup(PlayerInfo player) {
-        this.player = player;
+        this.PlayerInfo = player;
         tokenSprites = tokenDictionary.getSprites(player.Token);
         tokenColours = tokenDictionary.getColours(player.Colour);
     }
@@ -42,7 +42,7 @@ public class TokenVisual : MonoBehaviour {
         tokenSpriteRenderer.color = tokenColours.TokenColour;
     }
     private void setSpriteLayerOrders() {
-        int turnOrder = GameState.game.getPlayerIndex(player);
+        int turnOrder = GameState.game.getPlayerIndex(PlayerInfo);
         int players = GameState.game.NumberOfPlayers;
         int foregroundOrder = 2 * (players - turnOrder);
         tokenSpriteRenderer.sortingOrder = foregroundOrder;

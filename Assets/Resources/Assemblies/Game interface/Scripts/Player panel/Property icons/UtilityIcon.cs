@@ -48,7 +48,7 @@ public class UtilityIcon : PropertyGroupIcon {
             goldRingToggle.toggle(propertiesOwned == 2);
         }
 
-        int propertiesOwned = utilityGroupInfo.propertiesOwnedByPlayer(playerInfo);
+        int propertiesOwned = utilityGroupInfo.utilitiesOwnedByPlayer(playerInfo);
 
         setPanelColour(propertiesOwned);
         setIconColours(propertiesOwned);

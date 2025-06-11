@@ -14,7 +14,7 @@ public class AdvanceToState : State {
         int oldSpaceIndex = turnPlayer.SpaceIndex;
         cardResolve.invoke();
         int newSpaceIndex = turnPlayer.SpaceIndex;
-        int spacesMoved = Modulus.exe(newSpaceIndex - oldSpaceIndex, GameConstants.TOTAL_SPACES);
+        int spacesMoved = (newSpaceIndex - oldSpaceIndex).mod(GameConstants.TOTAL_SPACES);
 
         TokenVisualManager tokenVisualManager = TokenVisualManager.Instance;
         int turnPlayerIndex = GameState.game.IndexOfTurnPlayer;
@@ -43,9 +43,10 @@ public class AdvanceToState : State {
 
         if (spaceInfo is PropertySpaceInfo propertySpaceInfo) {
             PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
-            if (!propertyInfo.IsBought) return getState<BuyPropertyOptionState>();
+            if (!propertyInfo.IsBought) return allStates.getState<BuyPropertyOptionState>();
+            else if (propertyInfo.Owner != GameState.game.TurnPlayer) return allStates.getState<PayRentState>();
         }
-        return getState<ResolveTurnState>();
+        return allStates.getState<UpdateTurnPlayerState>();
     }
     #endregion
 

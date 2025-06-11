@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 1146611172415108038}
   - component: {fileID: 1719689867095146305}
   - component: {fileID: 7805128175505535997}
+  - component: {fileID: 8894831819150553161}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -171,10 +172,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenCover: {fileID: 2196481103385590348}
-  qRefs: {fileID: 11400000, guid: a55563091decee94aba3b9d0eed682b6, type: 2}
   questionAsked: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
   questionAnswered: {fileID: 11400000, guid: f63a59fd9cd37634a96a502daf1cc482, type: 2}
   allQuestionsAnswered: {fileID: 11400000, guid: 915426820e887234fa0a1177f256715f, type: 2}
+  playerNumberQuestionPrefab: {fileID: 606758849790308142, guid: 7dbb717baf958be4b9415bb499aa10d4, type: 3}
+  tokenSelectionQuestionPrefab: {fileID: 6847497366482895096, guid: f3075821a3680d641ac706842b031768, type: 3}
+  purchaseQuestionPrefab: {fileID: 3442082075229922575, guid: a5eff3b5040c5544792f1c76786733b7, type: 3}
+  incomeTaxQuestionPrefab: {fileID: 3442082075229922575, guid: 0aba535f26865804d8a80444771af625, type: 3}
+  unmortgageQuestionPrefab: {fileID: 3442082075229922575, guid: 3d635fb9e185688458c45cb79651c5c6, type: 3}
+  playerNumberQuestion: {fileID: 11400000, guid: c43175d0a9c0493448478948df6c9005, type: 2}
+  tokenSelectionQuestion: {fileID: 11400000, guid: c97d91f953779024c957b1b3fe0b1a6f, type: 2}
+  incomeTaxQuestion: {fileID: 11400000, guid: 78f50cfbec166e0408237475a1081cc3, type: 2}
+  purchaseQuestion: {fileID: 11400000, guid: a5b1acb66b7f35843b93252bd2942388, type: 2}
+  unmortgageQuestion: {fileID: 11400000, guid: ee7c4ea39dce04a4eb3a57fe3f7423ba, type: 2}
 --- !u!114 &1719689867095146305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +250,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinningPolicemanPrefab: {fileID: 5747658771908631661, guid: 53c3f0a8d879d7b4783fe1b660d5bb43, type: 3}
   spinningPolicemanEvent: {fileID: 11400000, guid: 2a6a4c2feb367e04dbb32f056bf22f91, type: 2}
+--- !u!114 &8894831819150553161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146611172415108035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2c40ec61bd866b499c51a9f7f2d6631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenCover: {fileID: 2196481103385590348}
+  payingRentAnimationBegins: {fileID: 11400000, guid: 08b3063bbc22e864692fc85fa3f1966c, type: 2}
+  rentAnimationOver: {fileID: 11400000, guid: e6f0a935c1a9bd743bca204a086bf674, type: 2}
+  debtorCreditorPrefab: {fileID: 6849593130023212710, guid: 862d290830f890f408b41e53f88e8406, type: 3}
 --- !u!1001 &1146611171906167348
 PrefabInstance:
   m_ObjectHideFlags: 0

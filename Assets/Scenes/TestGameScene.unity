@@ -432,6 +432,10 @@ PrefabInstance:
       propertyPath: playerSentToJail
       value: 
       objectReference: {fileID: 11400000, guid: 03b8cd968b372584aa73610ecf4c2897, type: 2}
+    - target: {fileID: 4095811442423946740, guid: f595b75a9507a204cbba0ffe00382640, type: 3}
+      propertyPath: playerIncurredDebt
+      value: 
+      objectReference: {fileID: 11400000, guid: b87708f34d8124845bedd3fe52b77b58, type: 2}
     - target: {fileID: 4095811442423946741, guid: f595b75a9507a204cbba0ffe00382640, type: 3}
       propertyPath: rollButton
       value: 
@@ -465,7 +469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7235366046681798078, guid: b99570ce7f3d14945ad76c5e17688ad1, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7235366046681798078, guid: b99570ce7f3d14945ad76c5e17688ad1, type: 3}
       propertyPath: m_AnchorMax.x
@@ -798,7 +802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1266324190073575548, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1266324190073575548, guid: aa3a620a56ed1a44dac83e03fb8f845b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -891,8 +895,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6681949334261818784}
-  - {fileID: 2000413599}
   - {fileID: 1803788732}
+  - {fileID: 2000413599}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -901,23 +905,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &6681949334153775803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6681949334153775806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14be84448f9a24442a5bcd1519f9d9db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  screenCover: {fileID: 2000413596}
-  qRefs: {fileID: 11400000, guid: a55563091decee94aba3b9d0eed682b6, type: 2}
-  questionAsked: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
-  questionAnswered: {fileID: 11400000, guid: f63a59fd9cd37634a96a502daf1cc482, type: 2}
-  allQuestionsAnswered: {fileID: 11400000, guid: 915426820e887234fa0a1177f256715f, type: 2}
 --- !u!114 &6681949334153775804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -974,9 +961,10 @@ GameObject:
   - component: {fileID: 6681949334153775805}
   - component: {fileID: 6681949334153775804}
   - component: {fileID: 6681949334153775807}
-  - component: {fileID: 6681949334153775803}
   - component: {fileID: 6681949334153775809}
+  - component: {fileID: 6681949334153775811}
   - component: {fileID: 6681949334153775808}
+  - component: {fileID: 6681949334153775810}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1066,6 +1054,48 @@ MonoBehaviour:
   - {fileID: 7628197036368909357, guid: 631af9a921c816c408e167e50c7e01f0, type: 3}
   cardRevealed: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
   okButtonClicked: {fileID: 11400000, guid: 9e00ad819c8c6ab48a3273fbab91e684, type: 2}
+--- !u!114 &6681949334153775810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6681949334153775806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2c40ec61bd866b499c51a9f7f2d6631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenCover: {fileID: 2000413596}
+  payingRentAnimationBegins: {fileID: 0}
+  rentAnimationOver: {fileID: 11400000, guid: e6f0a935c1a9bd743bca204a086bf674, type: 2}
+  debtorCreditorPrefab: {fileID: 6849593130023212710, guid: 862d290830f890f408b41e53f88e8406, type: 3}
+--- !u!114 &6681949334153775811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6681949334153775806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14be84448f9a24442a5bcd1519f9d9db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenCover: {fileID: 2000413596}
+  questionAsked: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
+  questionAnswered: {fileID: 11400000, guid: f63a59fd9cd37634a96a502daf1cc482, type: 2}
+  allQuestionsAnswered: {fileID: 11400000, guid: 915426820e887234fa0a1177f256715f, type: 2}
+  playerNumberQuestionPrefab: {fileID: 606758849790308142, guid: 7dbb717baf958be4b9415bb499aa10d4, type: 3}
+  tokenSelectionQuestionPrefab: {fileID: 6847497366482895096, guid: f3075821a3680d641ac706842b031768, type: 3}
+  purchaseQuestionPrefab: {fileID: 3442082075229922575, guid: a5eff3b5040c5544792f1c76786733b7, type: 3}
+  incomeTaxQuestionPrefab: {fileID: 3442082075229922575, guid: 0aba535f26865804d8a80444771af625, type: 3}
+  unmortgageQuestionPrefab: {fileID: 3442082075229922575, guid: 3d635fb9e185688458c45cb79651c5c6, type: 3}
+  playerNumberQuestion: {fileID: 11400000, guid: c43175d0a9c0493448478948df6c9005, type: 2}
+  tokenSelectionQuestion: {fileID: 11400000, guid: c97d91f953779024c957b1b3fe0b1a6f, type: 2}
+  incomeTaxQuestion: {fileID: 11400000, guid: 78f50cfbec166e0408237475a1081cc3, type: 2}
+  purchaseQuestion: {fileID: 11400000, guid: a5b1acb66b7f35843b93252bd2942388, type: 2}
+  unmortgageQuestion: {fileID: 11400000, guid: ee7c4ea39dce04a4eb3a57fe3f7423ba, type: 2}
 --- !u!224 &6681949334261818784
 RectTransform:
   m_ObjectHideFlags: 0

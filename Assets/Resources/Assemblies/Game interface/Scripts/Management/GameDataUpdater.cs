@@ -6,13 +6,15 @@ public class GameDataUpdater : MonoBehaviour {
     [SerializeField] private GameEvent rollButtonClicked;
     [SerializeField] private GameEvent turnPlayerSpaceUpdate;
     [SerializeField] private GameEvent turnPlayerSentToJail;
-    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerPurchasedProperty;
-    [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustment;
+    [SerializeField] private PlayerPropertyEvent playerPurchasedProperty;
+    [SerializeField] private PlayerIntEvent moneyAdjustment;
     [SerializeField] private GameEvent nextPlayerTurn;
-    [SerializeField] private GameEvent<CardType> cardDrawn;
+    [SerializeField] private CardTypeEvent cardDrawn;
     [SerializeField] private GameEvent cardResolve;
+    [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
+    [SerializeField] private PlayerEvent debtResolved;
     #endregion
-    [SerializeField] private GameEvent<CardInfo> cardRevealed;
+    [SerializeField] private CardInfoEvent cardRevealed;
     [SerializeField] private GameEvent cardUnrevealed;
 
 
@@ -27,6 +29,8 @@ public class GameDataUpdater : MonoBehaviour {
         nextPlayerTurn.Listeners += updateTurnPlayer;
         cardDrawn.Listeners += drawCard;
         cardResolve.Listeners += resolveRevealedCard;
+        playerIncurredDebt.Listeners += incurDebt;
+        debtResolved.Listeners += setDebtToNull;
     }
     #endregion
 
@@ -74,6 +78,12 @@ public class GameDataUpdater : MonoBehaviour {
             gamePlayer.bottomDeckCard(RevealedCard.card);
         }
         cardUnrevealed.invoke();
+    }
+    private void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
+        gamePlayer.incurDebt(debtor, creditor, owed);
+    }
+    private void setDebtToNull(PlayerInfo debtor) {
+        gamePlayer.removeDebt(debtor);
     }
     #endregion
 }

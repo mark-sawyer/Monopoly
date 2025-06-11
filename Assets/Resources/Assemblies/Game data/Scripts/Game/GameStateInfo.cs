@@ -12,4 +12,5 @@ public interface GameStateInfo {
     public int getSpaceIndex(SpaceInfo space);
     public PlayerInfo getPlayerInfo(int index);
     public int getPlayerIndex(PlayerInfo player);
+    public Creditor Bank { get; }
 }

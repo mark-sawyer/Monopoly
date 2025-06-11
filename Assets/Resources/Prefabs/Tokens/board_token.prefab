@@ -116,9 +116,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a455b1e2e35901f49b41f1dc2edc6618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tokenVisual: {fileID: 4292433205566116993}
   tokenScaler: {fileID: 8963674078663022694}
   tokenSettled: {fileID: 11400000, guid: 89c3c09748a18f04f97dde544eeb9785, type: 2}
   tokenOnSpaceChangedEvent: {fileID: 11400000, guid: 1f2fd157f0cd023498bffc372461579a, type: 2}
+  moneyAdjustment: {fileID: 11400000, guid: 7a53525ec9a164047aa8470674f8060c, type: 2}
+  moneyChangedHands: {fileID: 11400000, guid: 21c3d5d806e9f9143b126ea7a841731c, type: 2}
 --- !u!114 &8963674078663022694
 MonoBehaviour:
   m_ObjectHideFlags: 0

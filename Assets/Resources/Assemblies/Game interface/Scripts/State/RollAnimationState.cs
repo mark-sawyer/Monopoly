@@ -25,8 +25,8 @@ public class RollAnimationState : State {
         diceAnimationOver.Listeners -= animationOverCalled;
     }
     public override State getNextState() {
-        if (GameState.game.DiceInfo.ThreeDoublesInARow) return getState<PoliceAnimationState>();
-        else return getState<MoveTokenState>();
+        if (GameState.game.DiceInfo.ThreeDoublesInARow) return allStates.getState<PoliceAnimationState>();
+        else return allStates.getState<MoveTokenState>();
     }
     #endregion
 

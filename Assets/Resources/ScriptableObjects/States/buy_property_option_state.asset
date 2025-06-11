@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc3cf004ab71164780fbfc811c243b1, type: 3}
   m_Name: buy_property_option_state
   m_EditorClassIdentifier: 
-  possibleNextStates:
-  - {fileID: 11400000, guid: b31fc2102ef08cc49b2c29dee0b6a92c, type: 2}
-  questionEvents: {fileID: 11400000, guid: a55563091decee94aba3b9d0eed682b6, type: 2}
+  purchaseQuestion: {fileID: 11400000, guid: a5b1acb66b7f35843b93252bd2942388, type: 2}
   questionAnsweredEvent: {fileID: 11400000, guid: f63a59fd9cd37634a96a502daf1cc482, type: 2}

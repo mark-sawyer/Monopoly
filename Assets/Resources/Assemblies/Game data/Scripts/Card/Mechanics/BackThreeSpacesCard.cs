@@ -6,7 +6,8 @@ internal class BackThreeSpacesCard : CardMechanic, BackThreeSpacesCardInfo {
         Player player = (Player)Game.TurnPlayer;
         Space space = player.Space;
         int spaceIndex = space.Index;
-        int newIndex = Modulus.exe(spaceIndex - 3, GameConstants.TOTAL_SPACES);
+        //int newIndex = Modulus.exe(spaceIndex - 3, GameConstants.TOTAL_SPACES);
+        int newIndex = (spaceIndex - 3).mod(GameConstants.TOTAL_SPACES);
         Space newSpace = (Space)Game.getSpaceInfo(newIndex);
         player.changeSpace(newSpace);
     }

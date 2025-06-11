@@ -2,6 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New railroad", menuName = "Railroad")]
 internal class Railroad : Property, RailroadInfo {
+    [SerializeField] private RailroadGroup railroadGroup;
     [SerializeField] private int railroadID;
     private const int rentOne = 25;
     private const int rentTwo = 50;
@@ -10,9 +11,10 @@ internal class Railroad : Property, RailroadInfo {
 
 
 
-    #region RailroadInfo
-    public int ID => railroadID;
-    public int getRent(int railwaysOwned) {
+    #region Property
+    internal override int getRent() {
+        PlayerInfo owner = Owner;
+        int railwaysOwned = railroadGroup.railroadsOwnedByPlayer(owner);
         switch (railwaysOwned) {
             case 1: return rentOne;
             case 2: return rentTwo;
@@ -22,4 +24,14 @@ internal class Railroad : Property, RailroadInfo {
         throw new System.Exception("Invalid number of railroads owned.");
     }
     #endregion
+
+
+
+    #region RailroadInfo
+    public int ID => railroadID;
+    #endregion
+}
+
+public interface RailroadInfo : PropertyInfo {
+    public int ID { get; }
 }

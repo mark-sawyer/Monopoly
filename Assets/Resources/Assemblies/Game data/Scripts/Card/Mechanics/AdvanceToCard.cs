@@ -8,10 +8,6 @@ internal class AdvanceToCard : CardMechanic, AdvanceToCardInfo {
         Player player = (Player)Game.TurnPlayer;
         Space oldSpace = player.Space;
         player.changeSpace(destination);
-        int oldIndex = oldSpace.Index;
-        int newIndex = destination.Index;
-        bool passedGo = newIndex < oldIndex;
-        if (passedGo) player.adjustMoney(GameConstants.MONEY_FOR_PASSING_GO);
     }
     public SpaceInfo Destination => destination;
 }

@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 4095811442423946728}
   - component: {fileID: 4095811442423946741}
   - component: {fileID: 4095811442423946740}
+  - component: {fileID: 2859174189841277093}
   - component: {fileID: 4095811442423946742}
   - component: {fileID: 8060518588690116591}
   - component: {fileID: 5980539943454841028}
@@ -323,6 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstState: {fileID: 11400000, guid: 3de23add850b9c744a5d3ba03512d782, type: 2}
+  allStates: {fileID: 11400000, guid: e031bddc4251340498d41edae7dd11ea, type: 2}
 --- !u!114 &4095811442423946740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,8 +345,25 @@ MonoBehaviour:
   nextPlayerTurn: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
   cardDrawn: {fileID: 11400000, guid: 628b22fa13344134b8c48b36b0f3b7ad, type: 2}
   cardResolve: {fileID: 11400000, guid: 6849dc907a5d20a428e39a4ae85f4dae, type: 2}
+  playerIncurredDebt: {fileID: 11400000, guid: b87708f34d8124845bedd3fe52b77b58, type: 2}
+  debtResolved: {fileID: 11400000, guid: c7938aaf1f92a1f4eaf5055d97255fa3, type: 2}
   cardRevealed: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
   cardUnrevealed: {fileID: 11400000, guid: 7d37e45da8185e04d985d91073ab329e, type: 2}
+--- !u!114 &2859174189841277093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095811442423946729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd2e8f5f9d39114f9a658f5aa5d9027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moneyAdjustment: {fileID: 11400000, guid: 7a53525ec9a164047aa8470674f8060c, type: 2}
+  moneyAdjustmentData: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
+  moneyAdjustmentUI: {fileID: 11400000, guid: c0db97d160185d34f9e63f01c0c66949, type: 2}
 --- !u!114 &4095811442423946742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,24 +381,19 @@ MonoBehaviour:
   - {fileID: 3338381736022611112}
   - {fileID: 508104174120004031}
   - {fileID: 7058275444073576052}
+  soundEventPairs:
+  - {fileID: 11400000, guid: 2a40b5335b769b9429d92e8ab1441cac, type: 2}
+  - {fileID: 11400000, guid: 2c60be54120461b4f94e671255bf676a, type: 2}
+  - {fileID: 11400000, guid: 7681510d1eadb2a46bfffcf9f58c85f0, type: 2}
+  - {fileID: 11400000, guid: ea5cd3eea0f6d0d46a1234594cb0555f, type: 2}
+  - {fileID: 11400000, guid: 13f9bcaf76a87144ab4c83a0293aef4c, type: 2}
+  - {fileID: 11400000, guid: 74dee5424c434e0489eae6c7658ca5ab, type: 2}
+  rollClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
   diceRollSounds:
   - {fileID: 8300000, guid: e4747573b2627314987d562650ebbab7, type: 3}
   - {fileID: 8300000, guid: 11c5627c401c6f44eb6dbe5ee661f13d, type: 3}
   - {fileID: 8300000, guid: aaac241cf2232fa4c931fcae66345611, type: 3}
   - {fileID: 8300000, guid: e4f7d7d3b59a2ab4a9454989f9eb9e11, type: 3}
-  questionAskedSound: {fileID: 8300000, guid: 030c26b051f4a3f438bdd13eef4c2ff6, type: 3}
-  ching: {fileID: 8300000, guid: ca6f69fea85ef0541853432d007c3015, type: 3}
-  chk: {fileID: 8300000, guid: c94be23f642b6884a80fc268175bfd9e, type: 3}
-  correctSound: {fileID: 8300000, guid: 65c1371bd3422134f967baa032aad05d, type: 3}
-  incorrectSound: {fileID: 8300000, guid: 867d98af3a7a6f242a0a8d278fc90185, type: 3}
-  whistle: {fileID: 8300000, guid: 46835630ab6f1de4183eb23ffef8a129, type: 3}
-  rollClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
-  questionAsked: {fileID: 11400000, guid: da397b454e4b8874eb2348137555ec9e, type: 2}
-  moneyChangedHands: {fileID: 11400000, guid: 21c3d5d806e9f9143b126ea7a841731c, type: 2}
-  buttonPressed: {fileID: 11400000, guid: 3dcb9379c32144c49851c9b6feceecd5, type: 2}
-  correct: {fileID: 11400000, guid: e2cb512c96f9a3a45a6a1d408c5ea556, type: 2}
-  incorrect: {fileID: 11400000, guid: c99455678d034184d888a8d88628419a, type: 2}
-  spinningPoliceman: {fileID: 11400000, guid: 2a6a4c2feb367e04dbb32f056bf22f91, type: 2}
 --- !u!114 &8060518588690116591
 MonoBehaviour:
   m_ObjectHideFlags: 0

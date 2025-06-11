@@ -4,11 +4,10 @@ using UnityEngine;
 
 internal class Game : GameStateInfo, GamePlayer {
     private DiceInterface dice;
+    private Bank bank;
     private Space[] spaces;
     private Player[] players;
     private Player turnPlayer;
-    private Queue<House> houses;
-    private Queue<Hotel> hotels;
     private Queue<CardInstance> communityChestCards;
     private Queue<CardInstance> chanceCards;
 
@@ -24,10 +23,10 @@ internal class Game : GameStateInfo, GamePlayer {
         this.dice = dice;
         this.communityChestCards = communityChestCards;
         this.chanceCards = chanceCards;
+        bank = new Bank();
         spaces = initialiseSpaces();
+        initialiseUtilities();
         players = initialisePlayers(playerNum);
-        houses = initialiseHouses();
-        hotels = initialiseHotels();
         turnPlayer = players[0];
     }
     #endregion
@@ -54,6 +53,7 @@ internal class Game : GameStateInfo, GamePlayer {
     public int getPlayerIndex(PlayerInfo player) {
         return Array.FindIndex(players, x => x == player);
     }
+    public Creditor Bank => bank;
     #endregion
 
 
@@ -78,10 +78,17 @@ internal class Game : GameStateInfo, GamePlayer {
     public void addBuilding(EstateInfo estateInfo) {
         Estate estate = (Estate)estateInfo;
         if (estate.BuildingCount == 4) {
-            for (int i = 0; i < 4; i++) houses.Enqueue((House)estate.removeBuilding());
-            estate.addBuilding(hotels.Dequeue());
+            for (int i = 0; i < 4; i++) bank.returnHouse((House)estate.removeBuilding());
+            estate.addBuilding(bank.getHotel());
         }
-        else estate.addBuilding(houses.Dequeue());
+        else estate.addBuilding(bank.getHouse());
+    }
+    public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
+        Player debtorPlayer = (Player)debtor;
+        debtorPlayer.incurDebt(creditor, owed);
+    }
+    public void removeDebt(PlayerInfo debtor) {
+        ((Player)debtor).removeDebt();
     }
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference) {
         Player player = (Player)playerInfo;
@@ -116,11 +123,9 @@ internal class Game : GameStateInfo, GamePlayer {
 
     #region private
     private void movePlayer(Player player, int spacesMoved) {
-        int currentIndex = Array.FindIndex(spaces, x => x.containsPlayer(player));
-        int newIndex = (currentIndex + spacesMoved) % GameConstants.TOTAL_SPACES;
-        spaces[currentIndex].removePlayer(player);
-        spaces[newIndex].addPlayer(player);
-        player.Space = spaces[newIndex];
+        int oldIndex = player.SpaceIndex;
+        int newIndex = (oldIndex + spacesMoved) % GameConstants.TOTAL_SPACES;
+        player.changeSpace(spaces[newIndex]);
     }
     private Space[] initialiseSpaces() {
         Space[] spaces = new Space[] {
@@ -170,32 +175,24 @@ internal class Game : GameStateInfo, GamePlayer {
         }
         return spaces;
     }
+    private void initialiseUtilities() {
+        Utility electricCompany = Resources.Load<Utility>("ScriptableObjects/Properties/07_ElectricCompany");
+        Utility waterWorks = Resources.Load<Utility>("ScriptableObjects/Properties/20_WaterWorks");
+        electricCompany.setup(dice);
+        waterWorks.setup(dice);
+    }
     private Player[] initialisePlayers(int playerNum) {
         Player[] players = new Player[playerNum];
         for (int i = 0; i < playerNum; i++) {
             players[i] = new Player(
                 spaces[0],
-                (Token)i,
+                (Token)UnityEngine.Random.Range(0, 8),
                 (PlayerColour)UnityEngine.Random.Range(0, 8)
             );
             spaces[0].addPlayer(players[i]);
         }
         Player.jailSpace = spaces[10];
         return players;
-    }
-    private Queue<House> initialiseHouses() {
-        Queue<House> houseQueue = new Queue<House>(GameConstants.TOTAL_HOUSES);
-        for (int i = 0; i < GameConstants.TOTAL_HOUSES; i++) {
-            houseQueue.Enqueue(new House());
-        }
-        return houseQueue;
-    }
-    private Queue<Hotel> initialiseHotels() {
-        Queue<Hotel> hotelQueue = new Queue<Hotel>(GameConstants.TOTAL_HOTELS);
-        for (int i = 0; i < GameConstants.TOTAL_HOTELS; i++) {
-            hotelQueue.Enqueue(new Hotel());
-        }
-        return hotelQueue;
     }
     #endregion
 }

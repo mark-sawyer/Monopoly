@@ -25,8 +25,8 @@ public class DrawCardState : State {
     }
     public override State getNextState() {
         CardMechanicInfo cardMechanicInfo = RevealedCard.card.CardMechanicInfo;
-        if (cardMechanicInfo is AdvanceToCardInfo) return getState<AdvanceToState>();
-        if (cardMechanicInfo is BackThreeSpacesCardInfo) return getState<BackThreeState>();
+        if (cardMechanicInfo is AdvanceToCardInfo) return allStates.getState<AdvanceToState>();
+        if (cardMechanicInfo is BackThreeSpacesCardInfo) return allStates.getState<BackThreeState>();
         throw new System.Exception();
     }
     #endregion

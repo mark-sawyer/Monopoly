@@ -32,7 +32,7 @@ public class MoveTokenToJailState : State {
         tokenSettledEvent.Listeners -= heardTokenSettle;
     }
     public override State getNextState() {
-        return getState<ResolveTurnState>();
+        return allStates.getState<UpdateTurnPlayerState>();
     }
     #endregion
 

@@ -37,3 +37,15 @@ public class GameEvent<T1, T2> : ScriptableObject {
         action?.Invoke(value1, value2);
     }
 }
+
+public class GameEvent<T1, T2, T3> : ScriptableObject {
+    private event Action<T1, T2, T3> action;
+    public event Action<T1, T2, T3> Listeners {
+        add { action += value; }
+        remove { action -= value; }
+    }
+
+    public void invoke(T1 value1, T2 value2, T3 value3) {
+        action?.Invoke(value1, value2, value3);
+    }
+}

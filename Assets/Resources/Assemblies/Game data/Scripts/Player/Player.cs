@@ -5,6 +5,7 @@ using System.Linq;
 internal class Player : PlayerInfo {
     internal static Space jailSpace;
     private List<Property> properties = new List<Property>();
+    private Debt debt;
     private int money = 1500;
     private Token token;
     private PlayerColour colour;
@@ -40,6 +41,12 @@ internal class Player : PlayerInfo {
         newSpace.addPlayer(this);
         Space = newSpace;
     }
+    internal void incurDebt(Creditor creditor, int owed) {
+        debt = new Debt(this, creditor, owed);
+    }
+    internal void removeDebt() {
+        debt = null;
+    }
     #endregion
 
 
@@ -50,10 +57,11 @@ internal class Player : PlayerInfo {
     public Token Token { get => token; }
     public PlayerColour Colour { get => colour; }
     public int Money => money;
+    public DebtInfo Debt => debt;
+    public int TotalWorth => money + properties.Sum(x => x.getWorth());
     public int IncomeTaxAmount {
         get {
-            int totalWorth = money + properties.Sum(x => x.getWorth());
-            float tenPercent = totalWorth * 0.1f;
+            float tenPercent = TotalWorth * 0.1f;
             int rounded = Mathf.RoundToInt(tenPercent + 0.001f);
             return rounded;
         }

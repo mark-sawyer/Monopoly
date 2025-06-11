@@ -67,7 +67,7 @@ public class RailroadIcon : PropertyGroupIcon {
             goldRingToggle.toggle(propertiesOwned == 4);
         }
 
-        int propertiesOwned = railroadGroupInfo.propertiesOwnedByPlayer(playerInfo);
+        int propertiesOwned = railroadGroupInfo.railroadsOwnedByPlayer(playerInfo);
 
         setPanelColour(propertiesOwned);
         setIconColour(propertiesOwned);

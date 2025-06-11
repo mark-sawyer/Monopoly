@@ -15,14 +15,6 @@ internal class Estate : Property, EstateInfo {
     public int BuildingCost => buildingCost;
     public int BuildingCount => buildings.Count;
     public int EstateOrder => estateGroup.getPropertyOrder(this);
-    public int Rent { get {
-        if (Owner == null) throw new System.Exception("Property is unowned.");
-
-        if (buildings.Count == 0 && ownerHasMonopoly()) return 2 * rent[0];
-        if (buildings.Count == 0) return rent[0];
-        if (buildings.Peek() is Hotel) return rent[5];
-        return rent[buildings.Count];
-    } }
     public bool canAddBuilding() {
         if (!ownerHasMonopoly()) return false;
 
@@ -44,6 +36,14 @@ internal class Estate : Property, EstateInfo {
 
 
     #region Property
+    internal override int getRent() {
+        if (Owner == null) throw new System.Exception("Property is unowned.");
+
+        if (buildings.Count == 0 && ownerHasMonopoly()) return 2 * rent[0];
+        if (buildings.Count == 0) return rent[0];
+        if (buildings.Peek() is Hotel) return rent[5];
+        return rent[buildings.Count];        
+    }
     internal override int getWorth() {
         return Cost + (buildingCost * buildings.Count);
     }
@@ -78,4 +78,14 @@ internal class Estate : Property, EstateInfo {
         return hasMonopoly;
     }
     #endregion
+}
+
+public interface EstateInfo : PropertyInfo {
+    public EstateGroupInfo EstateGroupInfo { get; }
+    public Color EstateColour { get; }
+    public int BuildingCost { get; }
+    public int BuildingCount { get; }
+    public int EstateOrder { get; }
+    public bool canAddBuilding();
+    public int getSpecificRent(int index);
 }

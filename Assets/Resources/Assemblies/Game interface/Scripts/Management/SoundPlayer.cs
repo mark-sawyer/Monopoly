@@ -2,36 +2,18 @@ using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour {
     [SerializeField] private AudioSource[] audioSources;
-    #region AudioClips
-    [SerializeField] private AudioClip[] diceRollSounds;
-    [SerializeField] private AudioClip questionAskedSound;
-    [SerializeField] private AudioClip ching;
-    [SerializeField] private AudioClip chk;
-    [SerializeField] private AudioClip correctSound;
-    [SerializeField] private AudioClip incorrectSound;
-    [SerializeField] private AudioClip whistle;
-    #endregion
-    #region GameEvents
+    [SerializeField] private SoundEventPair[] soundEventPairs;
     [SerializeField] private GameEvent rollClicked;
-    [SerializeField] private GameEvent questionAsked;
-    [SerializeField] private GameEvent moneyChangedHands;
-    [SerializeField] private GameEvent buttonPressed;
-    [SerializeField] private GameEvent correct;
-    [SerializeField] private GameEvent incorrect;
-    [SerializeField] private GameEvent spinningPoliceman;
-    #endregion
+    [SerializeField] private AudioClip[] diceRollSounds;
 
 
 
     #region MonoBehaviour
     private void Start() {
         rollClicked.Listeners += playDiceSound;
-        questionAsked.Listeners += () => playSound(questionAskedSound);
-        moneyChangedHands.Listeners += () => playSound(ching);
-        buttonPressed.Listeners += () => playSound(chk);
-        correct.Listeners += () => playSound(correctSound);
-        incorrect.Listeners += () => playSound(incorrectSound);
-        spinningPoliceman.Listeners += () => playSound(whistle);
+        foreach (SoundEventPair soundEventPair in soundEventPairs) {
+            soundEventPair.GameEvent.Listeners += () => playSound(soundEventPair.AudioClip);
+        }
     }
     #endregion
 

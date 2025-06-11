@@ -1,13 +1,13 @@
 using UnityEngine;
 
 public class TestCharacterSelectManager : MonoBehaviour {
-    [SerializeField] private QuestionEventsAndPrefabs questionEventRaiser;
+    [SerializeField] private GameEvent playerNumberQuestion;
     private bool spacePressed = false;
 
     private void Update() {
         if (!spacePressed && Input.GetKeyDown(KeyCode.Space)) {
             spacePressed = true;
-            questionEventRaiser.PlayerNumberQuestion.invoke();
+            playerNumberQuestion.invoke();
         }
     }
 }

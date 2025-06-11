@@ -19,7 +19,7 @@ public class PoliceAnimationState : State {
     }
 
     public override State getNextState() {
-        return getState<MoveTokenToJailState>();
+        return allStates.getState<MoveTokenToJailState>();
     }
     public override void exitState() {
         policemanAnimationOver.Listeners -= animationOverCalled;
