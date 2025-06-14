@@ -1,10 +1,5 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GoToNextRailroadCard", menuName = "Card/Mechanic/GoToNextRailroadCard")]
-internal class GoToNextRailroadCard : CardMechanic, GoToNextRailroadCardInfo {
-    internal override void execute() {
-
-    }
-}
-
+internal class GoToNextRailroadCard : CardMechanic, GoToNextRailroadCardInfo { }
 public interface GoToNextRailroadCardInfo : CardMechanicInfo { }

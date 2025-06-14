@@ -2,7 +2,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/PayRentState")]
 public class PayRentState : State {
-    [SerializeField] private GameEvent rentAnimationOver;
     [SerializeField] private DebtEvent payingRentAnimationBegins;
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     private bool animationOver;
@@ -12,7 +11,7 @@ public class PayRentState : State {
     #region State
     public override void enterState() {
         animationOver = false;
-        rentAnimationOver.Listeners += animationOverCalled;
+        ScreenAnimation.removeScreenAnimation.Listeners += animationOverCalled;
         PropertySpaceInfo propertySpaceInfo = (PropertySpaceInfo)GameState.game.SpaceInfoOfTurnPlayer;
         PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
         PlayerInfo owner = propertyInfo.Owner;
@@ -27,7 +26,7 @@ public class PayRentState : State {
         return allStates.getState<ResolveDebtState>();
     }
     public override void exitState() {
-        rentAnimationOver.Listeners -= animationOverCalled;
+        ScreenAnimation.removeScreenAnimation.Listeners -= animationOverCalled;
     }
     #endregion
 

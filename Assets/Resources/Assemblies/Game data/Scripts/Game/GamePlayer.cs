@@ -2,6 +2,7 @@
 public interface GamePlayer {
     public void rollDice();
     public void moveTurnPlayerDiceValues();
+    public void moveTurnPlayerToSpace(SpaceInfo spaceInfo);
     public void updateTurnPlayer();
     public void obtainProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo);
     public void addBuilding(EstateInfo estateInfo);
@@ -12,5 +13,4 @@ public interface GamePlayer {
     public void resetDoublesCount();
     public CardInfo drawCard(CardType cardType);
     public void bottomDeckCard(CardInfo cardInfo);
-    public void resolveCard(CardInfo cardInfo);
 }

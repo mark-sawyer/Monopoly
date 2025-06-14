@@ -42,9 +42,6 @@ public class ResolveDebtState : State {
     public override bool exitConditionMet() {
         return debtResolved;
     }
-    public override void exitState() {
-        
-    }
     public override State getNextState() {
         return allStates.getState<UpdateTurnPlayerState>();
     }

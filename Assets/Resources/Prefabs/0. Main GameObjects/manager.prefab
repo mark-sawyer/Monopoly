@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 4095811442423946728}
   - component: {fileID: 4095811442423946741}
   - component: {fileID: 4095811442423946740}
-  - component: {fileID: 2859174189841277093}
+  - component: {fileID: 7122642120485253451}
   - component: {fileID: 4095811442423946742}
   - component: {fileID: 8060518588690116591}
   - component: {fileID: 5980539943454841028}
@@ -344,12 +344,13 @@ MonoBehaviour:
   moneyAdjustment: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
   nextPlayerTurn: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
   cardDrawn: {fileID: 11400000, guid: 628b22fa13344134b8c48b36b0f3b7ad, type: 2}
-  cardResolve: {fileID: 11400000, guid: 6849dc907a5d20a428e39a4ae85f4dae, type: 2}
+  cardResolved: {fileID: 11400000, guid: 6849dc907a5d20a428e39a4ae85f4dae, type: 2}
   playerIncurredDebt: {fileID: 11400000, guid: b87708f34d8124845bedd3fe52b77b58, type: 2}
   debtResolved: {fileID: 11400000, guid: c7938aaf1f92a1f4eaf5055d97255fa3, type: 2}
+  turnPlayerMovedToSpace: {fileID: 11400000, guid: de17ca22b690d2d45af1198d408a2c8c, type: 2}
   cardRevealed: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
   cardUnrevealed: {fileID: 11400000, guid: 7d37e45da8185e04d985d91073ab329e, type: 2}
---- !u!114 &2859174189841277093
+--- !u!114 &7122642120485253451
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -364,6 +365,9 @@ MonoBehaviour:
   moneyAdjustment: {fileID: 11400000, guid: 7a53525ec9a164047aa8470674f8060c, type: 2}
   moneyAdjustmentData: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
   moneyAdjustmentUI: {fileID: 11400000, guid: c0db97d160185d34f9e63f01c0c66949, type: 2}
+  playerObtainedProperty: {fileID: 11400000, guid: d28d132d62a163e4dac06c77d87249ea, type: 2}
+  playerObtainedPropertyData: {fileID: 11400000, guid: 28d25c3afd0d0a442bc66e9b44ef254b, type: 2}
+  playerPropertyAdjustmentUI: {fileID: 11400000, guid: da436c0660695a24788a498d9ead8ee8, type: 2}
 --- !u!114 &4095811442423946742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,7 +391,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7681510d1eadb2a46bfffcf9f58c85f0, type: 2}
   - {fileID: 11400000, guid: ea5cd3eea0f6d0d46a1234594cb0555f, type: 2}
   - {fileID: 11400000, guid: 13f9bcaf76a87144ab4c83a0293aef4c, type: 2}
-  - {fileID: 11400000, guid: 74dee5424c434e0489eae6c7658ca5ab, type: 2}
+  - {fileID: 11400000, guid: f748583eedba39c4b9ba5a419917340a, type: 2}
   rollClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
   diceRollSounds:
   - {fileID: 8300000, guid: e4747573b2627314987d562650ebbab7, type: 3}

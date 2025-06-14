@@ -12,10 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad9e2810f79f76a43aeef89a095200d5, type: 3}
   m_Name: back_three_state
   m_EditorClassIdentifier: 
-  possibleNextStates:
-  - {fileID: 11400000, guid: 7d760c7d8efdc9043b3ed720acc9f94f, type: 2}
-  - {fileID: 11400000, guid: a6cca54070fd1ec4ab9857dee537d961, type: 2}
-  - {fileID: 11400000, guid: 6fd5759a6bad8bc4f9c1f4a23a537287, type: 2}
-  - {fileID: 11400000, guid: b31fc2102ef08cc49b2c29dee0b6a92c, type: 2}
-  cardResolve: {fileID: 11400000, guid: 6849dc907a5d20a428e39a4ae85f4dae, type: 2}
+  turnPlayerMovedToSpace: {fileID: 11400000, guid: de17ca22b690d2d45af1198d408a2c8c, type: 2}
+  cardResolved: {fileID: 11400000, guid: 6849dc907a5d20a428e39a4ae85f4dae, type: 2}
   tokenSettledEvent: {fileID: 11400000, guid: 89c3c09748a18f04f97dde544eeb9785, type: 2}

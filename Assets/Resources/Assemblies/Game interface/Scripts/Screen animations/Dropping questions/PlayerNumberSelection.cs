@@ -2,7 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerNumberSelection : DroppedQuestion {
+public class PlayerNumberSelection : MonoBehaviour {
+    /*
     [SerializeField] private GameEvent<int> tokenSelectionQuestion;
     [SerializeField] private TextMeshProUGUI numberText;
     [SerializeField] private Button decreaseButton;
@@ -27,4 +28,5 @@ public class PlayerNumberSelection : DroppedQuestion {
         questionAnswered.invoke();
         disappear();
     }
+    */
 }

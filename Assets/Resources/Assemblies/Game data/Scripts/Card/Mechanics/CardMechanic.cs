@@ -3,16 +3,11 @@ using UnityEngine;
 internal abstract class CardMechanic : ScriptableObject, CardMechanicInfo {
     private Game game;
 
-
-
     #region internal
-    internal abstract void execute();
     internal void setup(Game game) {
         this.game = game;
     }
     #endregion
-
-
 
     #region protected
     protected Game Game => game;

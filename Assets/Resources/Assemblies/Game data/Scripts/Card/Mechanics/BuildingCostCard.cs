@@ -4,10 +4,11 @@ using UnityEngine;
 internal class BuildingCostCard : CardMechanic, BuildingCostCardInfo {
     [SerializeField] private int houseCost;
     [SerializeField] private int hotelCost;
-
-    internal override void execute() {
-
-    }
+    public int HouseCost => houseCost;
+    public int HotelCost => hotelCost;
 }
 
-public interface BuildingCostCardInfo : CardMechanicInfo { }
+public interface BuildingCostCardInfo : CardMechanicInfo {
+    public int HouseCost { get; }
+    public int HotelCost { get; }
+}

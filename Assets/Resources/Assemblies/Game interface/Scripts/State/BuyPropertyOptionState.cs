@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "State/BuyPropertyOptionState")]
 public class BuyPropertyOptionState : State {
     [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> purchaseQuestion;
-    [SerializeField] private GameEvent questionAnsweredEvent;
+    [SerializeField] private GameEvent questionAskedEvent;
     private bool questionAnswered;
 
 
@@ -14,13 +14,14 @@ public class BuyPropertyOptionState : State {
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
         PropertyInfo propertyInfo = ((PropertySpaceInfo)GameState.game.SpaceInfoOfTurnPlayer).PropertyInfo;
         purchaseQuestion.invoke(playerInfo, propertyInfo);
-        questionAnsweredEvent.Listeners += listenForAnswer;
+        questionAskedEvent.invoke();
+        ScreenAnimation.removeScreenAnimation.Listeners += screenAnimationRemoved;
     }
     public override bool exitConditionMet() {
         return questionAnswered;
     }
     public override void exitState() {
-        questionAnsweredEvent.Listeners -= listenForAnswer;
+        ScreenAnimation.removeScreenAnimation.Listeners -= screenAnimationRemoved;
     }
     public override State getNextState() {
         return allStates.getState<UpdateTurnPlayerState>();
@@ -29,7 +30,7 @@ public class BuyPropertyOptionState : State {
 
 
 
-    private void listenForAnswer() {
+    private void screenAnimationRemoved() {
         questionAnswered = true;
     }
 }

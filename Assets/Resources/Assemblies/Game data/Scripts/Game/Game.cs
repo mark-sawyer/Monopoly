@@ -65,6 +65,10 @@ internal class Game : GameStateInfo, GamePlayer {
     public void moveTurnPlayerDiceValues() {
         movePlayer(turnPlayer, dice.TotalValue);
     }
+    public void moveTurnPlayerToSpace(SpaceInfo spaceInfo) {
+        Space space = (Space)spaceInfo;
+        turnPlayer.changeSpace(space);
+    }
     public void updateTurnPlayer() {
         int turnPlayerIndex = Array.IndexOf(players, turnPlayer);
         int nextTurnPlayer = (turnPlayerIndex + 1) % players.Length;
@@ -112,10 +116,6 @@ internal class Game : GameStateInfo, GamePlayer {
         else {
             chanceCards.Enqueue((CardInstance)cardInfo);
         }
-    }
-    public void resolveCard(CardInfo cardInfo) {
-        CardInstance cardInstance = (CardInstance)cardInfo;
-        cardInstance.resolve();
     }
     #endregion
 

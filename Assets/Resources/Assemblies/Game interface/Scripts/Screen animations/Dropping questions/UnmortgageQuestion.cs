@@ -1,7 +1,8 @@
 using TMPro;
 using UnityEngine;
 
-public class UnmortgageQuestion : DroppedQuestion {
+public class UnmortgageQuestion : MonoBehaviour {
+    /*
     [SerializeField] private TextMeshProUGUI unmortgageCostText;
     [SerializeField] private TextMeshProUGUI keepMortgagedCostText;
     [SerializeField] private TokenIcon tokenIcon;
@@ -18,4 +19,5 @@ public class UnmortgageQuestion : DroppedQuestion {
         int asInt = (int)rounded;
         return asInt.ToString();
     }
+    */
 }

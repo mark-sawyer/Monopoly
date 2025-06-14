@@ -10,9 +10,10 @@ public class GameDataUpdater : MonoBehaviour {
     [SerializeField] private PlayerIntEvent moneyAdjustment;
     [SerializeField] private GameEvent nextPlayerTurn;
     [SerializeField] private CardTypeEvent cardDrawn;
-    [SerializeField] private GameEvent cardResolve;
+    [SerializeField] private GameEvent cardResolved;
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     [SerializeField] private PlayerEvent debtResolved;
+    [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
     #endregion
     [SerializeField] private CardInfoEvent cardRevealed;
     [SerializeField] private GameEvent cardUnrevealed;
@@ -23,12 +24,13 @@ public class GameDataUpdater : MonoBehaviour {
     private void Start() {
         rollButtonClicked.Listeners += rollDice;
         turnPlayerSpaceUpdate.Listeners += moveTurnPlayerDiceValues;
+        turnPlayerMovedToSpace.Listeners += moveTurnPlayerToSpace;
+        turnPlayerSentToJail.Listeners += sendTurnPlayerToJail;
         playerPurchasedProperty.Listeners += purchasedProperty;
         moneyAdjustment.Listeners += adjustMoney;
-        turnPlayerSentToJail.Listeners += sendTurnPlayerToJail;
         nextPlayerTurn.Listeners += updateTurnPlayer;
         cardDrawn.Listeners += drawCard;
-        cardResolve.Listeners += resolveRevealedCard;
+        cardResolved.Listeners += replaceCard;
         playerIncurredDebt.Listeners += incurDebt;
         debtResolved.Listeners += setDebtToNull;
     }
@@ -51,6 +53,9 @@ public class GameDataUpdater : MonoBehaviour {
     private void moveTurnPlayerDiceValues() {
         gamePlayer.moveTurnPlayerDiceValues();
     }
+    private void moveTurnPlayerToSpace(SpaceInfo spaceInfo) {
+        gamePlayer.moveTurnPlayerToSpace(spaceInfo);
+    }
     private void sendTurnPlayerToJail() {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         gamePlayer.sendPlayerToJail(turnPlayer);
@@ -72,8 +77,7 @@ public class GameDataUpdater : MonoBehaviour {
         CardInfo revealedCard = gamePlayer.drawCard(cardType);
         cardRevealed.invoke(revealedCard);
     }
-    private void resolveRevealedCard() {
-        gamePlayer.resolveCard(RevealedCard.card);
+    private void replaceCard() {
         if (RevealedCard.card is not GetOutOfJailFreeCardInfo) {
             gamePlayer.bottomDeckCard(RevealedCard.card);
         }

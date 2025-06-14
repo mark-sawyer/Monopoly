@@ -2,7 +2,8 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/AdvanceToState")]
 public class AdvanceToState : State {
-    [SerializeField] private GameEvent cardResolve;
+    [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
+    [SerializeField] private GameEvent cardResolved;
     [SerializeField] private GameEvent tokenSettledEvent;
     private bool tokenSettled;
 
@@ -11,8 +12,12 @@ public class AdvanceToState : State {
     #region State
     public override void enterState() {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+        AdvanceToCardInfo advanceToCardInfo = (AdvanceToCardInfo)RevealedCard.card.CardMechanicInfo;
+        SpaceInfo newSpace = advanceToCardInfo.Destination;
+
         int oldSpaceIndex = turnPlayer.SpaceIndex;
-        cardResolve.invoke();
+        turnPlayerMovedToSpace.invoke(newSpace);
+        cardResolved.invoke();
         int newSpaceIndex = turnPlayer.SpaceIndex;
         int spacesMoved = (newSpaceIndex - oldSpaceIndex).mod(GameConstants.TOTAL_SPACES);
 
@@ -39,14 +44,7 @@ public class AdvanceToState : State {
         tokenSettledEvent.Listeners -= heardTokenSettle;
     }
     public override State getNextState() {
-        SpaceInfo spaceInfo = GameState.game.SpaceInfoOfTurnPlayer;
-
-        if (spaceInfo is PropertySpaceInfo propertySpaceInfo) {
-            PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
-            if (!propertyInfo.IsBought) return allStates.getState<BuyPropertyOptionState>();
-            else if (propertyInfo.Owner != GameState.game.TurnPlayer) return allStates.getState<PayRentState>();
-        }
-        return allStates.getState<UpdateTurnPlayerState>();
+        return allStates.getState<PlayerLandedOnSpaceState>();
     }
     #endregion
 

@@ -17,7 +17,6 @@ public class PoliceAnimationState : State {
     public override bool exitConditionMet() {
         return animationOver;
     }
-
     public override State getNextState() {
         return allStates.getState<MoveTokenToJailState>();
     }

@@ -12,9 +12,6 @@ internal class CardInstance : ScriptableObject, CardInfo {
     internal void setup(Game game) {
         cardMechanic.setup(game);
     }
-    internal void resolve() {
-        cardMechanic.execute();
-    }
     #endregion
 
 

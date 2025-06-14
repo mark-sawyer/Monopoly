@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "State/IncomeTaxState")]
 public class IncomeTaxState : State {
     [SerializeField] private GameEvent<PlayerInfo> incomeTaxQuestion;
-    [SerializeField] private GameEvent questionAnsweredEvent;
+    [SerializeField] private GameEvent questionAskedEvent;
     private bool questionAnswered;
 
 
@@ -13,13 +13,14 @@ public class IncomeTaxState : State {
         questionAnswered = false;
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
         incomeTaxQuestion.invoke(playerInfo);
-        questionAnsweredEvent.Listeners += listenForAnswer;
+        questionAskedEvent.invoke();
+        ScreenAnimation.removeScreenAnimation.Listeners += screenAnimationRemoved;
     }
     public override bool exitConditionMet() {
         return questionAnswered;
     }
     public override void exitState() {
-        questionAnsweredEvent.Listeners -= listenForAnswer;
+        ScreenAnimation.removeScreenAnimation.Listeners -= screenAnimationRemoved;
     }
     public override State getNextState() {
         return allStates.getState<ResolveDebtState>();
@@ -27,7 +28,8 @@ public class IncomeTaxState : State {
     #endregion
 
 
-    private void listenForAnswer() {
+
+    private void screenAnimationRemoved() {
         questionAnswered = true;
     }
 }

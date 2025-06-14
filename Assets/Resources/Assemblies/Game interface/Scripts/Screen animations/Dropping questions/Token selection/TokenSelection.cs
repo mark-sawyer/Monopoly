@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TokenSelection : DroppedQuestion {
+public class TokenSelection : MonoBehaviour {
+    /*
     [SerializeField] private GameEvent playerNumberQuestion;
     [SerializeField] private GoButton goButton;
     [SerializeField] private Button backButton;
@@ -46,4 +47,5 @@ public class TokenSelection : DroppedQuestion {
         disappear();
     }
     #endregion
+    */
 }

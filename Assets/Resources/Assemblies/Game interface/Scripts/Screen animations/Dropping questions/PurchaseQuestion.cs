@@ -1,38 +1,53 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class PurchaseQuestion : DroppedQuestion {
-    [SerializeField] private TextMeshProUGUI purchaseText;
-    [SerializeField] private TokenIcon tokenIcon;
+public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
     #region GameEvents
-    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerObtainedPropertyData;
-    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerObtainedPropertyUI;
-    [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustment;
+    [SerializeField] private PlayerPropertyEvent playerObtainedProperty;
+    [SerializeField] private PlayerIntEvent moneyAdjustment;
     [SerializeField] private GameEvent moneyChangedHands;
     #endregion
-    private PlayerInfo player;
-    private PropertyInfo property;
+    [SerializeField] private TextMeshProUGUI purchaseText;
+    [SerializeField] private TokenIcon tokenIcon;
+    private DroppingQuestionsFunctionality droppingQuestionsFunctionality;
+    private PlayerInfo playerInfo;
+    private PropertyInfo propertyInfo;
+
+
+
+    #region MonoBehaviour
+    private void OnEnable() {
+        droppingQuestionsFunctionality = new DroppingQuestionsFunctionality((RectTransform)transform);
+        droppingQuestionsFunctionality.adjustSize();
+    }
+    #endregion
+
+
+
+    #region ScreenAnimation
+    public override void appear() {
+        StartCoroutine(droppingQuestionsFunctionality.drop());
+    }
+    public override void setup(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
+        this.playerInfo = playerInfo;
+        this.propertyInfo = propertyInfo;
+        purchaseText.text = "PURCHASE FOR $" + this.propertyInfo.Cost.ToString();
+        tokenIcon.setup(this.playerInfo.Token, this.playerInfo.Colour);
+    }
+    #endregion
 
 
 
     #region public
-    public void setup(PlayerInfo player, PropertyInfo property) {
-        this.player = player;
-        this.property = property;
-        purchaseText.text = "PURCHASE FOR $" + property.Cost.ToString();
-        tokenIcon.setup(player.Token, player.Colour);
-    }
     public void yesClicked() {
-        questionAnswered.invoke();
-        playerObtainedPropertyData.invoke(player, property);
-        playerObtainedPropertyUI.invoke(player, property);
-        moneyAdjustment.invoke(player, -property.Cost);
+        playerObtainedProperty.invoke(playerInfo, propertyInfo);
+        moneyAdjustment.invoke(playerInfo, -propertyInfo.Cost);
         moneyChangedHands.invoke();
-        disappear();
+        removeScreenAnimation.invoke();
     }
     public void noClicked() {
-        questionAnswered.invoke();
-        disappear();
+        removeScreenAnimation.invoke();
     }
     #endregion
 }

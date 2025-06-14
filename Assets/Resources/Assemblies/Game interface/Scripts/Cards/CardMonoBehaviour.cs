@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CardMonoBehaviour : MonoBehaviour {
-    public void startCoroutines(Transform cameraTransform) {
+    public void startCoroutines() {
         StartCoroutine(position());
-        StartCoroutine(rotation(cameraTransform));
+        StartCoroutine(rotation());
     }
     private IEnumerator position() {
         float xStart = transform.localPosition.x;
@@ -27,7 +27,7 @@ public class CardMonoBehaviour : MonoBehaviour {
         }
         transform.localPosition = new Vector3();
     }
-    private IEnumerator rotation(Transform cameraTransform) {
+    private IEnumerator rotation() {
         Quaternion startingRotation = transform.localRotation;
         bool backToggled = false;
         for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_CARD_FLIP; i++) {
@@ -36,7 +36,7 @@ public class CardMonoBehaviour : MonoBehaviour {
                 Quaternion.identity,
                 (float)i / InterfaceConstants.FRAMES_FOR_CARD_FLIP
             );
-            if (!backToggled && facingCamera(cameraTransform)) {
+            if (!backToggled && facingCamera(Camera.main.transform)) {
                 toggleBack(false);
                 backToggled = true;
             }
