@@ -12,6 +12,8 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
     [SerializeField] private TextMeshProUGUI owedText;
     [SerializeField] private TextMeshProUGUI paidText;
     #endregion
+    [SerializeField] private GameEvent rentUhOhSound;
+    [SerializeField] private GameEvent thrownMoney;
     [SerializeField] private GameObject moneyPrefab;
     private Dictionary<int, MoneyNoteEnum> moneyValToEnum = new Dictionary<int, MoneyNoteEnum>() {
         { 1, MoneyNoteEnum.ONE },
@@ -65,6 +67,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         creditorRT.localScale = new Vector3(creditorScale, creditorScale, creditorScale);
     }
     public override void appear() {
+        rentUhOhSound.invoke();
         float width = ((RectTransform)transform).rect.width;
         StartCoroutine(moveToken(debtorRT, 2 * width / 5f));
         StartCoroutine(moveToken(creditorRT, -2 * width / 5f));
@@ -91,7 +94,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
     private IEnumerator moveText() {
         float yStart = textRT.anchoredPosition.y;
         float canvasHeight = ((RectTransform)transform).rect.height;
-        float yDestination = -0.25f * canvasHeight;
+        float yDestination = -0.4f * canvasHeight;
         for (int i = 1; i <= MOVEMENT_FRAMES; i++) {
             float yPos = LinearValue.exe(i, yStart, yDestination, MOVEMENT_FRAMES);
             textRT.anchoredPosition = new Vector3(0f, yPos, 0f);
@@ -130,7 +133,8 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         float getY(RectTransform t) {
             float height = t.rect.height;
             float scale = t.localScale.x;
-            return scale * height / 2f;
+            float yPos = t.localPosition.y;
+            return yPos + scale * height / 2f;
         }
         float getDerivative(float x, float a, float b) {
             return 2 * a * x + b;
@@ -142,6 +146,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         float xStart = debtorRT.localPosition.x;
         float xEnd = creditorRT.localPosition.x;
 
+        thrownMoney.invoke();
         moneyTransform.localPosition = new Vector3(xStart, yStart, 0f);
 
         Matrix3x3 mat = new Matrix3x3(
@@ -165,6 +170,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
             yield return null;
         }
 
+        thrownMoney.invoke();
         adjustCreditorScale(amount);
         paid += amount;
         paidText.text = "$" + paid.ToString();

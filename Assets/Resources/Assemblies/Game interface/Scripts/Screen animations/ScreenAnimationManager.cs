@@ -16,7 +16,7 @@ public class ScreenAnimationManager : MonoBehaviour {
     [SerializeField] private PlayerEvent incomeTaxEvent;
     [SerializeField] private PlayerPropertyEvent purchaseQuestionEvent;
     [SerializeField] private GameEvent spinningPolicemanEvent;
-    [SerializeField] private CardInfoEvent cardRevealed;
+    [SerializeField] private GameEvent cardShown;
     [SerializeField] private DebtEvent payingRentAnimationBegins;
     #endregion
     private GameObject screenAnimationInstance;
@@ -38,7 +38,8 @@ public class ScreenAnimationManager : MonoBehaviour {
         purchaseQuestionEvent.Listeners += (PlayerInfo playerInfo, PropertyInfo propertyInfo) => {
             startScreenAnimation(purchaseQuestionPrefab, playerInfo, propertyInfo);
         };
-        cardRevealed.Listeners += (CardInfo cardInfo) => {
+        cardShown.Listeners += () => {
+            CardInfo cardInfo = GameState.game.DrawnCard;
             GameObject cardPrefab;
             if (cardInfo.CardType == CardType.CHANCE) cardPrefab = chanceIDToPrefabDictionary[cardInfo.ID];
             else cardPrefab = communityChestIDToPrefabDictionary[cardInfo.ID];

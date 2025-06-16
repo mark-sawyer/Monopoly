@@ -4,13 +4,13 @@ using UnityEngine;
 public class DoublesTickboxes : MonoBehaviour {
     [SerializeField] private DoublesTickbox[] doublesTickboxArray;
     [SerializeField] private GameEvent diceAnimationOver;
-    [SerializeField] private GameEvent nextPlayerTurn;
+    [SerializeField] private GameEvent nextPlayerTurnUI;
 
 
 
     private void Start() {
         diceAnimationOver.Listeners += checkForDoubles;
-        nextPlayerTurn.Listeners += removeAllTicks;
+        nextPlayerTurnUI.Listeners += removeAllTicks;
     }
 
 

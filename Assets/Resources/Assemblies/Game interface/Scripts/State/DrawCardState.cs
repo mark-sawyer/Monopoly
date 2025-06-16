@@ -2,7 +2,9 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/DrawCardState")]
 public class DrawCardState : State {
+    [SerializeField] private GameEvent cardSoundEvent;
     [SerializeField] private CardTypeEvent cardDrawn;
+    [SerializeField] private GameEvent cardShown;
     private bool okClicked;
 
 
@@ -14,6 +16,8 @@ public class DrawCardState : State {
         CardSpaceInfo cardSpaceInfo = (CardSpaceInfo)playerInfo.SpaceInfo;
         CardType cardType = cardSpaceInfo.CardType;
         cardDrawn.invoke(cardType);
+        cardShown.invoke();
+        cardSoundEvent.invoke();
         ScreenAnimation.removeScreenAnimation.Listeners += screenAnimationRemoved;
     }
     public override bool exitConditionMet() {
@@ -23,7 +27,7 @@ public class DrawCardState : State {
         ScreenAnimation.removeScreenAnimation.Listeners -= screenAnimationRemoved;
     }
     public override State getNextState() {
-        CardMechanicInfo cardMechanicInfo = RevealedCard.card.CardMechanicInfo;
+        CardMechanicInfo cardMechanicInfo = GameState.game.DrawnCard.CardMechanicInfo;
         if (cardMechanicInfo is AdvanceToCardInfo) return allStates.getState<AdvanceToState>();
         if (cardMechanicInfo is BackThreeSpacesCardInfo) return allStates.getState<BackThreeState>();
         if (cardMechanicInfo is MoneyDifferenceCardInfo) return allStates.getState<MoneyCardState>();

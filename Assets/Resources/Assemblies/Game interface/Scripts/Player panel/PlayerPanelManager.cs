@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class PlayerPanelManager : MonoBehaviour {
     [SerializeField] private GameObject playerPanelPrefab;
-    [SerializeField] private GameEvent<PlayerInfo> moneyAdjustment;
-    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerPropertyAdjustment;
+    [SerializeField] private GameEvent nextTurnPlayerUI;
+    [SerializeField] private PlayerEvent moneyAdjustmentUI;
+    [SerializeField] private PlayerPropertyEvent playerPropertyAdjustmentUI;
     private const float GAP = 3;
 
 
@@ -15,6 +16,7 @@ public class PlayerPanelManager : MonoBehaviour {
         scalePanels();
         associateWithPlayers();
         subscribeToEvents();
+        getPlayerPanel(0).toggleHighlightImage(true);
     }
     #endregion
 
@@ -38,7 +40,7 @@ public class PlayerPanelManager : MonoBehaviour {
 
         float maxHeightForPlayerPanels = canvasRect.height;
         float maxWidthForPlayerPanels = (canvasRect.width - canvasRect.height) / 2f;
-        
+
         float scaleForHeight = maxHeightForPlayerPanels / panelsHeight;
         float scaleForWidth = maxWidthForPlayerPanels / panelsWidth;
 
@@ -56,14 +58,15 @@ public class PlayerPanelManager : MonoBehaviour {
         }
     }
     private void subscribeToEvents() {
-        moneyAdjustment.Listeners += adjustMoneyVisual;
-        playerPropertyAdjustment.Listeners += updatePropertyIcons;
+        moneyAdjustmentUI.Listeners += adjustMoneyVisual;
+        playerPropertyAdjustmentUI.Listeners += updatePropertyIcons;
+        nextTurnPlayerUI.Listeners += updateTurnPlayerHighlight;
     }
     #endregion
 
 
 
-    #region Events
+    #region Listeners
     private void adjustMoneyVisual(PlayerInfo playerInfo) {
         int playerIndex = GameState.game.getPlayerIndex(playerInfo);
         PlayerPanel playerPanel = transform.GetChild(playerIndex).GetComponent<PlayerPanel>();
@@ -73,6 +76,19 @@ public class PlayerPanelManager : MonoBehaviour {
         int playerIndex = GameState.game.getPlayerIndex(playerInfo);
         PlayerPanel playerPanel = transform.GetChild(playerIndex).GetComponent<PlayerPanel>();
         playerPanel.updatePropertyIconVisual(playerInfo, propertyInfo);
+    }
+    private void updateTurnPlayerHighlight() {
+        int turnPlayerIndex = GameState.game.IndexOfTurnPlayer;
+        for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
+            getPlayerPanel(i).toggleHighlightImage(i == turnPlayerIndex);
+        }
+    }
+    #endregion
+
+
+    #region private
+    private PlayerPanel getPlayerPanel(int index) {
+        return transform.GetChild(index).GetComponent<PlayerPanel>();
     }
     #endregion
 }

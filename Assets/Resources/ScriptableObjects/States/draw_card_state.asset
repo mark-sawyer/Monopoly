@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa37643d7321f44485a71d2fa51e332, type: 3}
   m_Name: draw_card_state
   m_EditorClassIdentifier: 
-  possibleNextStates:
-  - {fileID: 11400000, guid: 8f55fb995fb064d488a8d649fa63a537, type: 2}
-  - {fileID: 11400000, guid: 46878e516a8c6c84daecb8eecf9d38de, type: 2}
+  cardSoundEvent: {fileID: 11400000, guid: dd41fa33317c79b49b6fb300a80ac2a3, type: 2}
   cardDrawn: {fileID: 11400000, guid: 628b22fa13344134b8c48b36b0f3b7ad, type: 2}
-  okButtonClicked: {fileID: 11400000, guid: 9e00ad819c8c6ab48a3273fbab91e684, type: 2}
+  cardShown: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}

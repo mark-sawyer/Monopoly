@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerPanel : MonoBehaviour {
     [SerializeField] private PropertyGroupIcon[] propertyGroupIcons;
     [SerializeField] private Transform propertyIconContainer;
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private MoneyAdjuster moneyAdjuster;
+    [SerializeField] private Image highlightImage;
     private PlayerInfo player;
 
 
@@ -30,6 +32,9 @@ public class PlayerPanel : MonoBehaviour {
 
         PropertyGroupIcon propertyGroupIcon = getPropertyGroupIcon();
         StartCoroutine(propertyGroupIcon.pulseAndUpdate(player));
+    }
+    public void toggleHighlightImage(bool toggle) {
+        highlightImage.enabled = toggle;
     }
     #endregion
 }

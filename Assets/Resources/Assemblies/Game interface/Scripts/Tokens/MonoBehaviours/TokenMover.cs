@@ -41,8 +41,10 @@ public class TokenMover : MonoBehaviour {
             attractivePoint = queue.Dequeue();
             if (queue.Count == 0) {
                 tokenOnSpaceChangedEvent.invoke(this, PlayerInfo.SpaceIndex);
-                SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(PlayerInfo.SpaceIndex);
-                tokenScaler.beginScaleChange();
+                int spaceIndex = PlayerInfo.SpaceIndex;
+                SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(spaceIndex);
+                float scale = spaceVisual.getScale(PlayerInfo);
+                tokenScaler.beginScaleChange(scale);
             }
         }
         else if (passesSettledTest()) {
@@ -121,22 +123,30 @@ public class TokenMover : MonoBehaviour {
     }
     private void moveToAttractivePoint() {
         float finalPositionMagnitude() {
-            return (queue.Last() - transform.position).magnitude;
+            Vector3 temp = transform.position;
+            float distance = 0;
+            foreach (Vector3 v in queue) {
+                distance += (temp - v).magnitude;
+                temp = v;
+            }
+            return distance;
         }
 
-        Vector3 dirVec = queue.Count > 0 ? directionVector().normalized * finalPositionMagnitude() : directionVector();
+        Vector3 dirVec = queue.Count > 0
+            ? directionVector().normalized * finalPositionMagnitude()
+            : directionVector();
         Vector3 acceleration = (dirVec - VELOCITY_CONSTANT * velocity) * ACCELERATION_CONSTANT;
         velocity = velocity + acceleration;
         if (velocity.magnitude > MAX_VELOCITY) velocity = velocity.normalized * MAX_VELOCITY;
-        transform.position = (transform.position + velocity * Time.deltaTime);
+        transform.position = transform.position + velocity * Time.deltaTime;
     }
     private void tokenOnSpaceChanged(TokenMover caller, int spaceIndex) {
         if (caller == this) return;
         if (spaceIndex != PlayerInfo.SpaceIndex) return;
 
 
-        SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(spaceIndex);
-        tokenScaler.beginScaleChange();
+        SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(spaceIndex);        
+        tokenScaler.beginScaleChange(spaceVisual.getScale(PlayerInfo));
         attractivePoint = spaceVisual.getMinorPoint(PlayerInfo);
     }
     private Vector3 directionVector() {

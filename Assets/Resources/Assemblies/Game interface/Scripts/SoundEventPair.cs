@@ -1,9 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SoundEventPair")]
-public class SoundEventPair : ScriptableObject {
-    [SerializeField] private AudioClip audioClip;
+public abstract class SoundEventPair : ScriptableObject {
     [SerializeField] private GameEvent gameEvent;
-    public AudioClip AudioClip => audioClip;
+    public abstract AudioClip AudioClip { get; }
     public GameEvent GameEvent => gameEvent;
 }

@@ -12,7 +12,7 @@ public class MoneyCardState : State {
 
     #region State
     public override void enterState() {
-        MoneyDifferenceCardInfo moneyDifferenceCardInfo = (MoneyDifferenceCardInfo)RevealedCard.card.CardMechanicInfo;
+        MoneyDifferenceCardInfo moneyDifferenceCardInfo = (MoneyDifferenceCardInfo)GameState.game.DrawnCard.CardMechanicInfo;
         addedToPlayer = moneyDifferenceCardInfo.AddedToPlayer;
         if (addedToPlayer > 0) {
             moneyAdjustment.invoke(GameState.game.TurnPlayer, addedToPlayer);

@@ -3,9 +3,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CardMonoBehaviour : MonoBehaviour {
+    [SerializeField] private GameEvent cardDrop;
+
+
+
+    #region Coroutines
     public void startCoroutines() {
         StartCoroutine(position());
         StartCoroutine(rotation());
+        WaitFrames.Instance.exe(
+            InterfaceConstants.FRAMES_FOR_CARD_FLIP - 10,
+            cardDrop.invoke
+        );
+        WaitFrames.Instance.exe(
+            InterfaceConstants.FRAMES_FOR_CARD_FLIP,
+            () => StartCoroutine(tinyShake())
+        );
     }
     private IEnumerator position() {
         float xStart = transform.localPosition.x;
@@ -43,6 +56,22 @@ public class CardMonoBehaviour : MonoBehaviour {
             yield return null;
         }
     }
+    private IEnumerator tinyShake() {
+        float range = 3;
+        for (int i = 0; i < 5; i++) {
+            transform.localPosition = new Vector3(
+                Random.Range(-range, range),
+                Random.Range(-range, range),
+                0f
+            );
+            yield return null;
+        }
+    }
+    #endregion
+
+
+
+    #region private
     private float getLinearValue(float start, float end, float x) {
         return (x * (end - start) / InterfaceConstants.FRAMES_FOR_CARD_FLIP) + start;
     }
@@ -78,4 +107,5 @@ public class CardMonoBehaviour : MonoBehaviour {
     private bool facingCamera(Transform cameraTransform) {
         return Vector3.Dot(transform.forward, cameraTransform.forward) > 0;
     }
+    #endregion
 }

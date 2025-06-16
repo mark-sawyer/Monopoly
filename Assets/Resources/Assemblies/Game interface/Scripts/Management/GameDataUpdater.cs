@@ -8,15 +8,13 @@ public class GameDataUpdater : MonoBehaviour {
     [SerializeField] private GameEvent turnPlayerSentToJail;
     [SerializeField] private PlayerPropertyEvent playerPurchasedProperty;
     [SerializeField] private PlayerIntEvent moneyAdjustment;
-    [SerializeField] private GameEvent nextPlayerTurn;
+    [SerializeField] private GameEvent nextPlayerTurnData;
     [SerializeField] private CardTypeEvent cardDrawn;
     [SerializeField] private GameEvent cardResolved;
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     [SerializeField] private PlayerEvent debtResolved;
     [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
     #endregion
-    [SerializeField] private CardInfoEvent cardRevealed;
-    [SerializeField] private GameEvent cardUnrevealed;
 
 
 
@@ -28,9 +26,9 @@ public class GameDataUpdater : MonoBehaviour {
         turnPlayerSentToJail.Listeners += sendTurnPlayerToJail;
         playerPurchasedProperty.Listeners += purchasedProperty;
         moneyAdjustment.Listeners += adjustMoney;
-        nextPlayerTurn.Listeners += updateTurnPlayer;
+        nextPlayerTurnData.Listeners += updateTurnPlayer;
         cardDrawn.Listeners += drawCard;
-        cardResolved.Listeners += replaceCard;
+        cardResolved.Listeners += undrawCard;
         playerIncurredDebt.Listeners += incurDebt;
         debtResolved.Listeners += setDebtToNull;
     }
@@ -74,14 +72,10 @@ public class GameDataUpdater : MonoBehaviour {
         gamePlayer.resetDoublesCount();
     }
     private void drawCard(CardType cardType) {
-        CardInfo revealedCard = gamePlayer.drawCard(cardType);
-        cardRevealed.invoke(revealedCard);
+        gamePlayer.drawCard(cardType);
     }
-    private void replaceCard() {
-        if (RevealedCard.card is not GetOutOfJailFreeCardInfo) {
-            gamePlayer.bottomDeckCard(RevealedCard.card);
-        }
-        cardUnrevealed.invoke();
+    private void undrawCard() {
+        gamePlayer.undrawCard();
     }
     private void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
         gamePlayer.incurDebt(debtor, creditor, owed);

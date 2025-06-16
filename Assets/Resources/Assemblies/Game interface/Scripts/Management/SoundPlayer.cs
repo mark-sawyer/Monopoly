@@ -3,14 +3,11 @@ using UnityEngine;
 public class SoundPlayer : MonoBehaviour {
     [SerializeField] private AudioSource[] audioSources;
     [SerializeField] private SoundEventPair[] soundEventPairs;
-    [SerializeField] private GameEvent rollClicked;
-    [SerializeField] private AudioClip[] diceRollSounds;
 
 
 
     #region MonoBehaviour
     private void Start() {
-        rollClicked.Listeners += playDiceSound;
         foreach (SoundEventPair soundEventPair in soundEventPairs) {
             soundEventPair.GameEvent.Listeners += () => playSound(soundEventPair.AudioClip);
         }
@@ -20,12 +17,6 @@ public class SoundPlayer : MonoBehaviour {
 
 
     #region private
-    private void playDiceSound() {
-        int index = Random.Range(0, diceRollSounds.Length);
-        AudioSource audioSource = getAvailableAudioSource();
-        audioSource.clip = diceRollSounds[index];
-        audioSource.Play();
-    }
     private void playSound(AudioClip sound) {
         AudioSource audioSource = getAvailableAudioSource();
         audioSource.clip = sound;

@@ -13,4 +13,5 @@ public interface GameStateInfo {
     public PlayerInfo getPlayerInfo(int index);
     public int getPlayerIndex(PlayerInfo player);
     public Creditor Bank { get; }
+    public CardInfo DrawnCard { get; }
 }

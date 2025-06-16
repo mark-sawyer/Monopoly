@@ -31,6 +31,9 @@ public class BuyPropertyOptionState : State {
 
 
     private void screenAnimationRemoved() {
-        questionAnswered = true;
+        WaitFrames.Instance.exe(
+            100,  // Waiting for the UI update and bloop sound (occurs in PurchaseQuestion).
+            () => { questionAnswered = true; }
+        );
     }
 }

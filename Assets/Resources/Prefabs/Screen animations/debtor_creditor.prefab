@@ -729,7 +729,8 @@ MonoBehaviour:
   creditorRT: {fileID: 2333253816157646420}
   owedText: {fileID: 9163866893750173907}
   paidText: {fileID: 3777420030472920909}
-  rentAnimationOver: {fileID: 11400000, guid: e6f0a935c1a9bd743bca204a086bf674, type: 2}
+  rentUhOhSound: {fileID: 11400000, guid: e46ce8e354922ab45a52a095031e212c, type: 2}
+  thrownMoney: {fileID: 11400000, guid: 4a461730b0364f347aca51a68946a8b0, type: 2}
   moneyPrefab: {fileID: 2919637671612158086, guid: f4e7bff0383c4c7498ecfebbb72221f0, type: 3}
 --- !u!1001 &860829953773168513
 PrefabInstance:
@@ -760,7 +761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_AnchorMin.x
@@ -768,7 +769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_SizeDelta.x
@@ -878,7 +879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_AnchorMin.x
@@ -886,7 +887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_SizeDelta.x
@@ -894,7 +895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 37.6
+      value: 37.600006
       objectReference: {fileID: 0}
     - target: {fileID: 5828143247314238057, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_LocalScale.x

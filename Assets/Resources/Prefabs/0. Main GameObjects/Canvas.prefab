@@ -50,8 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPanelPrefab: {fileID: 7478890726560055293, guid: 1f5d3f52aab6c394e8a514c83f35a3e0, type: 3}
-  moneyAdjustment: {fileID: 11400000, guid: c0db97d160185d34f9e63f01c0c66949, type: 2}
-  playerPropertyAdjustment: {fileID: 11400000, guid: da436c0660695a24788a498d9ead8ee8, type: 2}
+  nextTurnPlayerUI: {fileID: 11400000, guid: 16a986c37b9c53c4f97288b8053c81b0, type: 2}
+  moneyAdjustmentUI: {fileID: 11400000, guid: c0db97d160185d34f9e63f01c0c66949, type: 2}
+  playerPropertyAdjustmentUI: {fileID: 11400000, guid: da436c0660695a24788a498d9ead8ee8, type: 2}
 --- !u!1 &1146611172415108035
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +211,7 @@ MonoBehaviour:
   incomeTaxEvent: {fileID: 11400000, guid: 78f50cfbec166e0408237475a1081cc3, type: 2}
   purchaseQuestionEvent: {fileID: 11400000, guid: a5b1acb66b7f35843b93252bd2942388, type: 2}
   spinningPolicemanEvent: {fileID: 11400000, guid: 2a6a4c2feb367e04dbb32f056bf22f91, type: 2}
-  cardRevealed: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
+  cardShown: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
   payingRentAnimationBegins: {fileID: 11400000, guid: 08b3063bbc22e864692fc85fa3f1966c, type: 2}
 --- !u!1001 &1146611171906167348
 PrefabInstance:
@@ -352,10 +353,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: game_ui
       objectReference: {fileID: 0}
-    - target: {fileID: 7171931576187737397, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
-      propertyPath: nextPlayerTurn
-      value: 
-      objectReference: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
     - target: {fileID: 7235366046681798078, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
       propertyPath: m_Pivot.x
       value: 1

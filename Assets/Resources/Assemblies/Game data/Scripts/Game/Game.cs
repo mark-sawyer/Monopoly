@@ -10,6 +10,7 @@ internal class Game : GameStateInfo, GamePlayer {
     private Player turnPlayer;
     private Queue<CardInstance> communityChestCards;
     private Queue<CardInstance> chanceCards;
+    private CardInstance drawnCard;
 
 
 
@@ -54,6 +55,7 @@ internal class Game : GameStateInfo, GamePlayer {
         return Array.FindIndex(players, x => x == player);
     }
     public Creditor Bank => bank;
+    public CardInfo DrawnCard => drawnCard;
     #endregion
 
 
@@ -105,17 +107,16 @@ internal class Game : GameStateInfo, GamePlayer {
     public void resetDoublesCount() {
         dice.resetDoublesCount();
     }
-    public CardInfo drawCard(CardType cardType) {
-        if (cardType == CardType.COMMUNITY_CHEST) return communityChestCards.Dequeue();
-        else return chanceCards.Dequeue();
+    public void drawCard(CardType cardType) {
+        if (cardType == CardType.COMMUNITY_CHEST) drawnCard = communityChestCards.Dequeue();
+        else drawnCard = chanceCards.Dequeue();
     }
-    public void bottomDeckCard(CardInfo cardInfo) {
-        if (cardInfo.CardType == CardType.COMMUNITY_CHEST) {
-            communityChestCards.Enqueue((CardInstance)cardInfo);
+    public void undrawCard() {
+        if (drawnCard.CardMechanicInfo is not GetOutOfJailFreeCardInfo) {
+            if (drawnCard.CardType == CardType.COMMUNITY_CHEST) communityChestCards.Enqueue(drawnCard);
+            else chanceCards.Enqueue(drawnCard);
         }
-        else {
-            chanceCards.Enqueue((CardInstance)cardInfo);
-        }
+        drawnCard = null;
     }
     #endregion
 

@@ -12,7 +12,7 @@ public class AdvanceToState : State {
     #region State
     public override void enterState() {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
-        AdvanceToCardInfo advanceToCardInfo = (AdvanceToCardInfo)RevealedCard.card.CardMechanicInfo;
+        AdvanceToCardInfo advanceToCardInfo = (AdvanceToCardInfo)GameState.game.DrawnCard.CardMechanicInfo;
         SpaceInfo newSpace = advanceToCardInfo.Destination;
 
         int oldSpaceIndex = turnPlayer.SpaceIndex;

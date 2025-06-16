@@ -25,12 +25,13 @@ public class TokenVisualManager : MonoBehaviour {
     private void Start() {
         IEnumerable<PlayerInfo> players = GameState.game.PlayerInfos;
         int i = 0;
+        SpaceVisual startingSpaceVisual = SpaceVisualManager.Instance.getSpaceVisual(0);
         foreach (PlayerInfo player in players) {
             Vector3 startingPosition = getStartingPosition(player);
             GameObject newToken = Instantiate(tokenPrefab, startingPosition, Quaternion.identity, transform);
             newToken.GetComponent<TokenVisual>().setup(player);
             newToken.GetComponent<TokenMover>().setup(player);
-            newToken.GetComponent<TokenScaler>().setup(player);
+            newToken.GetComponent<TokenScaler>().setup(player, startingSpaceVisual.getScale(player));
             i += 1;
         }
     }
