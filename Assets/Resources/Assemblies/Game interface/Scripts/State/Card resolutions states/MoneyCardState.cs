@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "State/MoneyCardState")]
 public class MoneyCardState : State {
     [SerializeField] private GameEvent cardResolved;
-    [SerializeField] private GameEvent moneyChangedHands;
+    [SerializeField] private SoundEvent moneyChing;
     [SerializeField] private PlayerIntEvent moneyAdjustment;
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     private int addedToPlayer;
@@ -16,7 +16,7 @@ public class MoneyCardState : State {
         addedToPlayer = moneyDifferenceCardInfo.AddedToPlayer;
         if (addedToPlayer > 0) {
             moneyAdjustment.invoke(GameState.game.TurnPlayer, addedToPlayer);
-            moneyChangedHands.invoke();
+            moneyChing.play();
         }
         else playerIncurredDebt.invoke(GameState.game.TurnPlayer, GameState.game.Bank, -addedToPlayer);
         cardResolved.invoke();

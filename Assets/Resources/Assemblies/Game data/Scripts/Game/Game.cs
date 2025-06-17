@@ -56,6 +56,14 @@ internal class Game : GameStateInfo, GamePlayer {
     }
     public Creditor Bank => bank;
     public CardInfo DrawnCard => drawnCard;
+    public void playerGetsGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
+        CardInstance getOutOfJailFreeCard = (CardInstance)cardInfo;
+        if (getOutOfJailFreeCard.CardMechanic is not GetOutOfJailFreeCard) {
+            throw new System.Exception("Not a GetOutOfJailFreeCard");
+        }
+        Player player = (Player)playerInfo;
+        player.getGOOJFCard(getOutOfJailFreeCard);
+    }
     #endregion
 
 

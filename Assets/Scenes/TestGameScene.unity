@@ -560,6 +560,10 @@ PrefabInstance:
       propertyPath: samePlayerTurn
       value: 
       objectReference: {fileID: 11400000, guid: 4c7a252050a310e46ae33c00f413b87d, type: 2}
+    - target: {fileID: 8167315050177127996, guid: b99570ce7f3d14945ad76c5e17688ad1, type: 3}
+      propertyPath: nextPlayerTurnUI
+      value: 
+      objectReference: {fileID: 11400000, guid: 16a986c37b9c53c4f97288b8053c81b0, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b99570ce7f3d14945ad76c5e17688ad1, type: 3}
 --- !u!224 &1803788732 stripped
@@ -687,9 +691,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPanelPrefab: {fileID: 7478890726560055293, guid: 1f5d3f52aab6c394e8a514c83f35a3e0, type: 3}
-  nextTurnPlayer: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
+  nextTurnPlayerUI: {fileID: 11400000, guid: 16a986c37b9c53c4f97288b8053c81b0, type: 2}
   moneyAdjustmentUI: {fileID: 11400000, guid: c0db97d160185d34f9e63f01c0c66949, type: 2}
   playerPropertyAdjustmentUI: {fileID: 11400000, guid: da436c0660695a24788a498d9ead8ee8, type: 2}
+  playerGetsGOOJFCardUI: {fileID: 11400000, guid: 6b9965a390aaf2d4b81eca2809fad300, type: 2}
 --- !u!224 &6346387888341500307
 RectTransform:
   m_ObjectHideFlags: 0

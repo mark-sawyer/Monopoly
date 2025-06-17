@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "State/IncomeTaxState")]
 public class IncomeTaxState : State {
     [SerializeField] private GameEvent<PlayerInfo> incomeTaxQuestion;
-    [SerializeField] private GameEvent questionAskedEvent;
+    [SerializeField] private SoundEvent questionChime;
     private bool questionAnswered;
 
 
@@ -13,7 +13,7 @@ public class IncomeTaxState : State {
         questionAnswered = false;
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
         incomeTaxQuestion.invoke(playerInfo);
-        questionAskedEvent.invoke();
+        questionChime.play();
         ScreenAnimation.removeScreenAnimation.Listeners += screenAnimationRemoved;
     }
     public override bool exitConditionMet() {

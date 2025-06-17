@@ -219,9 +219,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 3dcb9379c32144c49851c9b6feceecd5, type: 2}
-        m_TargetAssemblyTypeName: GameEvent, GameInterface
-        m_MethodName: invoke
+      - m_Target: {fileID: 11400000, guid: cf223574c9472a74e84d4f551f9f9f18, type: 2}
+        m_TargetAssemblyTypeName: SoundEvent, GameInterface
+        m_MethodName: play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

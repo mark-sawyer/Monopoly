@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/DrawCardState")]
 public class DrawCardState : State {
-    [SerializeField] private GameEvent cardSoundEvent;
+    [SerializeField] private SoundEvent cardSoundEvent;
     [SerializeField] private CardTypeEvent cardDrawn;
     [SerializeField] private GameEvent cardShown;
     private bool okClicked;
@@ -17,7 +17,7 @@ public class DrawCardState : State {
         CardType cardType = cardSpaceInfo.CardType;
         cardDrawn.invoke(cardType);
         cardShown.invoke();
-        cardSoundEvent.invoke();
+        cardSoundEvent.play();
         ScreenAnimation.removeScreenAnimation.Listeners += screenAnimationRemoved;
     }
     public override bool exitConditionMet() {
@@ -33,6 +33,7 @@ public class DrawCardState : State {
         if (cardMechanicInfo is MoneyDifferenceCardInfo) return allStates.getState<MoneyCardState>();
         if (cardMechanicInfo is GoToNextRailroadCardInfo) return allStates.getState<NextRailroadState>();
         if (cardMechanicInfo is GoToNextUtilityCardInfo) return allStates.getState<NextUtilityState>();
+        if (cardMechanicInfo is GetOutOfJailFreeCardInfo) return allStates.getState<GetOutOfJailFreeState>();
         throw new System.Exception();
     }
     #endregion

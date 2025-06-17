@@ -6,8 +6,8 @@ public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
     #region GameEvents
     [SerializeField] private PlayerPropertyEvent playerObtainedProperty;
     [SerializeField] private PlayerIntEvent moneyAdjustment;
-    [SerializeField] private GameEvent moneyChangedHands;
-    [SerializeField] private GameEvent propertyAdjustmentBloop;
+    [SerializeField] private SoundEvent moneyChangedHands;
+    [SerializeField] private SoundEvent propertyAdjustmentBloop;
     #endregion
     [SerializeField] private TextMeshProUGUI purchaseText;
     [SerializeField] private TokenIcon tokenIcon;
@@ -43,9 +43,9 @@ public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
     #region public
     public void yesClicked() {
         moneyAdjustment.invoke(playerInfo, -propertyInfo.Cost);
-        moneyChangedHands.invoke();
+        moneyChangedHands.play();
         removeScreenAnimation.invoke();
-        WaitFrames.Instance.exe(80, () => propertyAdjustmentBloop.invoke());
+        WaitFrames.Instance.exe(80, () => propertyAdjustmentBloop.play());
         WaitFrames.Instance.exe(100, () => playerObtainedProperty.invoke(playerInfo, propertyInfo));
     }
     public void noClicked() {

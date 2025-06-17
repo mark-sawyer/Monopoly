@@ -187,10 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 610e165a8242a144eb1e1e269772a96e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tokenIcon: {fileID: 1374728115555470472}
   playerIncurredDebtEvent: {fileID: 11400000, guid: b87708f34d8124845bedd3fe52b77b58, type: 2}
-  correct: {fileID: 11400000, guid: e2cb512c96f9a3a45a6a1d408c5ea556, type: 2}
-  incorrect: {fileID: 11400000, guid: c99455678d034184d888a8d88628419a, type: 2}
+  correct: {fileID: 11400000, guid: 5fe0b6cdf5596e34c9a4ad3a872f91c2, type: 2}
+  incorrect: {fileID: 11400000, guid: 42675fb118f7ad644afead6d24376467, type: 2}
+  tokenIcon: {fileID: 1374728115555470472}
   questionCircle: {fileID: 4676986694871467397}
   tenPercentButtonText: {fileID: 6566801403166145237}
 --- !u!1 &3442082075917985114
@@ -1043,7 +1043,7 @@ PrefabInstance:
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 3dcb9379c32144c49851c9b6feceecd5, type: 2}
+      objectReference: {fileID: 11400000, guid: cf223574c9472a74e84d4f551f9f9f18, type: 2}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1058,7 +1058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: invoke
+      value: play
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1066,7 +1066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: GameEvent, GameInterface
+      value: SoundEvent, GameInterface
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1438,7 +1438,7 @@ PrefabInstance:
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 3dcb9379c32144c49851c9b6feceecd5, type: 2}
+      objectReference: {fileID: 11400000, guid: cf223574c9472a74e84d4f551f9f9f18, type: 2}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1453,7 +1453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: invoke
+      value: play
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1461,7 +1461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: GameEvent, GameInterface
+      value: SoundEvent, GameInterface
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

@@ -13,4 +13,5 @@ public interface GamePlayer {
     public void resetDoublesCount();
     public void drawCard(CardType cardType);
     public void undrawCard();
+    public void playerGetsGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo);
 }

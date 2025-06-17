@@ -14,6 +14,7 @@ public class GameDataUpdater : MonoBehaviour {
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     [SerializeField] private PlayerEvent debtResolved;
     [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
+    [SerializeField] private PlayerCardEvent playerGetsGOOJFCardData;
     #endregion
 
 
@@ -31,6 +32,7 @@ public class GameDataUpdater : MonoBehaviour {
         cardResolved.Listeners += undrawCard;
         playerIncurredDebt.Listeners += incurDebt;
         debtResolved.Listeners += setDebtToNull;
+        playerGetsGOOJFCardData.Listeners += givePlayerGOOJFCard;
     }
     #endregion
 
@@ -82,6 +84,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void setDebtToNull(PlayerInfo debtor) {
         gamePlayer.removeDebt(debtor);
+    }
+    private void givePlayerGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
+        gamePlayer.playerGetsGOOJFCard(playerInfo, cardInfo);
     }
     #endregion
 }

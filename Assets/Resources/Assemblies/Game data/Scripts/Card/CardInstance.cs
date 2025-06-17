@@ -12,6 +12,7 @@ internal class CardInstance : ScriptableObject, CardInfo {
     internal void setup(Game game) {
         cardMechanic.setup(game);
     }
+    internal CardMechanic CardMechanic => cardMechanic;
     #endregion
 
 

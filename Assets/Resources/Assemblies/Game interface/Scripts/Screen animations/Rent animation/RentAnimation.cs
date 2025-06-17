@@ -12,8 +12,8 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
     [SerializeField] private TextMeshProUGUI owedText;
     [SerializeField] private TextMeshProUGUI paidText;
     #endregion
-    [SerializeField] private GameEvent rentUhOhSound;
-    [SerializeField] private GameEvent thrownMoney;
+    [SerializeField] private SoundEvent rentUhOhSound;
+    [SerializeField] private RandomSoundEvent paperSound;
     [SerializeField] private GameObject moneyPrefab;
     private Dictionary<int, MoneyNoteEnum> moneyValToEnum = new Dictionary<int, MoneyNoteEnum>() {
         { 1, MoneyNoteEnum.ONE },
@@ -67,7 +67,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         creditorRT.localScale = new Vector3(creditorScale, creditorScale, creditorScale);
     }
     public override void appear() {
-        rentUhOhSound.invoke();
+        rentUhOhSound.play();
         float width = ((RectTransform)transform).rect.width;
         StartCoroutine(moveToken(debtorRT, 2 * width / 5f));
         StartCoroutine(moveToken(creditorRT, -2 * width / 5f));
@@ -146,7 +146,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         float xStart = debtorRT.localPosition.x;
         float xEnd = creditorRT.localPosition.x;
 
-        thrownMoney.invoke();
+        paperSound.play();
         moneyTransform.localPosition = new Vector3(xStart, yStart, 0f);
 
         Matrix3x3 mat = new Matrix3x3(
@@ -170,7 +170,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
             yield return null;
         }
 
-        thrownMoney.invoke();
+        paperSound.play();
         adjustCreditorScale(amount);
         paid += amount;
         paidText.text = "$" + paid.ToString();

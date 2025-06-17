@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "State/PoliceAnimationState")]
 public class PoliceAnimationState : State {
     [SerializeField] private GameEvent spinningPoliceman;
+    [SerializeField] private SoundEvent whistle;
     [SerializeField] private GameEvent policemanAnimationOver;
     private bool animationOver;
 
@@ -11,6 +12,7 @@ public class PoliceAnimationState : State {
     #region GameState
     public override void enterState() {
         spinningPoliceman.invoke();
+        whistle.play();
         animationOver = false;
         policemanAnimationOver.Listeners += animationOverCalled;
     }

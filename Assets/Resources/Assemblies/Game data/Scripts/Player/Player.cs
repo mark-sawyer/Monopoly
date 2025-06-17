@@ -7,9 +7,10 @@ internal class Player : PlayerInfo {
     private List<Property> properties = new List<Property>();
     private Debt debt;
     private int money = 1500;
+    private bool inJail = false;
+    private List<CardInstance> getOutOfJailFreeCards = new();
     private Token token;
     private PlayerColour colour;
-    private bool inJail = false;
 
 
 
@@ -47,6 +48,9 @@ internal class Player : PlayerInfo {
     internal void removeDebt() {
         debt = null;
     }
+    internal void getGOOJFCard(CardInstance getOutOfJailFreeCard) {
+        getOutOfJailFreeCards.Add(getOutOfJailFreeCard);
+    }
     #endregion
 
 
@@ -67,5 +71,8 @@ internal class Player : PlayerInfo {
         }
     }
     public bool InJail => inJail;
+    public bool hasGOOJFCardOfType(CardType cardType) {
+        return getOutOfJailFreeCards.Any(x => x.CardType == cardType);
+    }
     #endregion
 }

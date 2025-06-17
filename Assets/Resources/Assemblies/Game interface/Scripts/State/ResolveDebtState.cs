@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResolveDebtState : State {
     [SerializeField] private PlayerIntEvent moneyAdjustment;
     [SerializeField] private PlayerEvent debtResolvedEvent;
-    [SerializeField] private GameEvent moneyChangedHands;
+    [SerializeField] private SoundEvent moneyChing;
     private bool debtResolved;
     private PlayerInfo debtor;
     private DebtInfo debt;
@@ -34,7 +34,7 @@ public class ResolveDebtState : State {
         int payable = money - owed >= 0 ? owed : money;
         moneyAdjustment.invoke(debtor, -payable);
         if (debt.Creditor is PlayerInfo creditorPlayer) moneyAdjustment.invoke(creditorPlayer, payable);
-        moneyChangedHands.invoke();
+        moneyChing.play();
         debtResolvedEvent.invoke(debt.Debtor);
 
         debtResolved = true;

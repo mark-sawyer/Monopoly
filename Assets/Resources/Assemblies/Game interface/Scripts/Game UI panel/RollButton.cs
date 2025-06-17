@@ -2,14 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class RollButton : MonoBehaviour {
-    [SerializeField] private GameEvent nextPlayerTurn;
+    [SerializeField] private GameEvent nextPlayerTurnUI;
     [SerializeField] private GameEvent samePlayerTurn;
     [SerializeField] private Button button;
     [SerializeField] private GameEvent rollClicked;
     [SerializeField] private GameEvent animationOver;
 
     private void Start() {
-        nextPlayerTurn.Listeners += () => button.interactable = true;
+        nextPlayerTurnUI.Listeners += () => button.interactable = true;
         samePlayerTurn.Listeners += () => button.interactable = true;
     }
 

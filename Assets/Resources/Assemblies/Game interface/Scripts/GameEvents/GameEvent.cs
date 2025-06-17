@@ -8,7 +8,6 @@ public class GameEvent : ScriptableObject {
         add { action += value; }
         remove { action -= value; }
     }
-
     public void invoke() {
         action?.Invoke();
     }
@@ -20,7 +19,6 @@ public class GameEvent<T> : ScriptableObject {
         add { action += value; }
         remove { action -= value; }
     }
-
     public void invoke(T value) {
         action?.Invoke(value);
     }
@@ -32,7 +30,6 @@ public class GameEvent<T1, T2> : ScriptableObject {
         add { action += value; }
         remove { action -= value; }
     }
-
     public void invoke(T1 value1, T2 value2) {
         action?.Invoke(value1, value2);
     }
@@ -44,7 +41,6 @@ public class GameEvent<T1, T2, T3> : ScriptableObject {
         add { action += value; }
         remove { action -= value; }
     }
-
     public void invoke(T1 value1, T2 value2, T3 value3) {
         action?.Invoke(value1, value2, value3);
     }

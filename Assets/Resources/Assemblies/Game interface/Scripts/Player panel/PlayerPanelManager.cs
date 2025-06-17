@@ -6,6 +6,7 @@ public class PlayerPanelManager : MonoBehaviour {
     [SerializeField] private GameEvent nextTurnPlayerUI;
     [SerializeField] private PlayerEvent moneyAdjustmentUI;
     [SerializeField] private PlayerPropertyEvent playerPropertyAdjustmentUI;
+    [SerializeField] private PlayerCardTypeEvent playerGetsGOOJFCardUI;
     private const float GAP = 3;
 
 
@@ -61,6 +62,7 @@ public class PlayerPanelManager : MonoBehaviour {
         moneyAdjustmentUI.Listeners += adjustMoneyVisual;
         playerPropertyAdjustmentUI.Listeners += updatePropertyIcons;
         nextTurnPlayerUI.Listeners += updateTurnPlayerHighlight;
+        playerGetsGOOJFCardUI.Listeners += updateGOOJFCardIcons;
     }
     #endregion
 
@@ -69,12 +71,12 @@ public class PlayerPanelManager : MonoBehaviour {
     #region Listeners
     private void adjustMoneyVisual(PlayerInfo playerInfo) {
         int playerIndex = GameState.game.getPlayerIndex(playerInfo);
-        PlayerPanel playerPanel = transform.GetChild(playerIndex).GetComponent<PlayerPanel>();
+        PlayerPanel playerPanel = getPlayerPanel(playerIndex);
         playerPanel.adjustMoney(playerInfo);
     }
     private void updatePropertyIcons(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         int playerIndex = GameState.game.getPlayerIndex(playerInfo);
-        PlayerPanel playerPanel = transform.GetChild(playerIndex).GetComponent<PlayerPanel>();
+        PlayerPanel playerPanel = getPlayerPanel(playerIndex);
         playerPanel.updatePropertyIconVisual(playerInfo, propertyInfo);
     }
     private void updateTurnPlayerHighlight() {
@@ -82,6 +84,12 @@ public class PlayerPanelManager : MonoBehaviour {
         for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
             getPlayerPanel(i).toggleHighlightImage(i == turnPlayerIndex);
         }
+    }
+    private void updateGOOJFCardIcons(PlayerInfo playerInfo, CardType cardType) {
+        int playerIndex = GameState.game.getPlayerIndex(playerInfo);
+        PlayerPanel playerPanel = getPlayerPanel(playerIndex);
+        bool hasCard = playerInfo.hasGOOJFCardOfType(cardType);
+        playerPanel.toggleGOOJFIcon(cardType, hasCard);
     }
     #endregion
 

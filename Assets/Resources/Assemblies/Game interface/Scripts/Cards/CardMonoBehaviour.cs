@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CardMonoBehaviour : MonoBehaviour {
-    [SerializeField] private GameEvent cardDrop;
+    [SerializeField] private SoundEvent cardDrop;
 
 
 
@@ -13,7 +13,7 @@ public class CardMonoBehaviour : MonoBehaviour {
         StartCoroutine(rotation());
         WaitFrames.Instance.exe(
             InterfaceConstants.FRAMES_FOR_CARD_FLIP - 10,
-            cardDrop.invoke
+            cardDrop.play
         );
         WaitFrames.Instance.exe(
             InterfaceConstants.FRAMES_FOR_CARD_FLIP,

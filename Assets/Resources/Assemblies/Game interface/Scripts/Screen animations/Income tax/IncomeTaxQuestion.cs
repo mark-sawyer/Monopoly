@@ -4,8 +4,8 @@ using UnityEngine;
 public class IncomeTaxQuestion : ScreenAnimation<PlayerInfo> {
     #region GameEvents
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebtEvent;
-    [SerializeField] private GameEvent correct;
-    [SerializeField] private GameEvent incorrect;
+    [SerializeField] private SoundEvent correct;
+    [SerializeField] private SoundEvent incorrect;
     #endregion
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private QuestionCircle questionCircle;
@@ -35,16 +35,16 @@ public class IncomeTaxQuestion : ScreenAnimation<PlayerInfo> {
         questionCircle.enabled = false;
         int amount = GameState.game.TurnPlayer.IncomeTaxAmount;
         tenPercentButtonText.updateText(amount);
-        if (amount > 200) correct.invoke();
-        else incorrect.invoke();
+        if (amount > 200) correct.play();
+        else incorrect.play();
         WaitFrames.Instance.exe(WAITED_FRAMES, completeQuestion, 200);
     }
     public void tenPercentClicked() {
         questionCircle.enabled = false;
         int amount = GameState.game.TurnPlayer.IncomeTaxAmount;
         tenPercentButtonText.updateText(amount);
-        if (amount <= 200) correct.invoke();
-        else incorrect.invoke();
+        if (amount <= 200) correct.play();
+        else incorrect.play();
         WaitFrames.Instance.exe(WAITED_FRAMES, completeQuestion, player.IncomeTaxAmount);
     }
     #endregion
