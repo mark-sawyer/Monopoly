@@ -17,7 +17,7 @@ internal class Dice : DiceInterface {
         return dice[i].getValue();
     }
     public int TotalValue => dice[0].getValue() + dice[1].getValue();
-    public bool RolledDoubles => dice[0].getValue() == dice[1].getValue();
+    public bool RolledDoubles => lastThreeRolls[0].x == lastThreeRolls[0].y;
     public bool ThreeDoublesInARow => lastThreeRolls.All(x => x[0] == x[1]);
     #endregion
 

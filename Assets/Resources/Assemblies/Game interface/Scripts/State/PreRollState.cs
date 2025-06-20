@@ -1,15 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "State/PreRollState")]
 public class PreRollState : State {
-    [SerializeField] GameEvent rollButtonClickedEvent;
+    [SerializeField] private GameEvent regularTurnBegin;
+    [SerializeField] private GameEvent rollButtonClickedEvent;
     private bool rollButtonClicked;
 
 
 
     #region GameState
     public override void enterState() {
+        regularTurnBegin.invoke();
         rollButtonClickedEvent.Listeners += rollButtonListener;
         rollButtonClicked = false;
     }

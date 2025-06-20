@@ -6,21 +6,23 @@ internal class Player : PlayerInfo {
     internal static Space jailSpace;
     private List<Property> properties = new List<Property>();
     private Debt debt;
-    private int money = 1500;
+    private int money;
     private bool inJail = false;
-    private List<CardInstance> getOutOfJailFreeCards = new();
+    private int turnInJail = 0;
+    private List<CardInstance> getOutOfJailFreeCards = new(2);
     private Token token;
     private PlayerColour colour;
 
 
 
     #region internal
-    internal Space Space { get; set; }
-    internal Player(Space space, Token token, PlayerColour colour) {
+    internal Player(Space space, Token token, PlayerColour colour, int startingMoney) {
         Space = space;
+        money = startingMoney;
         this.token = token;
         this.colour = colour;
     }
+    internal Space Space { get; set; }
     internal void obtainProperty(Property property) {
         properties.Add(property);
         property.changeOwner(this);
@@ -36,6 +38,7 @@ internal class Player : PlayerInfo {
     }
     internal void exitJail() {
         inJail = false;
+        turnInJail = 0;
     }
     internal void changeSpace(Space newSpace) {
         Space.removePlayer(this);
@@ -50,6 +53,14 @@ internal class Player : PlayerInfo {
     }
     internal void getGOOJFCard(CardInstance getOutOfJailFreeCard) {
         getOutOfJailFreeCards.Add(getOutOfJailFreeCard);
+    }
+    internal void incrementJailTurn() {
+        turnInJail++;
+    }
+    internal CardInstance handBackGOOJFCard(CardType cardType) {
+        CardInstance getOutOfJailFreeCard = getOutOfJailFreeCards.First(x => x.CardType == cardType);
+        getOutOfJailFreeCards.Remove(getOutOfJailFreeCard);
+        return getOutOfJailFreeCard;
     }
     #endregion
 
@@ -71,6 +82,8 @@ internal class Player : PlayerInfo {
         }
     }
     public bool InJail => inJail;
+    public int TurnInJail => turnInJail;
+    public bool HasGOOJFCard => getOutOfJailFreeCards.Count > 0;
     public bool hasGOOJFCardOfType(CardType cardType) {
         return getOutOfJailFreeCards.Any(x => x.CardType == cardType);
     }

@@ -12,14 +12,26 @@ public class GameFactory {
     public void makeGame(int playerNum) {
         Queue<CardInstance> communityChestCards = initialiseCards(CardType.COMMUNITY_CHEST);
         Queue<CardInstance> chanceCards = initialiseCards(CardType.CHANCE);
-        game = new Game(playerNum, new Dice(), communityChestCards, chanceCards);
+        game = new Game(
+            playerNum,
+            GameConstants.STARTING_MONEY,
+            new Dice(),
+            communityChestCards,
+            chanceCards
+        );
         setGameRefForCards(communityChestCards, game);
         setGameRefForCards(chanceCards, game);
     }
-    public void makeTestGame(int playerNum) {
+    public void makeTestGame(int playerNum, int startingMoney) {
         Queue<CardInstance> communityChestCards = initialiseTestCards(CardType.COMMUNITY_CHEST);
         Queue<CardInstance> chanceCards = initialiseTestCards(CardType.CHANCE);
-        game = new Game(playerNum, new RiggedDice(), communityChestCards, chanceCards);
+        game = new Game(
+            playerNum,
+            startingMoney,
+            new RiggedDice(),
+            communityChestCards,
+            chanceCards
+        );
         setGameRefForCards(communityChestCards, game);
         setGameRefForCards(chanceCards, game);
     }

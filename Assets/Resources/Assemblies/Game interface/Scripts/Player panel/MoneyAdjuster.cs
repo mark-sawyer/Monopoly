@@ -29,6 +29,9 @@ public class MoneyAdjuster : MonoBehaviour {
         changeMoneyVisual(currentMoney);
         startMoneyWobble(difference > 0);
     }
+    public void setStartingMoney(int startingMoney) {
+        changeMoneyVisual(startingMoney);
+    }
     #endregion
 
 

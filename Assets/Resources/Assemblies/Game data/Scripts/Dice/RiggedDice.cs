@@ -18,7 +18,7 @@ internal class RiggedDice : DiceInterface, DiceValueStorer {
         return diceValues[i];
     }
     public int TotalValue => diceValues[0] + diceValues[1];
-    public bool RolledDoubles => diceValues[0] == diceValues[1];
+    public bool RolledDoubles => lastThreeRolls[0].x == lastThreeRolls[0].y;
     public bool ThreeDoublesInARow => lastThreeRolls.All(x => x[0] == x[1]);
     #endregion
 

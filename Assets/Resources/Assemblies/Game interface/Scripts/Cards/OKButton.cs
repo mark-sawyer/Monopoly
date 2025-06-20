@@ -9,10 +9,9 @@ public class OKButton : MonoBehaviour {
     private void Start() {
         button.interactable = false;
     }
-    public void raise(RectTransform cardTransform) {
+    public void raise(float cardHeight) {
         RectTransform canvasRT = (RectTransform)transform.parent;
         float canvasHeight = canvasRT.rect.height;
-        float cardHeight = cardTransform.rect.height;
         float spaceOnBottomHalf = (canvasHeight - cardHeight) / 2f;
         float yEnd = (-cardHeight - spaceOnBottomHalf) / 2f;
         float yStart = transform.localPosition.y;

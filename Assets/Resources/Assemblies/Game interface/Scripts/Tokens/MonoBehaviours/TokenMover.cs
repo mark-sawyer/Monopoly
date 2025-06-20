@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class TokenMover : MonoBehaviour {
@@ -8,7 +7,8 @@ public class TokenMover : MonoBehaviour {
     [SerializeField] private GameEvent tokenSettled;
     [SerializeField] private TokenMoverIntEvent tokenOnSpaceChangedEvent;
     [SerializeField] private PlayerIntEvent moneyAdjustment;
-    [SerializeField] private GameEvent moneyChangedHands;
+    [SerializeField] private GameEvent leaveJailUI;
+    [SerializeField] private SoundEvent moneyChing;
     private Queue<Vector3> queue = new();
     private Vector3 attractivePoint;
     private Vector3 velocity = new();
@@ -29,6 +29,7 @@ public class TokenMover : MonoBehaviour {
     private void Start() {
         goMajorPoint = getGoMajorPoint();
         tokenOnSpaceChangedEvent.Listeners += tokenOnSpaceChanged;
+        leaveJailUI.Listeners += tokenOnJailSpaceChanged;
         attractivePoint = transform.position;
     }
     private void Update() {
@@ -36,7 +37,7 @@ public class TokenMover : MonoBehaviour {
         if (queue.Count > 0 && directionVector().magnitude < DISTANCE_TO_SPACE_THRESHOLD) {
             if (passingGo()) {
                 moneyAdjustment.invoke(tokenVisual.PlayerInfo, GameConstants.MONEY_FOR_PASSING_GO);
-                moneyChangedHands.invoke();
+                moneyChing.play();
             }
             attractivePoint = queue.Dequeue();
             if (queue.Count == 0) {
@@ -146,6 +147,14 @@ public class TokenMover : MonoBehaviour {
 
 
         SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(spaceIndex);        
+        tokenScaler.beginScaleChange(spaceVisual.getScale(PlayerInfo));
+        attractivePoint = spaceVisual.getMinorPoint(PlayerInfo);
+    }
+    private void tokenOnJailSpaceChanged() {
+        if (PlayerInfo.SpaceIndex != GameConstants.JAIL_SPACE_INDEX) return;
+
+
+        SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(GameConstants.JAIL_SPACE_INDEX);
         tokenScaler.beginScaleChange(spaceVisual.getScale(PlayerInfo));
         attractivePoint = spaceVisual.getMinorPoint(PlayerInfo);
     }

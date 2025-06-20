@@ -17,6 +17,7 @@ internal class Game : GameStateInfo, GamePlayer {
     #region internal
     internal Game(
         int playerNum,
+        int startingMoney,
         DiceInterface dice,
         Queue<CardInstance> communityChestCards,
         Queue<CardInstance> chanceCards
@@ -27,7 +28,7 @@ internal class Game : GameStateInfo, GamePlayer {
         bank = new Bank();
         spaces = initialiseSpaces();
         initialiseUtilities();
-        players = initialisePlayers(playerNum);
+        players = initialisePlayers(playerNum, startingMoney);
         turnPlayer = players[0];
     }
     #endregion
@@ -56,14 +57,6 @@ internal class Game : GameStateInfo, GamePlayer {
     }
     public Creditor Bank => bank;
     public CardInfo DrawnCard => drawnCard;
-    public void playerGetsGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
-        CardInstance getOutOfJailFreeCard = (CardInstance)cardInfo;
-        if (getOutOfJailFreeCard.CardMechanic is not GetOutOfJailFreeCard) {
-            throw new System.Exception("Not a GetOutOfJailFreeCard");
-        }
-        Player player = (Player)playerInfo;
-        player.getGOOJFCard(getOutOfJailFreeCard);
-    }
     #endregion
 
 
@@ -112,6 +105,9 @@ internal class Game : GameStateInfo, GamePlayer {
         Player player = (Player)playerInfo;
         player.goToJail();
     }
+    public void removeTurnPlayerFromJail() {
+        turnPlayer.exitJail();
+    }
     public void resetDoublesCount() {
         dice.resetDoublesCount();
     }
@@ -125,6 +121,23 @@ internal class Game : GameStateInfo, GamePlayer {
             else chanceCards.Enqueue(drawnCard);
         }
         drawnCard = null;
+    }
+    public void playerGetsGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
+        CardInstance getOutOfJailFreeCard = (CardInstance)cardInfo;
+        if (getOutOfJailFreeCard.CardMechanic is not GetOutOfJailFreeCard) {
+            throw new System.Exception("Not a GetOutOfJailFreeCard");
+        }
+        Player player = (Player)playerInfo;
+        player.getGOOJFCard(getOutOfJailFreeCard);
+    }
+    public void playerUsesGOOJFCard(CardType cardType) {
+        turnPlayer.exitJail();
+        CardInstance getOutOfJailFreeCard = turnPlayer.handBackGOOJFCard(cardType);
+        if (cardType == CardType.CHANCE) chanceCards.Enqueue(getOutOfJailFreeCard);
+        else communityChestCards.Enqueue(getOutOfJailFreeCard);
+    }
+    public void incrementJailTurn() {
+        turnPlayer.incrementJailTurn();
     }
     #endregion
 
@@ -190,13 +203,14 @@ internal class Game : GameStateInfo, GamePlayer {
         electricCompany.setup(dice);
         waterWorks.setup(dice);
     }
-    private Player[] initialisePlayers(int playerNum) {
+    private Player[] initialisePlayers(int playerNum, int startingMoney) {
         Player[] players = new Player[playerNum];
         for (int i = 0; i < playerNum; i++) {
             players[i] = new Player(
                 spaces[0],
                 (Token)UnityEngine.Random.Range(0, 8),
-                (PlayerColour)UnityEngine.Random.Range(0, 8)
+                (PlayerColour)UnityEngine.Random.Range(0, 8),
+                startingMoney
             );
             spaces[0].addPlayer(players[i]);
         }

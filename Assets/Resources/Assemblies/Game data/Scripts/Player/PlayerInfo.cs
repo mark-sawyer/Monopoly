@@ -9,5 +9,7 @@ public interface PlayerInfo : Creditor {
     public int TotalWorth { get; }
     public int IncomeTaxAmount { get; }
     public bool InJail { get; }
+    public int TurnInJail { get; }
+    public bool HasGOOJFCard { get; }
     public bool hasGOOJFCardOfType(CardType cardType);
 }

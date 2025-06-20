@@ -337,7 +337,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rollButtonClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
-  turnPlayerSpaceUpdate: {fileID: 11400000, guid: 8ca636d10ac5ae34eb7c2b18dea38e4d, type: 2}
+  turnPlayerMovedDiceValues: {fileID: 11400000, guid: 8ca636d10ac5ae34eb7c2b18dea38e4d, type: 2}
+  turnPlayerMovedToSpace: {fileID: 11400000, guid: de17ca22b690d2d45af1198d408a2c8c, type: 2}
   turnPlayerSentToJail: {fileID: 11400000, guid: 1deecc2a6d3cfb04e9ed56096cb3fde3, type: 2}
   playerPurchasedProperty: {fileID: 11400000, guid: 28d25c3afd0d0a442bc66e9b44ef254b, type: 2}
   moneyAdjustment: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
@@ -346,8 +347,11 @@ MonoBehaviour:
   cardResolved: {fileID: 11400000, guid: 6849dc907a5d20a428e39a4ae85f4dae, type: 2}
   playerIncurredDebt: {fileID: 11400000, guid: b87708f34d8124845bedd3fe52b77b58, type: 2}
   debtResolved: {fileID: 11400000, guid: c7938aaf1f92a1f4eaf5055d97255fa3, type: 2}
-  turnPlayerMovedToSpace: {fileID: 11400000, guid: de17ca22b690d2d45af1198d408a2c8c, type: 2}
   playerGetsGOOJFCardData: {fileID: 11400000, guid: 3c8daa7721a6ae941b8141e74de7d1d7, type: 2}
+  jailTurnBeginData: {fileID: 11400000, guid: 97854ffdf24dea64e8dff4b32442b17c, type: 2}
+  leaveJail: {fileID: 11400000, guid: 1b2e068ce25046c4b84bee0e241ba952, type: 2}
+  useGOOJFCardData: {fileID: 11400000, guid: b94ef5d541f720e458615a69bcab2949, type: 2}
+  doublesCountReset: {fileID: 11400000, guid: d3ba8d38498f6fb468bc494857935a8e, type: 2}
 --- !u!114 &5050648518214958489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +376,15 @@ MonoBehaviour:
   playerGetsGOOJFCard: {fileID: 11400000, guid: 2d5984864c4056441a8a4675be32aaf4, type: 2}
   playerGetsGOOJFCardData: {fileID: 11400000, guid: 3c8daa7721a6ae941b8141e74de7d1d7, type: 2}
   playerGetsGOOJFCardUI: {fileID: 11400000, guid: 6b9965a390aaf2d4b81eca2809fad300, type: 2}
+  leaveJail: {fileID: 11400000, guid: ae57e92eb2cf7814baf57b223804afa4, type: 2}
+  leaveJailData: {fileID: 11400000, guid: 1b2e068ce25046c4b84bee0e241ba952, type: 2}
+  leaveJailUI: {fileID: 11400000, guid: 12e78802aeacabc4b923e37451666e74, type: 2}
+  jailTurnBegin: {fileID: 11400000, guid: 8008fdd58c463a447ade83803652c23e, type: 2}
+  jailTurnBeginData: {fileID: 11400000, guid: 97854ffdf24dea64e8dff4b32442b17c, type: 2}
+  jailTurnBeginUI: {fileID: 11400000, guid: 24669706d16c1864a85709283b97a0e1, type: 2}
+  useCardButtonClicked: {fileID: 11400000, guid: 68d6fd3784b6a4e499d05d8f51e69874, type: 2}
+  useGOOJFCardData: {fileID: 11400000, guid: b94ef5d541f720e458615a69bcab2949, type: 2}
+  useGOOJFCardUI: {fileID: 11400000, guid: 3b432ded47c95a54787085ac81d05689, type: 2}
 --- !u!114 &4095811442423946742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,19 +402,6 @@ MonoBehaviour:
   - {fileID: 3338381736022611112}
   - {fileID: 508104174120004031}
   - {fileID: 7058275444073576052}
-  soundEventPairs:
-  - {fileID: 11400000, guid: 2a40b5335b769b9429d92e8ab1441cac, type: 2}
-  - {fileID: 11400000, guid: 2c60be54120461b4f94e671255bf676a, type: 2}
-  - {fileID: 11400000, guid: 7681510d1eadb2a46bfffcf9f58c85f0, type: 2}
-  - {fileID: 11400000, guid: ea5cd3eea0f6d0d46a1234594cb0555f, type: 2}
-  - {fileID: 11400000, guid: 13f9bcaf76a87144ab4c83a0293aef4c, type: 2}
-  - {fileID: 11400000, guid: f748583eedba39c4b9ba5a419917340a, type: 2}
-  - {fileID: 11400000, guid: 31c561429ed44b14ea4a6ad87aca337d, type: 2}
-  - {fileID: 11400000, guid: 229acdedb5ffa1b4c824346de849c3f0, type: 2}
-  - {fileID: 11400000, guid: 6dbf8661a9126384994b72f57bd9a6ef, type: 2}
-  - {fileID: 11400000, guid: d370b41b36caf6f48b51f20e3367ed58, type: 2}
-  - {fileID: 11400000, guid: b4aa28bdf74cd724ba28ef88ddfeb949, type: 2}
-  - {fileID: 11400000, guid: ab800a02ce0c3ed44b30b4be71e21ab9, type: 2}
 --- !u!114 &5980539943454841028
 MonoBehaviour:
   m_ObjectHideFlags: 0

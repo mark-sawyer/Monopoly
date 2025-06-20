@@ -7,6 +7,7 @@ public class PlayerPanelManager : MonoBehaviour {
     [SerializeField] private PlayerEvent moneyAdjustmentUI;
     [SerializeField] private PlayerPropertyEvent playerPropertyAdjustmentUI;
     [SerializeField] private PlayerCardTypeEvent playerGetsGOOJFCardUI;
+    [SerializeField] private CardTypeEvent playedUsedGOOJFCardUI;
     private const float GAP = 3;
 
 
@@ -15,7 +16,7 @@ public class PlayerPanelManager : MonoBehaviour {
     private void Start() {
         instantiatePanels();
         scalePanels();
-        associateWithPlayers();
+        setupPanels();
         subscribeToEvents();
         getPlayerPanel(0).toggleHighlightImage(true);
     }
@@ -50,7 +51,7 @@ public class PlayerPanelManager : MonoBehaviour {
 
         transform.localScale = new Vector3(scaleUsed, scaleUsed, scaleUsed);
     }
-    private void associateWithPlayers() {
+    private void setupPanels() {
         IEnumerable<PlayerInfo> players = GameState.game.PlayerInfos;
         int i = 0;
         foreach (PlayerInfo player in players) {
@@ -63,6 +64,7 @@ public class PlayerPanelManager : MonoBehaviour {
         playerPropertyAdjustmentUI.Listeners += updatePropertyIcons;
         nextTurnPlayerUI.Listeners += updateTurnPlayerHighlight;
         playerGetsGOOJFCardUI.Listeners += updateGOOJFCardIcons;
+        playedUsedGOOJFCardUI.Listeners += (CardType cardType) => updateGOOJFCardIcons(GameState.game.TurnPlayer, cardType);
     }
     #endregion
 
@@ -92,6 +94,7 @@ public class PlayerPanelManager : MonoBehaviour {
         playerPanel.toggleGOOJFIcon(cardType, hasCard);
     }
     #endregion
+
 
 
     #region private

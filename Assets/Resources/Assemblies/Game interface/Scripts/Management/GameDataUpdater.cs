@@ -4,7 +4,8 @@ public class GameDataUpdater : MonoBehaviour {
     private GamePlayer gamePlayer;
     #region Listening GameEvents
     [SerializeField] private GameEvent rollButtonClicked;
-    [SerializeField] private GameEvent turnPlayerSpaceUpdate;
+    [SerializeField] private GameEvent turnPlayerMovedDiceValues;
+    [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
     [SerializeField] private GameEvent turnPlayerSentToJail;
     [SerializeField] private PlayerPropertyEvent playerPurchasedProperty;
     [SerializeField] private PlayerIntEvent moneyAdjustment;
@@ -13,8 +14,11 @@ public class GameDataUpdater : MonoBehaviour {
     [SerializeField] private GameEvent cardResolved;
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     [SerializeField] private PlayerEvent debtResolved;
-    [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
     [SerializeField] private PlayerCardEvent playerGetsGOOJFCardData;
+    [SerializeField] private GameEvent jailTurnBeginData;
+    [SerializeField] private GameEvent leaveJail;
+    [SerializeField] private CardTypeEvent useGOOJFCardData;
+    [SerializeField] private GameEvent doublesCountReset;
     #endregion
 
 
@@ -22,7 +26,7 @@ public class GameDataUpdater : MonoBehaviour {
     #region MonoBehaviour
     private void Start() {
         rollButtonClicked.Listeners += rollDice;
-        turnPlayerSpaceUpdate.Listeners += moveTurnPlayerDiceValues;
+        turnPlayerMovedDiceValues.Listeners += moveTurnPlayerDiceValues;
         turnPlayerMovedToSpace.Listeners += moveTurnPlayerToSpace;
         turnPlayerSentToJail.Listeners += sendTurnPlayerToJail;
         playerPurchasedProperty.Listeners += purchasedProperty;
@@ -33,6 +37,10 @@ public class GameDataUpdater : MonoBehaviour {
         playerIncurredDebt.Listeners += incurDebt;
         debtResolved.Listeners += setDebtToNull;
         playerGetsGOOJFCardData.Listeners += givePlayerGOOJFCard;
+        jailTurnBeginData.Listeners += incrementJailTurn;
+        leaveJail.Listeners += removeTurnPlayerFromJail;
+        useGOOJFCardData.Listeners += useGOOJFCard;
+        doublesCountReset.Listeners += resetDoublesCount;
     }
     #endregion
 
@@ -87,6 +95,18 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void givePlayerGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
         gamePlayer.playerGetsGOOJFCard(playerInfo, cardInfo);
+    }
+    private void incrementJailTurn() {
+        gamePlayer.incrementJailTurn();
+    }
+    private void removeTurnPlayerFromJail() {
+        gamePlayer.removeTurnPlayerFromJail();
+    }
+    private void useGOOJFCard(CardType cardType) {
+        gamePlayer.playerUsesGOOJFCard(cardType);
+    }
+    private void resetDoublesCount() {
+        gamePlayer.resetDoublesCount();
     }
     #endregion
 }

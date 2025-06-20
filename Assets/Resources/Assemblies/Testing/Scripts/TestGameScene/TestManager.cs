@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TestManager : MonoBehaviour {
@@ -7,9 +6,9 @@ public class TestManager : MonoBehaviour {
 
 
     private void Awake() {
-        int playerNum = 8;
+        int playerNum = 2;
         GameFactory gameFactory = new GameFactory();
-        gameFactory.makeTestGame(playerNum);
+        gameFactory.makeTestGame(playerNum, 1500);
         GameState.game = gameFactory.GameStateInfo;
         gameDataUpdater.setup(gameFactory.GamePlayer);
     }

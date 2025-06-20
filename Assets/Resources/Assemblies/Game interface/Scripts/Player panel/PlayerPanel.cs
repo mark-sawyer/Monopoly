@@ -8,8 +8,8 @@ public class PlayerPanel : MonoBehaviour {
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private MoneyAdjuster moneyAdjuster;
     [SerializeField] private Image highlightImage;
-    [SerializeField] private Image chanceGOOJFImage;
-    [SerializeField] private Image communityChestGOOJFImage;
+    [SerializeField] private GOOJFIcon chanceGOOJFIcon;
+    [SerializeField] private GOOJFIcon ccGOOJFIcon;
     private PlayerInfo player;
 
 
@@ -18,6 +18,7 @@ public class PlayerPanel : MonoBehaviour {
     public void setup(PlayerInfo player) {
         this.player = player;
         tokenIcon.setup(player.Token, player.Colour);
+        moneyAdjuster.setStartingMoney(player.Money);
     }
     public void adjustMoney(PlayerInfo player) {
         moneyAdjuster.adjustMoney(player);
@@ -40,28 +41,8 @@ public class PlayerPanel : MonoBehaviour {
         highlightImage.enabled = toggle;
     }
     public void toggleGOOJFIcon(CardType cardType, bool toggle) {
-        IEnumerator pulse(Transform t) {
-            float getScale(float x) {
-                if (x <= 5) return 1f + 0.2f * x;
-                else return 2f - (1f / 15f) * (x - 5f);
-            }
-
-            for (int i = 1; i <= 20; i++) {
-                float scale = getScale(i);
-                t.localScale = new Vector3(scale, scale, scale);
-                yield return null;
-            }
-            t.localScale = new Vector3(1f, 1f, 1f);
-        }
-
-        if (cardType == CardType.COMMUNITY_CHEST) {
-            communityChestGOOJFImage.enabled = toggle;
-            if (toggle) StartCoroutine(pulse(communityChestGOOJFImage.transform));
-        }
-        else {
-            chanceGOOJFImage.enabled = toggle;
-            if (toggle) StartCoroutine(pulse(chanceGOOJFImage.transform));
-        }
+        if (cardType == CardType.CHANCE) chanceGOOJFIcon.enable(toggle);
+        else ccGOOJFIcon.enable(toggle);
     }
     #endregion
 }

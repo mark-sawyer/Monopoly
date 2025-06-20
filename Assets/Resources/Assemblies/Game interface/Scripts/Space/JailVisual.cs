@@ -37,7 +37,7 @@ public class JailVisual : SpaceVisual {
         }
         else {
             int playersVisiting = jailSpaceInfo.NumberOfVisitingPlayers;
-            int visitingOrder = jailSpaceInfo.getJailOrderIndex(playerInfo);
+            int visitingOrder = jailSpaceInfo.getVisitingOrderIndex(playerInfo);
             Vector3 position = TokenParameters.getTotalPositionOffset(playersVisiting, visitingOrder);
             return transform.TransformPoint(position);
         }

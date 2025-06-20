@@ -24,6 +24,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         { 100, MoneyNoteEnum.ONE_HUNDRED },
         { 500, MoneyNoteEnum.FIVE_HUNDRED }
     };
+    private ScreenAnimationSizeAdjuster screenAnimationSizeAdjuster;
     #region numeric fields
     private int[] moneyNoteValues = new int[7] { 1, 5, 10, 20, 50, 100, 500 };
     private int owed;
@@ -34,6 +35,8 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
     private float evenProportion;
     private const int MOVEMENT_FRAMES = 50;
     private const int MONEY_THROW_FRAMES = 100;
+    private const float HORIZONTAL_PROPORTION = 800f / 1920f;
+    private const float DEFAULT_WIDTH = 800f;
     #endregion
 
 
@@ -65,6 +68,13 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         float creditorScale = getScale(creditorWealth / totalGameWealth);
         debtorRT.localScale = new Vector3(debtorScale, debtorScale, debtorScale);
         creditorRT.localScale = new Vector3(creditorScale, creditorScale, creditorScale);
+
+        screenAnimationSizeAdjuster = new ScreenAnimationSizeAdjuster(
+            HORIZONTAL_PROPORTION,
+            DEFAULT_WIDTH,
+            (RectTransform)transform
+        );
+        screenAnimationSizeAdjuster.adjustChildrenSize();
     }
     public override void appear() {
         rentUhOhSound.play();
@@ -106,7 +116,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
     private IEnumerator sendMoney() {
         void adjustDebtorScale(float nextPayment) {
             debtorWealth -= nextPayment;
-            float newScale = getScale(debtorWealth / totalGameWealth);
+            float newScale = getScale(debtorWealth / totalGameWealth) * screenAnimationSizeAdjuster.Scale;
             debtorRT.localScale = new Vector3(newScale, newScale, newScale);
         }
 
@@ -127,7 +137,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
     private IEnumerator moveMoneyNote(Transform moneyTransform, int amount) {
         void adjustCreditorScale(float paymentReceived) {
             creditorWealth += paymentReceived;
-            float newScale = getScale(creditorWealth / totalGameWealth);
+            float newScale = getScale(creditorWealth / totalGameWealth) * screenAnimationSizeAdjuster.Scale;
             creditorRT.localScale = new Vector3(newScale, newScale, newScale);
         }
         float getY(RectTransform t) {
@@ -180,7 +190,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         return moneyNoteValues.Where(x => x <= remainingDebt).Max();
     }
     private GameObject getNextNote(MoneyNoteEnum moneyNoteEnum) {
-        GameObject moneyInstance = Instantiate(moneyPrefab, transform);
+        GameObject moneyInstance = screenAnimationSizeAdjuster.InstantiateAdjusted(moneyPrefab);
         MoneyNote moneyNote = moneyInstance.GetComponent<MoneyNote>();
         moneyNote.setup(moneyNoteEnum);
         return moneyInstance;

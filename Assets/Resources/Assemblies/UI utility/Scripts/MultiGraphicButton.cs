@@ -6,6 +6,12 @@ using UnityEngine.UI;
 internal class MultiGraphicButton : Button {
     [SerializeField] private List<Graphic> additionalGraphics = new List<Graphic>();
 
+
+
+    protected override void OnEnable() {
+        base.OnEnable();
+        DoStateTransition(currentSelectionState, true);
+    }
     protected override void DoStateTransition(SelectionState state, bool instant) {
         if (!IsActive() || additionalGraphics == null) return;
 

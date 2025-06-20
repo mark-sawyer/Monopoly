@@ -11,6 +11,7 @@ public class PlayerLandedOnSpaceState : State {
         if (spaceInfo is IncomeTaxSpaceInfo) return allStates.getState<IncomeTaxState>();
         if (spaceInfo is GoToJailSpaceInfo) return allStates.getState<PoliceAnimationState>();
         if (spaceInfo is CardSpaceInfo) return allStates.getState<DrawCardState>();
+        if (spaceInfo is LuxuryTaxSpaceInfo) return allStates.getState<LuxuryTaxState>();
         if (spaceInfo is PropertySpaceInfo propertySpaceInfo) {
             PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
             if (!propertyInfo.IsBought) return allStates.getState<BuyPropertyOptionState>();

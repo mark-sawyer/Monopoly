@@ -54,6 +54,7 @@ MonoBehaviour:
   moneyAdjustmentUI: {fileID: 11400000, guid: c0db97d160185d34f9e63f01c0c66949, type: 2}
   playerPropertyAdjustmentUI: {fileID: 11400000, guid: da436c0660695a24788a498d9ead8ee8, type: 2}
   playerGetsGOOJFCardUI: {fileID: 11400000, guid: 6b9965a390aaf2d4b81eca2809fad300, type: 2}
+  playedUsedGOOJFCardUI: {fileID: 11400000, guid: 3b432ded47c95a54787085ac81d05689, type: 2}
 --- !u!1 &1146611172415108035
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,11 +210,13 @@ MonoBehaviour:
   - {fileID: 6497583332892685588, guid: d57e7c1a1d7113a4b8f95acddffa6297, type: 3}
   - {fileID: 7628197036368909357, guid: 631af9a921c816c408e167e50c7e01f0, type: 3}
   debtorCreditor: {fileID: 6849593130023212710, guid: 862d290830f890f408b41e53f88e8406, type: 3}
+  luxuryTax: {fileID: 8865176980054825071, guid: 641744745916cf84390428d7de3fea64, type: 3}
   incomeTaxEvent: {fileID: 11400000, guid: 78f50cfbec166e0408237475a1081cc3, type: 2}
   purchaseQuestionEvent: {fileID: 11400000, guid: a5b1acb66b7f35843b93252bd2942388, type: 2}
   spinningPolicemanEvent: {fileID: 11400000, guid: 2a6a4c2feb367e04dbb32f056bf22f91, type: 2}
   cardShown: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
   payingRentAnimationBegins: {fileID: 11400000, guid: 08b3063bbc22e864692fc85fa3f1966c, type: 2}
+  luxuryTaxAnimationBegins: {fileID: 11400000, guid: 9749140e5112e3a4a910876e88971e32, type: 2}
 --- !u!1001 &1146611171906167348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -350,6 +353,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1146611172415108039}
     m_Modifications:
+    - target: {fileID: 741085446756322523, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 330
+      objectReference: {fileID: 0}
+    - target: {fileID: 3838064514887029173, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 330
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215153848247165357, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 330
+      objectReference: {fileID: 0}
+    - target: {fileID: 5616235594150395353, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 330
+      objectReference: {fileID: 0}
     - target: {fileID: 5747430255389655611, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
       propertyPath: m_Name
       value: game_ui
@@ -438,6 +457,14 @@ PrefabInstance:
       propertyPath: samePlayerTurn
       value: 
       objectReference: {fileID: 11400000, guid: 4c7a252050a310e46ae33c00f413b87d, type: 2}
+    - target: {fileID: 8285416715190132919, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 330
+      objectReference: {fileID: 0}
+    - target: {fileID: 8598678826731994307, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 330
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bfae21f19739f046b7b3c5225e766bb, type: 3}
 --- !u!224 &854333133532034190 stripped

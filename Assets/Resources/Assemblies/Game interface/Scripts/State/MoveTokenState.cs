@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/MoveTokenState")]
 public class MoveTokenState : State {
-    [SerializeField] private GameEvent turnPlayerSpaceUpdate;
+    [SerializeField] private GameEvent turnPlayerMovedDiceValues;
     [SerializeField] private GameEvent tokenSettledEvent;
     private bool tokenSettled;
 
@@ -13,7 +13,7 @@ public class MoveTokenState : State {
         int turnIndex = GameState.game.IndexOfTurnPlayer;
         TokenMover tokenMover = TokenVisualManager.Instance.getTokenMover(turnIndex);
         int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
-        turnPlayerSpaceUpdate.invoke();
+        turnPlayerMovedDiceValues.invoke();
         DiceInfo diceInfo = GameState.game.DiceInfo;
         tokenMover.startMoving(startingIndex, diceInfo.TotalValue);
         tokenSettled = false;

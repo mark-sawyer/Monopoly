@@ -7,4 +7,5 @@ public class SoundEvent : ScriptableObject {
     public void play() {
         SoundPlayer.Instance.playSound(audioClip);
     }
+    public float ClipLength => audioClip.length;
 }

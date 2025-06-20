@@ -21,6 +21,21 @@ public class DataUIAdjustmentPipeline : MonoBehaviour {
     [SerializeField] private PlayerCardEvent playerGetsGOOJFCardData;
     [SerializeField] private PlayerCardTypeEvent playerGetsGOOJFCardUI;
     #endregion
+    #region Leaving jail
+    [SerializeField] private GameEvent leaveJail;
+    [SerializeField] private GameEvent leaveJailData;
+    [SerializeField] private GameEvent leaveJailUI;
+    #endregion
+    #region Jail turn begin
+    [SerializeField] private GameEvent jailTurnBegin;
+    [SerializeField] private GameEvent jailTurnBeginData;
+    [SerializeField] private GameEvent jailTurnBeginUI;
+    #endregion
+    #region Using GOOJF card
+    [SerializeField] private CardTypeEvent useCardButtonClicked;
+    [SerializeField] private CardTypeEvent useGOOJFCardData;
+    [SerializeField] private CardTypeEvent useGOOJFCardUI;
+    #endregion
 
 
 
@@ -30,6 +45,9 @@ public class DataUIAdjustmentPipeline : MonoBehaviour {
         playerObtainedProperty.Listeners += propertyBoughtPipeline;
         turnPlayer.Listeners += turnPlayerPipeline;
         playerGetsGOOJFCard.Listeners += playerGetsGOOJFCardPipeline;
+        leaveJail.Listeners += leaveJailPipeline;
+        jailTurnBegin.Listeners += jailTurnBeginPipeline;
+        useCardButtonClicked.Listeners += useGOOJFCardPipeline;
     }
     #endregion
 
@@ -51,6 +69,18 @@ public class DataUIAdjustmentPipeline : MonoBehaviour {
     private void playerGetsGOOJFCardPipeline(PlayerInfo playerInfo, CardInfo cardInfo) {
         playerGetsGOOJFCardData.invoke(playerInfo, cardInfo);
         playerGetsGOOJFCardUI.invoke(playerInfo, cardInfo.CardType);
+    }
+    private void leaveJailPipeline() {
+        leaveJailData.invoke();
+        leaveJailUI.invoke();
+    }
+    private void jailTurnBeginPipeline() {
+        jailTurnBeginData.invoke();
+        jailTurnBeginUI.invoke();
+    }
+    private void useGOOJFCardPipeline(CardType cardType) {
+        useGOOJFCardData.invoke(cardType);
+        useGOOJFCardUI.invoke(cardType);
     }
     #endregion
 }

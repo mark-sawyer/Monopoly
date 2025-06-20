@@ -8,13 +8,20 @@ public class DoublesTickboxes : MonoBehaviour {
 
 
 
-    private void Start() {
+    #region MonoBehaviour
+    private void OnEnable() {
         diceAnimationOver.Listeners += checkForDoubles;
         nextPlayerTurnUI.Listeners += removeAllTicks;
     }
+    private void OnDisable() {
+        diceAnimationOver.Listeners -= checkForDoubles;
+        nextPlayerTurnUI.Listeners -= removeAllTicks;
+    }
+    #endregion
 
 
 
+    #region private
     private void checkForDoubles() {
         DiceInfo diceInfo = GameState.game.DiceInfo;
         if (diceInfo.RolledDoubles) addTickToNextTickbox();
@@ -28,4 +35,5 @@ public class DoublesTickboxes : MonoBehaviour {
             dt.removeTick();
         }
     }
+    #endregion
 }
