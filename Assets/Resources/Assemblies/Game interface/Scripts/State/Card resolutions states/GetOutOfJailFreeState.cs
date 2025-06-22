@@ -4,17 +4,24 @@ using UnityEngine;
 public class GetOutOfJailFreeState : State {
     [SerializeField] private PlayerCardEvent playerGetsGOOJFCard;
     [SerializeField] private GameEvent cardResolved;
+    [SerializeField] private SoundEvent pop;
+    private bool cardResolveInvoked;
 
 
 
     #region State
     public override void enterState() {
+        cardResolveInvoked = false;
         CardInfo cardInfo = GameState.game.DrawnCard;
-        playerGetsGOOJFCard.invoke(GameState.game.TurnPlayer, cardInfo);
-        cardResolved.invoke();
+        WaitFrames.Instance.exe(40, pop.play);
+        WaitFrames.Instance.exe(50, () => {
+            playerGetsGOOJFCard.invoke(GameState.game.TurnPlayer, cardInfo);
+            cardResolved.invoke();
+            cardResolveInvoked = true;
+        });
     }
     public override bool exitConditionMet() {
-        return true;
+        return cardResolveInvoked;
     }
     public override State getNextState() {
         return allStates.getState<UpdateTurnPlayerState>();

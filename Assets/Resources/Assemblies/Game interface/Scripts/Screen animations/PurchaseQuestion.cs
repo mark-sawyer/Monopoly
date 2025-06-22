@@ -45,7 +45,7 @@ public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
         moneyAdjustment.invoke(playerInfo, -propertyInfo.Cost);
         moneyChangedHands.play();
         removeScreenAnimation.invoke();
-        WaitFrames.Instance.exe(80, () => propertyAdjustmentBloop.play());
+        WaitFrames.Instance.exe(90, () => propertyAdjustmentBloop.play());
         WaitFrames.Instance.exe(100, () => playerObtainedProperty.invoke(playerInfo, propertyInfo));
     }
     public void noClicked() {

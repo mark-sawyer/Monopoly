@@ -17,10 +17,11 @@ public class TokenMover : MonoBehaviour {
     #region consts
     private const float ACCELERATION_CONSTANT = 0.1f;
     private const float VELOCITY_CONSTANT = 0.5f;
+    private const float MAX_VELOCITY = 60f;
+    private const float FRAME_TIME = 1f / 60f;
     private const float DISTANCE_TO_SPACE_THRESHOLD = 5f;
     private const float DISTANCE_FOR_SETTLING_THRESHOLD = 0.2f;
     private const float VELOCITY_FOR_SETTLING_THRESHOLD = 0.2f;
-    private const float MAX_VELOCITY = 100f;
     #endregion
 
 
@@ -139,7 +140,7 @@ public class TokenMover : MonoBehaviour {
         Vector3 acceleration = (dirVec - VELOCITY_CONSTANT * velocity) * ACCELERATION_CONSTANT;
         velocity = velocity + acceleration;
         if (velocity.magnitude > MAX_VELOCITY) velocity = velocity.normalized * MAX_VELOCITY;
-        transform.position = transform.position + velocity * Time.deltaTime;
+        transform.position = transform.position + velocity * FRAME_TIME;
     }
     private void tokenOnSpaceChanged(TokenMover caller, int spaceIndex) {
         if (caller == this) return;

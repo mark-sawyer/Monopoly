@@ -4,7 +4,7 @@ public class UtilityIcon : PropertyGroupIcon {
     [SerializeField] private ScriptableObject utilityGroupSO;
     [SerializeField] private GameColour propertyGroupPanelColour;
     [SerializeField] private UtilityIconColourSetter iconColourSetter;
-    [SerializeField] private GoldRingToggle goldRingToggle;
+    [SerializeField] private GameObject goldRing;
     private UtilityGroupInfo utilityGroupInfo;
 
 
@@ -45,7 +45,7 @@ public class UtilityIcon : PropertyGroupIcon {
             );
         }
         void setGoldRing(int propertiesOwned) {
-            goldRingToggle.toggle(propertiesOwned == 2);
+            goldRing.SetActive(propertiesOwned == 2);
         }
 
         int propertiesOwned = utilityGroupInfo.utilitiesOwnedByPlayer(playerInfo);

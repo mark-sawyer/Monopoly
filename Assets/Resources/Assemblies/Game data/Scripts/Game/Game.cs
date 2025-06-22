@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 internal class Game : GameStateInfo, GamePlayer {
@@ -37,6 +38,7 @@ internal class Game : GameStateInfo, GamePlayer {
 
     #region GameStateInfo
     public IEnumerable<PlayerInfo> PlayerInfos => players;
+    public IEnumerable<PlayerInfo> ActivePlayers => players.Where(x => x.IsActive);
     public DiceInfo DiceInfo => dice;
     public PlayerInfo TurnPlayer => turnPlayer;
     public int IndexOfTurnPlayer => getPlayerIndex(turnPlayer);
@@ -103,7 +105,8 @@ internal class Game : GameStateInfo, GamePlayer {
     }
     public void sendPlayerToJail(PlayerInfo playerInfo) {
         Player player = (Player)playerInfo;
-        player.goToJail();
+        player.changeSpace(spaces[GameConstants.JAIL_SPACE_INDEX]);
+        player.InJail = true;
     }
     public void removeTurnPlayerFromJail() {
         turnPlayer.exitJail();
@@ -214,7 +217,6 @@ internal class Game : GameStateInfo, GamePlayer {
             );
             spaces[0].addPlayer(players[i]);
         }
-        Player.jailSpace = spaces[10];
         return players;
     }
     #endregion

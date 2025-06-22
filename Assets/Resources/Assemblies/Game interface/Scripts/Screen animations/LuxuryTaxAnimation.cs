@@ -11,12 +11,10 @@ public class LuxuryTaxAnimation : ScreenAnimation {
     private const int ANIMATION_FRAMES = 250;
     private const int TEXT_ANIMATION_FRAMES = 200;
     private const float GOAL_MAX_HORIZONTAL_PROPORTION = 1380f / 1920f;
+    private const float GOAL_RING_PROPORTION = 400f / 1080f;
 
 
 
-    private void Start() {
-        appear();
-    }
     public override void appear() {
         sadSound.play();
         canvasWidth = ((RectTransform)transform.parent).rect.width;
@@ -32,9 +30,14 @@ public class LuxuryTaxAnimation : ScreenAnimation {
         );
     }
     private IEnumerator rollRingAcross() {
-        float ringWidth = ringTransform.rect.width * ringTransform.localScale.x;
-        float xStart = ringTransform.anchoredPosition.x;
-        float xEnd = canvasWidth + (ringWidth / 2f);
+        float ringLength = ringTransform.rect.width;
+        float canvasHeight = ((RectTransform)transform.parent).rect.height;
+        float scale = GOAL_RING_PROPORTION * canvasHeight / ringLength;
+        ringTransform.localScale = new Vector3(scale, scale, scale);
+        float effectiveLength = scale * ringLength;
+
+        float xStart = -effectiveLength / 2f;
+        float xEnd = canvasWidth + (effectiveLength / 2f);
         float totalAngle = -360f * TOTAL_ROTATIONS;
         for (int i = 1; i <= ANIMATION_FRAMES; i++) {
             float xPos = LinearValue.exe(i, xStart, xEnd, ANIMATION_FRAMES);

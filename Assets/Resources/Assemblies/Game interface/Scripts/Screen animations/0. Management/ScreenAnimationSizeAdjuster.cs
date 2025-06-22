@@ -13,7 +13,7 @@ public class ScreenAnimationSizeAdjuster {
         scale = goalWidthProportion * canvasWidth / defaultWidth;
     }
     public GameObject InstantiateAdjusted(GameObject prefab) {
-        GameObject instance = GameObject.Instantiate(prefab, rt);
+        GameObject instance = Object.Instantiate(prefab, rt);
         instance.transform.localScale = new Vector3(scale, scale, scale);
         return instance;
     }

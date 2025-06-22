@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 internal class Player : PlayerInfo {
-    internal static Space jailSpace;
     private List<Property> properties = new List<Property>();
     private Debt debt;
     private int money;
     private bool inJail = false;
+    private bool isActive = true;
     private int turnInJail = 0;
     private List<CardInstance> getOutOfJailFreeCards = new(2);
     private Token token;
@@ -29,12 +29,6 @@ internal class Player : PlayerInfo {
     }
     internal void adjustMoney(int difference) {
         money += difference;
-    }
-    internal void goToJail() {
-        Space.removePlayer(this);
-        Space = jailSpace;
-        Space.addPlayer(this);
-        inJail = true;
     }
     internal void exitJail() {
         inJail = false;
@@ -81,7 +75,8 @@ internal class Player : PlayerInfo {
             return rounded;
         }
     }
-    public bool InJail => inJail;
+    public bool IsActive { get => isActive; internal set => isActive = value; }
+    public bool InJail { get => inJail; internal set => inJail = value; }
     public int TurnInJail => turnInJail;
     public bool HasGOOJFCard => getOutOfJailFreeCards.Count > 0;
     public bool hasGOOJFCardOfType(CardType cardType) {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 public interface GameStateInfo {
     public IEnumerable<PlayerInfo> PlayerInfos { get; }
+    public IEnumerable<PlayerInfo> ActivePlayers { get; }
     public PlayerInfo TurnPlayer { get; }
     public int IndexOfTurnPlayer { get; }
     public int SpaceIndexOfTurnPlayer { get; }

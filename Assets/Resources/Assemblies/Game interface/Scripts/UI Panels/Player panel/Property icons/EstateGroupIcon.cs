@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EstateGroupIcon : PropertyGroupIcon {
     [SerializeField] private ScriptableObject estateGroupSO;
     [SerializeField] private TextMeshProUGUI countText;
-    [SerializeField] private GoldRingToggle goldRingToggle;
+    [SerializeField] private GameObject goldRing;
     [SerializeField] private HotelIconToggle hotelIconToggle;
     [SerializeField] private Image[] highlightImages;
     [SerializeField] private GameColour houseColour;
@@ -78,7 +78,7 @@ public class EstateGroupIcon : PropertyGroupIcon {
             }
         }
         void setGoldRing(bool hasMonopoly) {
-            goldRingToggle.toggle(hasMonopoly);
+            goldRing.SetActive(hasMonopoly);
         }
         void setHotelIcon(bool hotelExists, int minBuildings, int maxBuildings) {
             hotelIconToggle.toggle(hotelExists && minBuildings == maxBuildings);

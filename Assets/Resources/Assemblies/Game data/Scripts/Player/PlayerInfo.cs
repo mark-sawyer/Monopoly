@@ -8,6 +8,7 @@ public interface PlayerInfo : Creditor {
     public DebtInfo Debt { get; }
     public int TotalWorth { get; }
     public int IncomeTaxAmount { get; }
+    public bool IsActive { get; }
     public bool InJail { get; }
     public int TurnInJail { get; }
     public bool HasGOOJFCard { get; }

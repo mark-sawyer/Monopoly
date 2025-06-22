@@ -8,7 +8,7 @@ public class RailroadIcon : PropertyGroupIcon {
     [SerializeField] private GameColour propertyGroupPanelColour;
     [SerializeField] private GameColour propertyGroupIconColour;
     [SerializeField] private GameColour railroadHighlightColour;
-    [SerializeField] private GoldRingToggle goldRingToggle;
+    [SerializeField] private GameObject goldRing;
     [SerializeField] private Image[] highlightImages;
     [SerializeField] private Image trainImage;
     private RailroadGroupInfo railroadGroupInfo;
@@ -64,7 +64,7 @@ public class RailroadIcon : PropertyGroupIcon {
             }
         }
         void setGoldRing(int propertiesOwned) {
-            goldRingToggle.toggle(propertiesOwned == 4);
+            goldRing.SetActive(propertiesOwned == 4);
         }
 
         int propertiesOwned = railroadGroupInfo.railroadsOwnedByPlayer(playerInfo);
