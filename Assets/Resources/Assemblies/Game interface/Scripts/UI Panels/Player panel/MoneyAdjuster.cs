@@ -6,7 +6,6 @@ public class MoneyAdjuster : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI frontText;
     [SerializeField] private TextMeshProUGUI backText;
     [SerializeField] private GameObject floatingMoneyPrefab;
-    [SerializeField] private Transform floatingMoneySpawnPoint;
     private string moneyString = "$1500";
     private const int FRAMES = 90;
     private const float AMPLITUDE = 0.06f;
@@ -21,9 +20,9 @@ public class MoneyAdjuster : MonoBehaviour {
 
         GameObject floatingMoney = Instantiate(
             floatingMoneyPrefab,
-            floatingMoneySpawnPoint.position,
+            transform.position,
             Quaternion.identity,
-            floatingMoneySpawnPoint
+            transform
         );
         floatingMoney.GetComponent<FloatingMoneyDifference>().floatAway(difference);
         changeMoneyVisual(currentMoney);

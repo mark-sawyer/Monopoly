@@ -4,21 +4,27 @@ using UnityEngine.UI;
 
 [ExecuteAlways]
 public class EstateGroupIcon : PropertyGroupIcon {
-    [SerializeField] private ScriptableObject estateGroupSO;
+    #region Internal references
+    [SerializeField] private EstateColour estateColourEnum;
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private GameObject goldRing;
-    [SerializeField] private HotelIconToggle hotelIconToggle;
     [SerializeField] private Image[] highlightImages;
+    [SerializeField] private HotelIconToggle hotelIconToggle;
+    #endregion
+    #region External references
     [SerializeField] private GameColour houseColour;
     [SerializeField] private GameColour hotelColour;
+    #endregion
     private EstateGroupInfo estateGroupInfo;
+    private EstateGroupColours estateGroupColours;
 
 
 
     #region MonoBehaviour
     private void Start() {
-        estateGroupInfo = (EstateGroupInfo)estateGroupSO;
-        Color estateColour = estateGroupInfo.EstateColour;
+        estateGroupInfo = EstateGroupDictionary.Instance.lookupInfo(estateColourEnum);
+        estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateColourEnum);
+        Color estateColour = estateGroupColours.EstateColour.Colour;
         estateColour.a = ZeroPropertiesAlpha;
         updatePanelColour(estateColour);
     }
@@ -29,7 +35,10 @@ public class EstateGroupIcon : PropertyGroupIcon {
     #region PropertyGroupIcon
     public override void updateVisual(PlayerInfo playerInfo) {
         void transparentIfZeroProperties(int propertiesOwned) {
-            Color estateColour = estateGroupInfo.EstateColour;
+            EstateColour estateColourEnum = estateGroupInfo.EstateColour;
+            EstateGroupDictionary estateGroupDictionary = EstateGroupDictionary.Instance;
+            EstateGroupColours estateGroupColours = estateGroupDictionary.lookupColour(estateColourEnum);
+            Color estateColour = estateGroupColours.EstateColour.Colour;
             estateColour.a = propertiesOwned == 0 ? ZeroPropertiesAlpha : NonZeroPropertiesAlpha;
             updatePanelColour(estateColour);
         }
@@ -63,14 +72,14 @@ public class EstateGroupIcon : PropertyGroupIcon {
                 EstateInfo estateInfo = estateGroupInfo.getEstateInfo(i);
                 int buildings = estateInfo.BuildingCount;
                 if (estateInfo.Owner != playerInfo) return noColour;
-                if (!hasMonopoly) return estateGroupInfo.HighlightColour;          // Owns the property
-                if (maxBuildings == 0) return noColour;                            // Has a monopoly
-                if (maxBuildings == minBuildings && hotelExists) return noColour;  // Has at least one building
-                if (maxBuildings == minBuildings) return noColour;                 // Does not have all hotels
-                if (hotelExists && buildings == 1) return hotelColour.Colour;      // Has an uneven number of buildings
-                if (hotelExists) return noColour;                                  // Property does not have a hotel
-                if (buildings == maxBuildings) return houseColour.Colour;          // No properties have hotels
-                return noColour;                                                   // Can have another house added
+                if (!hasMonopoly) return estateGroupColours.HighlightColour.Colour;  // Owns the property
+                if (maxBuildings == 0) return noColour;                              // Has a monopoly
+                if (maxBuildings == minBuildings && hotelExists) return noColour;    // Has at least one building
+                if (maxBuildings == minBuildings) return noColour;                   // Does not have all hotels
+                if (hotelExists && buildings == 1) return hotelColour.Colour;        // Has an uneven number of buildings
+                if (hotelExists) return noColour;                                    // Property does not have a hotel
+                if (buildings == maxBuildings) return houseColour.Colour;            // No properties have hotels
+                return noColour;                                                     // Can have another house added
             }
 
             for (int i = 0; i < estateGroupInfo.NumberOfEstatesInGroup; i++) {

@@ -63,7 +63,7 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
     public void OnPointerClick(PointerEventData eventData) {
         if (selected) return;
 
-        select();
+        select(false);
     }
     #endregion
 
@@ -74,12 +74,12 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         this.playerInfo = playerInfo;
         tokenIcon.setup(playerInfo.Token, playerInfo.Colour);
     }
-    public void select() {
+    public void select(bool isFromOpen) {
         selected = true;
         canvas.sortingOrder = 2;
         setAlphaOfCover(0f);
         StartCoroutine(pulse());
-        tokenSelectedInManageProperties.invoke(playerInfo);
+        if (!isFromOpen) tokenSelectedInManageProperties.invoke(playerInfo);
     }
     #endregion
 

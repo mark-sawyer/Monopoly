@@ -82,5 +82,9 @@ internal class Player : PlayerInfo {
     public bool hasGOOJFCardOfType(CardType cardType) {
         return getOutOfJailFreeCards.Any(x => x.CardType == cardType);
     }
+    public bool ownsProperty(PropertyInfo propertyInfo) {
+        Property property = (Property)propertyInfo;
+        return properties.Contains(property);
+    }
     #endregion
 }

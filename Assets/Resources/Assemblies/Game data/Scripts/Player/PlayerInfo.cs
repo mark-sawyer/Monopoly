@@ -13,4 +13,5 @@ public interface PlayerInfo : Creditor {
     public int TurnInJail { get; }
     public bool HasGOOJFCard { get; }
     public bool hasGOOJFCardOfType(CardType cardType);
+    public bool ownsProperty(PropertyInfo propertyInfo);
 }

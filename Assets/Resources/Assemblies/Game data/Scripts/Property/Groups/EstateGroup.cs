@@ -4,17 +4,13 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New EstateGroup", menuName = "PropertyGroups/EstateGroup")]
 internal class EstateGroup : ScriptableObject, EstateGroupInfo {
-    [SerializeField] private int groupID;
+    [SerializeField] private EstateColour estateColour;
     [SerializeField] private Estate[] estates;
-    [SerializeField] private Color estateColour;
-    [SerializeField] private Color highlightColour;
 
 
 
     #region EstateGroupInfo
-    public int GroupID => groupID;
-    public Color EstateColour => estateColour;
-    public Color HighlightColour => highlightColour;
+    public EstateColour EstateColour => estateColour;
     public int NumberOfEstatesInGroup => estates.Length;
     public int MinBuildingCount => estates.Min(x => x.BuildingCount);
     public int MaxBuildingCount => estates.Max(x => x.BuildingCount);
@@ -37,9 +33,7 @@ internal class EstateGroup : ScriptableObject, EstateGroupInfo {
 }
 
 public interface EstateGroupInfo {
-    public int GroupID { get; }
-    public Color EstateColour { get; }
-    public Color HighlightColour { get; }
+    public EstateColour EstateColour { get; }
     public int NumberOfEstatesInGroup { get; }
     public int MinBuildingCount { get; }
     public int MaxBuildingCount { get; }

@@ -30,6 +30,7 @@ public class TokenDictionary : ScriptableObject {
 
 
 
+    #region public
     public TokenColours getColours(PlayerColour colour) {
         if (coloursDict == null) coloursDict = initialiseColoursDict();
         return coloursDict[colour];
@@ -38,6 +39,7 @@ public class TokenDictionary : ScriptableObject {
         if (spritesDict == null) spritesDict = initialiseSpritesDict();
         return spritesDict[token];
     }
+    #endregion
 
 
 

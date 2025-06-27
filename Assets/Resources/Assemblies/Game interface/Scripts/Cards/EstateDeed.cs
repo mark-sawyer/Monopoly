@@ -32,7 +32,7 @@ public class EstateDeed : MonoBehaviour {
 
     #region private
     private void updateVisual() {
-        colourBandImage.color = estateInfo.EstateColour;
+        colourBandImage.color = EstateGroupDictionary.Instance.lookupColour(estateInfo.EstateColour).EstateColour.Colour;
         setTexts();
     }
     private void setTexts() {

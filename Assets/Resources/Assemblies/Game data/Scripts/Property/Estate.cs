@@ -11,7 +11,7 @@ internal class Estate : Property, EstateInfo {
 
     #region EstateInfo
     public EstateGroupInfo EstateGroupInfo => estateGroup;
-    public Color EstateColour => estateGroup.EstateColour;
+    public EstateColour EstateColour => estateGroup.EstateColour;
     public int BuildingCost => buildingCost;
     public int BuildingCount => buildings.Count;
     public int EstateOrder => estateGroup.getPropertyOrder(this);
@@ -82,7 +82,7 @@ internal class Estate : Property, EstateInfo {
 
 public interface EstateInfo : PropertyInfo {
     public EstateGroupInfo EstateGroupInfo { get; }
-    public Color EstateColour { get; }
+    public EstateColour EstateColour { get; }
     public int BuildingCost { get; }
     public int BuildingCount { get; }
     public int EstateOrder { get; }

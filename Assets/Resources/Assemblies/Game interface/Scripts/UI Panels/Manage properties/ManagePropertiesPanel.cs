@@ -8,9 +8,15 @@ public class ManagePropertiesPanel : MonoBehaviour {
     [SerializeField] private RectTransform rt;
     [SerializeField] private RectTransform tokenIconContainerRT;
     #endregion
+    #region External references
     [SerializeField] private GameEvent managePropertiesOpened;
+    [SerializeField] private PlayerEvent managePropertiesVisualRefresh;
+    [SerializeField] private ScreenCover screenCover;
+    #endregion
+    #region Private attributes
     private float offScreenY;
     private float onScreenY;
+    #endregion
     #region Numeric constants
     private const float VERTICAL_PROPORTION = 800f / 1080f;
     private const float HEIGHT_ABOVE_CANVAS_PROPORTION = 5f / 36f;
@@ -56,14 +62,16 @@ public class ManagePropertiesPanel : MonoBehaviour {
                     PlayerInfo activePlayer = activePlayers.ElementAt(i);
                     ManagePropertiesTokenIcon managePropertiesTokenIcon = getComponent(i);
                     managePropertiesTokenIcon.setup(activePlayer);
-                    if (activePlayer == GameState.game.TurnPlayer) managePropertiesTokenIcon.select();
+                    if (activePlayer == GameState.game.TurnPlayer) managePropertiesTokenIcon.select(true);
                 }
                 else tokenIconContainerRT.GetChild(i).gameObject.SetActive(false);
             }
         }
 
         setIcons();
+        screenCover.startFadeIn();
         StartCoroutine(dropCoroutine());
+        managePropertiesVisualRefresh.invoke(GameState.game.TurnPlayer);
     }
     #endregion
 }

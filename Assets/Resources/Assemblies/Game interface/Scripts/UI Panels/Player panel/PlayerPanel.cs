@@ -26,9 +26,9 @@ public class PlayerPanel : MonoBehaviour {
     public void updatePropertyIconVisual(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         PropertyGroupIcon getPropertyGroupIcon() {
             if (propertyInfo is EstateInfo estateInfo) {
-                int groupID = estateInfo.EstateGroupInfo.GroupID;
-                if (groupID <= 4) return propertyIconContainer.GetChild(groupID - 1).GetComponent<PropertyGroupIcon>();
-                else return propertyIconContainer.GetChild(groupID).GetComponent<PropertyGroupIcon>();
+                int groupID = (int)estateInfo.EstateColour;
+                if (groupID < 4) return propertyIconContainer.GetChild(groupID).GetComponent<PropertyGroupIcon>();
+                else return propertyIconContainer.GetChild(groupID + 1).GetComponent<PropertyGroupIcon>();
             }
             else if (propertyInfo is RailroadInfo) return propertyIconContainer.GetChild(4).GetComponent<PropertyGroupIcon>();
             else return propertyIconContainer.GetChild(9).GetComponent<PropertyGroupIcon>();
