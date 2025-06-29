@@ -19,6 +19,7 @@ public class GameDataUpdater : MonoBehaviour {
     [SerializeField] private GameEvent leaveJail;
     [SerializeField] private CardTypeEvent useGOOJFCardData;
     [SerializeField] private GameEvent doublesCountReset;
+    [SerializeField] private EstateEvent estateAddedBuildingData;
     #endregion
 
 
@@ -41,6 +42,7 @@ public class GameDataUpdater : MonoBehaviour {
         leaveJail.Listeners += removeTurnPlayerFromJail;
         useGOOJFCardData.Listeners += useGOOJFCard;
         doublesCountReset.Listeners += resetDoublesCount;
+        estateAddedBuildingData.Listeners += addBuildingToEstate;
     }
     #endregion
 
@@ -107,6 +109,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void resetDoublesCount() {
         gamePlayer.resetDoublesCount();
+    }
+    private void addBuildingToEstate(EstateInfo estateInfo) {
+        gamePlayer.addBuilding(estateInfo);
     }
     #endregion
 }

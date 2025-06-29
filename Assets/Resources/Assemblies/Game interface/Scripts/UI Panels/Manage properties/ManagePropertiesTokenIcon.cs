@@ -13,30 +13,26 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
     [SerializeField] private GameColour panelColour;
     [SerializeField] private PlayerEvent tokenSelectedInManageProperties;
     #endregion
-    private PlayerInfo playerInfo;
-    private float goalScale;
-    private bool selected;
     #region Numeric constants
     private const float SELECTED_SCALE = 1.16f;
     private const float HOVER_COLOUR = 75f / 255f;
     private const float UNSELECTED_COLOUR = 150f / 255f;
     #endregion
+    #region Private attributes
+    private PlayerInfo playerInfo;
+    private float goalScale;
+    private static bool wipeInProgress;
+    #endregion
 
 
 
     #region MonoBehaviour
-    private void OnEnable() {
-        tokenSelectedInManageProperties.Listeners += deselect;
-    }
-    private void OnDisable() {
-        tokenSelectedInManageProperties.Listeners -= deselect;
-    }
     private void Start() {
         goalScale = 1f;
-        selected = false;
+        wipeInProgress = false;
     }
     private void Update() {
-        if (selected) return;
+        if (Selected) return;
 
         float currentScale = transform.parent.localScale.x;
         float difference = goalScale - currentScale;
@@ -49,19 +45,19 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
 
     #region Interfaces
     public void OnPointerEnter(PointerEventData eventData) {
-        if (selected) return;
+        if (Selected) return;
 
         setAlphaOfCover(HOVER_COLOUR);
         goalScale = SELECTED_SCALE;
     }
     public void OnPointerExit(PointerEventData eventData) {
-        if (selected) return;
+        if (Selected) return;
 
         setAlphaOfCover(UNSELECTED_COLOUR);
         goalScale = 1f;
     }
     public void OnPointerClick(PointerEventData eventData) {
-        if (selected) return;
+        if (Selected || wipeInProgress) return;
 
         select(false);
     }
@@ -70,30 +66,40 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
 
 
     #region public
+    public PlayerInfo PlayerInfo => playerInfo;
     public void setup(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
         tokenIcon.setup(playerInfo.Token, playerInfo.Colour);
     }
     public void select(bool isFromOpen) {
-        selected = true;
+        PlayerInfo priorSelectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
+        if (priorSelectedPlayer != null) {
+            ManagePropertiesTokenIcon priorIcon = ManagePropertiesPanel.Instance.getManagePropertiesTokenIcon(priorSelectedPlayer);
+            priorIcon.deselect();
+        }
+        ManagePropertiesPanel.Instance.setSelectedPlayer(playerInfo);
         canvas.sortingOrder = 2;
         setAlphaOfCover(0f);
         StartCoroutine(pulse());
-        if (!isFromOpen) tokenSelectedInManageProperties.invoke(playerInfo);
+        if (!isFromOpen) {
+            tokenSelectedInManageProperties.invoke(playerInfo);
+            wipeInProgress = true;
+            WaitFrames.Instance.exe(
+                2 * InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP + 2,
+                () => wipeInProgress = false
+            );
+        }
+    }
+    public void deselect() {
+        canvas.sortingOrder = 1;
+        goalScale = 1f;
+        setAlphaOfCover(UNSELECTED_COLOUR);
     }
     #endregion
 
 
 
     #region private
-    private void deselect(PlayerInfo selectedPlayer) {
-        if (!selected || selectedPlayer == playerInfo) return;
-
-        selected = false;
-        canvas.sortingOrder = 1;
-        goalScale = 1f;
-        setAlphaOfCover(UNSELECTED_COLOUR);
-    }
     private void setAlphaOfCover(float alpha) {
         Color colour = transparentCover.color;
         colour.a = alpha;
@@ -113,5 +119,6 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         }
         transform.parent.localScale = new Vector3(SELECTED_SCALE, SELECTED_SCALE, SELECTED_SCALE);
     }
+    private bool Selected => ManagePropertiesPanel.Instance.SelectedPlayer == playerInfo;
     #endregion
 }

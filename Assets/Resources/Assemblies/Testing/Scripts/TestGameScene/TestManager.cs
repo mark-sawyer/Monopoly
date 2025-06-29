@@ -6,9 +6,9 @@ public class TestManager : MonoBehaviour {
 
 
     private void Awake() {
-        int playerNum = 2;
+        int playerNum = 3;
         GameFactory gameFactory = new GameFactory();
-        gameFactory.makeTestGame(playerNum, 1500);
+        gameFactory.makeTestGame(playerNum, 15000);
         GameState.game = gameFactory.GameStateInfo;
         gameDataUpdater.setup(gameFactory.GamePlayer);
     }

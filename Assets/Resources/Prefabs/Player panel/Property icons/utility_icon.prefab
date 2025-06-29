@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 380.7, y: 536.7}
+  m_SizeDelta: {x: 380.7, y: 491.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6109160222483125677
 CanvasRenderer:
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 7581331008406608268}
+  propertyAdjustmentPop: {fileID: 11400000, guid: 81542e3b573b4e74793c9b3ac51db7d1, type: 2}
   utilityGroupSO: {fileID: 11400000, guid: 52b8828a606835f498ad82ed530cfc70, type: 2}
   propertyGroupPanelColour: {fileID: 11400000, guid: 1fee1a5b927fb3f4ca021a289cc377ff, type: 2}
   iconColourSetter: {fileID: 5139209117578275235}
@@ -292,7 +293,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.9, y: 536.7}
+  m_SizeDelta: {x: 0.9, y: 491.7}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &2142174290750736459
 CanvasRenderer:
@@ -925,7 +926,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.9, y: 536.7}
+  m_SizeDelta: {x: 0.9, y: 491.7}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &9134678368454655500
 CanvasRenderer:
@@ -1066,7 +1067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777360032310727156, guid: bf38c73ae15395d41ad6f8ea538df3f1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 537.1
+      value: 492.1
       objectReference: {fileID: 0}
     - target: {fileID: 1950214824803096317, guid: bf38c73ae15395d41ad6f8ea538df3f1, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1090,7 +1091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2246197819685358198, guid: bf38c73ae15395d41ad6f8ea538df3f1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 537.1
+      value: 492.1
       objectReference: {fileID: 0}
     - target: {fileID: 2554630784461185151, guid: bf38c73ae15395d41ad6f8ea538df3f1, type: 3}
       propertyPath: m_Pivot.x

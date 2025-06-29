@@ -3,7 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New property space", menuName = "Space/PropertySpace")]
 internal class PropertySpace : Space, PropertySpaceInfo {
     [SerializeField] private Property property;
+
+
+
+    #region internal
     internal Property Property => property;
+    #endregion
 
 
 

@@ -6,6 +6,7 @@ internal abstract class Property: ScriptableObject, PropertyInfo {
     [SerializeField] private int cost;
     [SerializeField] private int mortgageValue;
     private Player owner;
+    private bool isMortgaged;
 
 
 
@@ -22,6 +23,7 @@ internal abstract class Property: ScriptableObject, PropertyInfo {
     public int Cost => cost;
     public string Name => propertyName;
     public int MortgageValue => mortgageValue;
+    public bool IsMortgaged => isMortgaged;
     public bool IsBought => owner != null;
     public PlayerInfo Owner => owner;
     public int Rent => getRent();
@@ -40,6 +42,7 @@ public interface PropertyInfo {
     public int Cost { get; }
     public string Name { get; }
     public int MortgageValue { get; }
+    public bool IsMortgaged { get; }
     public bool IsBought { get; }
     public PlayerInfo Owner { get; }
     public int Rent { get; }

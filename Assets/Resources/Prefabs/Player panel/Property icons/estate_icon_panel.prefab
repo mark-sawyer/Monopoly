@@ -551,7 +551,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.9, y: 536.7}
+  m_SizeDelta: {x: 0.9, y: 491.7}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &2445717376196489369
 CanvasRenderer:
@@ -959,14 +959,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 4062801452771080559}
-  estateColour: 0
+  propertyAdjustmentPop: {fileID: 11400000, guid: 81542e3b573b4e74793c9b3ac51db7d1, type: 2}
+  estateColourEnum: 0
   countText: {fileID: 7227933648722432208}
   goldRing: {fileID: 7682971388605349690}
-  hotelIconToggle: {fileID: 7520077775405566249}
   highlightImages:
   - {fileID: 6691440458696033203}
   - {fileID: 5894969632561825983}
   - {fileID: 6575437488918299524}
+  hotelIconToggle: {fileID: 7520077775405566249}
   houseColour: {fileID: 11400000, guid: 17e96350264746c4c961060f8fed965e, type: 2}
   hotelColour: {fileID: 11400000, guid: f6cb57a11f127d341bf9d7bb341d9f30, type: 2}
 --- !u!1 &5897305019963258541
@@ -1005,7 +1006,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 380.7, y: 536.7}
+  m_SizeDelta: {x: 380.7, y: 491.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &863586876073941816
 CanvasRenderer:
@@ -1570,7 +1571,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.9, y: 536.7}
+  m_SizeDelta: {x: 0.9, y: 491.7}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4795914964419348190
 CanvasRenderer:
@@ -1711,7 +1712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777360032310727156, guid: bf38c73ae15395d41ad6f8ea538df3f1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 537.1
+      value: 492.1
       objectReference: {fileID: 0}
     - target: {fileID: 1950214824803096317, guid: bf38c73ae15395d41ad6f8ea538df3f1, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1735,7 +1736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2246197819685358198, guid: bf38c73ae15395d41ad6f8ea538df3f1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 537.1
+      value: 492.1
       objectReference: {fileID: 0}
     - target: {fileID: 2554630784461185151, guid: bf38c73ae15395d41ad6f8ea538df3f1, type: 3}
       propertyPath: m_Pivot.x

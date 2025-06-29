@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 internal abstract class Space : ScriptableObject, SpaceInfo {
-    private Game game;
+    private GameStateInfo gameInfo;
     private List<Player> playersVisiting;
 
 
@@ -13,15 +13,21 @@ internal abstract class Space : ScriptableObject, SpaceInfo {
     }
     public IEnumerable<PlayerInfo> VisitingPlayers => playersVisiting;
     public int NumberOfPlayersOnSpace => playersVisiting.Count;
-    public int Index => game.getSpaceIndex(this);
+    public int Index => gameInfo.getSpaceIndex(this);
     #endregion
 
 
 
     #region internal
-    internal void setupSpace(Game game) {
-        this.game = game;
+    internal void setupSpace(GameStateInfo gameInfo, BankInfo bankInfo) {
+        this.gameInfo = gameInfo;
         playersVisiting = new List<Player>();
+        if (this is PropertySpace propertySpace) {
+            Property property = propertySpace.Property;
+            if (property is Estate estate) {
+                estate.setup(bankInfo);
+            }
+        }
     }
     internal void addPlayer(Player player) {
         playersVisiting.Add(player);

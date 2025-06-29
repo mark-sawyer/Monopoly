@@ -56,18 +56,18 @@ public class ScreenAnimationManager : MonoBehaviour {
     
     #region Screen animation
     private void startScreenAnimation(GameObject prefab) {
-        screenCover.startFadeIn();
+        screenCover.startFadeIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
         screenAnimationInstance = Instantiate(prefab, transform);
         screenAnimationInstance.GetComponent<ScreenAnimation>().appear();
     }
     private void startScreenAnimation<T>(GameObject prefab, T t) {
-        screenCover.startFadeIn();
+        screenCover.startFadeIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
         screenAnimationInstance = Instantiate(prefab, transform);
         screenAnimationInstance.GetComponent<ScreenAnimation<T>>().setup(t);
         screenAnimationInstance.GetComponent<ScreenAnimation<T>>().appear();
     }
     private void startScreenAnimation<T1, T2>(GameObject prefab, T1 t1, T2 t2) {
-        screenCover.startFadeIn();
+        screenCover.startFadeIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
         screenAnimationInstance = Instantiate(prefab, transform);
         screenAnimationInstance.GetComponent<ScreenAnimation<T1, T2>>().setup(t1, t2);
         screenAnimationInstance.GetComponent<ScreenAnimation<T1, T2>>().appear();

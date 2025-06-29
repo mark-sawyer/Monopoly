@@ -10,6 +10,9 @@ internal class UtilityGroup : ScriptableObject, UtilityGroupInfo {
 
 
     #region UtilityGroupInfo
+    public UtilityInfo getUtilityInfo(int index) {
+        return utilities[index];
+    }
     public int utilitiesOwnedByPlayer(PlayerInfo player) {
         return utilities.Count(x => x.Owner == player);
     }
@@ -21,6 +24,7 @@ internal class UtilityGroup : ScriptableObject, UtilityGroupInfo {
 }
 
 public interface UtilityGroupInfo {
+    public UtilityInfo getUtilityInfo(int index);
     public int utilitiesOwnedByPlayer(PlayerInfo player);
     public bool playerOwnsUtility(PlayerInfo player, UtilityType utilityType);
 }

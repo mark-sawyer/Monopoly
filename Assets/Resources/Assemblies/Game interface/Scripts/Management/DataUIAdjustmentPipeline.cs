@@ -36,6 +36,11 @@ public class DataUIAdjustmentPipeline : MonoBehaviour {
     [SerializeField] private CardTypeEvent useGOOJFCardData;
     [SerializeField] private CardTypeEvent useGOOJFCardUI;
     #endregion
+    #region Estate added building
+    [SerializeField] private EstateEvent estateAddedBuilding;
+    [SerializeField] private EstateEvent estateAddedBuildingData;
+    [SerializeField] private EstateEvent estateAddedBuildingUI;
+    #endregion
 
 
 
@@ -48,6 +53,7 @@ public class DataUIAdjustmentPipeline : MonoBehaviour {
         leaveJail.Listeners += leaveJailPipeline;
         jailTurnBegin.Listeners += jailTurnBeginPipeline;
         useCardButtonClicked.Listeners += useGOOJFCardPipeline;
+        estateAddedBuilding.Listeners += estateAddedBuildingPipeline;
     }
     #endregion
 
@@ -81,6 +87,10 @@ public class DataUIAdjustmentPipeline : MonoBehaviour {
     private void useGOOJFCardPipeline(CardType cardType) {
         useGOOJFCardData.invoke(cardType);
         useGOOJFCardUI.invoke(cardType);
+    }
+    private void estateAddedBuildingPipeline(EstateInfo estateInfo) {
+        estateAddedBuildingData.invoke(estateInfo);
+        estateAddedBuildingUI.invoke(estateInfo);
     }
     #endregion
 }

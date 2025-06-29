@@ -196,7 +196,7 @@ internal class Game : GameStateInfo, GamePlayer {
             Resources.Load<Space>("ScriptableObjects/Spaces/39_propertySpace")
         };
         foreach (Space space in spaces) {
-            space.setupSpace(this);
+            space.setupSpace(this, bank);
         }
         return spaces;
     }

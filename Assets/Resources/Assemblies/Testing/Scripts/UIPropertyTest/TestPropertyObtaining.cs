@@ -59,7 +59,7 @@ public class TestPropertyObtaining : MonoBehaviour {
                 moneyAdjustData.invoke(playerInfo, -property.Cost);
                 moneyAdjustUI.invoke( playerInfo);
             }
-            else if (property is EstateInfo estateInfo && estateInfo.canAddBuilding() && estateInfo.BuildingCost <= playerInfo.Money) {
+            else if (property is EstateInfo estateInfo && estateInfo.CanAddBuilding && estateInfo.BuildingCost <= playerInfo.Money) {
                 estateAddedBuildingData.invoke(estateInfo);
                 playerPropertyAdjustmentUI.invoke(playerInfo, estateInfo);
                 moneyAdjustData.invoke(playerInfo, -estateInfo.BuildingCost);

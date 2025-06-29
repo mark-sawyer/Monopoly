@@ -15,8 +15,11 @@ public class EstateGroupIcon : PropertyGroupIcon {
     [SerializeField] private GameColour houseColour;
     [SerializeField] private GameColour hotelColour;
     #endregion
+    #region Private attributes
+    private EstateGroupIconState estateGroupIconState;
     private EstateGroupInfo estateGroupInfo;
     private EstateGroupColours estateGroupColours;
+    #endregion
 
 
 
@@ -27,13 +30,18 @@ public class EstateGroupIcon : PropertyGroupIcon {
         Color estateColour = estateGroupColours.EstateColour.Colour;
         estateColour.a = ZeroPropertiesAlpha;
         updatePanelColour(estateColour);
+        estateGroupIconState = new EstateGroupIconState(estateGroupInfo);
     }
     #endregion
 
 
 
     #region PropertyGroupIcon
-    public override void updateVisual(PlayerInfo playerInfo) {
+    public override bool iconNeedsToUpdate() {
+        EstateGroupIconState newState = new EstateGroupIconState(estateGroupInfo, PlayerInfo);
+        return estateGroupIconState.stateHasChanged(newState);
+    }
+    public override void updateVisual() {
         void transparentIfZeroProperties(int propertiesOwned) {
             EstateColour estateColourEnum = estateGroupInfo.EstateColour;
             EstateGroupDictionary estateGroupDictionary = EstateGroupDictionary.Instance;
@@ -71,7 +79,7 @@ public class EstateGroupIcon : PropertyGroupIcon {
                 Color noColour = new Color(0f, 0f, 0f, 0f);
                 EstateInfo estateInfo = estateGroupInfo.getEstateInfo(i);
                 int buildings = estateInfo.BuildingCount;
-                if (estateInfo.Owner != playerInfo) return noColour;
+                if (estateInfo.Owner != PlayerInfo) return noColour;
                 if (!hasMonopoly) return estateGroupColours.HighlightColour.Colour;  // Owns the property
                 if (maxBuildings == 0) return noColour;                              // Has a monopoly
                 if (maxBuildings == minBuildings && hotelExists) return noColour;    // Has at least one building
@@ -93,7 +101,7 @@ public class EstateGroupIcon : PropertyGroupIcon {
             hotelIconToggle.toggle(hotelExists && minBuildings == maxBuildings);
         }
 
-        int propertiesOwned = estateGroupInfo.propertiesOwnedByPlayer(playerInfo);
+        int propertiesOwned = estateGroupInfo.propertiesOwnedByPlayer(PlayerInfo);
         bool hasMonopoly = propertiesOwned == estateGroupInfo.NumberOfEstatesInGroup;
         bool hotelExists = estateGroupInfo.HotelExists;
         int minBuildings = estateGroupInfo.MinBuildingCount;
@@ -104,6 +112,9 @@ public class EstateGroupIcon : PropertyGroupIcon {
         setHighlights(hasMonopoly, hotelExists, minBuildings, maxBuildings);
         setGoldRing(hasMonopoly);
         setHotelIcon(hotelExists, minBuildings, maxBuildings);
+    }
+    public override void setNewState() {
+        estateGroupIconState = new EstateGroupIconState(estateGroupInfo, PlayerInfo);
     }
     #endregion
 }

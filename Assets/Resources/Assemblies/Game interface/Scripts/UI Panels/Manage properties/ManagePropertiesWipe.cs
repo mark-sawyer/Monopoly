@@ -6,7 +6,6 @@ public class ManagePropertiesWipe : MonoBehaviour {
     [SerializeField] private PlayerEvent managePropertiesVisualRefresh;
     [SerializeField] private PlayerEvent tokenSelectedInManageProperties;
     private const float MAX_HEIGHT = 600f;
-    private const int FRAMES_UP = 30;
 
 
 
@@ -24,16 +23,19 @@ public class ManagePropertiesWipe : MonoBehaviour {
     }
     private IEnumerator wipeCoroutine(PlayerInfo playerInfo) {
         float width = rt.rect.width;
-        for (int i = 1; i <= FRAMES_UP; i++) {
-            float height = LinearValue.exe(i, 0f, MAX_HEIGHT, FRAMES_UP);
+        int wipeFrames = InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP;
+        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP; i++) {
+            float height = LinearValue.exe(i, 0f, MAX_HEIGHT, wipeFrames);
             rt.sizeDelta = new Vector2(width, height);
             yield return null;
         }
+
         rt.sizeDelta = new Vector2(width, MAX_HEIGHT);
         managePropertiesVisualRefresh.invoke(playerInfo);
         yield return null;
-        for (int i = 1; i <= FRAMES_UP; i++) {
-            float height = LinearValue.exe(i, MAX_HEIGHT, 0f, FRAMES_UP);
+
+        for (int i = 1; i <= wipeFrames; i++) {
+            float height = LinearValue.exe(i, MAX_HEIGHT, 0f, wipeFrames);
             rt.sizeDelta = new Vector2(width, height);
             yield return null;
         }

@@ -145,7 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7879190789381795014}
   - component: {fileID: 2556426870191264033}
-  - component: {fileID: 1133096380686225286}
+  - component: {fileID: 7744277712581805002}
   m_Layer: 5
   m_Name: roll_button
   m_TagString: Untagged
@@ -232,9 +232,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1133096380686225286}
-        m_TargetAssemblyTypeName: RollButton, GameInterface
-        m_MethodName: buttonClicked
+      - m_Target: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
+        m_TargetAssemblyTypeName: GameEvent, GameInterface
+        m_MethodName: invoke
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -275,7 +275,7 @@ MonoBehaviour:
   - {fileID: 5609345506321440168}
   - {fileID: 1888674375391577478}
   - {fileID: 185850388900086527}
---- !u!114 &1133096380686225286
+--- !u!114 &7744277712581805002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -284,14 +284,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7879190789381795015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e729aceacf8f924f8376d8ad1bc8a06, type: 3}
+  m_Script: {fileID: 11500000, guid: 2135400a3277fd84cb5699f6da4a8639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextPlayerTurnUI: {fileID: 11400000, guid: 16a986c37b9c53c4f97288b8053c81b0, type: 2}
-  samePlayerTurn: {fileID: 11400000, guid: 4c7a252050a310e46ae33c00f413b87d, type: 2}
+  rollButtonClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
+  managePropertiesButtonClicked: {fileID: 11400000, guid: baa20c20f769f9e4a8aeb2e2ac0b73b5, type: 2}
+  regularTurnBegin: {fileID: 11400000, guid: 986505fe01605764bbfcdf08327ba49e, type: 2}
+  jailTurnBeginUI: {fileID: 11400000, guid: 24669706d16c1864a85709283b97a0e1, type: 2}
   button: {fileID: 2556426870191264033}
-  rollClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
-  animationOver: {fileID: 11400000, guid: a842269e339cf5e4490ebb5eefd50e8a, type: 2}
 --- !u!1001 &3043073969818941144
 PrefabInstance:
   m_ObjectHideFlags: 0

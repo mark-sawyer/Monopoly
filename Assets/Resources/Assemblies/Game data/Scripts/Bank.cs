@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 
-internal class Bank : Creditor {
+internal class Bank : BankInfo, Creditor {
     private Queue<House> houses;
     private Queue<Hotel> hotels;
-    private List<Property> mortgagedProperties = new();
 
 
 
@@ -28,6 +27,13 @@ internal class Bank : Creditor {
 
 
 
+    #region BankInfo
+    public int HousesRemaining => houses.Count;
+    public int HotelsRemaining => hotels.Count;
+    #endregion
+
+
+
     #region private
     private Queue<House> initialiseHouses() {
         Queue<House> houseQueue = new Queue<House>(GameConstants.TOTAL_HOUSES);
@@ -44,4 +50,9 @@ internal class Bank : Creditor {
         return hotelQueue;
     }
     #endregion
+}
+
+public interface BankInfo {
+    public int HousesRemaining { get; }
+    public int HotelsRemaining { get; }
 }

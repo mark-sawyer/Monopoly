@@ -6,6 +6,7 @@ public class UtilityIcon : PropertyGroupIcon {
     [SerializeField] private UtilityIconColourSetter iconColourSetter;
     [SerializeField] private GameObject goldRing;
     private UtilityGroupInfo utilityGroupInfo;
+    private UtilityIconState utilityIconState;
 
 
 
@@ -17,13 +18,17 @@ public class UtilityIcon : PropertyGroupIcon {
         Color panelColour = propertyGroupPanelColour.Colour;
         panelColour.a = ZeroPropertiesAlpha;
         updatePanelColour(panelColour);
+        utilityIconState = new();
     }
     #endregion
 
 
 
     #region PropertyGroupIcon
-    public override void updateVisual(PlayerInfo playerInfo) {
+    public override bool iconNeedsToUpdate() {
+        return false;
+    }
+    public override void updateVisual() {
         void setPanelColour(int propertiesOwned) {
             float alpha = propertiesOwned == 0 ? ZeroPropertiesAlpha : NonZeroPropertiesAlpha;
             Color panelColour = propertyGroupPanelColour.Colour;
@@ -35,12 +40,12 @@ public class UtilityIcon : PropertyGroupIcon {
 
             iconColourSetter.setColour(
                 UtilityType.ELECTRICITY,
-                utilityGroupInfo.playerOwnsUtility(playerInfo, UtilityType.ELECTRICITY),
+                utilityGroupInfo.playerOwnsUtility(PlayerInfo, UtilityType.ELECTRICITY),
                 alpha
             );
             iconColourSetter.setColour(
                 UtilityType.WATER,
-                utilityGroupInfo.playerOwnsUtility(playerInfo, UtilityType.WATER),
+                utilityGroupInfo.playerOwnsUtility(PlayerInfo, UtilityType.WATER),
                 alpha
             );
         }
@@ -48,11 +53,14 @@ public class UtilityIcon : PropertyGroupIcon {
             goldRing.SetActive(propertiesOwned == 2);
         }
 
-        int propertiesOwned = utilityGroupInfo.utilitiesOwnedByPlayer(playerInfo);
+        int propertiesOwned = utilityGroupInfo.utilitiesOwnedByPlayer(PlayerInfo);
 
         setPanelColour(propertiesOwned);
         setIconColours(propertiesOwned);
         setGoldRing(propertiesOwned);
+    }
+    public override void setNewState() {
+        utilityIconState = new UtilityIconState();
     }
     #endregion
 }

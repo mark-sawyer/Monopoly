@@ -12,6 +12,7 @@ public class RailroadIcon : PropertyGroupIcon {
     [SerializeField] private Image[] highlightImages;
     [SerializeField] private Image trainImage;
     private RailroadGroupInfo railroadGroupInfo;
+    private RailroadIconState railroadIconState;
 
 
 
@@ -26,13 +27,18 @@ public class RailroadIcon : PropertyGroupIcon {
         Color panelColour = propertyGroupPanelColour.Colour;
         panelColour.a = ZeroPropertiesAlpha;
         updatePanelColour(panelColour);
+
+        railroadIconState = new();
     }
     #endregion
 
 
 
     #region PropertyGroupIcon
-    public override void updateVisual(PlayerInfo playerInfo) {
+    public override bool iconNeedsToUpdate() {
+        return false;
+    }
+    public override void updateVisual() {
         void setPanelColour(int propertiesOwned) {
             float alpha = propertiesOwned == 0 ? ZeroPropertiesAlpha : NonZeroPropertiesAlpha;
             Color panelColour = propertyGroupPanelColour.Colour;
@@ -58,7 +64,7 @@ public class RailroadIcon : PropertyGroupIcon {
                     highlightImages[i].color = noColour;
                 }
                 else {
-                    bool playerOwnsRailroad = railroadGroupInfo.playerOwnsRailroad(playerInfo, i);
+                    bool playerOwnsRailroad = railroadGroupInfo.playerOwnsRailroad(PlayerInfo, i);
                     highlightImages[i].color = playerOwnsRailroad ? railroadHighlightColour.Colour : noColour;
                 }
             }
@@ -67,13 +73,16 @@ public class RailroadIcon : PropertyGroupIcon {
             goldRing.SetActive(propertiesOwned == 4);
         }
 
-        int propertiesOwned = railroadGroupInfo.railroadsOwnedByPlayer(playerInfo);
+        int propertiesOwned = railroadGroupInfo.railroadsOwnedByPlayer(PlayerInfo);
 
         setPanelColour(propertiesOwned);
         setIconColour(propertiesOwned);
         setText(propertiesOwned);
         setHighlights(propertiesOwned);
         setGoldRing(propertiesOwned);
+    }
+    public override void setNewState() {
+        railroadIconState = new RailroadIconState();
     }
     #endregion
 }

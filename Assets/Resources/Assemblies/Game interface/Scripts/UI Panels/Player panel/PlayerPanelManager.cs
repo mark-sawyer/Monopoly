@@ -1,13 +1,18 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerPanelManager : MonoBehaviour {
+    #region External references
     [SerializeField] private GameObject playerPanelPrefab;
     [SerializeField] private GameEvent nextTurnPlayerUI;
     [SerializeField] private PlayerEvent moneyAdjustmentUI;
     [SerializeField] private PlayerPropertyEvent playerPropertyAdjustmentUI;
     [SerializeField] private PlayerCardTypeEvent playerGetsGOOJFCardUI;
     [SerializeField] private CardTypeEvent playedUsedGOOJFCardUI;
+    [SerializeField] private GameEvent updateIconsAfterManagePropertiesClosed;
+    [SerializeField] private GameEvent iconsUpdatedAfterManagePropertiesClosed;
+    #endregion
     private const float GAP = 3;
 
 
@@ -65,6 +70,7 @@ public class PlayerPanelManager : MonoBehaviour {
         nextTurnPlayerUI.Listeners += updateTurnPlayerHighlight;
         playerGetsGOOJFCardUI.Listeners += updateGOOJFCardIcons;
         playedUsedGOOJFCardUI.Listeners += (CardType cardType) => updateGOOJFCardIcons(GameState.game.TurnPlayer, cardType);
+        updateIconsAfterManagePropertiesClosed.Listeners += checkForUpdatesAfterBackButtonPushed;
     }
     #endregion
 
@@ -93,6 +99,19 @@ public class PlayerPanelManager : MonoBehaviour {
         bool hasCard = playerInfo.hasGOOJFCardOfType(cardType);
         playerPanel.toggleGOOJFIcon(cardType, hasCard);
     }
+    private void checkForUpdatesAfterBackButtonPushed() {
+        List<PropertyGroupIcon> iconsToUpdate = new();
+        for (int i = 0; i < transform.childCount; i++) {
+            PlayerInfo playerInfo = GameState.game.getPlayerInfo(i);
+            if (!playerInfo.IsActive) continue;
+
+            PlayerPanel playerPanel = getPlayerPanel(i);
+            List<PropertyGroupIcon> needingUpdateOnThisPanel = playerPanel.propertyGroupIconsNeedingAnUpdate();
+            foreach (PropertyGroupIcon PGI in needingUpdateOnThisPanel) iconsToUpdate.Add(PGI);
+        }
+
+        StartCoroutine(updateIconsPostManagePropertiesClosed(iconsToUpdate));
+    }
     #endregion
 
 
@@ -100,6 +119,14 @@ public class PlayerPanelManager : MonoBehaviour {
     #region private
     private PlayerPanel getPlayerPanel(int index) {
         return transform.GetChild(index).GetComponent<PlayerPanel>();
+    }
+    private IEnumerator updateIconsPostManagePropertiesClosed(List<PropertyGroupIcon> iconsToUpdate) {
+        foreach (PropertyGroupIcon propertyGroupIcon in iconsToUpdate) {
+            StartCoroutine(propertyGroupIcon.pulseAndUpdate());
+            propertyGroupIcon.setNewState();
+            for (int i = 0; i < 22; i++) yield return null;
+        }
+        iconsUpdatedAfterManagePropertiesClosed.invoke();
     }
     #endregion
 }

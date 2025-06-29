@@ -6,7 +6,6 @@ public class EstateGroupColours : ScriptableObject {
     [SerializeField] private GameColour highlightColour;
     [SerializeField] private GameColour backgroundColour;
     [SerializeField] private GameColour panelColour;
-    [SerializeField] private GameColour transitionPanelColour;
 
 
 
@@ -14,5 +13,4 @@ public class EstateGroupColours : ScriptableObject {
     public GameColour HighlightColour => highlightColour;
     public GameColour BackgroundColour => backgroundColour;
     public GameColour PanelColour => panelColour;
-    public GameColour TransitionPanelColour => transitionPanelColour;
 }

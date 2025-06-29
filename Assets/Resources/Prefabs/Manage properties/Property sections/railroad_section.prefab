@@ -677,6 +677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1613838776905083673}
   - component: {fileID: 6361126831261718270}
+  - component: {fileID: 6652005964749248675}
   m_Layer: 5
   m_Name: mortgage_button
   m_TagString: Untagged
@@ -783,6 +784,20 @@ MonoBehaviour:
   - {fileID: 3955679531598420599}
   - {fileID: 6992094339821535833}
   - {fileID: 8766615555488482592}
+--- !u!114 &6652005964749248675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613838776905083672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425ff76a8f0f2214a8749fb7f5122ce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backButtonPressed: {fileID: 11400000, guid: 9c76f23151095df4f9d5172a4d499e9b, type: 2}
+  button: {fileID: 6361126831261718270}
 --- !u!1 &2258626584661100265
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ public class GameUIPanelManager : MonoBehaviour {
     private const float GAP = 11;
 
 
+
     #region MonoBehaviour
     private void Start() {
         scalePanels();
