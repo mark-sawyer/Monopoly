@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public abstract class PropertyGroupIcon : MonoBehaviour {
     [SerializeField] Canvas canvas;
-    [SerializeField] private SoundEvent propertyAdjustmentPop;
     private PlayerInfo playerInfo;
     private const float ZERO_PROPERTIES_ALPHA = 0.125f;
     private const float NON_ZERO_PROPERTIES_ALPHA = 1f;
@@ -25,7 +24,6 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
             else return 2f - (1f / 15f) * (x - 5f);
         }
 
-        propertyAdjustmentPop.play();
         for (int i = 0; i < 10; i++) yield return null;
 
         canvas.overrideSorting = true;

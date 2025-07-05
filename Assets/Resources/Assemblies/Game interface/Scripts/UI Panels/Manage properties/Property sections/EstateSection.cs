@@ -7,6 +7,7 @@ public class EstateSection : PropertySection {
     [SerializeField] private TextMeshProUGUI propertyTitleText;
     [SerializeField] private TextMeshProUGUI buyPriceText;
     [SerializeField] private TextMeshProUGUI sellPriceText;
+    [SerializeField] private TextMeshProUGUI mortgagePriceText;
     [SerializeField] private Image titleStripImage;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Transform squarePanelTransform;
@@ -14,7 +15,7 @@ public class EstateSection : PropertySection {
     #endregion
     #region Updating visuals
     [SerializeField] private BuyBuildingButton buyBuildingMono;
-    [SerializeField] private SellOrMortgageBuildingButton sellBuildingMono;
+    [SerializeField] private SellOrMortgageBuildingButton sellOrMortgageBuildingMono;
     [SerializeField] private BuildingIcons buildingIcons;
     #endregion
     private EstateInfo estateInfo;
@@ -27,14 +28,15 @@ public class EstateSection : PropertySection {
         void setEstateReferences() {
             estateInfo = (EstateInfo)PropertyInfo;
             buyBuildingMono.setup(estateInfo);
-            sellBuildingMono.setup(estateInfo);
+            sellOrMortgageBuildingMono.setup(estateInfo);
             buildingIcons.setup(estateInfo);
             estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateInfo.EstateColour);
         }
         void setTexts() {
             propertyTitleText.text = estateInfo.Name.ToUpper();
             buyPriceText.text = "$" + estateInfo.BuildingCost.ToString();
-            sellPriceText.text = "$" + (estateInfo.BuildingCost / 2).ToString();
+            sellPriceText.text = "$" + estateInfo.BuildingSellCost.ToString();
+            mortgagePriceText.text = "$" + estateInfo.MortgageValue.ToString();
         }
         void setRingBorderColour() {
             Color highlightColour = estateGroupColours.HighlightColour.Colour;
@@ -68,7 +70,7 @@ public class EstateSection : PropertySection {
     }
     public override void refreshVisual(PlayerInfo playerInfo) {
         buyBuildingMono.setInteractable(playerInfo);
-        sellBuildingMono.setInteractable();
+        sellOrMortgageBuildingMono.adjustToAppropriateOption();
     }
     public void updateBuildingIcons() {
         buildingIcons.updateIcons();

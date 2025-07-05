@@ -2,7 +2,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/DrawCardState")]
 public class DrawCardState : State {
-    [SerializeField] private SoundEvent cardSoundEvent;
     private bool okClicked;
 
 
@@ -15,7 +14,6 @@ public class DrawCardState : State {
         CardType cardType = cardSpaceInfo.CardType;
         DataEventHub.Instance.call_CardDrawn(cardType);
         ScreenAnimationEventHub.Instance.call_CardShown();
-        cardSoundEvent.play();
         ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(screenAnimationRemoved);
     }
     public override bool exitConditionMet() {

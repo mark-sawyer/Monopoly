@@ -268,8 +268,8 @@ GameObject:
   - component: {fileID: 4095811442423946728}
   - component: {fileID: 4095811442423946741}
   - component: {fileID: 4095811442423946740}
-  - component: {fileID: 4095811442423946742}
   - component: {fileID: 5980539943454841028}
+  - component: {fileID: 3276287391246339811}
   m_Layer: 0
   m_Name: manager
   m_TagString: Untagged
@@ -335,24 +335,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e972641a2e8c8c47a235ebea683f6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollButtonClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
-  turnPlayerMovedDiceValues: {fileID: 11400000, guid: 8ca636d10ac5ae34eb7c2b18dea38e4d, type: 2}
-  turnPlayerMovedToSpace: {fileID: 11400000, guid: de17ca22b690d2d45af1198d408a2c8c, type: 2}
-  turnPlayerSentToJail: {fileID: 11400000, guid: 1deecc2a6d3cfb04e9ed56096cb3fde3, type: 2}
-  playerPurchasedProperty: {fileID: 11400000, guid: 28d25c3afd0d0a442bc66e9b44ef254b, type: 2}
-  moneyAdjustment: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
-  nextPlayerTurnData: {fileID: 11400000, guid: 72a04f82e2c2563418f69f6c393c15e6, type: 2}
-  cardDrawn: {fileID: 11400000, guid: 628b22fa13344134b8c48b36b0f3b7ad, type: 2}
-  cardResolved: {fileID: 11400000, guid: 6849dc907a5d20a428e39a4ae85f4dae, type: 2}
-  playerIncurredDebt: {fileID: 11400000, guid: b87708f34d8124845bedd3fe52b77b58, type: 2}
-  debtResolved: {fileID: 11400000, guid: c7938aaf1f92a1f4eaf5055d97255fa3, type: 2}
-  playerGetsGOOJFCardData: {fileID: 11400000, guid: 3c8daa7721a6ae941b8141e74de7d1d7, type: 2}
-  jailTurnBeginData: {fileID: 11400000, guid: 97854ffdf24dea64e8dff4b32442b17c, type: 2}
-  leaveJail: {fileID: 11400000, guid: 1b2e068ce25046c4b84bee0e241ba952, type: 2}
-  useGOOJFCardData: {fileID: 11400000, guid: b94ef5d541f720e458615a69bcab2949, type: 2}
-  doublesCountReset: {fileID: 11400000, guid: d3ba8d38498f6fb468bc494857935a8e, type: 2}
-  estateAddedBuildingData: {fileID: 11400000, guid: 6f519a6c9fbf1144a8831209c17ec34c, type: 2}
---- !u!114 &4095811442423946742
+--- !u!114 &5980539943454841028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095811442423946729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a7711fa8906fd4dab71e1eb009cd39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3276287391246339811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,18 +364,20 @@ MonoBehaviour:
   - {fileID: 3338381736022611112}
   - {fileID: 508104174120004031}
   - {fileID: 7058275444073576052}
---- !u!114 &5980539943454841028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4095811442423946729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a7711fa8906fd4dab71e1eb009cd39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  diceSounds: {fileID: 11400000, guid: 33dae0fd90b5e6440bbe0949e141b13a, type: 2}
+  paperSounds: {fileID: 11400000, guid: 0ccc68c46df979a4c962dad5dae4e8f3, type: 2}
+  buttonDown: {fileID: 8300000, guid: 17ab4dded1b4c2a48983974e6b3c478d, type: 3}
+  buttonUp: {fileID: 8300000, guid: 0c4f360cb02a08742aa13b829f913e2f, type: 3}
+  cardDrawn: {fileID: 8300000, guid: 0e1c523eb677add488203adee84897c0, type: 3}
+  cardDrop: {fileID: 8300000, guid: 4b4085a3c6b4fab49b38cfd2875712f5, type: 3}
+  correct: {fileID: 8300000, guid: 65c1371bd3422134f967baa032aad05d, type: 3}
+  incorrect: {fileID: 8300000, guid: 867d98af3a7a6f242a0a8d278fc90185, type: 3}
+  moneyChing: {fileID: 8300000, guid: ca6f69fea85ef0541853432d007c3015, type: 3}
+  mupMooo: {fileID: 8300000, guid: f6460204857f46b4c8a4be09dae34df1, type: 3}
+  pop: {fileID: 8300000, guid: a9b66a6af9f863c43a132e48426d4cd1, type: 3}
+  questionChime: {fileID: 8300000, guid: 030c26b051f4a3f438bdd13eef4c2ff6, type: 3}
+  uhOh: {fileID: 8300000, guid: ea2b466c793f8234892e7b3556db8700, type: 3}
+  whistle: {fileID: 8300000, guid: 46835630ab6f1de4183eb23ffef8a129, type: 3}
 --- !u!1 &5756401574445528174
 GameObject:
   m_ObjectHideFlags: 0

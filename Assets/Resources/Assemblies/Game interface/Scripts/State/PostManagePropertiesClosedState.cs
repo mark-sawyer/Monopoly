@@ -9,8 +9,8 @@ public class PostManagePropertiesClosedState : State {
 
     #region State
     public override void enterState() {
-        ManagePropertiesEventHub.Instance.sub_IconsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
         updateAnimationsOver = false;
+        ManagePropertiesEventHub.Instance.sub_IconsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
         ManagePropertiesEventHub.Instance.call_UpdateIconsAfterManagePropertiesClosed();
     }
     public override bool exitConditionMet() {

@@ -145,6 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4054646366065154876}
   - component: {fileID: 8531574251600635611}
+  - component: {fileID: 3967547716358655411}
   m_Layer: 5
   m_Name: monopoly_button
   m_TagString: Untagged
@@ -250,6 +251,19 @@ MonoBehaviour:
   - {fileID: 1784581182826801746}
   - {fileID: 5704255826862862972}
   - {fileID: 6307353763166811397}
+--- !u!114 &3967547716358655411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054646366065154877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2dc9097f7578094eb337cd365184a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 8531574251600635611}
 --- !u!1001 &781180434085319978
 PrefabInstance:
   m_ObjectHideFlags: 0

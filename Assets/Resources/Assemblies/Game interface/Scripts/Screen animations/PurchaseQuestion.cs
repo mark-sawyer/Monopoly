@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 
 public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
-    [SerializeField] private SoundEvent moneyChangedHands;
     [SerializeField] private TextMeshProUGUI purchaseText;
     [SerializeField] private TokenIcon tokenIcon;
     private DroppingQuestionsFunctionality droppingQuestionsFunctionality;
@@ -38,7 +37,6 @@ public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
     #region public
     public void yesClicked() {
         DataEventHub.Instance.call_MoneyAdjustment(playerInfo, -propertyInfo.Cost);
-        moneyChangedHands.play();
         ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation();
         WaitFrames.Instance.exe(
             90,

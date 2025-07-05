@@ -6,9 +6,11 @@ public interface GamePlayer {
     public void updateTurnPlayer();
     public void obtainProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo);
     public void addBuilding(EstateInfo estateInfo);
+    public void removeBuilding(EstateInfo estateInfo);
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed);
     public void removeDebt(PlayerInfo debtor);
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference);
+    public void tradePlayerMoney(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount);
     public void sendTurnPlayerToJail();
     public void removeTurnPlayerFromJail();
     public void resetDoublesCount();

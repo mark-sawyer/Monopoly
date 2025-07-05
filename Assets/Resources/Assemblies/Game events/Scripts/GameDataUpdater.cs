@@ -20,12 +20,14 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_DoublesCountReset(resetDoublesCount);
         dataHub.sub_PlayerObtainedProperty(purchasedProperty);
         dataHub.sub_MoneyAdjustment(adjustMoney);
+        dataHub.sub_MoneyBetweenPlayers(tradeMoney);
         dataHub.sub_NextPlayerTurn(updateTurnPlayer);
         dataHub.sub_PlayerGetsGOOJFCard(givePlayerGOOJFCard);
         dataHub.sub_TurnBegin(incrementJailTurn);
         dataHub.sub_LeaveJail(removeTurnPlayerFromJail);
         dataHub.sub_UseGOOJFCardButtonClicked(useGOOJFCard);
         dataHub.sub_EstateAddedBuilding(addBuildingToEstate);
+        dataHub.sub_EstateRemovedBuilding(removeBuildingFromEstate);
     }
     #endregion
 
@@ -57,6 +59,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void adjustMoney(PlayerInfo playerInfo, int difference) {
         gamePlayer.adjustPlayerMoney(playerInfo, difference);
+    }
+    private void tradeMoney(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount) {
+        gamePlayer.tradePlayerMoney(losingPlayer, gainingPlayer, amount);
     }
     private void updateTurnPlayer() {
         gamePlayer.updateTurnPlayer();
@@ -93,6 +98,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void addBuildingToEstate(EstateInfo estateInfo) {
         gamePlayer.addBuilding(estateInfo);
+    }
+    private void removeBuildingFromEstate(EstateInfo estateInfo) {
+        gamePlayer.removeBuilding(estateInfo);
     }
     #endregion
 }

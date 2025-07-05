@@ -381,6 +381,7 @@ MonoBehaviour:
   propertyTitleText: {fileID: 1052453327429521008}
   buyPriceText: {fileID: 7623447099497154796}
   sellPriceText: {fileID: 3692868048633042643}
+  mortgagePriceText: {fileID: 7821496178543367884}
   titleStripImage: {fileID: 532433074558752163}
   backgroundImage: {fileID: 1030152968985724327}
   squarePanelTransform: {fileID: 1206602929192106602}
@@ -388,7 +389,7 @@ MonoBehaviour:
   - {fileID: 4159619004474372142}
   - {fileID: 7155569041191710225}
   buyBuildingMono: {fileID: 8479004849560960800}
-  sellBuildingMono: {fileID: 7721773133759743185}
+  sellOrMortgageBuildingMono: {fileID: 7721773133759743185}
   buildingIcons: {fileID: 5767023344294878960}
 --- !u!1 &3889468042458709325
 GameObject:
@@ -1127,6 +1128,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sell_text
       objectReference: {fileID: 0}
+    - target: {fileID: 729905530787569826, guid: 562a37d6d067a064e949a490c99464cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1265431418657622861, guid: 562a37d6d067a064e949a490c99464cb, type: 3}
       propertyPath: m_SizeDelta.y
       value: 20
@@ -1146,6 +1151,10 @@ PrefabInstance:
     - target: {fileID: 2199429714388671888, guid: 562a37d6d067a064e949a490c99464cb, type: 3}
       propertyPath: m_SizeDelta.y
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2243962683234073997, guid: 562a37d6d067a064e949a490c99464cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2603562160305347722, guid: 562a37d6d067a064e949a490c99464cb, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1311,6 +1320,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2bd19cbc93114c4788e16c9276b33a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7821496178543367884 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9179600124684721188, guid: 562a37d6d067a064e949a490c99464cb, type: 3}
+  m_PrefabInstance: {fileID: 1436636152509614824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1552378200642072882

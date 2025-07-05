@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameEvent/Hubs/DataEventHub")]
@@ -14,6 +15,7 @@ public class DataEventHub : ScriptableObject {
     #region In pipeline
     [SerializeField] private GameEvent rollButtonClicked;
     [SerializeField] private PlayerIntEvent moneyAdjustment;
+    [SerializeField] private PlayerPlayerIntEvent moneyBetweenPlayers;
     [SerializeField] private IntEvent turnPlayerMovedAlongBoard;
     [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
     [SerializeField] private GameEvent turnPlayerSentToJail;
@@ -24,6 +26,7 @@ public class DataEventHub : ScriptableObject {
     [SerializeField] private GameEvent leaveJail;
     [SerializeField] private CardTypeEvent useGOOJFCardButtonClicked;
     [SerializeField] private EstateEvent estateAddedBuilding;
+    [SerializeField] private EstateEvent estateRemovedBuilding;
     #endregion
 
 
@@ -44,23 +47,13 @@ public class DataEventHub : ScriptableObject {
 
 
     #region Data invoking
-    public void call_TurnPlayerMovedAlongBoard(int spacesMoved) {
-            turnPlayerMovedAlongBoard.invoke(spacesMoved);
-    }
-    public void call_CardResolved() {
-            cardResolved.invoke();
-    }
-    public void call_CardDrawn(CardType cardType) {
-            cardDrawn.invoke(cardType);
-    }
-    public void call_DebtResolved(PlayerInfo playerInfo) {
-            debtResolved.invoke(playerInfo);
-    }
-    public void call_DoublesCountReset() {
-            doublesCountReset.invoke();
-    }
+    public void call_TurnPlayerMovedAlongBoard(int spacesMoved) => turnPlayerMovedAlongBoard.invoke(spacesMoved);
+    public void call_CardResolved() => cardResolved.invoke();
+    public void call_CardDrawn(CardType cardType) => cardDrawn.invoke(cardType);
+    public void call_DebtResolved(PlayerInfo playerInfo) => debtResolved.invoke(playerInfo);
+    public void call_DoublesCountReset() => doublesCountReset.invoke();
     public void call_PlayerIncurredDebt(PlayerInfo playerInfo, Creditor creditor, int debtVal) {
-            playerIncurredDebt.invoke(playerInfo, creditor, debtVal);
+        playerIncurredDebt.invoke(playerInfo, creditor, debtVal);
     }
     #endregion
 
@@ -74,6 +67,10 @@ public class DataEventHub : ScriptableObject {
     public void call_MoneyAdjustment(PlayerInfo playerInfo, int adjustment) {
         moneyAdjustment.invoke(playerInfo, adjustment);
         UIEventHub.Instance.MoneyAdjustment.invoke(playerInfo);
+    }
+    public void call_MoneyBetweenPlayers(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount) {
+        moneyBetweenPlayers.invoke(losingPlayer, gainingPlayer, amount);
+        UIEventHub.Instance.MoneyBetweenPlayers.invoke(losingPlayer, gainingPlayer);
     }
     public void call_TurnPlayerMovedAlongBoard(int startingIndex, int spacesMoved) {
         turnPlayerMovedAlongBoard.invoke(spacesMoved);
@@ -115,66 +112,35 @@ public class DataEventHub : ScriptableObject {
         estateAddedBuilding.invoke(estateInfo);
         UIEventHub.Instance.EstateAddedBuilding.invoke(estateInfo);
     }
+    public void call_EstateRemovedBuilding(EstateInfo estateInfo) {
+        estateRemovedBuilding.invoke(estateInfo);
+        UIEventHub.Instance.EstateRemovedBuilding.invoke(estateInfo);
+    }
     #endregion
 
 
 
     #region Data subscribing
-    internal void sub_RollButtonClicked(Action a) {
-        rollButtonClicked.Listeners += a;
-    }
-    internal void sub_TurnPlayerMovedAlongBoard(Action<int> a) {
-        turnPlayerMovedAlongBoard.Listeners += a;
-    }
-    internal void sub_TurnPlayerSentToJail(Action a) {
-        turnPlayerSentToJail.Listeners += a;
-    }
-    internal void sub_TurnPlayerMovedToSpace(Action<SpaceInfo> a) {
-        turnPlayerMovedToSpace.Listeners += a;
-    }
-    internal void sub_CardResolved(Action a) {
-        cardResolved.Listeners += a;
-    }
-    internal void sub_CardDrawn(Action<CardType> a) {
-        cardDrawn.Listeners += a;
-    }
-    internal void sub_DebtResolved(Action<PlayerInfo> a) {
-        debtResolved.Listeners += a;
-    }
-    internal void sub_DoublesCountReset(Action a) {
-        doublesCountReset.Listeners += a;
-    }
-    internal void sub_PlayerIncurredDebt(Action<PlayerInfo, Creditor, int> a) {
-        playerIncurredDebt.Listeners += a;
-    }
-    #endregion
+    internal void sub_RollButtonClicked(Action a) => rollButtonClicked.Listeners += a;
+    internal void sub_TurnPlayerMovedAlongBoard(Action<int> a) => turnPlayerMovedAlongBoard.Listeners += a;
+    internal void sub_TurnPlayerSentToJail(Action a) => turnPlayerSentToJail.Listeners += a;
+    internal void sub_TurnPlayerMovedToSpace(Action<SpaceInfo> a) => turnPlayerMovedToSpace.Listeners += a;
+    internal void sub_CardResolved(Action a) => cardResolved.Listeners += a;
+    internal void sub_CardDrawn(Action<CardType> a) => cardDrawn.Listeners += a;
+    internal void sub_DebtResolved(Action<PlayerInfo> a) => debtResolved.Listeners += a;
+    internal void sub_DoublesCountReset(Action a) => doublesCountReset.Listeners += a;
+    internal void sub_PlayerIncurredDebt(Action<PlayerInfo, Creditor, int> a) => playerIncurredDebt.Listeners += a;
 
 
-
-    #region Pipeline subscribing
-    internal void sub_MoneyAdjustment(Action<PlayerInfo, int> a) {
-        moneyAdjustment.Listeners += a;
-    }
-    internal void sub_PlayerObtainedProperty(Action<PlayerInfo, PropertyInfo> a) {
-        playerObtainedProperty.Listeners += a;
-    }
-    internal void sub_NextPlayerTurn(Action a) {
-        nextPlayerTurn.Listeners += a;
-    }
-    internal void sub_PlayerGetsGOOJFCard(Action<PlayerInfo, CardInfo> a) {
-        playerGetsGOOJFCard.Listeners += a;
-    }
-    internal void sub_TurnBegin(Action<bool> a) {
-        turnBegin.Listeners += a;
-    }
-    internal void sub_LeaveJail(Action a) {
-        leaveJail.Listeners += a;
-    }
-    internal void sub_UseGOOJFCardButtonClicked(Action<CardType> a) {
-        useGOOJFCardButtonClicked.Listeners += a;
-    }
-    internal void sub_EstateAddedBuilding(Action<EstateInfo> a) {
-        estateAddedBuilding.Listeners += a;
-    }
+    internal void sub_MoneyAdjustment(Action<PlayerInfo, int> a) => moneyAdjustment.Listeners += a;
+    internal void sub_MoneyBetweenPlayers(Action<PlayerInfo, PlayerInfo, int> a) => moneyBetweenPlayers.Listeners += a;
+    internal void sub_PlayerObtainedProperty(Action<PlayerInfo, PropertyInfo> a) => playerObtainedProperty.Listeners += a;
+    internal void sub_NextPlayerTurn(Action a) => nextPlayerTurn.Listeners += a;
+    internal void sub_PlayerGetsGOOJFCard(Action<PlayerInfo, CardInfo> a) => playerGetsGOOJFCard.Listeners += a;
+    internal void sub_TurnBegin(Action<bool> a) => turnBegin.Listeners += a;
+    internal void sub_LeaveJail(Action a) => leaveJail.Listeners += a;
+    internal void sub_UseGOOJFCardButtonClicked(Action<CardType> a) => useGOOJFCardButtonClicked.Listeners += a;
+    internal void sub_EstateAddedBuilding(Action<EstateInfo> a) => estateAddedBuilding.Listeners += a;
+    internal void sub_EstateRemovedBuilding(Action<EstateInfo> a) => estateRemovedBuilding.Listeners += a;
     #endregion
 }

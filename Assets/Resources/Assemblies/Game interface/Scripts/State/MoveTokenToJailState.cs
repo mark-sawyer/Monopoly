@@ -2,7 +2,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/MoveTokenToJail")]
 public class MoveTokenToJailState : State {
-    [SerializeField] private SoundEvent whistle;
     private bool tokenSettled;
 
 
@@ -14,7 +13,6 @@ public class MoveTokenToJailState : State {
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
 
         ScreenAnimationEventHub.Instance.call_SpinningPoliceman();
-        whistle.play();
     }
     public override bool exitConditionMet() {
         return tokenSettled;

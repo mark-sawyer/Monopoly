@@ -14,6 +14,7 @@ internal class EstateGroup : ScriptableObject, EstateGroupInfo {
     public int NumberOfEstatesInGroup => estates.Length;
     public int MinBuildingCount => estates.Min(x => x.BuildingCount);
     public int MaxBuildingCount => estates.Max(x => x.BuildingCount);
+    public bool BuildingExists => estates.Any(x => x.BuildingCount > 0);
     public bool HotelExists => estates.Any(x => x.HasHotel);
     public bool MortgageExists => estates.Any(x => x.IsMortgaged);
     public EstateInfo getEstateInfo(int index) {
@@ -38,6 +39,7 @@ public interface EstateGroupInfo {
     public int NumberOfEstatesInGroup { get; }
     public int MinBuildingCount { get; }
     public int MaxBuildingCount { get; }
+    public bool BuildingExists { get; }
     public bool HotelExists { get; }
     public bool MortgageExists { get; }
     public EstateInfo getEstateInfo(int index);

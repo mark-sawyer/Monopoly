@@ -92,6 +92,12 @@ internal class Game : GameStateInfo, GamePlayer {
         }
         else estate.addBuilding(bank.getHouse());
     }
+    public void removeBuilding(EstateInfo estateInfo) {
+        Estate estate = (Estate)estateInfo;
+        Building removedBuilding = estate.removeBuilding();
+        if (removedBuilding is Hotel hotel) bank.returnHotel(hotel);
+        else if (removedBuilding is House house) bank.returnHouse(house);
+    }
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
         Player debtorPlayer = (Player)debtor;
         debtorPlayer.incurDebt(creditor, owed);
@@ -102,6 +108,10 @@ internal class Game : GameStateInfo, GamePlayer {
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference) {
         Player player = (Player)playerInfo;
         player.adjustMoney(difference);
+    }
+    public void tradePlayerMoney(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount) {
+        ((Player)losingPlayer).adjustMoney(-amount);
+        ((Player)gainingPlayer).adjustMoney(amount);
     }
     public void sendTurnPlayerToJail() {
         turnPlayer.changeSpace(spaces[GameConstants.JAIL_SPACE_INDEX]);

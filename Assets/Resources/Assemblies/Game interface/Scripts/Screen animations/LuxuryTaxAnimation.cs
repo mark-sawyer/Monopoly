@@ -5,7 +5,6 @@ public class LuxuryTaxAnimation : ScreenAnimation {
     [SerializeField] private RectTransform ringTransform;
     [SerializeField] private RectTransform luxuryTaxTextTransform;
     [SerializeField] private RectTransform pay100TextTransform;
-    [SerializeField] private SoundEvent sadSound;
     private float canvasWidth;
     private const int TOTAL_ROTATIONS = 2;
     private const int ANIMATION_FRAMES = 250;
@@ -16,7 +15,6 @@ public class LuxuryTaxAnimation : ScreenAnimation {
 
 
     public override void appear() {
-        sadSound.play();
         canvasWidth = ((RectTransform)transform.parent).rect.width;
         StartCoroutine(rollRingAcross());
         StartCoroutine(growAndShrinkText(luxuryTaxTextTransform));

@@ -2,7 +2,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/BuyPropertyOptionState")]
 public class BuyPropertyOptionState : State {
-    [SerializeField] private SoundEvent questionChime;
     private bool questionAnswered;
 
 
@@ -13,7 +12,6 @@ public class BuyPropertyOptionState : State {
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
         PropertyInfo propertyInfo = ((PropertySpaceInfo)GameState.game.SpaceInfoOfTurnPlayer).PropertyInfo;
         ScreenAnimationEventHub.Instance.call_PurchaseQuestion(playerInfo, propertyInfo);
-        questionChime.play();
         ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(screenAnimationRemoved);
     }
     public override bool exitConditionMet() {

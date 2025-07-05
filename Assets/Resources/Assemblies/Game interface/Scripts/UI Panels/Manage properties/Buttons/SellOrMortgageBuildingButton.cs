@@ -1,20 +1,67 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SellOrMortgageBuildingButton : MonoBehaviour {
+    private enum ButtonMode {
+        SELL,
+        MORTGAGE
+    }
+    [SerializeField] private TextMeshProUGUI sellText;
+    [SerializeField] private GameObject sellGameObject;
+    [SerializeField] private GameObject mortgageGameObject;
     [SerializeField] private Button button;
     private EstateInfo estateInfo;
+    private ButtonMode buttonMode;
 
 
 
+    #region public
     public void setup(EstateInfo estateInfo) {
         this.estateInfo = estateInfo;
     }
-    public void setInteractable() {
-        button.interactable = estateInfo.CanRemoveBuilding;
-    }
     public void buttonClicked() {
+        void sellClicked(PlayerInfo selectedPlayer) {
+            DataEventHub.Instance.call_EstateRemovedBuilding(estateInfo);
+            DataEventHub.Instance.call_MoneyAdjustment(selectedPlayer, estateInfo.BuildingSellCost);
+            ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer);
+        }
+        void mortgageClicked(PlayerInfo selectedPlayer) { }
+
+
+
         PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
-        //estateAddedBuilding.invoke(estateInfo);
+        if (buttonMode == ButtonMode.SELL) sellClicked(selectedPlayer);
+        else mortgageClicked(selectedPlayer);
     }
+    public void adjustToAppropriateOption() {
+        if (estateInfo.BuildingCount > 0) {
+            toggleMode(ButtonMode.SELL);
+            button.interactable = estateInfo.CanRemoveBuilding;
+        }
+        else {
+            toggleMode(ButtonMode.MORTGAGE);
+            bool noBuildingsInGroup = !estateInfo.EstateGroupInfo.BuildingExists;
+            button.interactable = noBuildingsInGroup;
+        }
+    }
+    #endregion
+
+
+
+    #region private
+    private void toggleMode(ButtonMode mode) {
+        buttonMode = mode;
+        if (mode == ButtonMode.SELL) {
+            sellGameObject.SetActive(true);
+            mortgageGameObject.SetActive(false);
+            if (estateInfo.HasHotel) sellText.text = "SELL HOTEL";
+            else sellText.text = "SELL HOUSE";
+        }
+        else {
+            sellGameObject.SetActive(false);
+            mortgageGameObject.SetActive(true);
+        }
+    }
+    #endregion
 }

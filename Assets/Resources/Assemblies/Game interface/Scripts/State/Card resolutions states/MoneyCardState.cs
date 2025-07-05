@@ -2,7 +2,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/MoneyCardState")]
 public class MoneyCardState : State {
-    [SerializeField] private SoundEvent moneyChing;
     private int addedToPlayer;
 
 
@@ -13,7 +12,6 @@ public class MoneyCardState : State {
         addedToPlayer = moneyDifferenceCardInfo.AddedToPlayer;
         if (addedToPlayer > 0) {
             DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, addedToPlayer);
-            moneyChing.play();
         }
         else DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.Bank, -addedToPlayer);
         DataEventHub.Instance.call_CardResolved();

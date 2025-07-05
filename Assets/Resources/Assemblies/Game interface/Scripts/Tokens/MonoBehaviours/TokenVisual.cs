@@ -40,7 +40,6 @@ public class TokenVisual : MonoBehaviour {
             if (queue.Count > 0 && directionVector().magnitude < DISTANCE_TO_SPACE_THRESHOLD) {
                 if (passingGo()) {
                     DataEventHub.Instance.call_MoneyAdjustment(tokenVisual.PlayerInfo, GameConstants.MONEY_FOR_PASSING_GO);
-                    tokenVisual.moneyChing.play();
                 }
                 attractivePoint = queue.Dequeue();
                 if (queue.Count == 0) {
@@ -167,7 +166,6 @@ public class TokenVisual : MonoBehaviour {
         #endregion
     }
     #region Editor references
-    [SerializeField] private SoundEvent moneyChing;
     [SerializeField] private TokenDictionary tokenDictionary;
     [SerializeField] private SpriteRenderer tokenSpriteRenderer;
     [SerializeField] private SpriteRenderer silouhetteSpriteRenderer;
