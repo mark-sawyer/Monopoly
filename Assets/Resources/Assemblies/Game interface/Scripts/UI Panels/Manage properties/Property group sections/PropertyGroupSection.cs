@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public abstract class PropertyGroupSection : MonoBehaviour {
     [SerializeField] private PropertySection[] propertySections;
-    [SerializeField] private PlayerEvent managePropertiesVisualRefresh;
     [SerializeField] private Transform panelTransform;
     [SerializeField] private RectTransform transitionPanel;
     [SerializeField] private Transform transitionPanelParent;
@@ -13,7 +12,7 @@ public abstract class PropertyGroupSection : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        managePropertiesVisualRefresh.Listeners += refreshVisuals;
+        ManagePropertiesEventHub.Instance.sub_ManagePropertiesVisualRefresh(refreshVisuals);
         setupTransitionPanel(TransitionPanelColour);
         setup();
     }

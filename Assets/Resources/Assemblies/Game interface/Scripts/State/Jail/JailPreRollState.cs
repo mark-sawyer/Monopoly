@@ -1,56 +1,57 @@
 using UnityEngine;
+using static Codice.CM.Common.CmCallContext;
 
 [CreateAssetMenu(menuName = "State/JailPreRoll")]
 public class JailPreRollState : State {
-    #region Button events
-    [SerializeField] private GameEvent rollButtonClickedEvent;
-    [SerializeField] private GameEvent payFiftyButtonClickedEvent;
-    [SerializeField] private CardTypeEvent useCardButtonClickedEvent;
-    #endregion
-    #region Button bools
-    private bool rollButtonClicked;
+    [SerializeField] private SoundEvent moneyChing;
+    [SerializeField] private SoundEvent correct;
+    [SerializeField] private SoundEvent incorrect;
+    private bool rollAnimationOver;
     private bool payFiftyButtonClicked;
     private bool useCardButtonClicked;
-    #endregion
-    [SerializeField] private GameEvent jailTurnBegin;
-    [SerializeField] private PlayerIntEvent moneyAdjustment;
-    [SerializeField] private GameEvent leaveJail;
-    [SerializeField] private SoundEvent moneyChing;
+    private bool goToMoveToken;
+    private bool goToUpdateTurnPlayer;
+    private const int WAITED_FRAMES = 200;
 
 
 
     #region
     public override void enterState() {
-        jailTurnBegin.invoke();
-        rollButtonClicked = false;
+        DataEventHub.Instance.call_TurnBegin(true);
+        rollAnimationOver = false;
         payFiftyButtonClicked = false;
         useCardButtonClicked = false;
-        rollButtonClickedEvent.Listeners += rollButtonListener;
-        payFiftyButtonClickedEvent.Listeners += payFiftyListener;
-        useCardButtonClickedEvent.Listeners += useCardListener;
+        goToMoveToken = false;
+        goToUpdateTurnPlayer = false;
+        UIEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
+        UIEventHub.Instance.sub_PayFiftyButtonClicked(payFiftyListener);
+        UIEventHub.Instance.sub_UseGOOJFCardButtonClicked(useCardListener);
     }
     public override bool exitConditionMet() {
-        return rollButtonClicked
+        return rollAnimationOver
             || payFiftyButtonClicked
             || useCardButtonClicked;
     }
     public override void exitState() {
-        rollButtonClickedEvent.Listeners -= rollButtonListener;
-        payFiftyButtonClickedEvent.Listeners -= payFiftyListener;
-        useCardButtonClickedEvent.Listeners -= useCardListener;
+        UIEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
+        UIEventHub.Instance.unsub_PayFiftyButtonClicked(payFiftyListener);
+        UIEventHub.Instance.unsub_UseGOOJFCardButtonClicked(useCardListener);
 
         if (payFiftyButtonClicked) {
-            moneyAdjustment.invoke(GameState.game.TurnPlayer, -GameConstants.PRICE_FOR_LEAVING_JAIL);
+            DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, -GameConstants.PRICE_FOR_LEAVING_JAIL);
             moneyChing.play();
-            leaveJail.invoke();
+            DataEventHub.Instance.call_LeaveJail();
         }
         else if (useCardButtonClicked) {
-            leaveJail.invoke();
+            DataEventHub.Instance.call_LeaveJail();
         }
     }
     public override State getNextState() {
         if (payFiftyButtonClicked || useCardButtonClicked) return allStates.getState<PreRollState>();
-        else return allStates.getState<JailRollAnimationState>();
+        if (goToMoveToken) return allStates.getState<MoveTokenState>();
+        if (goToUpdateTurnPlayer) return allStates.getState<UpdateTurnPlayerState>();
+
+        throw new System.Exception();
     }
     #endregion
 
@@ -58,7 +59,45 @@ public class JailPreRollState : State {
 
     #region private
     private void rollButtonListener() {
-        rollButtonClicked = true;
+        int turnIndex = GameState.game.IndexOfTurnPlayer;
+        TokenVisual turnTokenVisual = TokenVisualManager.Instance.getTokenVisual(turnIndex);
+        turnTokenVisual.prepForMoving();
+        WaitFrames.Instance.exe(
+            InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING,
+            () => resolveDiceRollOutcomes(turnTokenVisual)
+        );
+    }
+    private void resolveDiceRollOutcomes(TokenVisual turnTokenVisual) {
+        void doublesRolled() {
+            DataEventHub.Instance.call_DoublesCountReset();
+            turnTokenVisual.prepForMoving();
+            WaitFrames.Instance.exe(InterfaceConstants.FRAMES_FOR_TOKEN_GROWING, () => goToMoveToken = true);
+        }
+        void nonDoublesRolled() {
+            if (GameState.game.TurnPlayer.TurnInJail < 3) {
+                goToUpdateTurnPlayer = true;
+            }
+            else {
+                DataEventHub.Instance.call_LeaveJail();
+                DataEventHub.Instance.call_PlayerIncurredDebt(
+                    GameState.game.TurnPlayer,
+                    GameState.game.Bank,
+                    GameConstants.PRICE_FOR_LEAVING_JAIL
+                );
+            }
+        }
+
+
+        bool rolledDoubles = GameState.game.DiceInfo.RolledDoubles;
+        if (rolledDoubles) {
+            correct.play();
+            DataEventHub.Instance.call_LeaveJail();
+            WaitFrames.Instance.exe(WAITED_FRAMES, doublesRolled);
+        }
+        else {
+            incorrect.play();
+            WaitFrames.Instance.exe(WAITED_FRAMES, nonDoublesRolled);
+        }
     }
     private void payFiftyListener() {
         payFiftyButtonClicked = true;

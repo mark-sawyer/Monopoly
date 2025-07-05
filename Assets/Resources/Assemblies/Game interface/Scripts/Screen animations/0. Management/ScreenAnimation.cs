@@ -1,8 +1,6 @@
-using System.Collections;
 using UnityEngine;
 
 public abstract class ScreenAnimation : MonoBehaviour {
-    public static GameEvent removeScreenAnimation;
     public abstract void appear();
 }
 

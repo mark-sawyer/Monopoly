@@ -26,7 +26,7 @@ public class LuxuryTaxAnimation : ScreenAnimation {
         );
         WaitFrames.Instance.exe(
             ANIMATION_FRAMES + 20,
-            () => removeScreenAnimation.invoke()
+            () => ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation()
         );
     }
     private IEnumerator rollRingAcross() {

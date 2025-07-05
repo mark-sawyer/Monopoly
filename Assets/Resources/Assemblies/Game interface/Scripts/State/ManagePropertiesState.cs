@@ -2,7 +2,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/ManagePropertiesState")]
 public class ManagePropertiesState : State {
-    [SerializeField] private GameEvent backButtonPressedEvent;
     private bool managePropertiesPanelRaised;
 
 
@@ -11,13 +10,13 @@ public class ManagePropertiesState : State {
     #region State
     public override void enterState() {
         managePropertiesPanelRaised = false;
-        backButtonPressedEvent.Listeners += backButtonListening;
+        ManagePropertiesEventHub.Instance.sub_BackButtonPressed(backButtonListening);
     }
     public override bool exitConditionMet() {
         return managePropertiesPanelRaised;
     }
     public override void exitState() {
-        backButtonPressedEvent.Listeners -= backButtonListening;
+        ManagePropertiesEventHub.Instance.unsub_BackButtonPressed(backButtonListening);
     }
     public override State getNextState() {
         return allStates.getState<PostManagePropertiesClosedState>();

@@ -1,18 +1,18 @@
 using UnityEngine;
 
 public class TestGameDataUpdater : MonoBehaviour {
-    [SerializeField] GameEvent<PlayerInfo, PropertyInfo> playerObtainedProperty;
-    [SerializeField] GameEvent<EstateInfo> estateAddedBuilding;
-    [SerializeField] GameEvent<PlayerInfo, int> moneyAdjustment;
+    //[SerializeField] GameEvent<PlayerInfo, PropertyInfo> playerObtainedProperty;
+    //[SerializeField] GameEvent<EstateInfo> estateAddedBuilding;
+    //[SerializeField] GameEvent<PlayerInfo, int> moneyAdjustment;
     private GamePlayer gamePlayer;
 
 
 
     #region MonoBehaviour
     private void Start() {
-        playerObtainedProperty.Listeners += buyProperty;
-        estateAddedBuilding.Listeners += addBuilding;
-        moneyAdjustment.Listeners += adjustMoney;
+        //playerObtainedProperty.Listeners += buyProperty;
+        //estateAddedBuilding.Listeners += addBuilding;
+        //moneyAdjustment.Listeners += adjustMoney;
     }
     #endregion
 

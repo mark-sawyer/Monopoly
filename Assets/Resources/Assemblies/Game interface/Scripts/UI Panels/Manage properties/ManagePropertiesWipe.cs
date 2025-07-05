@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class ManagePropertiesWipe : MonoBehaviour {
     [SerializeField] private RectTransform rt;
-    [SerializeField] private PlayerEvent managePropertiesVisualRefresh;
-    [SerializeField] private PlayerEvent tokenSelectedInManageProperties;
     private const float MAX_HEIGHT = 600f;
 
 
 
     #region MonoBehaviour
     private void Start() {
-        tokenSelectedInManageProperties.Listeners += wipe;
+        ManagePropertiesEventHub.Instance.sub_TokenSelectedInManageProperties(wipe);
     }
     #endregion
 
@@ -31,7 +29,7 @@ public class ManagePropertiesWipe : MonoBehaviour {
         }
 
         rt.sizeDelta = new Vector2(width, MAX_HEIGHT);
-        managePropertiesVisualRefresh.invoke(playerInfo);
+        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(playerInfo);
         yield return null;
 
         for (int i = 1; i <= wipeFrames; i++) {

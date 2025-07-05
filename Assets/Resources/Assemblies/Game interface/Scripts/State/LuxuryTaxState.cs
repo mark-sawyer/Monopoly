@@ -5,27 +5,25 @@ using static UnityEngine.UI.GridLayoutGroup;
 
 [CreateAssetMenu(menuName = "State/LuxuryTaxState")]
 public class LuxuryTaxState : State {
-    [SerializeField] private GameEvent luxuryTaxAnimationBegins;
-    [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     private bool animationOver;
 
 
     #region
     public override void enterState() {
-        ScreenAnimation.removeScreenAnimation.Listeners += animationOverCalled;
+        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
         animationOver = false;
-        playerIncurredDebt.invoke(
+        DataEventHub.Instance.call_PlayerIncurredDebt(
             GameState.game.TurnPlayer,
             GameState.game.Bank,
             GameConstants.LUXURY_TAX
         );
-        luxuryTaxAnimationBegins.invoke();
+        ScreenAnimationEventHub.Instance.call_LuxuryTaxAnimationBegins();
     }
     public override bool exitConditionMet() {
         return animationOver;
     }
     public override void exitState() {
-        ScreenAnimation.removeScreenAnimation.Listeners -= animationOverCalled;
+        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
     }
     public override State getNextState() {
         return allStates.getState<ResolveDebtState>();

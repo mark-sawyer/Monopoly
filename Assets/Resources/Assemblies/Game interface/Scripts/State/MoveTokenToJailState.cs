@@ -2,34 +2,26 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/MoveTokenToJail")]
 public class MoveTokenToJailState : State {
-    [SerializeField] private GameEvent turnPlayerSentToJail;
-    [SerializeField] private GameEvent tokenSettledEvent;
+    [SerializeField] private SoundEvent whistle;
     private bool tokenSettled;
 
 
     #region GameState
     public override void enterState() {
-        int turnIndex = GameState.game.IndexOfTurnPlayer;
-        TokenMover tokenMover = TokenVisualManager.Instance.getTokenMover(turnIndex);
-        TokenVisual tokenVisual = TokenVisualManager.Instance.getTokenVisual(turnIndex);
-        TokenScaler tokenScaler = TokenVisualManager.Instance.getTokenScaler(turnIndex);
-        tokenVisual.changeLayer(InterfaceConstants.MOVING_TOKEN_LAYER_NAME);
-        int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
-        turnPlayerSentToJail.invoke();
-        tokenScaler.beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
         tokenSettled = false;
-        tokenSettledEvent.Listeners += heardTokenSettle;
-        WaitFrames.Instance.exe(
-            InterfaceConstants.FRAMES_FOR_TOKEN_GROWING,
-            tokenMover.startMovingDirectly,
-            startingIndex, GameConstants.JAIL_SPACE_INDEX
-        );
+
+        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
+        UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
+
+        ScreenAnimationEventHub.Instance.call_SpinningPoliceman();
+        whistle.play();
     }
     public override bool exitConditionMet() {
         return tokenSettled;
     }
     public override void exitState() {
-        tokenSettledEvent.Listeners -= heardTokenSettle;
+        UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
+        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
     }
     public override State getNextState() {
         return allStates.getState<UpdateTurnPlayerState>();
@@ -39,6 +31,10 @@ public class MoveTokenToJailState : State {
 
 
     #region private
+    private void animationOverCalled() {
+        int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
+        DataEventHub.Instance.call_TurnPlayerSentToJail(startingIndex);
+    }
     private void heardTokenSettle() {
         tokenSettled = true;
     }

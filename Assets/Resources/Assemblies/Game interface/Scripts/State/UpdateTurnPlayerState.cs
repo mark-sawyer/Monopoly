@@ -2,14 +2,12 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/UpdateTurnPlayerState")]
 public class UpdateTurnPlayerState : State {
-    [SerializeField] private GameEvent nextPlayerTurn;
-    [SerializeField] private GameEvent samePlayerTurn;
-
     public override void enterState() {
         DiceInfo diceInfo = GameState.game.DiceInfo;
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
-        if (diceInfo.RolledDoubles && !turnPlayer.InJail) samePlayerTurn.invoke();
-        else nextPlayerTurn.invoke();
+        if (!diceInfo.RolledDoubles || turnPlayer.InJail) {
+            DataEventHub.Instance.call_NextPlayerTurn();
+        }
     }
     public override bool exitConditionMet() {
         return true;

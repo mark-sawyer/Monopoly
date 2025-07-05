@@ -3,19 +3,17 @@ using UnityEngine;
 
 public class DoublesTickboxes : MonoBehaviour {
     [SerializeField] private DoublesTickbox[] doublesTickboxArray;
-    [SerializeField] private GameEvent diceAnimationOver;
-    [SerializeField] private GameEvent nextPlayerTurnUI;
 
 
 
     #region MonoBehaviour
     private void OnEnable() {
-        diceAnimationOver.Listeners += checkForDoubles;
-        nextPlayerTurnUI.Listeners += removeAllTicks;
+        UIEventHub.Instance.sub_DoublesTickBoxUpdate(checkForDoubles); 
+        UIEventHub.Instance.sub_NextPlayerTurn(removeAllTicks);
     }
     private void OnDisable() {
-        diceAnimationOver.Listeners -= checkForDoubles;
-        nextPlayerTurnUI.Listeners -= removeAllTicks;
+        UIEventHub.Instance.unsub_DoublesTickBoxUpdate(checkForDoubles);
+        UIEventHub.Instance.unsub_NextPlayerTurn(removeAllTicks);
     }
     #endregion
 

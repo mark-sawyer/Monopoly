@@ -5,24 +5,21 @@ using UnityEngine.UI;
 public class JailUIAlternator : MonoBehaviour {
     [SerializeField] private GameObject doublesGameObject;
     [SerializeField] private GameObject jailOptionsGameObject;
-    [SerializeField] private GameEvent jailTurnBeginUI;
-    [SerializeField] private GameEvent regularTurnBegin;
 
 
 
     #region MonoBehaviour
     private void Start() {
-        regularTurnBegin.Listeners += () => setMode(true);
-        jailTurnBeginUI.Listeners += () => setMode(false);
+        UIEventHub.Instance.sub_TurnBegin((bool turnPlayerInJail) => setMode(turnPlayerInJail));
     }
     #endregion
 
 
 
     #region private
-    private void setMode(bool isRegular) {
-        doublesGameObject.SetActive(isRegular);
-        jailOptionsGameObject.SetActive(!isRegular);
+    private void setMode(bool turnPlayerInJail) {
+        doublesGameObject.SetActive(!turnPlayerInJail);
+        jailOptionsGameObject.SetActive(turnPlayerInJail);
     }
     #endregion
 }

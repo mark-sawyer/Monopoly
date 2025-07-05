@@ -35,6 +35,6 @@ public class SpinningPoliceman : ScreenAnimation {
             );
             yield return null;
         }
-        removeScreenAnimation.invoke();
+        ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation();
     }
 }

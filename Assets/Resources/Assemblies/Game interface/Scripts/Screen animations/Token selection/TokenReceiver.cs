@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TokenReceiver : MonoBehaviour, GhostReceiver {
+    /*
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private Button upButton;
     [SerializeField] private Button downButton;
@@ -12,14 +13,16 @@ public class TokenReceiver : MonoBehaviour, GhostReceiver {
 
 
     #region public
+    */
     public void receiveGhost(Ghostable ghost) {
-        UIToken uiToken = (UIToken)ghost;
-        token = uiToken.Token;
-        turnOnButtons();
-        turnOnIconImages();
-        tokenIcon.setup(token, colour);
-        selectedTokensChanged.invoke();
+        //UIToken uiToken = (UIToken)ghost;
+        //token = uiToken.Token;
+        //turnOnButtons();
+        //turnOnIconImages();
+        //tokenIcon.setup(token, colour);
+        //selectedTokensChanged.invoke();
     }
+    /*
     public void colourUp() {
         int colourInt = (int)colour;
         colourInt = (colourInt - 1).mod(8);
@@ -50,4 +53,5 @@ public class TokenReceiver : MonoBehaviour, GhostReceiver {
         tokenIcon.transform.GetChild(2).GetChild(1).GetComponent<Image>().enabled = true;
     }
     #endregion
+    */
 }

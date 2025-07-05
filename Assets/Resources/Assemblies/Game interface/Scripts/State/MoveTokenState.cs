@@ -2,28 +2,23 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/MoveTokenState")]
 public class MoveTokenState : State {
-    [SerializeField] private GameEvent turnPlayerMovedDiceValues;
-    [SerializeField] private GameEvent tokenSettledEvent;
     private bool tokenSettled;
 
 
 
     #region GameState
     public override void enterState() {
-        int turnIndex = GameState.game.IndexOfTurnPlayer;
-        TokenMover tokenMover = TokenVisualManager.Instance.getTokenMover(turnIndex);
         int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
-        turnPlayerMovedDiceValues.invoke();
-        DiceInfo diceInfo = GameState.game.DiceInfo;
-        tokenMover.startMoving(startingIndex, diceInfo.TotalValue);
+        int diceValues = GameState.game.DiceInfo.TotalValue;
+        DataEventHub.Instance.call_TurnPlayerMovedAlongBoard(startingIndex, diceValues);
         tokenSettled = false;
-        tokenSettledEvent.Listeners += heardTokenSettle;
+        UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
     }
     public override bool exitConditionMet() {
         return tokenSettled;
     }
     public override void exitState() {
-        tokenSettledEvent.Listeners -= heardTokenSettle;
+        UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
     }
     public override State getNextState() {
         return allStates.getState<PlayerLandedOnSpaceState>();

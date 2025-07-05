@@ -67,8 +67,8 @@ internal class Game : GameStateInfo, GamePlayer {
     public void rollDice() {
         dice.roll();
     }
-    public void moveTurnPlayerDiceValues() {
-        movePlayer(turnPlayer, dice.TotalValue);
+    public void moveTurnPlayerAlongBoard(int spacesMoved) {
+        movePlayer(turnPlayer, spacesMoved);
     }
     public void moveTurnPlayerToSpace(SpaceInfo spaceInfo) {
         Space space = (Space)spaceInfo;
@@ -103,10 +103,9 @@ internal class Game : GameStateInfo, GamePlayer {
         Player player = (Player)playerInfo;
         player.adjustMoney(difference);
     }
-    public void sendPlayerToJail(PlayerInfo playerInfo) {
-        Player player = (Player)playerInfo;
-        player.changeSpace(spaces[GameConstants.JAIL_SPACE_INDEX]);
-        player.InJail = true;
+    public void sendTurnPlayerToJail() {
+        turnPlayer.changeSpace(spaces[GameConstants.JAIL_SPACE_INDEX]);
+        turnPlayer.InJail = true;
     }
     public void removeTurnPlayerFromJail() {
         turnPlayer.exitJail();

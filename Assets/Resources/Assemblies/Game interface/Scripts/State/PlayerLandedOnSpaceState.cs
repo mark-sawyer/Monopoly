@@ -9,7 +9,7 @@ public class PlayerLandedOnSpaceState : State {
     public override State getNextState() {
         SpaceInfo spaceInfo = GameState.game.SpaceInfoOfTurnPlayer;
         if (spaceInfo is IncomeTaxSpaceInfo) return allStates.getState<IncomeTaxState>();
-        if (spaceInfo is GoToJailSpaceInfo) return allStates.getState<PoliceAnimationState>();
+        if (spaceInfo is GoToJailSpaceInfo) return allStates.getState<MoveTokenToJailState>();
         if (spaceInfo is CardSpaceInfo) return allStates.getState<DrawCardState>();
         if (spaceInfo is LuxuryTaxSpaceInfo) return allStates.getState<LuxuryTaxState>();
         if (spaceInfo is PropertySpaceInfo propertySpaceInfo) {

@@ -2,8 +2,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/GetOutOfJailFreeState")]
 public class GetOutOfJailFreeState : State {
-    [SerializeField] private PlayerCardEvent playerGetsGOOJFCard;
-    [SerializeField] private GameEvent cardResolved;
     [SerializeField] private SoundEvent pop;
     private bool cardResolveInvoked;
 
@@ -15,8 +13,8 @@ public class GetOutOfJailFreeState : State {
         CardInfo cardInfo = GameState.game.DrawnCard;
         WaitFrames.Instance.exe(40, pop.play);
         WaitFrames.Instance.exe(50, () => {
-            playerGetsGOOJFCard.invoke(GameState.game.TurnPlayer, cardInfo);
-            cardResolved.invoke();
+            DataEventHub.Instance.call_PlayerGetsGOOJFCard(GameState.game.TurnPlayer, cardInfo);
+            DataEventHub.Instance.call_CardResolved();
             cardResolveInvoked = true;
         });
     }

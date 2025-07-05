@@ -2,12 +2,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/NextRailroadState")]
 public class NextRailroadState : State {
-    [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
-    [SerializeField] private GameEvent cardResolved;
-    [SerializeField] private GameEvent tokenSettledEvent;
-    [SerializeField] private GameEvent rentAnimationOver;
-    [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
-    [SerializeField] private DebtEvent payingRentAnimationBegins;
     private RailroadInfo railroadInfo;
     private bool doubleRentResolved;
     private bool tokenSettled;
@@ -24,22 +18,12 @@ public class NextRailroadState : State {
         int spacesToMove = getSpacesToNextRailroad(oldSpaceIndex);
         int newSpaceIndex = (oldSpaceIndex + spacesToMove) % GameConstants.TOTAL_SPACES;
         SpaceInfo newSpace = SpaceVisualManager.Instance.getSpaceVisual(newSpaceIndex).SpaceInfo;
-        turnPlayerMovedToSpace.invoke(newSpace);
-        cardResolved.invoke();
+        DataEventHub.Instance.call_TurnPlayerMovedToSpace(newSpace, oldSpaceIndex);
+        DataEventHub.Instance.call_CardResolved();
 
         railroadInfo = (RailroadInfo)((PropertySpaceInfo)newSpace).PropertyInfo;
         doubleRentRequired = getDoubleRentRequired(turnPlayer, railroadInfo);
         if (doubleRentRequired) doubleRentResolved = false;
-
-        int turnPlayerIndex = GameState.game.IndexOfTurnPlayer;
-        growToken(turnPlayerIndex);
-
-        TokenMover tokenMover = TokenVisualManager.Instance.getTokenMover(turnPlayerIndex);
-        WaitFrames.Instance.exe(
-            InterfaceConstants.FRAMES_FOR_TOKEN_GROWING,
-            tokenMover.startMoving,
-            oldSpaceIndex, spacesToMove
-        );
     }
     public override void update() {
         if (!tokenSettled) return;
@@ -53,8 +37,8 @@ public class NextRailroadState : State {
         return tokenSettled && doubleRentResolved;
     }
     public override void exitState() {
-        tokenSettledEvent.Listeners -= heardTokenSettle;
-        rentAnimationOver.Listeners -= animationOverCalled;
+        UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
+        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
     }
     public override State getNextState() {
         if (doubleRentRequired) return allStates.getState<ResolveDebtState>();
@@ -66,8 +50,8 @@ public class NextRailroadState : State {
 
     #region private
     private void initialise() {
-        tokenSettledEvent.Listeners += heardTokenSettle;
-        rentAnimationOver.Listeners += animationOverCalled;
+        UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
+        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
         doubleRentResolved = true;
         tokenSettled = false;
         animationStarted = false;
@@ -85,17 +69,11 @@ public class NextRailroadState : State {
     private bool getDoubleRentRequired(PlayerInfo turnPlayer, RailroadInfo railroadInfo) {
         return railroadInfo.IsBought && railroadInfo.Owner != turnPlayer;
     }
-    private void growToken(int turnPlayerIndex) {
-        TokenScaler tokenScaler = TokenVisualManager.Instance.getTokenScaler(turnPlayerIndex);
-        TokenVisual tokenVisual = TokenVisualManager.Instance.getTokenVisual(turnPlayerIndex);
-        tokenVisual.changeLayer(InterfaceConstants.MOVING_TOKEN_LAYER_NAME);
-        tokenScaler.beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
-    }
     private void startRentAnimation() {
         PlayerInfo owner = railroadInfo.Owner;
         int rent =  2 * railroadInfo.Rent;
-        playerIncurredDebt.invoke(GameState.game.TurnPlayer, owner, rent);
-        payingRentAnimationBegins.invoke(GameState.game.TurnPlayer.Debt);
+        DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
+        ScreenAnimationEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.Debt);
     }
     #endregion
 }

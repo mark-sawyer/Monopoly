@@ -12,11 +12,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
     [SerializeField] private Button backButton;
     #endregion
     #region External references
-    [SerializeField] private GameEvent managePropertiesOpened;
-    [SerializeField] private GameEvent managePropertiesClosed;
-    [SerializeField] private PlayerEvent managePropertiesVisualRefresh;
     [SerializeField] private ScreenCover screenCover;
-    [SerializeField] private EstateEvent estateAddedBuildingUI;
     #endregion
     #region Private attributes
     private PlayerInfo selectedPlayer;
@@ -54,9 +50,9 @@ public class ManagePropertiesPanel : MonoBehaviour {
         onScreenY = -canvasHeight * ((1f + VERTICAL_PROPORTION) / 2f);
         rt.anchoredPosition = new Vector3(0f, offScreenY, 0f);
         estateSectionGetter = new EstateSectionGetter(propertSectionsTransform);
-        managePropertiesOpened.Listeners += drop;
-        managePropertiesClosed.Listeners += raise;
-        estateAddedBuildingUI.Listeners += updateEstateVisual;
+        ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(drop);
+        ManagePropertiesEventHub.Instance.sub_BackButtonPressed(raise);
+        UIEventHub.Instance.sub_EstateAddedBuilding(updateEstateVisual);
     }
     #endregion
 
@@ -117,7 +113,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
         setIcons();
         screenCover.startFadeIn(255f);
         StartCoroutine(dropCoroutine());
-        managePropertiesVisualRefresh.invoke(GameState.game.TurnPlayer);
+        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(GameState.game.TurnPlayer);
     }
     private void raise() {
         int raiseFrames = InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_DROP;

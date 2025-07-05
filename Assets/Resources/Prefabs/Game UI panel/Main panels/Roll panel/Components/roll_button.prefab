@@ -232,9 +232,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
-        m_TargetAssemblyTypeName: GameEvent, GameInterface
-        m_MethodName: invoke
+      - m_Target: {fileID: 11400000, guid: 5b252a1fd11b00f429bbe3551d88490e, type: 2}
+        m_TargetAssemblyTypeName: DataEventHub, GameEvents
+        m_MethodName: call_RollButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -287,10 +287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2135400a3277fd84cb5699f6da4a8639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollButtonClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
-  managePropertiesButtonClicked: {fileID: 11400000, guid: baa20c20f769f9e4a8aeb2e2ac0b73b5, type: 2}
-  regularTurnBegin: {fileID: 11400000, guid: 986505fe01605764bbfcdf08327ba49e, type: 2}
-  jailTurnBeginUI: {fileID: 11400000, guid: 24669706d16c1864a85709283b97a0e1, type: 2}
   button: {fileID: 2556426870191264033}
 --- !u!1001 &3043073969818941144
 PrefabInstance:

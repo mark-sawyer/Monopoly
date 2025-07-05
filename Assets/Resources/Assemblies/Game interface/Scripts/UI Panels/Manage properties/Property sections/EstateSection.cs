@@ -11,10 +11,10 @@ public class EstateSection : PropertySection {
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Transform squarePanelTransform;
     [SerializeField] private Transform[] buttonPanelTransforms;
-    [SerializeField] private BuyBuildingButton buyBuildingButton;
     #endregion
-    #region Refresh references
-    [SerializeField] private Button sellBuildingButton;
+    #region Updating visuals
+    [SerializeField] private BuyBuildingButton buyBuildingMono;
+    [SerializeField] private SellOrMortgageBuildingButton sellBuildingMono;
     [SerializeField] private BuildingIcons buildingIcons;
     #endregion
     private EstateInfo estateInfo;
@@ -26,7 +26,8 @@ public class EstateSection : PropertySection {
     public override void setup() {
         void setEstateReferences() {
             estateInfo = (EstateInfo)PropertyInfo;
-            buyBuildingButton.setup(estateInfo);
+            buyBuildingMono.setup(estateInfo);
+            sellBuildingMono.setup(estateInfo);
             buildingIcons.setup(estateInfo);
             estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateInfo.EstateColour);
         }
@@ -66,8 +67,8 @@ public class EstateSection : PropertySection {
         setButtonColours();
     }
     public override void refreshVisual(PlayerInfo playerInfo) {
-        buyBuildingButton.setInteractable(playerInfo);
-        sellBuildingButton.interactable = estateInfo.CanRemoveBuilding;
+        buyBuildingMono.setInteractable(playerInfo);
+        sellBuildingMono.setInteractable();
     }
     public void updateBuildingIcons() {
         buildingIcons.updateIcons();

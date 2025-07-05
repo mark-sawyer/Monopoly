@@ -17,14 +17,6 @@ public class TestPropertyObtaining : MonoBehaviour {
     private RailroadInfo[] railroads;
     private UtilityInfo[] utilities;
     #endregion
-    #region GameEvents
-    [SerializeField] private GameEvent<PlayerInfo, int> moneyAdjustData;
-    [SerializeField] private GameEvent<PlayerInfo> moneyAdjustUI;
-    [SerializeField] private GameEvent<EstateInfo> estateAddedBuildingData;
-    [SerializeField] private GameEvent<PlayerInfo, EstateInfo> estateAddedBuildingUI;
-    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerObtainedPropertyData;
-    [SerializeField] private GameEvent<PlayerInfo, PropertyInfo> playerPropertyAdjustmentUI;
-    #endregion
     private PlayerInfo playerInfo;
 
 
@@ -42,28 +34,22 @@ public class TestPropertyObtaining : MonoBehaviour {
     }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            moneyAdjustData.invoke(playerInfo, moneyChange.Amount);
-            moneyAdjustUI.invoke(playerInfo);
+            DataEventHub.Instance.call_MoneyAdjustment(playerInfo, moneyChange.Amount);
         }
         else if (Input.GetKeyDown(KeyCode.Delete)) {
-            moneyAdjustData.invoke(playerInfo, -moneyChange.Amount);
-            moneyAdjustUI.invoke(playerInfo);
+            DataEventHub.Instance.call_MoneyAdjustment(playerInfo, -moneyChange.Amount);
         }
         else if (Input.GetKeyDown(KeyCode.Space)) {
             PropertyInfo property = getProperty(propertyGroupSelected.PropertyGroup, propertySelected.ID);
             if (property == null) return;
             
             if (property.Owner == null && property.Cost <= playerInfo.Money) {
-                playerObtainedPropertyData.invoke(playerInfo, property);
-                playerPropertyAdjustmentUI.invoke(playerInfo, property);
-                moneyAdjustData.invoke(playerInfo, -property.Cost);
-                moneyAdjustUI.invoke( playerInfo);
+                DataEventHub.Instance.call_PlayerObtainedProperty(playerInfo, property);
+                DataEventHub.Instance.call_MoneyAdjustment(playerInfo, -property.Cost);
             }
             else if (property is EstateInfo estateInfo && estateInfo.CanAddBuilding && estateInfo.BuildingCost <= playerInfo.Money) {
-                estateAddedBuildingData.invoke(estateInfo);
-                playerPropertyAdjustmentUI.invoke(playerInfo, estateInfo);
-                moneyAdjustData.invoke(playerInfo, -estateInfo.BuildingCost);
-                moneyAdjustUI.invoke(playerInfo);
+                DataEventHub.Instance.call_EstateAddedBuilding(estateInfo);
+                DataEventHub.Instance.call_MoneyAdjustment(playerInfo, -estateInfo.BuildingCost);
             }
         }            
     }

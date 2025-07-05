@@ -2,11 +2,8 @@ using System.Collections;
 using UnityEngine;
 
 public class IncomeTaxQuestion : ScreenAnimation<PlayerInfo> {
-    #region GameEvents
-    [SerializeField] private PlayerCreditorIntEvent playerIncurredDebtEvent;
     [SerializeField] private SoundEvent correct;
     [SerializeField] private SoundEvent incorrect;
-    #endregion
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private QuestionCircle questionCircle;
     [SerializeField] private TenPercentButton tenPercentButtonText;
@@ -53,8 +50,8 @@ public class IncomeTaxQuestion : ScreenAnimation<PlayerInfo> {
 
     #region private
     private void completeQuestion(int moneyLost) {
-        playerIncurredDebtEvent.invoke(GameState.game.TurnPlayer, GameState.game.Bank, moneyLost);
-        removeScreenAnimation.invoke();
+        DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.Bank, moneyLost);
+        ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation();
     }
     #endregion
 }

@@ -3,8 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "State/DrawCardState")]
 public class DrawCardState : State {
     [SerializeField] private SoundEvent cardSoundEvent;
-    [SerializeField] private CardTypeEvent cardDrawn;
-    [SerializeField] private GameEvent cardShown;
     private bool okClicked;
 
 
@@ -15,16 +13,16 @@ public class DrawCardState : State {
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
         CardSpaceInfo cardSpaceInfo = (CardSpaceInfo)playerInfo.SpaceInfo;
         CardType cardType = cardSpaceInfo.CardType;
-        cardDrawn.invoke(cardType);
-        cardShown.invoke();
+        DataEventHub.Instance.call_CardDrawn(cardType);
+        ScreenAnimationEventHub.Instance.call_CardShown();
         cardSoundEvent.play();
-        ScreenAnimation.removeScreenAnimation.Listeners += screenAnimationRemoved;
+        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(screenAnimationRemoved);
     }
     public override bool exitConditionMet() {
         return okClicked;
     }
     public override void exitState() {
-        ScreenAnimation.removeScreenAnimation.Listeners -= screenAnimationRemoved;
+        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(screenAnimationRemoved);
     }
     public override State getNextState() {
         CardMechanicInfo cardMechanicInfo = GameState.game.DrawnCard.CardMechanicInfo;

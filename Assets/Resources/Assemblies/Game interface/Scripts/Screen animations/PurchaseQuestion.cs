@@ -3,10 +3,6 @@ using TMPro;
 using UnityEngine;
 
 public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
-    #region GameEvents
-    [SerializeField] private PlayerPropertyEvent playerObtainedProperty;
-    [SerializeField] private PlayerIntEvent moneyAdjustment;
-    #endregion
     [SerializeField] private SoundEvent moneyChangedHands;
     [SerializeField] private TextMeshProUGUI purchaseText;
     [SerializeField] private TokenIcon tokenIcon;
@@ -41,13 +37,16 @@ public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
 
     #region public
     public void yesClicked() {
-        moneyAdjustment.invoke(playerInfo, -propertyInfo.Cost);
+        DataEventHub.Instance.call_MoneyAdjustment(playerInfo, -propertyInfo.Cost);
         moneyChangedHands.play();
-        removeScreenAnimation.invoke();
-        WaitFrames.Instance.exe(90, () => playerObtainedProperty.invoke(playerInfo, propertyInfo));
+        ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation();
+        WaitFrames.Instance.exe(
+            90,
+            () => DataEventHub.Instance.call_PlayerObtainedProperty(playerInfo, propertyInfo)
+        );
     }
     public void noClicked() {
-        removeScreenAnimation.invoke();
+        ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation();
     }
     #endregion
 }

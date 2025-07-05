@@ -3,9 +3,6 @@ using UnityEngine.UI;
 
 public class BuyBuildingButton : MonoBehaviour {
     [SerializeField] private Button button;
-    [SerializeField] private EstateEvent estateAddedBuilding;
-    [SerializeField] private PlayerIntEvent moneyAdjustment;
-    [SerializeField] private PlayerEvent managePropertiesVisualRefresh;
     private EstateInfo estateInfo;
 
 
@@ -22,8 +19,8 @@ public class BuyBuildingButton : MonoBehaviour {
     }
     public void buttonClicked() {
         PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
-        estateAddedBuilding.invoke(estateInfo);
-        moneyAdjustment.invoke(selectedPlayer, -estateInfo.BuildingCost);
-        managePropertiesVisualRefresh.invoke(selectedPlayer);
+        DataEventHub.Instance.call_EstateAddedBuilding(estateInfo);
+        DataEventHub.Instance.call_MoneyAdjustment(selectedPlayer, -estateInfo.BuildingCost);
+        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer);
     }
 }

@@ -1,7 +1,7 @@
 
 public interface GamePlayer {
     public void rollDice();
-    public void moveTurnPlayerDiceValues();
+    public void moveTurnPlayerAlongBoard(int spacesMoved);
     public void moveTurnPlayerToSpace(SpaceInfo spaceInfo);
     public void updateTurnPlayer();
     public void obtainProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo);
@@ -9,7 +9,7 @@ public interface GamePlayer {
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed);
     public void removeDebt(PlayerInfo debtor);
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference);
-    public void sendPlayerToJail(PlayerInfo playerInfo);
+    public void sendTurnPlayerToJail();
     public void removeTurnPlayerFromJail();
     public void resetDoublesCount();
     public void drawCard(CardType cardType);

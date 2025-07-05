@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpaceVisual : MonoBehaviour {
@@ -8,6 +10,22 @@ public class SpaceVisual : MonoBehaviour {
 
     public SpaceInfo SpaceInfo => (SpaceInfo)spaceInfoSO;
     public TokenParameters TokenParameters => tokenParameters;
+    public void alertRemainingTokensToMove() {
+        IEnumerable<PlayerInfo> playerInfos = SpaceInfo.VisitingPlayers;
+        IEnumerable<int> indices = playerInfos.Select(x => GameState.game.getPlayerIndex(x));
+        IEnumerable<TokenVisual> tokenVisuals = indices.Select(x => TokenVisualManager.Instance.getTokenVisual(x));
+        foreach (TokenVisual tv in tokenVisuals) {
+            tv.tokenOnSpaceChanged();
+        }
+    }
+    public void alertPresentTokensToMove() {
+        IEnumerable<PlayerInfo> playerInfos = SpaceInfo.VisitingPlayers;
+        IEnumerable<int> indices = playerInfos.Select(x => GameState.game.getPlayerIndex(x));
+        List<TokenVisual> tokenVisuals = indices.Select(x => TokenVisualManager.Instance.getTokenVisual(x)).ToList();
+        for (int i = 0; i < tokenVisuals.Count - 1; i++) {
+            tokenVisuals[i].tokenOnSpaceChanged();
+        }
+    }
     public virtual float getScale(PlayerInfo playerInfo) {
         int playersOnSpace = SpaceInfo.NumberOfPlayersOnSpace;
         return tokenParameters.getScaleValue(playersOnSpace);

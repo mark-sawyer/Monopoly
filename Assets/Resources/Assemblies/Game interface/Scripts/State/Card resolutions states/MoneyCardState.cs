@@ -2,10 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/MoneyCardState")]
 public class MoneyCardState : State {
-    [SerializeField] private GameEvent cardResolved;
     [SerializeField] private SoundEvent moneyChing;
-    [SerializeField] private PlayerIntEvent moneyAdjustment;
-    [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     private int addedToPlayer;
 
 
@@ -15,11 +12,11 @@ public class MoneyCardState : State {
         MoneyDifferenceCardInfo moneyDifferenceCardInfo = (MoneyDifferenceCardInfo)GameState.game.DrawnCard.CardMechanicInfo;
         addedToPlayer = moneyDifferenceCardInfo.AddedToPlayer;
         if (addedToPlayer > 0) {
-            moneyAdjustment.invoke(GameState.game.TurnPlayer, addedToPlayer);
+            DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, addedToPlayer);
             moneyChing.play();
         }
-        else playerIncurredDebt.invoke(GameState.game.TurnPlayer, GameState.game.Bank, -addedToPlayer);
-        cardResolved.invoke();
+        else DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.Bank, -addedToPlayer);
+        DataEventHub.Instance.call_CardResolved();
     }
     public override bool exitConditionMet() {
         return true;

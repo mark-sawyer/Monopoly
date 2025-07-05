@@ -13,14 +13,6 @@ public class ScreenAnimationManager : MonoBehaviour {
     [SerializeField] private GameObject debtorCreditor;
     [SerializeField] private GameObject luxuryTax;
     #endregion
-    #region Events
-    [SerializeField] private PlayerEvent incomeTaxEvent;
-    [SerializeField] private PlayerPropertyEvent purchaseQuestionEvent;
-    [SerializeField] private GameEvent spinningPolicemanEvent;
-    [SerializeField] private GameEvent cardShown;
-    [SerializeField] private DebtEvent payingRentAnimationBegins;
-    [SerializeField] private GameEvent luxuryTaxAnimationBegins;
-    #endregion
     private GameObject screenAnimationInstance;
     private Dictionary<int, GameObject> chanceIDToPrefabDictionary = new Dictionary<int, GameObject>();
     private Dictionary<int, GameObject> communityChestIDToPrefabDictionary = new Dictionary<int, GameObject>();
@@ -29,26 +21,24 @@ public class ScreenAnimationManager : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        ScreenAnimation.removeScreenAnimation = Resources.Load<GameEvent>(
-            "ScriptableObjects/Events/Screen animations/remove_screen_animation"
-        );
+        ScreenAnimationEventHub events = ScreenAnimationEventHub.Instance;
         initialiseChanceDictionary();
         initialiseCommunityChestyDictionary();
-        ScreenAnimation.removeScreenAnimation.Listeners += removeScreenAnimation;
-        spinningPolicemanEvent.Listeners += () => startScreenAnimation(spinningPolicemanPrefab);
-        incomeTaxEvent.Listeners += (PlayerInfo playerInfo) => startScreenAnimation(incomeTaxPrefab, playerInfo);
-        purchaseQuestionEvent.Listeners += (PlayerInfo playerInfo, PropertyInfo propertyInfo) => {
+        events.sub_RemoveScreenAnimation(removeScreenAnimation);
+        events.sub_SpinningPoliceman(() => startScreenAnimation(spinningPolicemanPrefab));
+        events.sub_IncomeTaxQuestion((PlayerInfo playerInfo) => startScreenAnimation(incomeTaxPrefab, playerInfo));
+        events.sub_PurchaseQuestion((PlayerInfo playerInfo, PropertyInfo propertyInfo) => {
             startScreenAnimation(purchaseQuestionPrefab, playerInfo, propertyInfo);
-        };
-        cardShown.Listeners += () => {
+        });
+        events.sub_CardShown(() => {
             CardInfo cardInfo = GameState.game.DrawnCard;
             GameObject cardPrefab;
             if (cardInfo.CardType == CardType.CHANCE) cardPrefab = chanceIDToPrefabDictionary[cardInfo.ID];
             else cardPrefab = communityChestIDToPrefabDictionary[cardInfo.ID];
             startScreenAnimation(cardFlipperPrefab, cardPrefab);
-        };
-        payingRentAnimationBegins.Listeners += (DebtInfo debtInfo) => startScreenAnimation(debtorCreditor, debtInfo);
-        luxuryTaxAnimationBegins.Listeners += () => startScreenAnimation(luxuryTax);
+        });
+        events.sub_PayingRentAnimationBegins((DebtInfo debtInfo) => startScreenAnimation(debtorCreditor, debtInfo));
+        events.sub_LuxuryTaxAnimationBegins(() => startScreenAnimation(luxuryTax));
     }
     #endregion
 

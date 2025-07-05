@@ -5,7 +5,6 @@ public class UseCardButton : MonoBehaviour {
     [SerializeField] private CardType cardType;
     [SerializeField] private Image padlockImage;
     [SerializeField] private Transform colourSectionsTransform;
-    [SerializeField] private CardTypeEvent useCardButtonClicked;
     #region GameColours
     [SerializeField] private GameColour chanceColour;
     [SerializeField] private GameColour communityChestColour;
@@ -26,6 +25,6 @@ public class UseCardButton : MonoBehaviour {
         }
     }
     public void buttonClicked() {
-        useCardButtonClicked.invoke(cardType);
+        DataEventHub.Instance.call_UseGOOJFCardButtonClicked(cardType);
     }
 }

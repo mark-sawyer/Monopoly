@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class InJailOptions : MonoBehaviour {
-    [SerializeField] private GameEvent rollButtonClicked;
-    [SerializeField] private GameEvent jailTurnBeginUI;
     [SerializeField] private Button payFiftyButton;
     [SerializeField] private Button chanceCardButton;
     [SerializeField] private Button ccCardButton;
@@ -13,20 +11,22 @@ public class InJailOptions : MonoBehaviour {
 
     #region MonoBehaviour
     private void OnEnable() {
-        rollButtonClicked.Listeners += disableButtons;
-        jailTurnBeginUI.Listeners += setup;
-        setup();
+        UIEventHub.Instance.sub_RollButtonClicked(disableButtons);
+        UIEventHub.Instance.sub_TurnBegin(setup);
+        setup(true);
     }
     private void OnDisable() {
-        rollButtonClicked.Listeners -= disableButtons;
-        jailTurnBeginUI.Listeners -= setup;
+        UIEventHub.Instance.unsub_RollButtonClicked(disableButtons);
+        UIEventHub.Instance.unsub_TurnBegin(setup);
     }
     #endregion
 
 
 
     #region public
-    public void setup() {
+    public void setup(bool turnPlayerIsInJail) {
+        if (!turnPlayerIsInJail) return;
+
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         payFiftyButton.interactable = canUsePayButton(turnPlayer);
         chanceCardButton.interactable = canUseCardButton(turnPlayer, CardType.CHANCE);

@@ -11,7 +11,6 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
     #endregion
     #region External references
     [SerializeField] private GameColour panelColour;
-    [SerializeField] private PlayerEvent tokenSelectedInManageProperties;
     #endregion
     #region Numeric constants
     private const float SELECTED_SCALE = 1.16f;
@@ -82,7 +81,7 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         setAlphaOfCover(0f);
         StartCoroutine(pulse());
         if (!isFromOpen) {
-            tokenSelectedInManageProperties.invoke(playerInfo);
+            ManagePropertiesEventHub.Instance.call_TokenSelectedInManageProperties(playerInfo);
             wipeInProgress = true;
             WaitFrames.Instance.exe(
                 2 * InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP + 2,

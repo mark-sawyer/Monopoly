@@ -5,13 +5,6 @@ using UnityEngine;
 public class PlayerPanelManager : MonoBehaviour {
     #region External references
     [SerializeField] private GameObject playerPanelPrefab;
-    [SerializeField] private GameEvent nextTurnPlayerUI;
-    [SerializeField] private PlayerEvent moneyAdjustmentUI;
-    [SerializeField] private PlayerPropertyEvent playerPropertyAdjustmentUI;
-    [SerializeField] private PlayerCardTypeEvent playerGetsGOOJFCardUI;
-    [SerializeField] private CardTypeEvent playedUsedGOOJFCardUI;
-    [SerializeField] private GameEvent updateIconsAfterManagePropertiesClosed;
-    [SerializeField] private GameEvent iconsUpdatedAfterManagePropertiesClosed;
     #endregion
     private const float GAP = 3;
 
@@ -65,12 +58,14 @@ public class PlayerPanelManager : MonoBehaviour {
         }
     }
     private void subscribeToEvents() {
-        moneyAdjustmentUI.Listeners += adjustMoneyVisual;
-        playerPropertyAdjustmentUI.Listeners += updatePropertyIcons;
-        nextTurnPlayerUI.Listeners += updateTurnPlayerHighlight;
-        playerGetsGOOJFCardUI.Listeners += updateGOOJFCardIcons;
-        playedUsedGOOJFCardUI.Listeners += (CardType cardType) => updateGOOJFCardIcons(GameState.game.TurnPlayer, cardType);
-        updateIconsAfterManagePropertiesClosed.Listeners += checkForUpdatesAfterBackButtonPushed;
+        UIEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisual);
+        UIEventHub.Instance.sub_PlayerPropertyAdjustment(updatePropertyIcons);
+        UIEventHub.Instance.sub_NextPlayerTurn(updateTurnPlayerHighlight);
+        UIEventHub.Instance.sub_PlayerGetsGOOJFCard(updateGOOJFCardIcons);
+        UIEventHub.Instance.sub_UseGOOJFCardButtonClicked(
+            (CardType cardType) => updateGOOJFCardIcons(GameState.game.TurnPlayer, cardType)
+        );
+        ManagePropertiesEventHub.Instance.sub_UpdateIconsAfterManagePropertiesClosed(checkForUpdatesAfterBackButtonPushed);
     }
     #endregion
 
@@ -126,7 +121,7 @@ public class PlayerPanelManager : MonoBehaviour {
             propertyGroupIcon.setNewState();
             for (int i = 0; i < 22; i++) yield return null;
         }
-        iconsUpdatedAfterManagePropertiesClosed.invoke();
+        ManagePropertiesEventHub.Instance.call_IconsUpdatedAfterManagePropertiesClosed();
     }
     #endregion
 }

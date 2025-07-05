@@ -4,7 +4,6 @@ using UnityEngine;
 public class CardFlipper : ScreenAnimation<GameObject> {
     [SerializeField] private RectTransform rt;
     [SerializeField] private GameObject okButton;
-    [SerializeField] private GameEvent okButtonClicked;
     private GameObject cardPrefab;
     private GameObject cardInstance;
     private ScreenAnimationSizeAdjuster screenAnimationSizeAdjuster;
@@ -16,7 +15,9 @@ public class CardFlipper : ScreenAnimation<GameObject> {
     #region ScreenAnimation
     public override void setup(GameObject cardPrefab) {
         this.cardPrefab = cardPrefab;
-        okButtonClicked.Listeners += () => removeScreenAnimation.invoke();
+        ScreenAnimationEventHub.Instance.sub_CardOKClicked(
+            () => ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation()
+        );
         screenAnimationSizeAdjuster = new ScreenAnimationSizeAdjuster(
             HORIZONTAL_PROPORTION,
             ((RectTransform)cardPrefab.transform).rect.width,

@@ -268,7 +268,6 @@ GameObject:
   - component: {fileID: 4095811442423946728}
   - component: {fileID: 4095811442423946741}
   - component: {fileID: 4095811442423946740}
-  - component: {fileID: 5050648518214958489}
   - component: {fileID: 4095811442423946742}
   - component: {fileID: 5980539943454841028}
   m_Layer: 0
@@ -353,42 +352,6 @@ MonoBehaviour:
   useGOOJFCardData: {fileID: 11400000, guid: b94ef5d541f720e458615a69bcab2949, type: 2}
   doublesCountReset: {fileID: 11400000, guid: d3ba8d38498f6fb468bc494857935a8e, type: 2}
   estateAddedBuildingData: {fileID: 11400000, guid: 6f519a6c9fbf1144a8831209c17ec34c, type: 2}
---- !u!114 &5050648518214958489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4095811442423946729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fd2e8f5f9d39114f9a658f5aa5d9027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moneyAdjustment: {fileID: 11400000, guid: 7a53525ec9a164047aa8470674f8060c, type: 2}
-  moneyAdjustmentData: {fileID: 11400000, guid: 4e5691191c560724c880db394ab4e484, type: 2}
-  moneyAdjustmentUI: {fileID: 11400000, guid: c0db97d160185d34f9e63f01c0c66949, type: 2}
-  playerObtainedProperty: {fileID: 11400000, guid: d28d132d62a163e4dac06c77d87249ea, type: 2}
-  playerObtainedPropertyData: {fileID: 11400000, guid: 28d25c3afd0d0a442bc66e9b44ef254b, type: 2}
-  playerPropertyAdjustmentUI: {fileID: 11400000, guid: da436c0660695a24788a498d9ead8ee8, type: 2}
-  turnPlayer: {fileID: 11400000, guid: 9aec26365bdcf4d46a78834781725f67, type: 2}
-  turnPlayerData: {fileID: 11400000, guid: 72a04f82e2c2563418f69f6c393c15e6, type: 2}
-  turnPlayerUI: {fileID: 11400000, guid: 16a986c37b9c53c4f97288b8053c81b0, type: 2}
-  playerGetsGOOJFCard: {fileID: 11400000, guid: 2d5984864c4056441a8a4675be32aaf4, type: 2}
-  playerGetsGOOJFCardData: {fileID: 11400000, guid: 3c8daa7721a6ae941b8141e74de7d1d7, type: 2}
-  playerGetsGOOJFCardUI: {fileID: 11400000, guid: 6b9965a390aaf2d4b81eca2809fad300, type: 2}
-  leaveJail: {fileID: 11400000, guid: ae57e92eb2cf7814baf57b223804afa4, type: 2}
-  leaveJailData: {fileID: 11400000, guid: 1b2e068ce25046c4b84bee0e241ba952, type: 2}
-  leaveJailUI: {fileID: 11400000, guid: 12e78802aeacabc4b923e37451666e74, type: 2}
-  jailTurnBegin: {fileID: 11400000, guid: 8008fdd58c463a447ade83803652c23e, type: 2}
-  jailTurnBeginData: {fileID: 11400000, guid: 97854ffdf24dea64e8dff4b32442b17c, type: 2}
-  jailTurnBeginUI: {fileID: 11400000, guid: 24669706d16c1864a85709283b97a0e1, type: 2}
-  useCardButtonClicked: {fileID: 11400000, guid: 68d6fd3784b6a4e499d05d8f51e69874, type: 2}
-  useGOOJFCardData: {fileID: 11400000, guid: b94ef5d541f720e458615a69bcab2949, type: 2}
-  useGOOJFCardUI: {fileID: 11400000, guid: 3b432ded47c95a54787085ac81d05689, type: 2}
-  estateAddedBuilding: {fileID: 11400000, guid: 067460e045e4c8847a313211d3c81b3a, type: 2}
-  estateAddedBuildingData: {fileID: 11400000, guid: 6f519a6c9fbf1144a8831209c17ec34c, type: 2}
-  estateAddedBuildingUI: {fileID: 11400000, guid: 7b126c7c804a5a8449e0cc07af2466fc, type: 2}
 --- !u!114 &4095811442423946742
 MonoBehaviour:
   m_ObjectHideFlags: 0

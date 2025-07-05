@@ -3,8 +3,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/ResolveTurnState")]
 public class ResolveDebtState : State {
-    [SerializeField] private PlayerIntEvent moneyAdjustment;
-    [SerializeField] private PlayerEvent debtResolvedEvent;
     [SerializeField] private SoundEvent moneyChing;
     private bool debtResolved;
     private PlayerInfo debtor;
@@ -32,10 +30,12 @@ public class ResolveDebtState : State {
         int money = debtor.Money;
         int owed = debt.Owed;
         int payable = money - owed >= 0 ? owed : money;
-        moneyAdjustment.invoke(debtor, -payable);
-        if (debt.Creditor is PlayerInfo creditorPlayer) moneyAdjustment.invoke(creditorPlayer, payable);
+        DataEventHub.Instance.call_MoneyAdjustment(debtor, -payable);
+        if (debt.Creditor is PlayerInfo creditorPlayer) {
+            DataEventHub.Instance.call_MoneyAdjustment(creditorPlayer, payable);
+        }
         moneyChing.play();
-        debtResolvedEvent.invoke(debt.Debtor);
+        DataEventHub.Instance.call_DebtResolved(debt.Debtor);
 
         debtResolved = true;
     }

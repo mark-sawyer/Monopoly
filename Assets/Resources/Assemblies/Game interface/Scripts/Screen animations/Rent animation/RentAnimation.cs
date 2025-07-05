@@ -5,16 +5,19 @@ using TMPro;
 using UnityEngine;
 
 public class RentAnimation : ScreenAnimation<DebtInfo> {
-    #region References within prefab
+    #region Internal references
     [SerializeField] private RectTransform textRT;
     [SerializeField] private RectTransform debtorRT;
     [SerializeField] private RectTransform creditorRT;
     [SerializeField] private TextMeshProUGUI owedText;
     [SerializeField] private TextMeshProUGUI paidText;
     #endregion
+    #region External references
     [SerializeField] private SoundEvent rentUhOhSound;
     [SerializeField] private RandomSoundEvent paperSound;
     [SerializeField] private GameObject moneyPrefab;
+    #endregion
+    #region Private attributes
     private Dictionary<int, MoneyNoteEnum> moneyValToEnum = new Dictionary<int, MoneyNoteEnum>() {
         { 1, MoneyNoteEnum.ONE },
         { 5, MoneyNoteEnum.FIVE },
@@ -25,6 +28,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         { 500, MoneyNoteEnum.FIVE_HUNDRED }
     };
     private ScreenAnimationSizeAdjuster screenAnimationSizeAdjuster;
+    #endregion
     #region numeric fields
     private int[] moneyNoteValues = new int[7] { 1, 5, 10, 20, 50, 100, 500 };
     private int owed;
@@ -132,7 +136,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
             for (int i = 0; i < 20; i++) yield return null;
         }
         for (int i = 0; i < MONEY_THROW_FRAMES + 50; i++) yield return null;
-        removeScreenAnimation.invoke();
+        ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation();
     }
     private IEnumerator moveMoneyNote(Transform moneyTransform, int amount) {
         void adjustCreditorScale(float paymentReceived) {

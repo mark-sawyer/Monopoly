@@ -2,12 +2,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/NextUtilityState")]
 public class NextUtilityState : State {
-    [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
-    [SerializeField] private GameEvent cardResolved;
-    [SerializeField] private GameEvent tokenSettledEvent;
-    [SerializeField] private GameEvent rentAnimationOver;
-    [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
-    [SerializeField] private DebtEvent payingRentAnimationBegins;
     private UtilityInfo utilityInfo;
     private bool tenTimesDiceRentResolved;
     private bool tokenSettled;
@@ -17,8 +11,8 @@ public class NextUtilityState : State {
 
     #region State
     public override void enterState() {
-        tokenSettledEvent.Listeners += heardTokenSettle;
-        rentAnimationOver.Listeners += animationOverCalled;
+        UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
+        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
         tenTimesDiceRentResolved = true;
         tokenSettled = false;
         animationStarted = false;
@@ -28,22 +22,12 @@ public class NextUtilityState : State {
         int spacesToMove = getSpacesToNextUtility(oldSpaceIndex);
         int newSpaceIndex = (oldSpaceIndex + spacesToMove) % GameConstants.TOTAL_SPACES;
         SpaceInfo newSpace = SpaceVisualManager.Instance.getSpaceVisual(newSpaceIndex).SpaceInfo;
-        turnPlayerMovedToSpace.invoke(newSpace);
-        cardResolved.invoke();
+        DataEventHub.Instance.call_TurnPlayerMovedToSpace(newSpace, oldSpaceIndex);
+        DataEventHub.Instance.call_CardResolved();
 
         utilityInfo = (UtilityInfo)((PropertySpaceInfo)newSpace).PropertyInfo;
         tenTimesDiceRentRequired = getTenTimesDiceRequired(turnPlayer, utilityInfo);
         if (tenTimesDiceRentRequired) tenTimesDiceRentResolved = false;
-
-        int turnPlayerIndex = GameState.game.IndexOfTurnPlayer;
-        growToken(turnPlayerIndex);
-
-        TokenMover tokenMover = TokenVisualManager.Instance.getTokenMover(turnPlayerIndex);
-        WaitFrames.Instance.exe(
-            InterfaceConstants.FRAMES_FOR_TOKEN_GROWING,
-            tokenMover.startMoving,
-            oldSpaceIndex, spacesToMove
-        );
     }
     public override void update() {
         if (!tokenSettled) return;
@@ -57,8 +41,8 @@ public class NextUtilityState : State {
         return tokenSettled && tenTimesDiceRentResolved;
     }
     public override void exitState() {
-        tokenSettledEvent.Listeners -= heardTokenSettle;
-        rentAnimationOver.Listeners -= animationOverCalled;
+        UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
+        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
     }
     public override State getNextState() {
         if (tenTimesDiceRentRequired) return allStates.getState<ResolveDebtState>();
@@ -89,17 +73,11 @@ public class NextUtilityState : State {
     private bool getTenTimesDiceRequired(PlayerInfo turnPlayer, UtilityInfo utilityInfo) {
         return utilityInfo.IsBought && utilityInfo.Owner != turnPlayer;
     }
-    private void growToken(int turnPlayerIndex) {
-        TokenScaler tokenScaler = TokenVisualManager.Instance.getTokenScaler(turnPlayerIndex);
-        TokenVisual tokenVisual = TokenVisualManager.Instance.getTokenVisual(turnPlayerIndex);
-        tokenVisual.changeLayer(InterfaceConstants.MOVING_TOKEN_LAYER_NAME);
-        tokenScaler.beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
-    }
     private void startRentAnimation() {
         PlayerInfo owner = utilityInfo.Owner;
         int rent = 10 * GameState.game.DiceInfo.TotalValue;
-        playerIncurredDebt.invoke(GameState.game.TurnPlayer, owner, rent);
-        payingRentAnimationBegins.invoke(GameState.game.TurnPlayer.Debt);
+        DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
+        ScreenAnimationEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.Debt);
     }
     #endregion
 }

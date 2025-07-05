@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GoButton : MonoBehaviour {
+    /*
     [SerializeField] private Button button;
     [SerializeField] private Transform tokenReceiverParent;
     [SerializeField] private GameEvent selectedTokensChanged;
@@ -47,4 +48,5 @@ public class GoButton : MonoBehaviour {
         return !tokenIcon.transform.GetChild(0).GetComponent<Image>().enabled;
     }
     #endregion
+    */
 }

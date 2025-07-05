@@ -534,8 +534,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a33d1d61a4be386478aa3fff1442bae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollButtonClicked: {fileID: 11400000, guid: 564910bfacbb21949b871ce582853924, type: 2}
-  jailTurnBeginUI: {fileID: 11400000, guid: 24669706d16c1864a85709283b97a0e1, type: 2}
   payFiftyButton: {fileID: 8148505178589982028}
   chanceCardButton: {fileID: 1747840779074703357}
   ccCardButton: {fileID: 254316951756065297}
@@ -739,6 +737,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316922735139183715, guid: 9a86cac6cf1abc24bbb752880bffd304, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196237800077425494, guid: 9a86cac6cf1abc24bbb752880bffd304, type: 3}
+      propertyPath: radius
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8003845265429539653, guid: 9a86cac6cf1abc24bbb752880bffd304, type: 3}
@@ -1835,6 +1837,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6728227910972596271, guid: 9a86cac6cf1abc24bbb752880bffd304, type: 3}
       propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196237800077425494, guid: 9a86cac6cf1abc24bbb752880bffd304, type: 3}
+      propertyPath: radius
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196237800077425494, guid: 9a86cac6cf1abc24bbb752880bffd304, type: 3}
+      propertyPath: colour.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196237800077425494, guid: 9a86cac6cf1abc24bbb752880bffd304, type: 3}
+      propertyPath: colour.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196237800077425494, guid: 9a86cac6cf1abc24bbb752880bffd304, type: 3}
+      propertyPath: colour.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8003845265429539653, guid: 9a86cac6cf1abc24bbb752880bffd304, type: 3}
