@@ -14,7 +14,7 @@ internal class Railroad : Property, RailroadInfo {
     #region Property
     internal override int getRent() {
         PlayerInfo owner = Owner;
-        int railwaysOwned = railroadGroup.railroadsOwnedByPlayer(owner);
+        int railwaysOwned = railroadGroup.propertiesOwnedByPlayer(owner);
         switch (railwaysOwned) {
             case 1: return rentOne;
             case 2: return rentTwo;

@@ -30,6 +30,7 @@ public class DrawCardState : State {
         if (cardMechanicInfo is GoToNextRailroadCardInfo) return allStates.getState<NextRailroadState>();
         if (cardMechanicInfo is GoToNextUtilityCardInfo) return allStates.getState<NextUtilityState>();
         if (cardMechanicInfo is GetOutOfJailFreeCardInfo) return allStates.getState<GetOutOfJailFreeState>();
+        if (cardMechanicInfo is BuildingCostCardInfo) return allStates.getState<BuildingCostState>();
         return allStates.getState<UpdateTurnPlayerState>();
     }
     #endregion

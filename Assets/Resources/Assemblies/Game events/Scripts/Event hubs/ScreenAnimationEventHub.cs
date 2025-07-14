@@ -10,8 +10,9 @@ public class ScreenAnimationEventHub : ScriptableObject {
     [SerializeField] private GameEvent cardShown;
     [SerializeField] private GameEvent spinningPoliceman;
     [SerializeField] private GameEvent luxuryTaxAnimationBegins;
-    [SerializeField] private GameEvent removeScreenAnimation;
     [SerializeField] private GameEvent cardOKClicked;
+    [SerializeField] private GameEvent removeScreenAnimation;
+    [SerializeField] private GameEvent removeScreenAnimationKeepCover;
 
 
 
@@ -37,8 +38,9 @@ public class ScreenAnimationEventHub : ScriptableObject {
     public void call_CardShown() => cardShown.invoke();
     public void call_SpinningPoliceman() => spinningPoliceman.invoke();
     public void call_LuxuryTaxAnimationBegins() => luxuryTaxAnimationBegins.invoke();
-    public void call_RemoveScreenAnimation() => removeScreenAnimation.invoke();
     public void call_CardOKClicked() => cardOKClicked.invoke();
+    public void call_RemoveScreenAnimation() => removeScreenAnimation.invoke();
+    public void call_RemoveScreenAnimationKeepCover() => removeScreenAnimationKeepCover.invoke();
     #endregion
 
 
@@ -50,20 +52,15 @@ public class ScreenAnimationEventHub : ScriptableObject {
     public void sub_CardShown(Action a) => cardShown.Listeners += a;
     public void sub_SpinningPoliceman(Action a) => spinningPoliceman.Listeners += a;
     public void sub_LuxuryTaxAnimationBegins(Action a) => luxuryTaxAnimationBegins.Listeners += a;
-    public void sub_RemoveScreenAnimation(Action a) => removeScreenAnimation.Listeners += a;
     public void sub_CardOKClicked(Action a) => cardOKClicked.Listeners += a;
+    public void sub_RemoveScreenAnimation(Action a) => removeScreenAnimation.Listeners += a;
+    public void sub_RemoveScreenAnimationKeepCover(Action a) => removeScreenAnimationKeepCover.Listeners += a;
     #endregion
 
 
 
     #region Unubscribing
-    public void unsub_IncomeTaxQuestion(Action<PlayerInfo> a) => incomeTaxQuestion.Listeners -= a;
-    public void unsub_PurchaseQuestion(Action<PlayerInfo, PropertyInfo> a) => purchaseQuestion.Listeners -= a;
-    public void unsub_PayingRentAnimationBegins(Action<DebtInfo> a) => payingRentAnimationBegins.Listeners -= a;
-    public void unsub_CardShown(Action a) => cardShown.Listeners -= a;
-    public void unsub_SpinningPoliceman(Action a) => spinningPoliceman.Listeners -= a;
-    public void unsub_LuxuryTaxAnimationBegins(Action a) => luxuryTaxAnimationBegins.Listeners -= a;
     public void unsub_RemoveScreenAnimation(Action a) => removeScreenAnimation.Listeners -= a;
-    public void unsub_CardOKClicked(Action a) => cardOKClicked.Listeners -= a;
+    public void unsub_RemoveScreenAnimationKeepCover(Action a) => removeScreenAnimationKeepCover.Listeners -= a;
     #endregion
 }

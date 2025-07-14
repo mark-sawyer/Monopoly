@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ScreenAnimationManager : MonoBehaviour {
-    [SerializeField] private ScreenCover screenCover;
     #region Prefabs
     [SerializeField] private GameObject incomeTaxPrefab;
     [SerializeField] private GameObject purchaseQuestionPrefab;
@@ -13,9 +12,11 @@ public class ScreenAnimationManager : MonoBehaviour {
     [SerializeField] private GameObject debtorCreditor;
     [SerializeField] private GameObject luxuryTax;
     #endregion
+    #region Private attributes
     private GameObject screenAnimationInstance;
     private Dictionary<int, GameObject> chanceIDToPrefabDictionary = new Dictionary<int, GameObject>();
     private Dictionary<int, GameObject> communityChestIDToPrefabDictionary = new Dictionary<int, GameObject>();
+    #endregion
 
 
 
@@ -25,6 +26,8 @@ public class ScreenAnimationManager : MonoBehaviour {
         initialiseChanceDictionary();
         initialiseCommunityChestyDictionary();
         events.sub_RemoveScreenAnimation(removeScreenAnimation);
+        events.sub_RemoveScreenAnimationKeepCover(removeAnimationKeepCover);
+
         events.sub_SpinningPoliceman(() => startScreenAnimation(spinningPolicemanPrefab));
         events.sub_IncomeTaxQuestion((PlayerInfo playerInfo) => startScreenAnimation(incomeTaxPrefab, playerInfo));
         events.sub_PurchaseQuestion((PlayerInfo playerInfo, PropertyInfo propertyInfo) => {
@@ -46,18 +49,18 @@ public class ScreenAnimationManager : MonoBehaviour {
     
     #region Screen animation
     private void startScreenAnimation(GameObject prefab) {
-        screenCover.startFadeIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
+        UIEventHub.Instance.call_FadeScreenCoverIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
         screenAnimationInstance = Instantiate(prefab, transform);
         screenAnimationInstance.GetComponent<ScreenAnimation>().appear();
     }
     private void startScreenAnimation<T>(GameObject prefab, T t) {
-        screenCover.startFadeIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
+        UIEventHub.Instance.call_FadeScreenCoverIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
         screenAnimationInstance = Instantiate(prefab, transform);
         screenAnimationInstance.GetComponent<ScreenAnimation<T>>().setup(t);
         screenAnimationInstance.GetComponent<ScreenAnimation<T>>().appear();
     }
     private void startScreenAnimation<T1, T2>(GameObject prefab, T1 t1, T2 t2) {
-        screenCover.startFadeIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
+        UIEventHub.Instance.call_FadeScreenCoverIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
         screenAnimationInstance = Instantiate(prefab, transform);
         screenAnimationInstance.GetComponent<ScreenAnimation<T1, T2>>().setup(t1, t2);
         screenAnimationInstance.GetComponent<ScreenAnimation<T1, T2>>().appear();
@@ -65,7 +68,11 @@ public class ScreenAnimationManager : MonoBehaviour {
     private void removeScreenAnimation() {
         Destroy(screenAnimationInstance);
         screenAnimationInstance = null;
-        screenCover.startFadeOut();
+        UIEventHub.Instance.call_FadeScreenCoverOut();
+    }
+    private void removeAnimationKeepCover() {
+        Destroy(screenAnimationInstance);
+        screenAnimationInstance = null;
     }
     #endregion
 

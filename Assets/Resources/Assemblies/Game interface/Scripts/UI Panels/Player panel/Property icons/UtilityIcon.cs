@@ -1,3 +1,4 @@
+using System.Reflection;
 using UnityEngine;
 
 public class UtilityIcon : PropertyGroupIcon {
@@ -6,19 +7,25 @@ public class UtilityIcon : PropertyGroupIcon {
     [SerializeField] private UtilityIconColourSetter iconColourSetter;
     [SerializeField] private GameObject goldRing;
     private UtilityGroupInfo utilityGroupInfo;
-    private UtilityIconState utilityIconState;
+    private PropertyInfo[] propertyInfos;
+    private OtherPropertyGroupIconState utilityIconState;
 
 
 
     #region MonoBehaviour
     private void Start() {
         utilityGroupInfo = (UtilityGroupInfo)utilityGroupSO;
-        iconColourSetter.setColour(UtilityType.ELECTRICITY, false, ZeroPropertiesAlpha);
-        iconColourSetter.setColour(UtilityType.WATER, false, ZeroPropertiesAlpha);
+        propertyInfos = new PropertyInfo[2] {
+            utilityGroupInfo.getUtilityInfo(0),
+            utilityGroupInfo.getUtilityInfo(1)
+        };
+        iconColourSetter.setup(ZeroPropertiesAlpha, PlayerInfo);
+        iconColourSetter.setColour(UtilityType.ELECTRICITY);
+        iconColourSetter.setColour(UtilityType.WATER);
         Color panelColour = propertyGroupPanelColour.Colour;
         panelColour.a = ZeroPropertiesAlpha;
         updatePanelColour(panelColour);
-        utilityIconState = new();
+        utilityIconState = new OtherPropertyGroupIconState(propertyInfos);
     }
     #endregion
 
@@ -26,7 +33,8 @@ public class UtilityIcon : PropertyGroupIcon {
 
     #region PropertyGroupIcon
     public override bool iconNeedsToUpdate() {
-        return false;
+        OtherPropertyGroupIconState newState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);
+        return utilityIconState.stateHasChanged(newState);
     }
     public override void updateVisual() {
         void setPanelColour(int propertiesOwned) {
@@ -36,31 +44,21 @@ public class UtilityIcon : PropertyGroupIcon {
             updatePanelColour(panelColour);
         }
         void setIconColours(int propertiesOwned) {
-            float alpha = propertiesOwned == 0 ? ZeroPropertiesAlpha : NonZeroPropertiesAlpha;
-
-            iconColourSetter.setColour(
-                UtilityType.ELECTRICITY,
-                utilityGroupInfo.playerOwnsUtility(PlayerInfo, UtilityType.ELECTRICITY),
-                alpha
-            );
-            iconColourSetter.setColour(
-                UtilityType.WATER,
-                utilityGroupInfo.playerOwnsUtility(PlayerInfo, UtilityType.WATER),
-                alpha
-            );
+            iconColourSetter.setColour(PlayerInfo, utilityGroupInfo.getUtilityInfo(0));
+            iconColourSetter.setColour(PlayerInfo, utilityGroupInfo.getUtilityInfo(1));
         }
         void setGoldRing(int propertiesOwned) {
             goldRing.SetActive(propertiesOwned == 2);
         }
 
-        int propertiesOwned = utilityGroupInfo.utilitiesOwnedByPlayer(PlayerInfo);
+        int propertiesOwned = utilityGroupInfo.propertiesOwnedByPlayer(PlayerInfo);
 
         setPanelColour(propertiesOwned);
         setIconColours(propertiesOwned);
         setGoldRing(propertiesOwned);
     }
     public override void setNewState() {
-        utilityIconState = new UtilityIconState();
+        utilityIconState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);
     }
     #endregion
 }

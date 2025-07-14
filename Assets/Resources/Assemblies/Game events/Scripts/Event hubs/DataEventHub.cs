@@ -5,12 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameEvent/Hubs/DataEventHub")]
 public class DataEventHub : ScriptableObject {
     private static DataEventHub instance;
+    private UIEventHub uiEvents;
     #region Data only
     [SerializeField] private GameEvent cardResolved;
     [SerializeField] private CardTypeEvent cardDrawn;
     [SerializeField] private PlayerEvent debtResolved;
     [SerializeField] private GameEvent doublesCountReset;
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
+    [SerializeField] private EstateEvent estateAddedBuilding;
+    [SerializeField] private EstateEvent estateRemovedBuilding;
+    [SerializeField] private PropertyEvent propertyMortgaged;
+    [SerializeField] private PropertyEvent propertyUnmortgaged;
     #endregion
     #region In pipeline
     [SerializeField] private GameEvent rollButtonClicked;
@@ -25,13 +30,14 @@ public class DataEventHub : ScriptableObject {
     [SerializeField] private BoolEvent turnBegin;
     [SerializeField] private GameEvent leaveJail;
     [SerializeField] private CardTypeEvent useGOOJFCardButtonClicked;
-    [SerializeField] private EstateEvent estateAddedBuilding;
-    [SerializeField] private EstateEvent estateRemovedBuilding;
     #endregion
 
 
 
-    #region public
+    #region Setup
+    private void OnEnable() {
+        uiEvents = UIEventHub.Instance;
+    }
     public static DataEventHub Instance {
         get {
             if (instance == null) {
@@ -55,6 +61,10 @@ public class DataEventHub : ScriptableObject {
     public void call_PlayerIncurredDebt(PlayerInfo playerInfo, Creditor creditor, int debtVal) {
         playerIncurredDebt.invoke(playerInfo, creditor, debtVal);
     }
+    public void call_EstateAddedBuilding(EstateInfo estateInfo) => estateAddedBuilding.invoke(estateInfo);
+    public void call_EstateRemovedBuilding(EstateInfo estateInfo) => estateRemovedBuilding.invoke(estateInfo);
+    public void call_PropertyMortgaged(PropertyInfo propertyInfo) => propertyMortgaged.invoke(propertyInfo);
+    public void call_PropertyUnmortgaged(PropertyInfo propertyInfo) => propertyUnmortgaged.invoke(propertyInfo);
     #endregion
 
 
@@ -62,65 +72,57 @@ public class DataEventHub : ScriptableObject {
     #region Pipeline invoking
     public void call_RollButtonClicked() {
         rollButtonClicked.invoke();
-        UIEventHub.Instance.RollButtonClicked.invoke();
+        uiEvents.RollButtonClicked.invoke();
     }
     public void call_MoneyAdjustment(PlayerInfo playerInfo, int adjustment) {
         moneyAdjustment.invoke(playerInfo, adjustment);
-        UIEventHub.Instance.MoneyAdjustment.invoke(playerInfo);
+        uiEvents.MoneyAdjustment.invoke(playerInfo);
     }
     public void call_MoneyBetweenPlayers(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount) {
         moneyBetweenPlayers.invoke(losingPlayer, gainingPlayer, amount);
-        UIEventHub.Instance.MoneyBetweenPlayers.invoke(losingPlayer, gainingPlayer);
+        uiEvents.MoneyBetweenPlayers.invoke(losingPlayer, gainingPlayer);
     }
     public void call_TurnPlayerMovedAlongBoard(int startingIndex, int spacesMoved) {
         turnPlayerMovedAlongBoard.invoke(spacesMoved);
-        UIEventHub.Instance.TurnPlayerMovedAlongBoard.invoke(startingIndex, spacesMoved);
+        uiEvents.TurnPlayerMovedAlongBoard.invoke(startingIndex, spacesMoved);
     }
     public void call_TurnPlayerMovedToSpace(SpaceInfo newSpace, int startingIndex) {
         turnPlayerMovedToSpace.invoke(newSpace);
-        UIEventHub.Instance.TurnPlayerMovedToSpace.invoke(startingIndex, newSpace.Index);
+        uiEvents.TurnPlayerMovedToSpace.invoke(startingIndex, newSpace.Index);
     }
     public void call_TurnPlayerSentToJail(int startingIndex) {
         turnPlayerSentToJail.invoke();
-        UIEventHub.Instance.TurnPlayerMovedToSpace.invoke(startingIndex, GameConstants.JAIL_SPACE_INDEX);
+        uiEvents.TurnPlayerMovedToSpace.invoke(startingIndex, GameConstants.JAIL_SPACE_INDEX);
     }
     public void call_PlayerObtainedProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         playerObtainedProperty.invoke(playerInfo, propertyInfo);
-        UIEventHub.Instance.PlayerObtainedProperty.invoke(playerInfo, propertyInfo);
+        uiEvents.PlayerObtainedProperty.invoke(playerInfo, propertyInfo);
     }
     public void call_NextPlayerTurn() {
         nextPlayerTurn.invoke();
-        UIEventHub.Instance.NextPlayerTurn.invoke();
+        uiEvents.NextPlayerTurn.invoke();
     }
     public void call_PlayerGetsGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
         playerGetsGOOJFCard.invoke(playerInfo, cardInfo);
-        UIEventHub.Instance.PlayerGetsGOOJFCard.invoke(playerInfo, cardInfo.CardType);
+        uiEvents.PlayerGetsGOOJFCard.invoke(playerInfo, cardInfo.CardType);
     }
     public void call_TurnBegin(bool turnPlayerInJail) {
         turnBegin.invoke(turnPlayerInJail);
-        UIEventHub.Instance.TurnBegin.invoke(turnPlayerInJail);
+        uiEvents.TurnBegin.invoke(turnPlayerInJail);
     }
     public void call_LeaveJail() {
         leaveJail.invoke();
-        UIEventHub.Instance.LeaveJail.invoke();
+        uiEvents.LeaveJail.invoke();
     }
     public void call_UseGOOJFCardButtonClicked(CardType cardType) {
         useGOOJFCardButtonClicked.invoke(cardType);
-        UIEventHub.Instance.UseGOOJFCardButtonClicked.invoke(cardType);
-    }
-    public void call_EstateAddedBuilding(EstateInfo estateInfo) {
-        estateAddedBuilding.invoke(estateInfo);
-        UIEventHub.Instance.EstateAddedBuilding.invoke(estateInfo);
-    }
-    public void call_EstateRemovedBuilding(EstateInfo estateInfo) {
-        estateRemovedBuilding.invoke(estateInfo);
-        UIEventHub.Instance.EstateRemovedBuilding.invoke(estateInfo);
+        uiEvents.UseGOOJFCardButtonClicked.invoke(cardType);
     }
     #endregion
 
 
 
-    #region Data subscribing
+    #region Internal subscribing
     internal void sub_RollButtonClicked(Action a) => rollButtonClicked.Listeners += a;
     internal void sub_TurnPlayerMovedAlongBoard(Action<int> a) => turnPlayerMovedAlongBoard.Listeners += a;
     internal void sub_TurnPlayerSentToJail(Action a) => turnPlayerSentToJail.Listeners += a;
@@ -130,6 +132,10 @@ public class DataEventHub : ScriptableObject {
     internal void sub_DebtResolved(Action<PlayerInfo> a) => debtResolved.Listeners += a;
     internal void sub_DoublesCountReset(Action a) => doublesCountReset.Listeners += a;
     internal void sub_PlayerIncurredDebt(Action<PlayerInfo, Creditor, int> a) => playerIncurredDebt.Listeners += a;
+    internal void sub_EstateAddedBuilding(Action<EstateInfo> a) => estateAddedBuilding.Listeners += a;
+    internal void sub_EstateRemovedBuilding(Action<EstateInfo> a) => estateRemovedBuilding.Listeners += a;
+    internal void sub_PropertyMortgaged(Action<PropertyInfo> a) => propertyMortgaged.Listeners += a;
+    internal void sub_PropertyUnmortgaged(Action<PropertyInfo> a) => propertyUnmortgaged.Listeners += a;
 
 
     internal void sub_MoneyAdjustment(Action<PlayerInfo, int> a) => moneyAdjustment.Listeners += a;
@@ -140,7 +146,5 @@ public class DataEventHub : ScriptableObject {
     internal void sub_TurnBegin(Action<bool> a) => turnBegin.Listeners += a;
     internal void sub_LeaveJail(Action a) => leaveJail.Listeners += a;
     internal void sub_UseGOOJFCardButtonClicked(Action<CardType> a) => useGOOJFCardButtonClicked.Listeners += a;
-    internal void sub_EstateAddedBuilding(Action<EstateInfo> a) => estateAddedBuilding.Listeners += a;
-    internal void sub_EstateRemovedBuilding(Action<EstateInfo> a) => estateRemovedBuilding.Listeners += a;
     #endregion
 }

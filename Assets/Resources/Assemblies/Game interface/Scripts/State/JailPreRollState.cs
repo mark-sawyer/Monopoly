@@ -76,7 +76,7 @@ public class JailPreRollState : State {
                 DataEventHub.Instance.call_LeaveJail();
                 DataEventHub.Instance.call_PlayerIncurredDebt(
                     GameState.game.TurnPlayer,
-                    GameState.game.Bank,
+                    GameState.game.BankCreditor,
                     GameConstants.PRICE_FOR_LEAVING_JAIL
                 );
             }

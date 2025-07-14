@@ -187,9 +187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 610e165a8242a144eb1e1e269772a96e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIncurredDebtEvent: {fileID: 11400000, guid: b87708f34d8124845bedd3fe52b77b58, type: 2}
-  correct: {fileID: 11400000, guid: 5fe0b6cdf5596e34c9a4ad3a872f91c2, type: 2}
-  incorrect: {fileID: 11400000, guid: 42675fb118f7ad644afead6d24376467, type: 2}
   tokenIcon: {fileID: 1374728115555470472}
   questionCircle: {fileID: 4676986694871467397}
   tenPercentButtonText: {fileID: 6566801403166145237}
@@ -1090,6 +1087,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3442082075229922574}
     m_Modifications:
+    - target: {fileID: 1906367390417864928, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1906367390417864928, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722595734370471052, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722595734370471052, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4879366903318283685, guid: 4807f9b6ca0e8bd47bdf098a4fd4358a, type: 3}
       propertyPath: m_Name
       value: token_icon

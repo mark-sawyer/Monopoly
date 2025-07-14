@@ -11,7 +11,7 @@ public class QuickObtainProperty : MonoBehaviour {
             
             if (propertyGroupNumber <= 8) {
                 EstateGroupInfo estateGroupInfo = propertyGroupSelect.SelectedEstateGroup;
-                int propertiesInGroup = estateGroupInfo.NumberOfEstatesInGroup;
+                int propertiesInGroup = estateGroupInfo.NumberOfPropertiesInGroup;
                 if (propertyNumber > propertiesInGroup) return;
                 EstateInfo estateInfo = estateGroupInfo.getEstateInfo(propertyNumber - 1);
                 if (estateInfo.IsBought) return;

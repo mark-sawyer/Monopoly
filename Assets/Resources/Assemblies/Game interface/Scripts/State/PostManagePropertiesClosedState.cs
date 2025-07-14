@@ -10,14 +10,14 @@ public class PostManagePropertiesClosedState : State {
     #region State
     public override void enterState() {
         updateAnimationsOver = false;
-        ManagePropertiesEventHub.Instance.sub_IconsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
+        ManagePropertiesEventHub.Instance.sub_AllVisualsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
         ManagePropertiesEventHub.Instance.call_UpdateIconsAfterManagePropertiesClosed();
     }
     public override bool exitConditionMet() {
         return updateAnimationsOver;
     }
     public override void exitState() {
-        ManagePropertiesEventHub.Instance.unsub_IconsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
+        ManagePropertiesEventHub.Instance.unsub_AllVisualsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
     }
     public override State getNextState() {
         if (GameState.game.TurnPlayer.InJail) {

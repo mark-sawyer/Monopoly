@@ -2,7 +2,7 @@ using System.Globalization;
 using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour {
-    [SerializeField] private AudioSource[] audioSources;
+    [SerializeField] private AudioSource audioSource;
     #region RandomAudioClips
     [SerializeField] private RandomAudioClip diceSounds;
     [SerializeField] private RandomAudioClip paperSounds;
@@ -37,8 +37,8 @@ public class SoundPlayer : MonoBehaviour {
         uiEvents.sub_IncorrectOutcome(play_IncorrectSound);
         uiEvents.sub_CardDrop(play_CardDrop);
         uiEvents.sub_MoneyAppearOrDisappear(play_PaperSound);
+        uiEvents.sub_AppearingPop(play_Pop);
         uiEvents.sub_PlayerGetsGOOJFCard(play_Pop);
-        uiEvents.sub_PlayerPropertyAdjustment(play_Pop);
 
         screenEvents.sub_LuxuryTaxAnimationBegins(play_MupMooo);
         screenEvents.sub_SpinningPoliceman(play_Whistle);
@@ -53,16 +53,7 @@ public class SoundPlayer : MonoBehaviour {
 
     #region private
     private void playSound(AudioClip sound) {
-        AudioSource audioSource = getAvailableAudioSource();
         audioSource.PlayOneShot(sound);
-    }
-    private AudioSource getAvailableAudioSource() {
-        AudioSource defaultAudioSource = audioSources[0];
-        for (int i = 0; i < audioSources.Length; i++) {
-            AudioSource audioSource = audioSources[i];
-            if (!audioSource.isPlaying) return audioSource;
-        }
-        return defaultAudioSource;
     }
     #endregion
 
@@ -81,6 +72,7 @@ public class SoundPlayer : MonoBehaviour {
     private void play_MoneyChing(PlayerInfo x) => playSound(moneyChing);
     private void play_MoneyChing(PlayerInfo x, PlayerInfo y) => playSound(moneyChing);
     private void play_MupMooo() => playSound(mupMooo);
+    private void play_Pop() => playSound(pop);
     private void play_Pop(PlayerInfo x, CardType y) => playSound(pop);
     private void play_Pop(PlayerInfo x, PropertyInfo y) => playSound(pop);
     private void play_QuestionChime(PlayerInfo x, PropertyInfo y) => playSound(questionChime);

@@ -8,13 +8,14 @@ public class EstateSection : PropertySection {
     [SerializeField] private TextMeshProUGUI buyPriceText;
     [SerializeField] private TextMeshProUGUI sellPriceText;
     [SerializeField] private TextMeshProUGUI mortgagePriceText;
+    [SerializeField] private TextMeshProUGUI unmortgagePriceText;
     [SerializeField] private Image titleStripImage;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Transform squarePanelTransform;
     [SerializeField] private Transform[] buttonPanelTransforms;
     #endregion
     #region Updating visuals
-    [SerializeField] private BuyBuildingButton buyBuildingMono;
+    [SerializeField] private BuyOrUnmortgageBuildingButton buyOrUnmortgageBuildingMono;
     [SerializeField] private SellOrMortgageBuildingButton sellOrMortgageBuildingMono;
     [SerializeField] private BuildingIcons buildingIcons;
     #endregion
@@ -27,7 +28,7 @@ public class EstateSection : PropertySection {
     public override void setup() {
         void setEstateReferences() {
             estateInfo = (EstateInfo)PropertyInfo;
-            buyBuildingMono.setup(estateInfo);
+            buyOrUnmortgageBuildingMono.setup(estateInfo);
             sellOrMortgageBuildingMono.setup(estateInfo);
             buildingIcons.setup(estateInfo);
             estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateInfo.EstateColour);
@@ -37,6 +38,7 @@ public class EstateSection : PropertySection {
             buyPriceText.text = "$" + estateInfo.BuildingCost.ToString();
             sellPriceText.text = "$" + estateInfo.BuildingSellCost.ToString();
             mortgagePriceText.text = "$" + estateInfo.MortgageValue.ToString();
+            unmortgagePriceText.text = "$" + estateInfo.UnmortgageCost.ToString();
         }
         void setRingBorderColour() {
             Color highlightColour = estateGroupColours.HighlightColour.Colour;
@@ -69,10 +71,8 @@ public class EstateSection : PropertySection {
         setButtonColours();
     }
     public override void refreshVisual(PlayerInfo playerInfo) {
-        buyBuildingMono.setInteractable(playerInfo);
+        buyOrUnmortgageBuildingMono.adjustToAppropriateOption(playerInfo);
         sellOrMortgageBuildingMono.adjustToAppropriateOption();
-    }
-    public void updateBuildingIcons() {
         buildingIcons.updateIcons();
     }
     #endregion

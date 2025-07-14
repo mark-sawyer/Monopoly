@@ -14,7 +14,7 @@ public class LuxuryTaxState : State {
         animationOver = false;
         DataEventHub.Instance.call_PlayerIncurredDebt(
             GameState.game.TurnPlayer,
-            GameState.game.Bank,
+            GameState.game.BankCreditor,
             GameConstants.LUXURY_TAX
         );
         ScreenAnimationEventHub.Instance.call_LuxuryTaxAnimationBegins();

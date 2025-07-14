@@ -1,6 +1,4 @@
 
-using static UnityEngine.UI.GridLayoutGroup;
-
 public class EstateGroupIconState : PropertyGroupIconState {
     private enum EstateStatus {
         UNOWNED,
@@ -18,7 +16,7 @@ public class EstateGroupIconState : PropertyGroupIconState {
 
     #region public
     public EstateGroupIconState(EstateGroupInfo estateGroupInfo, PlayerInfo owner) {
-        int estatesInGroup = estateGroupInfo.NumberOfEstatesInGroup;
+        int estatesInGroup = estateGroupInfo.NumberOfPropertiesInGroup;
         estateStatuses = new EstateStatus[estatesInGroup];
         for (int i = 0; i < estatesInGroup; i++) {
             EstateInfo estateInfo = estateGroupInfo.getEstateInfo(i);
@@ -26,7 +24,7 @@ public class EstateGroupIconState : PropertyGroupIconState {
         }
     }
     public EstateGroupIconState(EstateGroupInfo estateGroupInfo) {
-        int estatesInGroup = estateGroupInfo.NumberOfEstatesInGroup;
+        int estatesInGroup = estateGroupInfo.NumberOfPropertiesInGroup;
         estateStatuses = new EstateStatus[estatesInGroup];
         for (int i = 0; i < estatesInGroup; i++) {
             estateStatuses[i] = EstateStatus.UNOWNED;

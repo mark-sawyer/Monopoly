@@ -79,6 +79,23 @@ internal class Player : PlayerInfo {
     public bool InJail { get => inJail; internal set => inJail = value; }
     public int TurnInJail => turnInJail;
     public bool HasGOOJFCard => getOutOfJailFreeCards.Count > 0;
+    public int HousesOwned {
+        get {
+            IEnumerable<Estate> estates = properties.OfType<Estate>();
+            int houseCount = estates.Sum(x => {
+                if (x.HasHotel) return 0;
+                else return x.BuildingCount;
+            });
+            return houseCount;
+        }
+    }
+    public int HotelsOwned {
+        get {
+            IEnumerable<Estate> estates = properties.OfType<Estate>();
+            int hotelCount = estates.Count(x => x.HasHotel);
+            return hotelCount;
+        }
+    }
     public bool hasGOOJFCardOfType(CardType cardType) {
         return getOutOfJailFreeCards.Any(x => x.CardType == cardType);
     }

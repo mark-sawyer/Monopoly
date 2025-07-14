@@ -24,6 +24,7 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
             else return 2f - (1f / 15f) * (x - 5f);
         }
 
+        UIEventHub.Instance.call_AppearingPop();
         for (int i = 0; i < 10; i++) yield return null;
 
         canvas.overrideSorting = true;

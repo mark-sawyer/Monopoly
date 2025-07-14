@@ -1,4 +1,2 @@
 
-internal abstract class Building {
-    public Estate Estate { get; set; }
-}
+internal abstract class Building { }

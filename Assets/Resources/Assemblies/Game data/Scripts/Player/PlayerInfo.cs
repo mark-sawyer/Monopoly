@@ -12,6 +12,8 @@ public interface PlayerInfo : Creditor {
     public bool InJail { get; }
     public int TurnInJail { get; }
     public bool HasGOOJFCard { get; }
+    public int HousesOwned { get; }
+    public int HotelsOwned { get; }
     public bool hasGOOJFCardOfType(CardType cardType);
     public bool ownsProperty(PropertyInfo propertyInfo);
 }

@@ -9,12 +9,23 @@ internal class UtilityGroup : ScriptableObject, UtilityGroupInfo {
 
 
 
+    #region PropertyGroupInfo
+    public int NumberOfPropertiesInGroup => utilities.Length;
+    public bool MortgageExists => utilities.Any(x => x.IsMortgaged);
+    public int MortgageCount => utilities.Count(x => x.IsMortgaged);
+    public int propertiesOwnedByPlayer(PlayerInfo playerInfo) {
+        return utilities.Count(x => x.Owner == playerInfo);
+    }
+    public bool playerHasMortgageInGroup(PlayerInfo playerInfo) {
+        return utilities.Any(x => x.Owner == playerInfo && x.IsMortgaged);
+    }
+    #endregion
+
+
+
     #region UtilityGroupInfo
     public UtilityInfo getUtilityInfo(int index) {
         return utilities[index];
-    }
-    public int utilitiesOwnedByPlayer(PlayerInfo player) {
-        return utilities.Count(x => x.Owner == player);
     }
     public bool playerOwnsUtility(PlayerInfo player, UtilityType utilityType) {
         Utility utility = utilityType == UtilityType.ELECTRICITY ? ElectricCompany : WaterWorks;
@@ -23,8 +34,7 @@ internal class UtilityGroup : ScriptableObject, UtilityGroupInfo {
     #endregion
 }
 
-public interface UtilityGroupInfo {
+public interface UtilityGroupInfo : PropertyGroupInfo {
     public UtilityInfo getUtilityInfo(int index);
-    public int utilitiesOwnedByPlayer(PlayerInfo player);
     public bool playerOwnsUtility(PlayerInfo player, UtilityType utilityType);
 }

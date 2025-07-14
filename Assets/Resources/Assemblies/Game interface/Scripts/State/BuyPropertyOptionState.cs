@@ -2,35 +2,49 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/BuyPropertyOptionState")]
 public class BuyPropertyOptionState : State {
-    private bool questionAnswered;
+    private ScreenAnimationEventHub screenAnimationEvents;
+    private bool purchaseAccepted;
+    private bool purchaseDeclined;
 
 
 
     #region GameState
     public override void enterState() {
-        questionAnswered = false;
+        if (screenAnimationEvents == null) screenAnimationEvents = ScreenAnimationEventHub.Instance;
+        purchaseAccepted = false;
+        purchaseDeclined = false;
+
+        screenAnimationEvents.sub_RemoveScreenAnimation(purchaseAcceptedCalled);
+        screenAnimationEvents.sub_RemoveScreenAnimationKeepCover(purchaseDeclinedCalled);
+
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
         PropertyInfo propertyInfo = ((PropertySpaceInfo)GameState.game.SpaceInfoOfTurnPlayer).PropertyInfo;
-        ScreenAnimationEventHub.Instance.call_PurchaseQuestion(playerInfo, propertyInfo);
-        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(screenAnimationRemoved);
+        screenAnimationEvents.call_PurchaseQuestion(playerInfo, propertyInfo);
     }
     public override bool exitConditionMet() {
-        return questionAnswered;
+        return purchaseAccepted || purchaseDeclined;
     }
     public override void exitState() {
-        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(screenAnimationRemoved);
+        screenAnimationEvents.unsub_RemoveScreenAnimation(purchaseAcceptedCalled);
+        screenAnimationEvents.unsub_RemoveScreenAnimationKeepCover(purchaseDeclinedCalled);
     }
     public override State getNextState() {
-        return allStates.getState<UpdateTurnPlayerState>();
+        if (purchaseAccepted) return allStates.getState<UpdateTurnPlayerState>();
+        else return allStates.getState<AuctionPropertyState>();
     }
     #endregion
 
 
-
-    private void screenAnimationRemoved() {
+    
+    #region private
+    private void purchaseAcceptedCalled() {
         WaitFrames.Instance.exe(
             100,  // Waiting for the UI update and bloop sound (occurs in PurchaseQuestion).
-            () => { questionAnswered = true; }
+            () => { purchaseAccepted = true; }
         );
     }
+    private void purchaseDeclinedCalled() {
+        purchaseDeclined = true;
+    }
+    #endregion
 }

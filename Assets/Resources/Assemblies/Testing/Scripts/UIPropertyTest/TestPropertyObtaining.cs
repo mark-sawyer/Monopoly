@@ -59,7 +59,7 @@ public class TestPropertyObtaining : MonoBehaviour {
 
     private PropertyInfo getProperty(int propertyGroup, int propertyNum) {
         PropertyInfo getEstate(EstateGroupInfo egi, int propertyNum) {
-            int totalProperties = egi.NumberOfEstatesInGroup;
+            int totalProperties = egi.NumberOfPropertiesInGroup;
             if (propertyNum > totalProperties) return null;
             else return egi.getEstateInfo(propertyNum - 1);
         }

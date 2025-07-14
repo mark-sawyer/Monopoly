@@ -122,7 +122,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         }
 
         int money = GameState.game.TurnPlayer.Money;
-        int remainingPayment = money - owed >= 0 ? owed : money; ;
+        int remainingPayment = money - owed >= 0 ? owed : money;
         while (remainingPayment > 0) {
             int nextPayment = getNextPayment(remainingPayment);
             remainingPayment -= nextPayment;

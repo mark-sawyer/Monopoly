@@ -25,6 +25,9 @@ public class PlayerPanel : MonoBehaviour {
     public void adjustMoney(PlayerInfo player) {
         moneyAdjuster.adjustMoney(player);
     }
+    public void adjustMoneyQuietly(PlayerInfo player) {
+        moneyAdjuster.adjustMoneyQuietly(player);
+    }
     public void updatePropertyIconVisual(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         PropertyGroupIcon getPropertyGroupIcon() {
             if (propertyInfo is EstateInfo estateInfo) {

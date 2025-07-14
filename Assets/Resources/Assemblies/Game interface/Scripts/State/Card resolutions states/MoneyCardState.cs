@@ -13,13 +13,12 @@ public class MoneyCardState : State {
         if (addedToPlayer > 0) {
             DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, addedToPlayer);
         }
-        else DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.Bank, -addedToPlayer);
+        else DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.BankCreditor, -addedToPlayer);
         DataEventHub.Instance.call_CardResolved();
     }
     public override bool exitConditionMet() {
         return true;
     }
-
     public override State getNextState() {
         if (addedToPlayer > 0) return allStates.getState<UpdateTurnPlayerState>();
         else return allStates.getState<ResolveDebtState>();

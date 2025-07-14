@@ -31,7 +31,7 @@ public class TokenVisual : MonoBehaviour {
             this.tokenVisual = tokenVisual;
             transform = tokenVisual.transform;
             playerInfo = tokenVisual.playerInfo;
-            goMajorPoint = getGoMajorPoint();
+            goMajorPoint = SpaceVisualManager.Instance.getSpaceVisual(0).getMajorPoint(GameState.game.TurnPlayer);
             UIEventHub.Instance.sub_LeaveJail(tokenOnJailSpaceChanged);
             attractivePoint = transform.position;
         }
@@ -82,6 +82,12 @@ public class TokenVisual : MonoBehaviour {
                 }
                 return majorPoints;
             }
+            Vector3 getMinorPoint() {
+                SpaceVisualManager spaceVisualManager = SpaceVisualManager.Instance;
+                int spaceIndex = playerInfo.SpaceIndex;
+                SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(spaceIndex);
+                return spaceVisual.getMinorPoint(playerInfo);
+            }
 
 
 
@@ -114,12 +120,6 @@ public class TokenVisual : MonoBehaviour {
 
 
         #region private
-        private Vector3 getMinorPoint() {
-            SpaceVisualManager spaceVisualManager = SpaceVisualManager.Instance;
-            int spaceIndex = playerInfo.SpaceIndex;
-            SpaceVisual spaceVisual = spaceVisualManager.getSpaceVisual(spaceIndex);
-            return spaceVisual.getMinorPoint(playerInfo);
-        }
         private void moveToAttractivePoint() {
             float finalPositionMagnitude() {
                 Vector3 temp = transform.position;
@@ -155,9 +155,6 @@ public class TokenVisual : MonoBehaviour {
                 queue.Count == 0 &&
                 velocity.magnitude < VELOCITY_FOR_SETTLING_THRESHOLD &&
                 directionVector().magnitude < DISTANCE_FOR_SETTLING_THRESHOLD;
-        }
-        private Vector3 getGoMajorPoint() {
-            return SpaceVisualManager.Instance.getSpaceVisual(0).getMajorPoint(GameState.game.TurnPlayer);
         }
         private bool passingGo() {
             return attractivePoint.x == goMajorPoint.x

@@ -10,10 +10,13 @@ public class UIEventHub : ScriptableObject {
     [SerializeField] private GameEvent tokenSettled;
     [SerializeField] private GameEvent correctOutcome;
     [SerializeField] private GameEvent incorrectOutcome;
+    [SerializeField] private GameEvent appearingPop;
     [SerializeField] private GameEvent cardDrop;
     [SerializeField] private GameEvent moneyAppearOrDisappear;
     [SerializeField] private GameEvent buttonDown;
     [SerializeField] private GameEvent buttonUp;
+    [SerializeField] private FloatEvent fadeScreenCoverIn;
+    [SerializeField] private GameEvent fadeScreenCoverOut;
     #endregion
     #region In pipeline
     [SerializeField] private GameEvent rollButtonClicked;
@@ -27,8 +30,6 @@ public class UIEventHub : ScriptableObject {
     [SerializeField] private BoolEvent turnBegin;
     [SerializeField] private GameEvent leaveJail;
     [SerializeField] private CardTypeEvent useGOOJFCardButtonClicked;
-    [SerializeField] private EstateEvent estateAddedBuilding;
-    [SerializeField] private EstateEvent estateRemovedBuilding;
     #endregion
 
 
@@ -48,7 +49,7 @@ public class UIEventHub : ScriptableObject {
 
 
 
-    #region internal
+    #region internal (for pipeline)
     internal GameEvent RollButtonClicked => rollButtonClicked;
     internal PlayerEvent MoneyAdjustment => moneyAdjustment;
     internal PlayerPlayerEvent MoneyBetweenPlayers => moneyBetweenPlayers;
@@ -60,8 +61,6 @@ public class UIEventHub : ScriptableObject {
     internal BoolEvent TurnBegin => turnBegin;
     internal GameEvent LeaveJail => leaveJail;
     internal CardTypeEvent UseGOOJFCardButtonClicked => useGOOJFCardButtonClicked;
-    internal EstateEvent EstateAddedBuilding => estateAddedBuilding;
-    internal EstateEvent EstateRemovedBuilding => estateRemovedBuilding;
     #endregion
 
 
@@ -72,26 +71,33 @@ public class UIEventHub : ScriptableObject {
     public void call_TokenSettled() => tokenSettled.invoke();
     public void call_CorrectOutcome() => correctOutcome.invoke();
     public void call_IncorrectOutcome() => incorrectOutcome.invoke();
+    public void call_AppearingPop() => appearingPop.invoke();
     public void call_CardDrop() => cardDrop.invoke();
     public void call_MoneyAppearOrDisappear() => moneyAppearOrDisappear.invoke();
-    public void call_buttonDown() => buttonDown.invoke();
-    public void call_buttonUp() => buttonUp.invoke();
+    public void call_ButtonDown() => buttonDown.invoke();
+    public void call_ButtonUp() => buttonUp.invoke();
+    public void call_FadeScreenCoverIn(float alpha) => fadeScreenCoverIn.invoke(alpha);
+    public void call_FadeScreenCoverOut() => fadeScreenCoverOut.invoke();
     #endregion
 
 
 
-    #region UI public subscribing
+    #region UI subscribing
+    /* UI only */
     public void sub_DoublesTickBoxUpdate(Action a) => doublesTickBoxUpdate.Listeners += a;
     public void sub_PayFiftyButtonClicked(Action a) => payFiftyButtonClicked.Listeners += a;
     public void sub_TokenSettled(Action a) => tokenSettled.Listeners += a;
     public void sub_CorrectOutcome(Action a) => correctOutcome.Listeners += a;
     public void sub_IncorrectOutcome(Action a) => incorrectOutcome.Listeners += a;
+    public void sub_AppearingPop(Action a) => appearingPop.Listeners += a;
     public void sub_CardDrop(Action a) => cardDrop.Listeners += a;
     public void sub_MoneyAppearOrDisappear(Action a) => moneyAppearOrDisappear.Listeners += a;
     public void sub_ButtonDown(Action a) => buttonDown.Listeners += a;
     public void sub_ButtonUp(Action a) => buttonUp.Listeners += a;
+    public void sub_FadeScreenCoverIn(Action<float> a) => fadeScreenCoverIn.Listeners += a;
+    public void sub_FadeScreenCoverOut(Action a) => fadeScreenCoverOut.Listeners += a;
 
-
+    /* In pipeline */
     public void sub_RollButtonClicked(Action a) => rollButtonClicked.Listeners += a;
     public void sub_MoneyAdjustment(Action<PlayerInfo> a) => moneyAdjustment.Listeners += a;
     public void sub_MoneyBetweenPlayers(Action<PlayerInfo, PlayerInfo> a) => moneyBetweenPlayers.Listeners += a;
@@ -103,13 +109,12 @@ public class UIEventHub : ScriptableObject {
     public void sub_TurnBegin(Action<bool> a) => turnBegin.Listeners += a;
     public void sub_LeaveJail(Action a) => leaveJail.Listeners += a;
     public void sub_UseGOOJFCardButtonClicked(Action<CardType> a) => useGOOJFCardButtonClicked.Listeners += a;
-    public void sub_EstateAddedBuilding(Action<EstateInfo> a) => estateAddedBuilding.Listeners += a;
-    public void sub_EstateRemovedBuilding(Action<EstateInfo> a) => estateRemovedBuilding.Listeners += a;
     #endregion
 
 
 
-    #region UI public unsubscribing
+    #region UI unsubscribing
+    public void unsub_MoneyAdjustment(Action<PlayerInfo> a) => moneyAdjustment.Listeners -= a;
     public void unsub_DoublesTickBoxUpdate(Action a) => doublesTickBoxUpdate.Listeners -= a;
     public void unsub_PayFiftyButtonClicked(Action a) => payFiftyButtonClicked.Listeners -= a;
     public void unsub_TokenSettled(Action a) => tokenSettled.Listeners -= a;

@@ -1,34 +1,56 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScreenCover : MonoBehaviour {
     [SerializeField] private Image image;
-    private float storedMaxAlpha;
 
 
 
-    public void startFadeIn(float maxAlpha) {
-        storedMaxAlpha = maxAlpha;
-        StartCoroutine(fadeIn(maxAlpha));
+    #region MonoBehaviour
+    private void Start() {
+        UIEventHub uiEvents = UIEventHub.Instance;
+        uiEvents.sub_FadeScreenCoverIn(startFadeIn);
+        uiEvents.sub_FadeScreenCoverOut(startFadeOut);
     }
-    public void startFadeOut() {
+    #endregion
+
+
+
+    #region private
+    private void startFadeIn(float goalAlpha) {
+        StartCoroutine(fadeIn(goalAlpha));
+    }
+    private void startFadeOut() {
         StartCoroutine(fadeOut());
     }
-    private IEnumerator fadeIn(float maxAlpha) {
-        float slope = maxAlpha / InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION;
-        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION; i++) {
-            float alpha = (slope * i) / 255f;
-            image.color = new Color(0f, 0f, 0f, alpha);
+    private IEnumerator fadeIn(float goalAlpha) {
+        // goalAlpha is between 0f and 255f, not zero and one.
+
+        int frames = InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION;
+        Color colour = image.color;
+        float currentAlpha = colour.a;
+        Func<float, float> getAlpha = LinearValue.getFunc(currentAlpha, goalAlpha / 255f, frames);
+
+        for (int i = 1; i <= frames; i++) {
+            float alpha = getAlpha(i);
+            colour.a = alpha;
+            image.color = colour;
             yield return null;
         }
+
+        colour.a = goalAlpha / 255f;
+        image.color = colour;
     }
     private IEnumerator fadeOut() {
-        float slope = -storedMaxAlpha / InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION;
+        float currentAlpha = image.color.a * 255f;
+        float slope = -currentAlpha / InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION;
         for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION; i++) {
-            float alpha = (storedMaxAlpha + slope * i) / 255f;
+            float alpha = (currentAlpha + slope * i) / 255f;
             image.color = new Color(0f, 0f, 0f, alpha);
             yield return null;
         }
     }
+    #endregion
 }

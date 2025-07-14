@@ -19,7 +19,7 @@ internal abstract class Space : ScriptableObject, SpaceInfo {
 
 
     #region internal
-    internal void setupSpace(GameStateInfo gameInfo, BankInfo bankInfo) {
+    internal virtual void setupSpace(GameStateInfo gameInfo, BankInfo bankInfo) {
         this.gameInfo = gameInfo;
         playersVisiting = new List<Player>();
         if (this is PropertySpace propertySpace) {

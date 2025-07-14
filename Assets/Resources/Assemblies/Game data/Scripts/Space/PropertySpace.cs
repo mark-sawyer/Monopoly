@@ -8,6 +8,10 @@ internal class PropertySpace : Space, PropertySpaceInfo {
 
     #region internal
     internal Property Property => property;
+    internal override void setupSpace(GameStateInfo gameInfo, BankInfo bankInfo) {
+        base.setupSpace(gameInfo, bankInfo);
+        property.unmortgage();
+    }
     #endregion
 
 

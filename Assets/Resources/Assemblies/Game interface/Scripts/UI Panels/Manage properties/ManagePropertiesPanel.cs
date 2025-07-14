@@ -40,15 +40,15 @@ public class ManagePropertiesPanel : MonoBehaviour {
     [SerializeField] private RectTransform tokenIconContainerRT;
     [SerializeField] private Transform propertSectionsTransform;
     [SerializeField] private Button backButton;
-    #endregion
-    #region External references
-    [SerializeField] private ScreenCover screenCover;
+    [SerializeField] private MoneyAdjuster moneyAdjuster;
     #endregion
     #region Private attributes
     private PlayerInfo selectedPlayer;
     private float offScreenY;
     private float onScreenY;
     private EstateSectionGetter estateSectionGetter;
+    private UIEventHub uiEvents;
+    private ManagePropertiesEventHub managePropertiesEvents;
     #endregion
     #region Numeric constants
     private const float VERTICAL_PROPORTION = 800f / 1080f;
@@ -72,6 +72,9 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
+        uiEvents = UIEventHub.Instance;
+        managePropertiesEvents = ManagePropertiesEventHub.Instance;
+
         float canvasHeight = ((RectTransform)transform.parent).rect.height;
         float thisHeight = rt.rect.height;
         float scale = VERTICAL_PROPORTION * canvasHeight / thisHeight;
@@ -80,10 +83,9 @@ public class ManagePropertiesPanel : MonoBehaviour {
         onScreenY = -canvasHeight * ((1f + VERTICAL_PROPORTION) / 2f);
         rt.anchoredPosition = new Vector3(0f, offScreenY, 0f);
         estateSectionGetter = new EstateSectionGetter(propertSectionsTransform);
-        ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(drop);
-        ManagePropertiesEventHub.Instance.sub_BackButtonPressed(raise);
-        UIEventHub.Instance.sub_EstateAddedBuilding(updateEstateVisual);
-        UIEventHub.Instance.sub_EstateRemovedBuilding(updateEstateVisual);
+        managePropertiesEvents.sub_ManagePropertiesOpened(drop);
+        managePropertiesEvents.sub_BackButtonPressed(raise);
+        managePropertiesEvents.sub_TokenSelectedInManageProperties(adjustMoneyVisualQuietly);
     }
     #endregion
 
@@ -112,6 +114,12 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
 
     #region private
+    private void adjustMoneyVisual(PlayerInfo playerInfo) {
+        moneyAdjuster.adjustMoney(playerInfo);
+    }
+    private void adjustMoneyVisualQuietly(PlayerInfo playerInfo) {
+        moneyAdjuster.adjustMoneyQuietly(playerInfo);
+    }
     private void drop() {
         int dropFrames = InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_DROP;
         IEnumerator dropCoroutine() {
@@ -142,9 +150,12 @@ public class ManagePropertiesPanel : MonoBehaviour {
         }
 
         setIcons();
-        screenCover.startFadeIn(255f);
+        adjustMoneyVisualQuietly(GameState.game.TurnPlayer);
+        uiEvents.call_FadeScreenCoverIn(255f);
         StartCoroutine(dropCoroutine());
-        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(GameState.game.TurnPlayer);
+        managePropertiesEvents.call_ManagePropertiesVisualRefresh(GameState.game.TurnPlayer);
+        uiEvents.sub_MoneyAdjustment(adjustMoneyVisual);
+        uiEvents.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
     }
     private void raise() {
         int raiseFrames = InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_DROP;
@@ -158,12 +169,10 @@ public class ManagePropertiesPanel : MonoBehaviour {
             rt.anchoredPosition = new Vector2(0f, offScreenY);
         }
 
-        screenCover.startFadeOut();
+        uiEvents.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
+        uiEvents.unsub_MoneyAdjustment(adjustMoneyVisual);
+        uiEvents.call_FadeScreenCoverOut();
         StartCoroutine(raiseCoroutine());
-    }
-    private void updateEstateVisual(EstateInfo estateInfo) {
-        EstateSection estateSection = estateSectionGetter.exe(estateInfo);
-        estateSection.updateBuildingIcons();
     }
     #endregion
 }

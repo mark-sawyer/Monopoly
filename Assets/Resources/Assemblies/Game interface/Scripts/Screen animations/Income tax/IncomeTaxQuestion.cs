@@ -48,7 +48,7 @@ public class IncomeTaxQuestion : ScreenAnimation<PlayerInfo> {
 
     #region private
     private void completeQuestion(int moneyLost) {
-        DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.Bank, moneyLost);
+        DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.BankCreditor, moneyLost);
         ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation();
     }
     #endregion

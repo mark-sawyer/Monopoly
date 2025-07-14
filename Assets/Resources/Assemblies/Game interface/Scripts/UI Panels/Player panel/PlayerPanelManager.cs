@@ -7,6 +7,8 @@ public class PlayerPanelManager : MonoBehaviour {
     [SerializeField] private GameObject playerPanelPrefab;
     #endregion
     private const float GAP = 3;
+    UIEventHub uiEvents;
+    ManagePropertiesEventHub managePropertiesEvents;
 
 
 
@@ -58,14 +60,21 @@ public class PlayerPanelManager : MonoBehaviour {
         }
     }
     private void subscribeToEvents() {
-        UIEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisual);
-        UIEventHub.Instance.sub_PlayerPropertyAdjustment(updatePropertyIcons);
-        UIEventHub.Instance.sub_NextPlayerTurn(updateTurnPlayerHighlight);
-        UIEventHub.Instance.sub_PlayerGetsGOOJFCard(updateGOOJFCardIcons);
-        UIEventHub.Instance.sub_UseGOOJFCardButtonClicked(
+        uiEvents = UIEventHub.Instance;
+        managePropertiesEvents = ManagePropertiesEventHub.Instance;
+
+        uiEvents.sub_MoneyAdjustment(adjustMoneyVisual);
+        uiEvents.sub_MoneyBetweenPlayers(adjustMoneyVisuals);
+        uiEvents.sub_PlayerPropertyAdjustment(updatePropertyIcons);
+        uiEvents.sub_NextPlayerTurn(updateTurnPlayerHighlight);
+        uiEvents.sub_PlayerGetsGOOJFCard(updateGOOJFCardIcons);
+        uiEvents.sub_UseGOOJFCardButtonClicked(
             (CardType cardType) => updateGOOJFCardIcons(GameState.game.TurnPlayer, cardType)
         );
-        ManagePropertiesEventHub.Instance.sub_UpdateIconsAfterManagePropertiesClosed(checkForUpdatesAfterBackButtonPushed);
+
+        managePropertiesEvents.sub_ManagePropertiesOpened(() => changeMoneyAdjustListening(true));
+        managePropertiesEvents.sub_BackButtonPressed(() => changeMoneyAdjustListening(false));
+        managePropertiesEvents.sub_UpdateIconsAfterManagePropertiesClosed(checkForUpdatesAfterBackButtonPushed);
     }
     #endregion
 
@@ -76,6 +85,15 @@ public class PlayerPanelManager : MonoBehaviour {
         int playerIndex = GameState.game.getPlayerIndex(playerInfo);
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
         playerPanel.adjustMoney(playerInfo);
+    }
+    private void adjustMoneyVisuals(PlayerInfo playerOne, PlayerInfo playerTwo) {
+        adjustMoneyVisual(playerOne);
+        adjustMoneyVisual(playerTwo);
+    }
+    private void adjustMoneyVisualQuietly(PlayerInfo playerInfo) {
+        int playerIndex = GameState.game.getPlayerIndex(playerInfo);
+        PlayerPanel playerPanel = getPlayerPanel(playerIndex);
+        playerPanel.adjustMoneyQuietly(playerInfo);
     }
     private void updatePropertyIcons(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         int playerIndex = GameState.game.getPlayerIndex(playerInfo);
@@ -107,6 +125,16 @@ public class PlayerPanelManager : MonoBehaviour {
 
         StartCoroutine(updateIconsPostManagePropertiesClosed(iconsToUpdate));
     }
+    private void changeMoneyAdjustListening(bool quietly) {
+        if (quietly) {
+            uiEvents.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
+            uiEvents.unsub_MoneyAdjustment(adjustMoneyVisual);
+        }
+        else {
+            uiEvents.sub_MoneyAdjustment(adjustMoneyVisual);
+            uiEvents.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
+        }
+    }
     #endregion
 
 
@@ -117,11 +145,12 @@ public class PlayerPanelManager : MonoBehaviour {
     }
     private IEnumerator updateIconsPostManagePropertiesClosed(List<PropertyGroupIcon> iconsToUpdate) {
         foreach (PropertyGroupIcon propertyGroupIcon in iconsToUpdate) {
-            StartCoroutine(propertyGroupIcon.pulseAndUpdate());
+            yield return StartCoroutine(propertyGroupIcon.pulseAndUpdate());
             propertyGroupIcon.setNewState();
-            for (int i = 0; i < 22; i++) yield return null;
         }
-        ManagePropertiesEventHub.Instance.call_IconsUpdatedAfterManagePropertiesClosed();
+
+        for (int i = 0; i < 30; i++) yield return null;
+        ManagePropertiesEventHub.Instance.call_UpdateBoardAfterManagePropertiesClosed();
     }
     #endregion
 }

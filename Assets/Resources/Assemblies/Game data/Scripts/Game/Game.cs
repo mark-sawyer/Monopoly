@@ -57,7 +57,8 @@ internal class Game : GameStateInfo, GamePlayer {
     public int getPlayerIndex(PlayerInfo player) {
         return Array.FindIndex(players, x => x == player);
     }
-    public Creditor Bank => bank;
+    public Creditor BankCreditor => bank;
+    public BankInfo BankInfo => bank;
     public CardInfo DrawnCard => drawnCard;
     #endregion
 
@@ -95,8 +96,19 @@ internal class Game : GameStateInfo, GamePlayer {
     public void removeBuilding(EstateInfo estateInfo) {
         Estate estate = (Estate)estateInfo;
         Building removedBuilding = estate.removeBuilding();
-        if (removedBuilding is Hotel hotel) bank.returnHotel(hotel);
+        if (removedBuilding is Hotel hotel) {
+            bank.returnHotel(hotel);
+            for (int i = 0; i < 4; i++) estate.addBuilding(bank.getHouse());
+        }
         else if (removedBuilding is House house) bank.returnHouse(house);
+    }
+    public void mortgageProperty(PropertyInfo propertyInfo) {
+        Property property = (Property)propertyInfo;
+        property.mortgage();
+    }
+    public void unmortgageProperty(PropertyInfo propertyInfo) {
+        Property property = (Property)propertyInfo;
+        property.unmortgage();
     }
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
         Player debtorPlayer = (Player)debtor;

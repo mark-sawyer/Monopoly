@@ -7,6 +7,8 @@ public interface GamePlayer {
     public void obtainProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo);
     public void addBuilding(EstateInfo estateInfo);
     public void removeBuilding(EstateInfo estateInfo);
+    public void mortgageProperty(PropertyInfo propertyInfo);
+    public void unmortgageProperty(PropertyInfo propertyInfo);
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed);
     public void removeDebt(PlayerInfo debtor);
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference);

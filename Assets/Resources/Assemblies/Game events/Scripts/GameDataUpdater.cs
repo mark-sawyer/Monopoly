@@ -28,6 +28,8 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_UseGOOJFCardButtonClicked(useGOOJFCard);
         dataHub.sub_EstateAddedBuilding(addBuildingToEstate);
         dataHub.sub_EstateRemovedBuilding(removeBuildingFromEstate);
+        dataHub.sub_PropertyMortgaged(mortgageProperty);
+        dataHub.sub_PropertyUnmortgaged(unmortgageProperty);
     }
     #endregion
 
@@ -101,6 +103,12 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void removeBuildingFromEstate(EstateInfo estateInfo) {
         gamePlayer.removeBuilding(estateInfo);
+    }
+    private void mortgageProperty(PropertyInfo propertyInfo) {
+        gamePlayer.mortgageProperty(propertyInfo);
+    }
+    private void unmortgageProperty(PropertyInfo propertyInfo) {
+        gamePlayer.unmortgageProperty(propertyInfo);
     }
     #endregion
 }

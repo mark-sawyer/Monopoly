@@ -24,15 +24,18 @@ public class SellOrMortgageBuildingButton : MonoBehaviour {
         void sellClicked(PlayerInfo selectedPlayer) {
             DataEventHub.Instance.call_EstateRemovedBuilding(estateInfo);
             DataEventHub.Instance.call_MoneyAdjustment(selectedPlayer, estateInfo.BuildingSellCost);
-            ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer);
         }
-        void mortgageClicked(PlayerInfo selectedPlayer) { }
+        void mortgageClicked(PlayerInfo selectedPlayer) {
+            DataEventHub.Instance.call_PropertyMortgaged(estateInfo);
+            DataEventHub.Instance.call_MoneyAdjustment(selectedPlayer, estateInfo.MortgageValue);
+        }
 
 
 
         PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
         if (buttonMode == ButtonMode.SELL) sellClicked(selectedPlayer);
         else mortgageClicked(selectedPlayer);
+        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer);
     }
     public void adjustToAppropriateOption() {
         if (estateInfo.BuildingCount > 0) {
@@ -42,7 +45,8 @@ public class SellOrMortgageBuildingButton : MonoBehaviour {
         else {
             toggleMode(ButtonMode.MORTGAGE);
             bool noBuildingsInGroup = !estateInfo.EstateGroupInfo.BuildingExists;
-            button.interactable = noBuildingsInGroup;
+            bool propertyNotMortgaged = !estateInfo.IsMortgaged;
+            button.interactable = noBuildingsInGroup && propertyNotMortgaged;
         }
     }
     #endregion

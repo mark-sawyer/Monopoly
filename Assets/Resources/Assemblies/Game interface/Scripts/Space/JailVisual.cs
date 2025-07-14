@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class JailVisual : SpaceVisual {
     [SerializeField] private TokenParameters jailParameters;

@@ -33,7 +33,7 @@ internal class Estate : Property, EstateInfo {
             // This estate does not have a hotel.
             bool groupHasHotel = estateGroup.HotelExists;
             bool bankHasHotel = bankInfo.HotelsRemaining > 0;
-            if (groupHasHotel && bankHasHotel) return true;
+            if (groupHasHotel) return bankHasHotel;
 
             // No estate in the group has a hotel.
             int minBuildingCount = estateGroup.MinBuildingCount;
@@ -42,8 +42,7 @@ internal class Estate : Property, EstateInfo {
 
             // The estate could build a house or hotel, if they are available.
             bool housesComplete = minBuildingCount == 4;
-            if (housesComplete && bankHasHotel) return true;
-            if (housesComplete && !bankHasHotel) return false;
+            if (housesComplete) return bankHasHotel;
 
             // The estate can build a house, if available.
             bool bankHasHouse = bankInfo.HousesRemaining > 0;
@@ -56,6 +55,15 @@ internal class Estate : Property, EstateInfo {
             if (buildingCount == 0) return false;
 
             // There is a building on the estate.
+            bool isHotel = buildings.Peek() is Hotel;
+            int housesLeft = bankInfo.HousesRemaining;
+            if (isHotel) return housesLeft >= 4;
+
+            // It's not a hotel.
+            bool hotelExists = estateGroup.HotelExists;
+            if (hotelExists) return false;
+
+            // There are no hotels in the group.
             int maxBuildingCount = estateGroup.MaxBuildingCount;
             return buildingCount == maxBuildingCount;
         }
@@ -101,7 +109,7 @@ internal class Estate : Property, EstateInfo {
     #region private
     private bool ownerHasMonopoly() {
         bool hasMonopoly = true;
-        for (int i = 0; i < estateGroup.NumberOfEstatesInGroup; i++) {
+        for (int i = 0; i < estateGroup.NumberOfPropertiesInGroup; i++) {
             EstateInfo estate = estateGroup.getEstateInfo(i);
             if (estate.Owner != Owner) {
                 hasMonopoly = false;

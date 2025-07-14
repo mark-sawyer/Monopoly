@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 1358572232198711970}
   - component: {fileID: 3414403363102672025}
   - component: {fileID: 8344638889019240414}
+  - component: {fileID: 7728822822248985815}
   m_Layer: 5
   m_Name: left_button
   m_TagString: Untagged
@@ -167,21 +168,22 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: cf223574c9472a74e84d4f551f9f9f18, type: 2}
-        m_TargetAssemblyTypeName: SoundEvent, GameInterface
-        m_MethodName: play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   additionalGraphics:
   - {fileID: 3576531852920295366}
+--- !u!114 &7728822822248985815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7642624223693011539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2dc9097f7578094eb337cd365184a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 8344638889019240414}
 --- !u!1 &8397911325383934311
 GameObject:
   m_ObjectHideFlags: 0
