@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/AuctionPropertyState")]
@@ -5,6 +7,8 @@ public class AuctionPropertyState : State {
     #region State
     public override void enterState() {
         UIEventHub.Instance.call_FadeScreenCoverIn(255f);
+        List<PlayerInfo> activePlayers = GameState.game.ActivePlayers.ToList();
+        AuctionManager.Instance.appear(activePlayers);
     }
     public override void update() {
         Debug.Log("auction");

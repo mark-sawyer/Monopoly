@@ -12,5 +12,6 @@ public static class InterfaceConstants {
     public const int FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION = 30;
     public const int FRAMES_FOR_CARD_FLIP = 60;
     public const int FRAMES_FOR_MANAGE_PROPERTIES_DROP = 20;
+    public const int FRAMES_FOR_AUCTION_DROP = 20;
     public const int FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP = 30;
 }

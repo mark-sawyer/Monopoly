@@ -6,10 +6,12 @@ internal class Panel : UIAutoUpdater, TypeSettable<Color>, TypeSettable<float> {
     [SerializeField] private RectTransform rt;
     [SerializeField] private float radius;
     [SerializeField] private Color colour;
+    #region Private attributes
     private float lastRadius;
     private Color lastColour;
     private Vector2 lastSize;
-    #region public properties
+    #endregion
+    #region Public properties
     public Color Colour {
         get { return colour; }
         set { colour = value; }
@@ -21,7 +23,7 @@ internal class Panel : UIAutoUpdater, TypeSettable<Color>, TypeSettable<float> {
         }
     }
     #endregion
-    #region protected properties
+    #region Protected properties
     protected virtual RectTransform TopLeft { get => (RectTransform)transform.GetChild(0).GetChild(0); }
     protected virtual RectTransform Top { get => (RectTransform)transform.GetChild(0).GetChild(1); }
     protected virtual RectTransform TopRight { get => (RectTransform)transform.GetChild(0).GetChild(2); }

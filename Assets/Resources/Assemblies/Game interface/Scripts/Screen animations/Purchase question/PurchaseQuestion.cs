@@ -51,8 +51,7 @@ public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
         Transform deedSpawnerTransform = deedSpawner.transform;
         Transform deedTransform = deedSpawnerTransform.GetChild(0);
         AuctionManager auctionManager = AuctionManager.Instance;
-        Transform auctionTransform = auctionManager.transform;
-        deedTransform.SetParent(auctionTransform);
+        auctionManager.takeInVisualChild(deedTransform);
         ScreenAnimationEventHub.Instance.call_RemoveScreenAnimationKeepCover();
     }
     #endregion

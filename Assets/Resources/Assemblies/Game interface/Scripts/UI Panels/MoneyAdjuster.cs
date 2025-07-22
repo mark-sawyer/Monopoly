@@ -32,9 +32,6 @@ public class MoneyAdjuster : MonoBehaviour {
     }
     public void adjustMoneyQuietly(PlayerInfo playerInfo) {
         int currentMoney = playerInfo.Money;
-        int priorMoney = int.Parse(frontText.text.Substring(1));
-        int difference = currentMoney - priorMoney;
-
         changeMoneyVisual(currentMoney);
     }
     public void setStartingMoney(int startingMoney) {
