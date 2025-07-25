@@ -163,7 +163,6 @@ public class TokenVisual : MonoBehaviour {
         #endregion
     }
     #region Editor references
-    [SerializeField] private TokenDictionary tokenDictionary;
     [SerializeField] private SpriteRenderer tokenSpriteRenderer;
     [SerializeField] private SpriteRenderer silouhetteSpriteRenderer;
     #endregion
@@ -194,6 +193,7 @@ public class TokenVisual : MonoBehaviour {
     public SpaceVisual CurrentSpace => SpaceVisualManager.Instance.getSpaceVisual(playerInfo.SpaceIndex);
     public void setup(PlayerInfo playerInfo, float scale) {
         this.playerInfo = playerInfo;
+        TokenDictionary tokenDictionary = TokenDictionary.Instance;
         tokenSprites = tokenDictionary.getSprites(playerInfo.Token);
         tokenColours = tokenDictionary.getColours(playerInfo.Colour);
         transform.localScale = new Vector3(scale, scale, scale);

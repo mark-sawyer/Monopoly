@@ -7,14 +7,12 @@ public class PercentageBar : MonoBehaviour {
     [SerializeField] private Image barImage;
     private float totalMoney;
     private float containerWidth;
-    private float barHeight;
 
 
 
     #region MonoBehaviour
     private void Start() {
         containerWidth = containerRT.rect.width;
-        barHeight = barRT.rect.height;
     }
     #endregion
 
@@ -27,7 +25,7 @@ public class PercentageBar : MonoBehaviour {
     public void adjustVisual(int currentBid) {
         float proportion = currentBid / totalMoney;
         float newWidth = containerWidth * proportion;
-        barRT.sizeDelta = new Vector2(newWidth, barHeight);
+        barRT.sizeDelta = new Vector2(newWidth, 0f);
         Color barColour = getBarColour(proportion);
         barImage.color = barColour;
     }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb26ae14c58829246a32dfd7cb857e88, type: 3}
+  m_Name: auction_event_hub
+  m_EditorClassIdentifier: 
+  bidMade: {fileID: 11400000, guid: d07e93c539a95fb42ab7013ea6bb3ae8, type: 2}
+  auctionFinished: {fileID: 11400000, guid: a66718aff0141c242955ae82fc2da919, type: 2}
+  winnerAnnounced: {fileID: 11400000, guid: 7edd6f2da14d25844b0a42e815eb9782, type: 2}

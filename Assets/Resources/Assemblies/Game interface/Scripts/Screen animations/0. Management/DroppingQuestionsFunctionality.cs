@@ -22,8 +22,8 @@ public class DroppingQuestionsFunctionality {
     }
     public IEnumerator drop() {
         Vector2 start = rt.anchoredPosition;
-        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION; i++) {
-            Vector2 newPos = start - (i * start / InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION);
+        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION; i++) {
+            Vector2 newPos = start - (i * start / InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION);
             rt.anchoredPosition = newPos;
             yield return null;
         }

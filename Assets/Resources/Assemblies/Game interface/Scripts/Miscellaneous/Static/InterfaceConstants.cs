@@ -9,7 +9,7 @@ public static class InterfaceConstants {
     public const float SCREEN_ANIMATION_COVER_ALPHA = 220f;
     public const float SCALE_FOR_MOVING_TOKEN = 3f;
     public const int FRAMES_FOR_TOKEN_GROWING = 50;
-    public const int FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION = 30;
+    public const int FRAMES_FOR_SCREEN_COVER_TRANSITION = 30;
     public const int FRAMES_FOR_CARD_FLIP = 60;
     public const int FRAMES_FOR_MANAGE_PROPERTIES_DROP = 20;
     public const int FRAMES_FOR_AUCTION_DROP = 20;

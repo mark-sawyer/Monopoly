@@ -27,10 +27,21 @@ public class TokenDictionary : ScriptableObject {
     #endregion
     private Dictionary<PlayerColour, TokenColours> coloursDict;
     private Dictionary<Token, TokenSprites> spritesDict;
+    private static TokenDictionary instance;
 
 
 
     #region public
+    public static TokenDictionary Instance {
+        get {
+            if (instance == null) {
+                instance = Resources.Load<TokenDictionary>(
+                    "ScriptableObjects/Tokens/token_dictionary"
+                );
+            }
+            return instance;
+        }
+    }
     public TokenColours getColours(PlayerColour colour) {
         if (coloursDict == null) coloursDict = initialiseColoursDict();
         return coloursDict[colour];

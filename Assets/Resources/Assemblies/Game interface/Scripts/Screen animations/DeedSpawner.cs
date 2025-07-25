@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeedSpawner : MonoBehaviour {
     #region Internal references
-    [SerializeField] private RectTransform questionSectionRT;
+    [SerializeField] private RectTransform middleSectionRT;
     #endregion
     #region External references
     [SerializeField] private GameObject estateDeed;
@@ -14,8 +14,8 @@ public class DeedSpawner : MonoBehaviour {
     #region Private attributes
     private RectTransform deedRT;
     private float canvasWidth;
-    private float questionHeight;
-    private float questionWidth;
+    private float canvasHeight;
+    private float middleWidth;
     private float goalX;
     #endregion
 
@@ -32,7 +32,7 @@ public class DeedSpawner : MonoBehaviour {
         goalX = getGoalX();
     }
     public IEnumerator moveDeed() {
-        int frames = InterfaceConstants.FRAMES_FOR_QUESTION_ON_SCREEN_TRANSITION;
+        int frames = InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION;
         RectTransform rt = (RectTransform)transform;
         Func<float, float> getXPos = LinearValue.getFunc(rt.anchoredPosition.x, goalX, frames);
         for (int i = 1; i <= frames; i++) {
@@ -55,27 +55,21 @@ public class DeedSpawner : MonoBehaviour {
         throw new System.Exception();
     }
     private void setAttributes(GameObject spawnedDeed) {
-        float getQuestionWidth(float scale) {
-            RectTransform buttonRT = (RectTransform)questionSectionRT.GetChild(2);
-            float width = buttonRT.rect.width * scale;
-            return width;
-        }
-
-        float questionScale = questionSectionRT.localScale.x;
-        canvasWidth = ((RectTransform)transform.parent).rect.width;
-        questionHeight = questionSectionRT.rect.height * questionScale;
-        questionWidth = getQuestionWidth(questionScale);
+        RectTransform canvasRT = (RectTransform)transform.parent;
+        canvasWidth = canvasRT.rect.width;
+        canvasHeight = canvasRT.rect.height;
+        middleWidth = middleSectionRT.rect.width;
         deedRT = (RectTransform)spawnedDeed.transform;
     }
     private void scaleDeed() {
         float deedHeight = deedRT.rect.height;
-        float deedScale = questionHeight / deedHeight;
+        float deedScale = 0.5f * canvasHeight / deedHeight;
         deedRT.localScale = new Vector3(deedScale, deedScale, deedScale);
     }
     private float getGoalX() {
         float deedScale = deedRT.localScale.x;
         float deedWidth = deedRT.rect.width * deedScale;
-        float sideSpace = (canvasWidth - questionWidth) / 2;
+        float sideSpace = (canvasWidth - middleWidth) / 2;
         float spaceBetweenQuestionAndDeed = (sideSpace - deedWidth) / 2;
         return -deedWidth - spaceBetweenQuestionAndDeed;
     }

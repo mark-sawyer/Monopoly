@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 [ExecuteAlways]
 public class TokenIcon : MonoBehaviour {
-    [SerializeField] private TokenDictionary tokenDictionary;
     [SerializeField] private Image silouhetteImage;
     [SerializeField] private Image tokenImage;
     [SerializeField] private Image outerCircleImage;
@@ -18,6 +17,7 @@ public class TokenIcon : MonoBehaviour {
     public void setup(Token token, PlayerColour colour) {
         this.token = token;
         this.colour = colour;
+        TokenDictionary tokenDictionary = TokenDictionary.Instance;
         TokenSprites tokenSprites = tokenDictionary.getSprites(token);
         TokenColours tokenColours = tokenDictionary.getColours(colour);
 

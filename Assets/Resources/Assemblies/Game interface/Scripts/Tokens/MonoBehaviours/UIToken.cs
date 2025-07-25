@@ -4,7 +4,6 @@ using UnityEngine.UI;
 [ExecuteAlways]
 public class UIToken : Ghostable {
     [SerializeField] private Token token;
-    [SerializeField] private TokenDictionary tokenDictionary;
     [SerializeField] private Image tokenImage;
     [SerializeField] private Image silouhetteImage;
 
@@ -17,6 +16,7 @@ public class UIToken : Ghostable {
 
     public Token Token => token;
     public void setup() {
+        TokenDictionary tokenDictionary = TokenDictionary.Instance;
         tokenImage.sprite = tokenDictionary.getSprites(token).ForegroundSprite;
         silouhetteImage.sprite = tokenDictionary.getSprites(token).SilouhetteSprite;
         float width = tokenImage.sprite.rect.width;

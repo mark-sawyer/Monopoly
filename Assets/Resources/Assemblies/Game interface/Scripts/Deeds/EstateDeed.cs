@@ -32,7 +32,7 @@ public class EstateDeed : PropertyDeed {
         colourBandImage.color = estateGroupColours.EstateColour.Colour;
     }
     private void setTexts() {
-        propertyNameText.text = estateInfo.Name.ToString().ToUpper();
+        propertyNameText.text = estateInfo.Name.ToUpper();
         costTexts[0].text = "$" + estateInfo.getSpecificRent(0).ToString();
         costTexts[1].text = "$" + (2 * estateInfo.getSpecificRent(0)).ToString();
         costTexts[2].text = "$" + estateInfo.getSpecificRent(1).ToString();

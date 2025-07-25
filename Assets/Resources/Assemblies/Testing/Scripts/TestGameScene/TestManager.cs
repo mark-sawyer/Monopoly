@@ -6,15 +6,21 @@ public class TestManager : MonoBehaviour {
 
 
     private void Awake() {
-        int playerNum = 8;
+        int playerNum = 5;
         GameFactory gameFactory = new GameFactory();
-        gameFactory.makeTestGame(playerNum, 15000);
+        gameFactory.makeTestGame(playerNum, 50);
         GameState.game = gameFactory.GameStateInfo;
         gameDataUpdater.setup(gameFactory.GamePlayer);
     }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
+        }
+        else if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
+            DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, 50);
+        }
+        else if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
+            DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, -50);
         }
     }
 }

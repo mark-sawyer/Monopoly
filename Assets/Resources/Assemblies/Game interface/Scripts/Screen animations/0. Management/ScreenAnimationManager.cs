@@ -11,6 +11,7 @@ public class ScreenAnimationManager : MonoBehaviour {
     [SerializeField] private GameObject[] communityChestPrefabs;
     [SerializeField] private GameObject debtorCreditor;
     [SerializeField] private GameObject luxuryTax;
+    [SerializeField] private GameObject unaffordableProperty;
     #endregion
     #region Private attributes
     private GameObject screenAnimationInstance;
@@ -42,6 +43,7 @@ public class ScreenAnimationManager : MonoBehaviour {
         });
         events.sub_PayingRentAnimationBegins((DebtInfo debtInfo) => startScreenAnimation(debtorCreditor, debtInfo));
         events.sub_LuxuryTaxAnimationBegins(() => startScreenAnimation(luxuryTax));
+        events.sub_UnaffordableProperty((PropertyInfo propertyInfo) => startScreenAnimation(unaffordableProperty, propertyInfo));
     }
     #endregion
 

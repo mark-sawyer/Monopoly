@@ -11,7 +11,7 @@ public static class LinearValue {
     public static Func<float, float> getFunc(float yStart, float yEnd, float length) {
         return (float x) => exe(x, yStart, yEnd, length);
     }
-    public static Func<float, float> getFunc(float x, float xStart, float xEnd, float yStart, float yEnd) {
+    public static Func<float, float> getFunc(float xStart, float xEnd, float yStart, float yEnd) {
         return (float x) => exe(x, xStart, xEnd, yStart, yEnd);
     }
 }
