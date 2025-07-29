@@ -14,6 +14,7 @@ public class ScreenAnimationEventHub : ScriptableObject {
     [SerializeField] private PropertyEvent unaffordableProperty;
     [SerializeField] private GameEvent removeScreenAnimation;
     [SerializeField] private GameEvent removeScreenAnimationKeepCover;
+    [SerializeField] private GameEvent tradeOpened;
 
 
 
@@ -60,6 +61,7 @@ public class ScreenAnimationEventHub : ScriptableObject {
     public void sub_UnaffordableProperty(Action<PropertyInfo> a) => unaffordableProperty.Listeners += a;
     public void sub_RemoveScreenAnimation(Action a) => removeScreenAnimation.Listeners += a;
     public void sub_RemoveScreenAnimationKeepCover(Action a) => removeScreenAnimationKeepCover.Listeners += a;
+    public void sub_TradeOpened(Action a) => tradeOpened.Listeners += a;
     #endregion
 
 
@@ -67,5 +69,6 @@ public class ScreenAnimationEventHub : ScriptableObject {
     #region Unubscribing
     public void unsub_RemoveScreenAnimation(Action a) => removeScreenAnimation.Listeners -= a;
     public void unsub_RemoveScreenAnimationKeepCover(Action a) => removeScreenAnimationKeepCover.Listeners -= a;
+    public void unsub_TradeOpened(Action a) => tradeOpened.Listeners -= a;
     #endregion
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class PreRollState : State {
     private bool rollAnimationOver;
     private bool managePropertiesClicked;
+    private bool tradeClicked;
 
 
 
@@ -11,9 +12,11 @@ public class PreRollState : State {
     public override void enterState() {
         rollAnimationOver = false;
         managePropertiesClicked = false;
+        tradeClicked = true;
 
         UIEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(managePropertiesListener);
+        ScreenAnimationEventHub.Instance.sub_TradeOpened(tradeListener);
 
         DataEventHub.Instance.call_TurnBegin(false);
     }
@@ -24,6 +27,7 @@ public class PreRollState : State {
     public override void exitState() {
         UIEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.unsub_ManagePropertiesOpened(managePropertiesListener);
+        ScreenAnimationEventHub.Instance.unsub_TradeOpened(tradeListener);
     }
     public override State getNextState() {
         if (rollAnimationOver) {
@@ -31,6 +35,7 @@ public class PreRollState : State {
             else return allStates.getState<MoveTokenState>();
         }
         if (managePropertiesClicked) return allStates.getState<ManagePropertiesState>();
+        if (tradeClicked) return allStates.getState<TradeState>();
         throw new System.Exception();
     }
     #endregion
@@ -52,6 +57,9 @@ public class PreRollState : State {
     }
     private void managePropertiesListener() {
         managePropertiesClicked = true;
+    }
+    private void tradeListener() {
+        tradeClicked = true;
     }
     #endregion
 }

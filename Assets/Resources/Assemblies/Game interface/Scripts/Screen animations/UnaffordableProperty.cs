@@ -24,8 +24,6 @@ public class UnaffordableProperty : ScreenAnimation<PropertyInfo> {
 
     private IEnumerator shakeText() {
         int frames = InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION;
-        //Func<float, float> firstHalf = LinearValue.getFunc(5f, -5f, frames / 2f);
-        //Func<float, float> secondHalf = LinearValue.getFunc(frames / 2f, frames, -5f, 5f);
         Func<float, float> firstHalf = LinearValue.getFunc(5f, -5f, frames / 4f);
         Func<float, float> secondHalf = LinearValue.getFunc(frames / 4f, frames / 2f, -5f, 5f);
         float fullFunc(float x) {

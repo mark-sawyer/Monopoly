@@ -9,16 +9,8 @@ public class ChoosableToken : DraggableGhostSource {
 
 
 
-    #region IPointerDownHandler
-    public override void OnPointerDown(PointerEventData eventData) {
-        base.OnPointerDown(eventData);
-    }
-    #endregion
-
-
-
     #region DraggableGhost
-    public override Image[] imagesToBecomeTransparent(GameObject newGhost) {
+    public Image[] imagesToBecomeTransparent(GameObject newGhost) {
         return new Image[2] {
             newGhost.GetComponent<Image>(),
             newGhost.transform.GetChild(0).GetComponent<Image>()

@@ -31,7 +31,6 @@ public class ManagePropertiesEventHub : ScriptableObject {
 
     #region Invoking
     public void call_BackButtonPressed() => backButtonPressed.invoke();
-    public void call_ManagePropertiesOpened() => managePropertiesOpened.invoke();
     public void call_ManagePropertiesVisualRefresh(PlayerInfo playerInfo) => managePropertiesVisualRefresh.invoke(playerInfo);
     public void call_TokenSelectedInManageProperties(PlayerInfo playerInfo) => tokenSelectedInManageProperties.invoke(playerInfo);
     public void call_UpdateIconsAfterManagePropertiesClosed() => updateIconsAfterManagePropertiesClosed.invoke();

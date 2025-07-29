@@ -6,7 +6,6 @@ public class ManagePropertiesState : State {
 
 
 
-
     #region State
     public override void enterState() {
         managePropertiesPanelRaised = false;
@@ -22,6 +21,8 @@ public class ManagePropertiesState : State {
         return allStates.getState<PostManagePropertiesClosedState>();
     }
     #endregion
+
+
 
     #region private
     private void backButtonListening() {

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [ExecuteAlways]
-public class UIToken : Ghostable {
+public class UIToken : DraggableGhost {
     [SerializeField] private Token token;
     [SerializeField] private Image tokenImage;
     [SerializeField] private Image silouhetteImage;

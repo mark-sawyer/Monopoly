@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TokenReceiver : MonoBehaviour, GhostReceiver {
+public class TokenReceiver : GhostReceiver {
     /*
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private Button upButton;
@@ -14,7 +14,7 @@ public class TokenReceiver : MonoBehaviour, GhostReceiver {
 
     #region public
     */
-    public void receiveGhost(Ghostable ghost) {
+    public override void receiveGhost(DraggableGhost ghost) {
         //UIToken uiToken = (UIToken)ghost;
         //token = uiToken.Token;
         //turnOnButtons();

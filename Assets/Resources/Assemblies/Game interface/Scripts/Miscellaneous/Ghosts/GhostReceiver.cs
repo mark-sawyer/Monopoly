@@ -1,4 +1,5 @@
+using UnityEngine;
 
-public interface GhostReceiver {
-    public void receiveGhost(Ghostable ghost);
+public abstract class GhostReceiver : MonoBehaviour {
+    public abstract void receiveGhost(DraggableGhost ghost);
 }
