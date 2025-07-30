@@ -17,6 +17,8 @@ public class UIEventHub : ScriptableObject {
     [SerializeField] private GameEvent buttonUp;
     [SerializeField] private FloatEvent fadeScreenCoverIn;
     [SerializeField] private GameEvent fadeScreenCoverOut;
+    [SerializeField] private GameEvent tradingPlayerPlaced;
+    [SerializeField] private GameEvent tradingPlayersConfirmed;
     #endregion
     #region In pipeline
     [SerializeField] private GameEvent rollButtonClicked;
@@ -78,6 +80,7 @@ public class UIEventHub : ScriptableObject {
     public void call_ButtonUp() => buttonUp.invoke();
     public void call_FadeScreenCoverIn(float alpha) => fadeScreenCoverIn.invoke(alpha);
     public void call_FadeScreenCoverOut() => fadeScreenCoverOut.invoke();
+    public void call_TradingPlayerPlaced() => tradingPlayerPlaced.invoke();
     #endregion
 
 
@@ -96,6 +99,8 @@ public class UIEventHub : ScriptableObject {
     public void sub_ButtonUp(Action a) => buttonUp.Listeners += a;
     public void sub_FadeScreenCoverIn(Action<float> a) => fadeScreenCoverIn.Listeners += a;
     public void sub_FadeScreenCoverOut(Action a) => fadeScreenCoverOut.Listeners += a;
+    public void sub_TradingPlayerPlaced(Action a) => tradingPlayerPlaced.Listeners += a;
+    public void sub_TradingPlayersConfirmed(Action a) => tradingPlayersConfirmed.Listeners += a;
 
     /* In pipeline */
     public void sub_RollButtonClicked(Action a) => rollButtonClicked.Listeners += a;
