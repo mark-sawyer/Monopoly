@@ -46,6 +46,7 @@ public class ScreenAnimationEventHub : ScriptableObject {
     public void call_UnaffordableProperty(PropertyInfo propertyInfo) => unaffordableProperty.invoke(propertyInfo);
     public void call_RemoveScreenAnimation() => removeScreenAnimation.invoke();
     public void call_RemoveScreenAnimationKeepCover() => removeScreenAnimationKeepCover.invoke();
+    public void call_TradeOpened() => tradeOpened.invoke();
     #endregion
 
 

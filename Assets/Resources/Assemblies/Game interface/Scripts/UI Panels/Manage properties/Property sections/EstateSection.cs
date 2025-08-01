@@ -46,7 +46,7 @@ public class EstateSection : PropertySection {
             panelRecolourer.recolour(highlightColour);
         }
         void setTitleStripImageColour() {
-            Color titleStripColour = estateGroupColours.EstateColour.Colour;
+            Color titleStripColour = estateGroupColours.MainColour.Colour;
             titleStripImage.color = titleStripColour;
         }
         void setBackgroundImageColour() {

@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 public interface PlayerInfo : Creditor {
     public int SpaceIndex { get; }
     public SpaceInfo SpaceInfo { get; }
@@ -14,6 +16,7 @@ public interface PlayerInfo : Creditor {
     public bool HasGOOJFCard { get; }
     public int HousesOwned { get; }
     public int HotelsOwned { get; }
+    public IEnumerable<TradableInfo> TradableInfos { get; }
     public bool hasGOOJFCardOfType(CardType cardType);
     public bool ownsProperty(PropertyInfo propertyInfo);
 }

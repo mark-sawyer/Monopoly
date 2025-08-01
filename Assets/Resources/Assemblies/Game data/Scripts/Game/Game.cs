@@ -9,9 +9,9 @@ internal class Game : GameStateInfo, GamePlayer {
     private Space[] spaces;
     private Player[] players;
     private Player turnPlayer;
-    private Queue<CardInstance> communityChestCards;
-    private Queue<CardInstance> chanceCards;
-    private CardInstance drawnCard;
+    private Queue<Card> communityChestCards;
+    private Queue<Card> chanceCards;
+    private Card drawnCard;
 
 
 
@@ -20,8 +20,8 @@ internal class Game : GameStateInfo, GamePlayer {
         int playerNum,
         int startingMoney,
         DiceInterface dice,
-        Queue<CardInstance> communityChestCards,
-        Queue<CardInstance> chanceCards
+        Queue<Card> communityChestCards,
+        Queue<Card> chanceCards
     ) {
         this.dice = dice;
         this.communityChestCards = communityChestCards;
@@ -147,7 +147,7 @@ internal class Game : GameStateInfo, GamePlayer {
         drawnCard = null;
     }
     public void playerGetsGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
-        CardInstance getOutOfJailFreeCard = (CardInstance)cardInfo;
+        Card getOutOfJailFreeCard = (Card)cardInfo;
         if (getOutOfJailFreeCard.CardMechanic is not GetOutOfJailFreeCard) {
             throw new System.Exception("Not a GetOutOfJailFreeCard");
         }
@@ -156,7 +156,7 @@ internal class Game : GameStateInfo, GamePlayer {
     }
     public void playerUsesGOOJFCard(CardType cardType) {
         turnPlayer.exitJail();
-        CardInstance getOutOfJailFreeCard = turnPlayer.handBackGOOJFCard(cardType);
+        Card getOutOfJailFreeCard = turnPlayer.handBackGOOJFCard(cardType);
         if (cardType == CardType.CHANCE) chanceCards.Enqueue(getOutOfJailFreeCard);
         else communityChestCards.Enqueue(getOutOfJailFreeCard);
     }

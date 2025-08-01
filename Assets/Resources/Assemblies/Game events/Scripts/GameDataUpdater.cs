@@ -23,7 +23,7 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_MoneyBetweenPlayers(tradeMoney);
         dataHub.sub_NextPlayerTurn(updateTurnPlayer);
         dataHub.sub_PlayerGetsGOOJFCard(givePlayerGOOJFCard);
-        dataHub.sub_TurnBegin(incrementJailTurn);
+        dataHub.sub_IncrementJailTurn(incrementJailTurn);
         dataHub.sub_LeaveJail(removeTurnPlayerFromJail);
         dataHub.sub_UseGOOJFCardButtonClicked(useGOOJFCard);
         dataHub.sub_EstateAddedBuilding(addBuildingToEstate);
@@ -84,10 +84,8 @@ public class GameDataUpdater : MonoBehaviour {
     private void givePlayerGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
         gamePlayer.playerGetsGOOJFCard(playerInfo, cardInfo);
     }
-    private void incrementJailTurn(bool turnPlayerInJail) {
-        if (turnPlayerInJail) {
-            gamePlayer.incrementJailTurn();
-        }
+    private void incrementJailTurn() {
+        gamePlayer.incrementJailTurn();
     }
     private void removeTurnPlayerFromJail() {
         gamePlayer.removeTurnPlayerFromJail();

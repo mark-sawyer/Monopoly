@@ -14,7 +14,7 @@ public class AuctionPropertyState : State {
         auctionOver = false;
         AuctionEventHub.Instance.sub_WinnerAnnounced(auctionOverListening);
 
-        UIEventHub.Instance.call_FadeScreenCoverIn(255f);
+        UIEventHub.Instance.call_FadeScreenCoverIn(1f);
         List<PlayerInfo> activePlayers = GameState.game.ActivePlayers.ToList();
         AuctionManager.Instance.appear(activePlayers);
     }

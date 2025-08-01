@@ -69,6 +69,16 @@ internal class Estate : Property, EstateInfo {
         }
     }
     public bool HasHotel => buildings.Count == 1 && buildings.Peek() is Hotel;
+    public override int Rent {
+        get {
+            if (Owner == null) throw new System.Exception("Property is unowned.");
+
+            if (buildings.Count == 0 && ownerHasMonopoly()) return 2 * rent[0];
+            if (buildings.Count == 0) return rent[0];
+            if (buildings.Peek() is Hotel) return rent[5];
+            return rent[buildings.Count];
+        }
+    }
     public int getSpecificRent(int index) {
         return rent[index];
     }
@@ -77,16 +87,12 @@ internal class Estate : Property, EstateInfo {
 
 
     #region Property
-    internal override int getRent() {
-        if (Owner == null) throw new System.Exception("Property is unowned.");
-
-        if (buildings.Count == 0 && ownerHasMonopoly()) return 2 * rent[0];
-        if (buildings.Count == 0) return rent[0];
-        if (buildings.Peek() is Hotel) return rent[5];
-        return rent[buildings.Count];        
-    }
-    internal override int getWorth() {
-        return Cost + (buildingCost * buildings.Count);
+    internal override int Worth => Cost + (buildingCost * buildings.Count);
+    internal override bool IsCurrentlyTradable {
+        get {
+            bool noBuildings = !estateGroup.BuildingExists;
+            return noBuildings;
+        }
     }
     #endregion
 

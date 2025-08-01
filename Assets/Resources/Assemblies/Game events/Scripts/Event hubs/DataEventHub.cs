@@ -7,6 +7,7 @@ public class DataEventHub : ScriptableObject {
     private static DataEventHub instance;
     private UIEventHub uiEvents;
     #region Data only
+    [SerializeField] private GameEvent incrementJailTurn;
     [SerializeField] private GameEvent cardResolved;
     [SerializeField] private CardTypeEvent cardDrawn;
     [SerializeField] private PlayerEvent debtResolved;
@@ -27,7 +28,6 @@ public class DataEventHub : ScriptableObject {
     [SerializeField] private PlayerPropertyEvent playerObtainedProperty;
     [SerializeField] private GameEvent nextPlayerTurn;
     [SerializeField] private PlayerCardEvent playerGetsGOOJFCard;
-    [SerializeField] private BoolEvent turnBegin;
     [SerializeField] private GameEvent leaveJail;
     [SerializeField] private CardTypeEvent useGOOJFCardButtonClicked;
     #endregion
@@ -54,6 +54,7 @@ public class DataEventHub : ScriptableObject {
 
     #region Data invoking
     public void call_TurnPlayerMovedAlongBoard(int spacesMoved) => turnPlayerMovedAlongBoard.invoke(spacesMoved);
+    public void call_IncrementJailTurn() => incrementJailTurn.invoke();
     public void call_CardResolved() => cardResolved.invoke();
     public void call_CardDrawn(CardType cardType) => cardDrawn.invoke(cardType);
     public void call_DebtResolved(PlayerInfo playerInfo) => debtResolved.invoke(playerInfo);
@@ -106,10 +107,6 @@ public class DataEventHub : ScriptableObject {
         playerGetsGOOJFCard.invoke(playerInfo, cardInfo);
         uiEvents.PlayerGetsGOOJFCard.invoke(playerInfo, cardInfo.CardType);
     }
-    public void call_TurnBegin(bool turnPlayerInJail) {
-        turnBegin.invoke(turnPlayerInJail);
-        uiEvents.TurnBegin.invoke(turnPlayerInJail);
-    }
     public void call_LeaveJail() {
         leaveJail.invoke();
         uiEvents.LeaveJail.invoke();
@@ -143,7 +140,7 @@ public class DataEventHub : ScriptableObject {
     internal void sub_PlayerObtainedProperty(Action<PlayerInfo, PropertyInfo> a) => playerObtainedProperty.Listeners += a;
     internal void sub_NextPlayerTurn(Action a) => nextPlayerTurn.Listeners += a;
     internal void sub_PlayerGetsGOOJFCard(Action<PlayerInfo, CardInfo> a) => playerGetsGOOJFCard.Listeners += a;
-    internal void sub_TurnBegin(Action<bool> a) => turnBegin.Listeners += a;
+    internal void sub_IncrementJailTurn(Action a) => incrementJailTurn.Listeners += a;
     internal void sub_LeaveJail(Action a) => leaveJail.Listeners += a;
     internal void sub_UseGOOJFCardButtonClicked(Action<CardType> a) => useGOOJFCardButtonClicked.Listeners += a;
     #endregion

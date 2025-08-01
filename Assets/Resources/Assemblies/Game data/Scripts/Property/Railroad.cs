@@ -12,23 +12,26 @@ internal class Railroad : Property, RailroadInfo {
 
 
     #region Property
-    internal override int getRent() {
-        PlayerInfo owner = Owner;
-        int railwaysOwned = railroadGroup.propertiesOwnedByPlayer(owner);
-        switch (railwaysOwned) {
-            case 1: return rentOne;
-            case 2: return rentTwo;
-            case 3: return rentThree;
-            case 4: return rentFour;
-        }
-        throw new System.Exception("Invalid number of railroads owned.");
-    }
+    internal override bool IsCurrentlyTradable => true;
     #endregion
 
 
 
     #region RailroadInfo
     public int ID => railroadID;
+    public override int Rent {
+        get {
+            PlayerInfo owner = Owner;
+            int railwaysOwned = railroadGroup.propertiesOwnedByPlayer(owner);
+            switch (railwaysOwned) {
+                case 1: return rentOne;
+                case 2: return rentTwo;
+                case 3: return rentThree;
+                case 4: return rentFour;
+            }
+            throw new System.Exception("Invalid number of railroads owned.");
+        }
+    }
     #endregion
 }
 

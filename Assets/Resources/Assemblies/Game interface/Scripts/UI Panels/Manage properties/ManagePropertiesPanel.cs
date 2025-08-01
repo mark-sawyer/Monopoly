@@ -151,7 +151,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
         setIcons();
         adjustMoneyVisualQuietly(GameState.game.TurnPlayer);
-        uiEvents.call_FadeScreenCoverIn(255f);
+        uiEvents.call_FadeScreenCoverIn(1f);
         StartCoroutine(dropCoroutine());
         managePropertiesEvents.call_ManagePropertiesVisualRefresh(GameState.game.TurnPlayer);
         uiEvents.sub_MoneyAdjustment(adjustMoneyVisual);

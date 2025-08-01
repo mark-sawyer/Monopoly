@@ -208,7 +208,7 @@ public class TokenVisual : MonoBehaviour {
         if (currentScale < InterfaceConstants.SCALE_FOR_MOVING_TOKEN) {
             beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
             WaitFrames.Instance.exe(
-                InterfaceConstants.FRAMES_FOR_TOKEN_GROWING,
+                InterfaceConstants.FRAMES_FOR_TOKEN_SCALING,
                 () => tokenMover.startMoving(startingIndex, spacesMoved)
             );
         }
@@ -220,11 +220,11 @@ public class TokenVisual : MonoBehaviour {
         if (currentScale < InterfaceConstants.SCALE_FOR_MOVING_TOKEN) {
             beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
             WaitFrames.Instance.exe(
-                InterfaceConstants.FRAMES_FOR_TOKEN_GROWING,
+                InterfaceConstants.FRAMES_FOR_TOKEN_SCALING,
                 () => tokenMover.startMovingDirectly(startingIndex, newIndex)
             );
         }
-        else tokenMover.startMovingDirectly(startingIndex, newIndex); ;
+        else tokenMover.startMovingDirectly(startingIndex, newIndex);
     }
     public void tokenOnSpaceChanged() {
         SpaceVisual currentSpace = CurrentSpace;
@@ -239,7 +239,7 @@ public class TokenVisual : MonoBehaviour {
     private void beginScaleChange(float targetScale) {
         IEnumerator changeScale(float targetScale) {
             float startScale = transform.localScale.x;
-            int frames = InterfaceConstants.FRAMES_FOR_TOKEN_GROWING;
+            int frames = InterfaceConstants.FRAMES_FOR_TOKEN_SCALING;
             for (int i = 1; i <= frames; i++) {
                 float scale = LinearValue.exe(i, startScale, targetScale, frames);
                 transform.localScale = new Vector3(scale, scale, scale);

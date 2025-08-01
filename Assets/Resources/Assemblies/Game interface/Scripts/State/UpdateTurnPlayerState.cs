@@ -12,6 +12,13 @@ public class UpdateTurnPlayerState : State {
     public override bool exitConditionMet() {
         return true;
     }
+    public override void exitState() {
+        PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+        bool turnPlayerInJail = turnPlayer.InJail;
+        if (turnPlayerInJail) {
+            DataEventHub.Instance.call_IncrementJailTurn();
+        }            
+    }
     public override State getNextState() {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         if (turnPlayer.InJail) return allStates.getState<JailPreRollState>();

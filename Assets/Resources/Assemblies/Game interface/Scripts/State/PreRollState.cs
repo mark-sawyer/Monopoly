@@ -12,17 +12,18 @@ public class PreRollState : State {
     public override void enterState() {
         rollAnimationOver = false;
         managePropertiesClicked = false;
-        tradeClicked = true;
+        tradeClicked = false;
 
         UIEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(managePropertiesListener);
         ScreenAnimationEventHub.Instance.sub_TradeOpened(tradeListener);
 
-        DataEventHub.Instance.call_TurnBegin(false);
+        UIEventHub.Instance.call_PreRollStateStarting();
     }
     public override bool exitConditionMet() {
         return rollAnimationOver
-            || managePropertiesClicked;
+            || managePropertiesClicked
+            || tradeClicked;
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);

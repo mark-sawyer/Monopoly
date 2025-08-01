@@ -2,6 +2,10 @@ using TMPro;
 using UnityEngine;
 
 public class BuildingCounter : MonoBehaviour {
+    private enum BuildingType {
+        HOUSE,
+        HOTEL
+    }
     [SerializeField] private BuildingType buildingType;
     [SerializeField] private TextMeshProUGUI counterText;
 
@@ -15,8 +19,7 @@ public class BuildingCounter : MonoBehaviour {
 
 
     private void updateCounter(PlayerInfo playerInfo) {
-        int remaining
-            = buildingType == BuildingType.HOUSE
+        int remaining = buildingType == BuildingType.HOUSE
             ? GameState.game.BankInfo.HousesRemaining
             : GameState.game.BankInfo.HotelsRemaining;
 

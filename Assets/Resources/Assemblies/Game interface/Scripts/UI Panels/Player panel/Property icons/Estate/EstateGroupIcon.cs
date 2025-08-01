@@ -28,7 +28,7 @@ public class EstateGroupIcon : PropertyGroupIcon {
     private void Start() {
         estateGroupInfo = EstateGroupDictionary.Instance.lookupInfo(estateColourEnum);
         estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateColourEnum);
-        Color estateColour = estateGroupColours.EstateColour.Colour;
+        Color estateColour = estateGroupColours.MainColour.Colour;
         estateColour.a = ZeroPropertiesAlpha;
         updatePanelColour(estateColour);
         estateGroupIconState = new EstateGroupIconState(estateGroupInfo);
@@ -84,7 +84,7 @@ public class EstateGroupIcon : PropertyGroupIcon {
             EstateColour estateColourEnum = estateGroupInfo.EstateColour;
             EstateGroupDictionary estateGroupDictionary = EstateGroupDictionary.Instance;
             EstateGroupColours estateGroupColours = estateGroupDictionary.lookupColour(estateColourEnum);
-            Color estateColour = estateGroupColours.EstateColour.Colour;
+            Color estateColour = estateGroupColours.MainColour.Colour;
             estateColour.a = propertiesOwned == 0 ? ZeroPropertiesAlpha : NonZeroPropertiesAlpha;
             updatePanelColour(estateColour);
         }

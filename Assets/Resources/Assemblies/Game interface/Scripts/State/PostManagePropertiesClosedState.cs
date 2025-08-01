@@ -18,6 +18,7 @@ public class PostManagePropertiesClosedState : State {
     }
     public override void exitState() {
         ManagePropertiesEventHub.Instance.unsub_AllVisualsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
+        UIEventHub.Instance.call_TurnMenuClosed();
     }
     public override State getNextState() {
         if (GameState.game.TurnPlayer.InJail) {

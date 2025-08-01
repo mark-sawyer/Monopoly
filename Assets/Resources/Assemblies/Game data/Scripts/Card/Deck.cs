@@ -3,11 +3,11 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Deck", menuName = "Card/Deck")]
 internal class Deck : ScriptableObject {
-    [SerializeField] private List<CardInstance> cards;
+    [SerializeField] private List<Card> cards;
 
-    internal Queue<CardInstance> getAsQueue() {
+    internal Queue<Card> getAsQueue() {
         randomiseCards();
-        Queue<CardInstance> cardQueue = new Queue<CardInstance>(cards.Count);
+        Queue<Card> cardQueue = new Queue<Card>(cards.Count);
         for (int i = 0; i < cards.Count; i++) {
             cardQueue.Enqueue(cards[i]);
         }
@@ -17,7 +17,7 @@ internal class Deck : ScriptableObject {
     private void randomiseCards() {
         for (int i = 0; i < cards.Count - 1; i++) {
             int swapIndex = Random.Range(i, cards.Count);
-            CardInstance hold = cards[i];
+            Card hold = cards[i];
             cards[i] = cards[swapIndex];
             cards[swapIndex] = hold;
         }

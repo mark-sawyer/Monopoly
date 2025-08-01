@@ -23,7 +23,7 @@ public class EstateVisual : SpaceVisual {
         EstateInfo estate = (EstateInfo)estateSO;
         if (estate.Name != "Northumberland Avenue") estateName.text = estate.Name.ToUpper();
         cost.text = "$" + estate.Cost.ToString();
-        colourBand.color = EstateGroupDictionary.Instance.lookupColour(estate.EstateColour).EstateColour.Colour;
+        colourBand.color = EstateGroupDictionary.Instance.lookupColour(estate.EstateColour).MainColour.Colour;
         numberOfHouses = 0;
         hasHotel = false;
     }

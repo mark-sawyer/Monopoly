@@ -16,18 +16,18 @@ public class WaitFrames : MonoBehaviour {
 
 
 
+    #region public
     public void exe(int frames, Action a) {
         StartCoroutine(waitThenAction(frames, a));
     }
     public void exe<T>(int frames, Action<T> a, T arg) {
         StartCoroutine(waitThenAction(frames, a, arg));
     }
-    public void exe<T1, T2>(int frames, Action<T1, T2> a, T1 arg1, T2 arg2) {
-        StartCoroutine(waitThenAction(frames, a, arg1, arg2));
-    }
+    #endregion
 
 
 
+    #region private
     private static IEnumerator waitThenAction(int frames, Action a) {
         for (int i = 0; i < frames; i++) {
             yield return null;
@@ -40,10 +40,5 @@ public class WaitFrames : MonoBehaviour {
         }
         a.Invoke(arg);
     }
-    private static IEnumerator waitThenAction<T1, T2>(int frames, Action<T1, T2> a, T1 arg1, T2 arg2) {
-        for (int i = 0; i < frames; i++) {
-            yield return null;
-        }
-        a.Invoke(arg1, arg2);
-    }
+    #endregion
 }

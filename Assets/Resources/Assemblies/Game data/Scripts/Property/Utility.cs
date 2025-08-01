@@ -9,21 +9,24 @@ internal class Utility : Property, UtilityInfo {
 
 
     #region internal
-    internal override int getRent() {
-        PlayerInfo owner = Owner;
-        int utilitiesOwnedByPlayer = utilityGroup.propertiesOwnedByPlayer(owner);
-        if (utilitiesOwnedByPlayer == 1) return dice.TotalValue * 4;
-        else return dice.TotalValue * 10;
-    }
     internal void setup(DiceInterface dice) {
         this.dice = dice;
     }
+    internal override bool IsCurrentlyTradable => true;
     #endregion
 
 
 
     #region UtilityInfo
     public UtilityType UtilityType => utilityType;
+    public override int Rent {
+        get {
+            PlayerInfo owner = Owner;
+            int utilitiesOwnedByPlayer = utilityGroup.propertiesOwnedByPlayer(owner);
+            if (utilitiesOwnedByPlayer == 1) return dice.TotalValue * 4;
+            else return dice.TotalValue * 10;
+        }
+    }
     #endregion
 }
 

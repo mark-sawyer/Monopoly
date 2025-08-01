@@ -9,7 +9,7 @@ internal class Player : PlayerInfo {
     private bool inJail = false;
     private bool isActive = true;
     private int turnInJail = 0;
-    private List<CardInstance> getOutOfJailFreeCards = new(2);
+    private List<Card> getOutOfJailFreeCards = new(2);
     private Token token;
     private PlayerColour colour;
 
@@ -45,14 +45,14 @@ internal class Player : PlayerInfo {
     internal void removeDebt() {
         debt = null;
     }
-    internal void getGOOJFCard(CardInstance getOutOfJailFreeCard) {
+    internal void getGOOJFCard(Card getOutOfJailFreeCard) {
         getOutOfJailFreeCards.Add(getOutOfJailFreeCard);
     }
     internal void incrementJailTurn() {
         turnInJail++;
     }
-    internal CardInstance handBackGOOJFCard(CardType cardType) {
-        CardInstance getOutOfJailFreeCard = getOutOfJailFreeCards.First(x => x.CardType == cardType);
+    internal Card handBackGOOJFCard(CardType cardType) {
+        Card getOutOfJailFreeCard = getOutOfJailFreeCards.First(x => x.CardType == cardType);
         getOutOfJailFreeCards.Remove(getOutOfJailFreeCard);
         return getOutOfJailFreeCard;
     }
@@ -67,7 +67,7 @@ internal class Player : PlayerInfo {
     public PlayerColour Colour { get => colour; }
     public int Money => money;
     public DebtInfo Debt => debt;
-    public int TotalWorth => money + properties.Sum(x => x.getWorth());
+    public int TotalWorth => money + properties.Sum(x => x.Worth);
     public int IncomeTaxAmount {
         get {
             float tenPercent = TotalWorth * 0.1f;
@@ -94,6 +94,21 @@ internal class Player : PlayerInfo {
             IEnumerable<Estate> estates = properties.OfType<Estate>();
             int hotelCount = estates.Count(x => x.HasHotel);
             return hotelCount;
+        }
+    }
+    public IEnumerable<TradableInfo> TradableInfos {
+        get {
+            List<Tradable> tradables = new();
+            foreach (Property property in properties) {
+                if (property.IsCurrentlyTradable) {
+                    tradables.Add(property);
+                }
+            }
+            foreach (Card cardInstance in getOutOfJailFreeCards) {
+                tradables.Add(cardInstance);
+            }
+            tradables.Sort((a, b) => a.TradableOrderID.CompareTo(b.TradableOrderID));
+            return tradables;
         }
     }
     public bool hasGOOJFCardOfType(CardType cardType) {

@@ -29,7 +29,7 @@ public class EstateDeed : PropertyDeed {
         EstateGroupDictionary estateGroupDictionary = EstateGroupDictionary.Instance;
         EstateColour estateColour = estateInfo.EstateColour;
         EstateGroupColours estateGroupColours = estateGroupDictionary.lookupColour(estateColour);
-        colourBandImage.color = estateGroupColours.EstateColour.Colour;
+        colourBandImage.color = estateGroupColours.MainColour.Colour;
     }
     private void setTexts() {
         propertyNameText.text = estateInfo.Name.ToUpper();

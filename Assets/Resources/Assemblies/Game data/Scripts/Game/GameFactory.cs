@@ -10,8 +10,8 @@ public class GameFactory {
 
     #region Factory
     public void makeGame(int playerNum) {
-        Queue<CardInstance> communityChestCards = initialiseCards(CardType.COMMUNITY_CHEST);
-        Queue<CardInstance> chanceCards = initialiseCards(CardType.CHANCE);
+        Queue<Card> communityChestCards = initialiseCards(CardType.COMMUNITY_CHEST);
+        Queue<Card> chanceCards = initialiseCards(CardType.CHANCE);
         game = new Game(
             playerNum,
             GameConstants.STARTING_MONEY,
@@ -23,8 +23,8 @@ public class GameFactory {
         setGameRefForCards(chanceCards, game);
     }
     public void makeTestGame(int playerNum, int startingMoney) {
-        Queue<CardInstance> communityChestCards = initialiseTestCards(CardType.COMMUNITY_CHEST);
-        Queue<CardInstance> chanceCards = initialiseTestCards(CardType.CHANCE);
+        Queue<Card> communityChestCards = initialiseTestCards(CardType.COMMUNITY_CHEST);
+        Queue<Card> chanceCards = initialiseTestCards(CardType.CHANCE);
         game = new Game(
             playerNum,
             startingMoney,
@@ -40,20 +40,20 @@ public class GameFactory {
 
 
     #region private
-    private Queue<CardInstance> initialiseCards(CardType cardType) {
+    private Queue<Card> initialiseCards(CardType cardType) {
         Deck deck = cardType == CardType.COMMUNITY_CHEST
             ? Resources.Load<Deck>("ScriptableObjects/Cards/cc_deck")
             : Resources.Load<Deck>("ScriptableObjects/Cards/chance_deck");
         return deck.getAsQueue();
     }
-    private Queue<CardInstance> initialiseTestCards(CardType cardType) {
+    private Queue<Card> initialiseTestCards(CardType cardType) {
         Deck deck = cardType == CardType.COMMUNITY_CHEST
             ? Resources.Load<Deck>("ScriptableObjects/Cards/cc_test_deck")
             : Resources.Load<Deck>("ScriptableObjects/Cards/chance_test_deck");
         return deck.getAsQueue();
     }
-    private void setGameRefForCards(Queue<CardInstance> queue, Game game) {
-        foreach (CardInstance card in queue) {
+    private void setGameRefForCards(Queue<Card> queue, Game game) {
+        foreach (Card card in queue) {
             card.setup(game);
         }
     }

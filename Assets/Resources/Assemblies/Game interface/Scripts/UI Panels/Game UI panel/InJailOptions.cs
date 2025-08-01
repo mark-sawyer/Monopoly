@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,26 +8,27 @@ public class InJailOptions : MonoBehaviour {
     [SerializeField] private Button chanceCardButton;
     [SerializeField] private Button ccCardButton;
     [SerializeField] private TextMeshProUGUI countText;
+    private UIEventHub uiEvents;
 
 
     #region MonoBehaviour
     private void OnEnable() {
-        UIEventHub.Instance.sub_RollButtonClicked(disableButtons);
-        UIEventHub.Instance.sub_TurnBegin(setup);
-        setup(true);
+        uiEvents = UIEventHub.Instance;
+        uiEvents.sub_RollButtonClicked(disableButtons);
+        uiEvents.sub_PayFiftyButtonClicked(disableButtons);
+        uiEvents.sub_UseGOOJFCardButtonClicked(disableButtons);
+        uiEvents.sub_JailPreRollStateStarting(setup);
+        setup();
     }
     private void OnDisable() {
-        UIEventHub.Instance.unsub_RollButtonClicked(disableButtons);
-        UIEventHub.Instance.unsub_TurnBegin(setup);
+        uiEvents.unsub_RollButtonClicked(disableButtons);
     }
     #endregion
 
 
 
     #region public
-    public void setup(bool turnPlayerIsInJail) {
-        if (!turnPlayerIsInJail) return;
-
+    public void setup() {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         payFiftyButton.interactable = canUsePayButton(turnPlayer);
         chanceCardButton.interactable = canUseCardButton(turnPlayer, CardType.CHANCE);
@@ -46,6 +48,11 @@ public class InJailOptions : MonoBehaviour {
         else rt.anchoredPosition = Vector3.zero;
     }
     private void disableButtons() {
+        payFiftyButton.interactable = false;
+        chanceCardButton.interactable = false;
+        ccCardButton.interactable = false;
+    }
+    private void disableButtons(CardType ct) {
         payFiftyButton.interactable = false;
         chanceCardButton.interactable = false;
         ccCardButton.interactable = false;

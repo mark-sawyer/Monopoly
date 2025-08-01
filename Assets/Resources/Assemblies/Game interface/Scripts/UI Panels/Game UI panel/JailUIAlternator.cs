@@ -10,16 +10,22 @@ public class JailUIAlternator : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        UIEventHub.Instance.sub_TurnBegin((bool turnPlayerInJail) => setMode(turnPlayerInJail));
+        UIEventHub uiEvents = UIEventHub.Instance;
+        uiEvents.sub_PreRollStateStarting(setDoublesMode);
+        uiEvents.sub_JailPreRollStateStarting(setJailMode);
     }
     #endregion
 
 
 
     #region private
-    private void setMode(bool turnPlayerInJail) {
-        doublesGameObject.SetActive(!turnPlayerInJail);
-        jailOptionsGameObject.SetActive(turnPlayerInJail);
+    private void setDoublesMode() {
+        doublesGameObject.SetActive(true);
+        jailOptionsGameObject.SetActive(false);
+    }
+    private void setJailMode() {
+        doublesGameObject.SetActive(false);
+        jailOptionsGameObject.SetActive(true);
     }
     #endregion
 }

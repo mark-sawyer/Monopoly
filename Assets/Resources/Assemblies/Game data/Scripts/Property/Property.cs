@@ -1,25 +1,21 @@
 using UnityEngine;
 
-internal abstract class Property: ScriptableObject, PropertyInfo {
+internal abstract class Property : ScriptableObject, PropertyInfo, Tradable {
     [SerializeField] private string propertyName;
     [SerializeField] private PropertySpace space;
     [SerializeField] private int cost;
     [SerializeField] private int mortgageValue;
+    [SerializeField] private string abbreviation;
+    [SerializeField] private int orderID;
     private Player owner;
     private bool isMortgaged;
 
 
 
-    #region virtual
-    internal abstract int getRent();
-    internal virtual int getWorth() {
-        return cost;
-    }
-    #endregion
-
-
-
     #region internal
+    internal abstract bool IsCurrentlyTradable { get; }
+    internal virtual int Worth => cost;
+
     internal void changeOwner(Player player) {
         owner = player;
     }
@@ -42,7 +38,14 @@ internal abstract class Property: ScriptableObject, PropertyInfo {
     public bool IsMortgaged => isMortgaged;
     public bool IsBought => owner != null;
     public PlayerInfo Owner => owner;
-    public int Rent => getRent();
+    public abstract int Rent { get; }
+    #endregion
+
+
+
+    #region Tradable
+    public int TradableOrderID => orderID;
+    public string Abbreviation => abbreviation;
     #endregion
 }
 
