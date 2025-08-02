@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public abstract class DraggableGhost : MonoBehaviour {
-    [SerializeField] private Image[] transparentImages;
+    [SerializeField] private Graphic[] transparentGraphics;
     [SerializeField] private Canvas thisCanvas;
     private float currentAlpha;
     private const float TRANSPARENT_ALPHA = 0.5f;
@@ -33,34 +33,45 @@ public abstract class DraggableGhost : MonoBehaviour {
 
 
 
+    #region protected
+    protected virtual void released(bool received) { }
+    #endregion
+
+
+
     #region private
     private void holdGhost() {
         transform.position = Input.mousePosition;
-        bool overGhostReceiver = getGhostReceiverUnderPointer() != null;
-        if (overGhostReceiver && currentAlpha != 1) {
+        GhostReceiver ghostReceiverUnderPointer = getGhostReceiverUnderPointer();
+        bool overGhostReceiver = ghostReceiverUnderPointer != null;
+        bool canBeReceived = overGhostReceiver && ghostReceiverUnderPointer.canReceiveThisGhost(this);
+        if (canBeReceived && currentAlpha != 1) {
             changeTransparency(1);
         }
-        else if (!overGhostReceiver && currentAlpha != TRANSPARENT_ALPHA) {
+        else if (!canBeReceived && currentAlpha != TRANSPARENT_ALPHA) {
             changeTransparency(TRANSPARENT_ALPHA);
         }
     }
     private void releaseGhost() {
-        GhostReceiver ghostReceiver = getGhostReceiverUnderPointer();
-        if (ghostReceiver != null) {
-            ghostReceiver.receiveGhost(this);
+        GhostReceiver ghostReceiverUnderPointer = getGhostReceiverUnderPointer();
+        bool overGhostReceiver = ghostReceiverUnderPointer != null;
+        bool canBeReceived = overGhostReceiver && ghostReceiverUnderPointer.canReceiveThisGhost(this);
+        if (canBeReceived) {
+            ghostReceiverUnderPointer.receiveGhost(this);
         }
+        released(canBeReceived);
         Destroy(gameObject);
     }
     private void changeTransparency(float alpha) {
-        foreach (Image image in transparentImages) {
-            Color currentColour = image.color;
+        foreach (Graphic g in transparentGraphics) {
+            Color currentColour = g.color;
             Color transparent = new Color(
                 currentColour.r,
                 currentColour.g,
                 currentColour.b,
                 alpha
             );
-            image.color = transparent;
+            g.color = transparent;
         }
         currentAlpha = alpha;
     }

@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+/*
 public class TokenReceiver : GhostReceiver {
     /*
     [SerializeField] private TokenIcon tokenIcon;
@@ -13,7 +13,6 @@ public class TokenReceiver : GhostReceiver {
 
 
     #region public
-    */
     public override void receiveGhost(DraggableGhost ghost) {
         //UIToken uiToken = (UIToken)ghost;
         //token = uiToken.Token;
@@ -22,7 +21,6 @@ public class TokenReceiver : GhostReceiver {
         //tokenIcon.setup(token, colour);
         //selectedTokensChanged.invoke();
     }
-    /*
     public void colourUp() {
         int colourInt = (int)colour;
         colourInt = (colourInt - 1).mod(8);
@@ -53,5 +51,5 @@ public class TokenReceiver : GhostReceiver {
         tokenIcon.transform.GetChild(2).GetChild(1).GetComponent<Image>().enabled = true;
     }
     #endregion
-    */
 }
+*/

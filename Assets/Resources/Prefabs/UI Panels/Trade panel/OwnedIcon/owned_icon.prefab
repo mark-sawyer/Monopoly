@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 838055435704122642}
   - component: {fileID: 2759412499548775591}
+  - component: {fileID: 2660953493425642078}
   m_Layer: 5
   m_Name: icon_section
   m_TagString: Untagged
@@ -50,6 +51,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965858145380146045}
   m_CullTransparentMesh: 1
+--- !u!114 &2660953493425642078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965858145380146045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2bbc8f599097fc4ba6313b982bca4ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconGameObjects:
+  - {fileID: 5824494050735465396}
+  - {fileID: 6418840839449478846}
+  - {fileID: 8074838134590202058}
+  - {fileID: 3815741403850736149}
+  - {fileID: 1338472779467147042}
 --- !u!1 &981875953758982242
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +611,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8599287723070438871}
   - component: {fileID: 808572337071674892}
-  - component: {fileID: 7868963023716034568}
   m_Layer: 0
   m_Name: owned_icon
   m_TagString: Untagged
@@ -629,37 +647,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4906626976296706810}
   m_CullTransparentMesh: 1
---- !u!114 &7868963023716034568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4906626976296706810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c32895c460b38e49b9903113b6c1062, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textMesh: {fileID: 4203310115163268477}
-  backgroundColourImage: {fileID: 2725554155404321763}
-  iconGameObjects:
-  - {fileID: 5824494050735465396}
-  - {fileID: 6418840839449478846}
-  - {fileID: 8074838134590202058}
-  - {fileID: 3815741403850736149}
-  - {fileID: 1338472779467147042}
-  squarePanelTransform: {fileID: 1019755262213633107}
-  railroadBackgroundColour: {fileID: 11400000, guid: 0fc01740203c584409c77b1d31ae8acb, type: 2}
-  railroadTextBorderColour: {fileID: 11400000, guid: f3479b49691fb8e478d7ea744a830f85, type: 2}
-  electricityBackgroundColour: {fileID: 11400000, guid: 7bae78e6562841942b3891194925c01c, type: 2}
-  electricityTextBorderColour: {fileID: 11400000, guid: b97d819e6264c1049a2d200a2c90e534, type: 2}
-  waterBackgroundColour: {fileID: 11400000, guid: 2997519f37259e94f8a8e04dfe5359bc, type: 2}
-  waterTextBorderColour: {fileID: 11400000, guid: 819d985c6aea0a5418f8368d0af0c449, type: 2}
-  chanceBackgroundColour: {fileID: 11400000, guid: f345d04572d7e574e831c80c4d3b3117, type: 2}
-  chanceTextBorderColour: {fileID: 11400000, guid: 8dfcb809fd7d5944497c0f89043e53cb, type: 2}
-  communityChestBackgroundColour: {fileID: 11400000, guid: f745754b563152e46be02cf93f880b98, type: 2}
-  communityChestTextBorderColour: {fileID: 11400000, guid: 280dfd185a9641243923187e318f431f, type: 2}
 --- !u!1 &5824494050735465396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,7 +1270,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1019755262213633107}
   - component: {fileID: 4679244197566084514}
-  - component: {fileID: 5659640503018745722}
   m_Layer: 5
   m_Name: square_panel
   m_TagString: Untagged
@@ -1322,21 +1308,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7722343179309778139}
   m_CullTransparentMesh: 1
---- !u!114 &5659640503018745722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7722343179309778139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d262ae740e007b5429bb2c5e89a59bea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rt: {fileID: 1019755262213633107}
-  radius: 4
-  colour: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &8074838134590202058
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ public class TradePanelSide : MonoBehaviour {
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private MoneyAdjuster moneyAdjuster;
     [SerializeField] private OwnedTradables ownedTradables;
+    [SerializeField] private ToBeTradedColumn toBeTradedColumn;
 
 
 
@@ -12,10 +13,10 @@ public class TradePanelSide : MonoBehaviour {
         Token token = playerInfo.Token;
         PlayerColour colour = playerInfo.Colour;
         int playerMoney = playerInfo.Money;
-        IEnumerable<TradableInfo> tradableInfos = playerInfo.TradableInfos;
 
         tokenIcon.setup(token, colour);
         moneyAdjuster.setStartingMoney(playerMoney);
-        ownedTradables.setup(tradableInfos);
+        ownedTradables.setup(playerInfo);
+        toBeTradedColumn.setup(playerInfo);
     }
 }

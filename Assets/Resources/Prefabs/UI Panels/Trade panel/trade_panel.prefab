@@ -1288,6 +1288,7 @@ MonoBehaviour:
   tokenIcon: {fileID: 2211091636623754775}
   moneyAdjuster: {fileID: 4934126874336186850}
   ownedTradables: {fileID: 6957826659649558}
+  toBeTradedColumn: {fileID: 1179158796031146802}
 --- !u!1 &3476170005035094522
 GameObject:
   m_ObjectHideFlags: 0
@@ -2502,6 +2503,7 @@ MonoBehaviour:
   tokenIcon: {fileID: 704800059033364391}
   moneyAdjuster: {fileID: 4829824972822664709}
   ownedTradables: {fileID: 4773620739131392560}
+  toBeTradedColumn: {fileID: 1941237799817610629}
 --- !u!1 &6005045347658891727
 GameObject:
   m_ObjectHideFlags: 0
@@ -4778,7 +4780,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4609141685046064842, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}
       propertyPath: m_Name
-      value: to_be_traded_panel
+      value: left_to_be_traded_column
       objectReference: {fileID: 0}
     - target: {fileID: 5416464147286750511, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4882,6 +4884,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}
+--- !u!114 &1179158796031146802 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 358312988878658156, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}
+  m_PrefabInstance: {fileID: 1487821127059497310}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174874c8fe49a3346b5f1f0721594d9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5647118836421486364 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6555927999494096450, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}
@@ -4896,7 +4909,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4609141685046064842, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}
       propertyPath: m_Name
-      value: to_be_traded_panel
+      value: right_to_be_traded_column
       objectReference: {fileID: 0}
     - target: {fileID: 5416464147286750511, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}
       propertyPath: m_SizeDelta.y
@@ -5000,6 +5013,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}
+--- !u!114 &1941237799817610629 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 358312988878658156, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}
+  m_PrefabInstance: {fileID: 2164070595845021673}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174874c8fe49a3346b5f1f0721594d9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4968323036111952299 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6555927999494096450, guid: 01d42b23f46633d46a1529bb0755bc97, type: 3}

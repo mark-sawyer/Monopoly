@@ -23,6 +23,7 @@ public class TradingTokenReceiver : GhostReceiver {
         }
         UIEventHub.Instance.call_TradingPlayerPlaced();
     }
+    public override bool canReceiveThisGhost(DraggableGhost ghost) => true;
     #endregion
 
 

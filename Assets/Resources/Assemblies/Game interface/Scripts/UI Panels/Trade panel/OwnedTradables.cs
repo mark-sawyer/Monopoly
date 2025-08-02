@@ -2,17 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OwnedTradables : MonoBehaviour {
-    [SerializeField] private OwnedIcon[] ownedIcons;
+    [SerializeField] private UnplacedOwnedIcon[] ownedIcons;
 
 
 
-    public void setup(IEnumerable<TradableInfo> tradableInfos) {
+    public void setup(PlayerInfo playerInfo) {
+        IEnumerable<TradableInfo> tradableInfos = playerInfo.TradableInfos;
         int i = 0;
         foreach (TradableInfo tradableInfo in tradableInfos) {
-            OwnedIcon ownedIcon = ownedIcons[i];
+            UnplacedOwnedIcon ownedIcon = ownedIcons[i];
             GameObject ownedIconGameObject = ownedIcon.gameObject;
             ownedIconGameObject.SetActive(true);
-            ownedIcon.setupOwnedIcon(tradableInfo);
+            ownedIcon.setupOwnedIcon(tradableInfo, playerInfo);
             i++;
         }
     }
