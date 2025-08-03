@@ -16,4 +16,5 @@ public interface GameStateInfo {
     public Creditor BankCreditor { get; }
     public BankInfo BankInfo { get; }
     public CardInfo DrawnCard { get; }
+    public bool TradeIsEmpty { get; }
 }

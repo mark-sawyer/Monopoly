@@ -29,4 +29,8 @@ public class ToBeTradedSpace : MonoBehaviour {
     public void changeIcon(UnplacedOwnedIcon ownedIconSource) {
         ownedIconReceiver.changeIcon(ownedIconSource);
     }
+    public TradableInfo getTradableInfo() {
+        UnplacedOwnedIcon unplacedOwnedIcon = placedOwnedIcon.OwnedIconSource;
+        return unplacedOwnedIcon.TradableInfo;
+    }
 }

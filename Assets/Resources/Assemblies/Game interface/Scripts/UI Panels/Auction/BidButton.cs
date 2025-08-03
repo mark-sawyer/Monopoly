@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class BidButton : MonoBehaviour {
     [SerializeField] private Button button;
-    [SerializeField] private BidInput bidInput;
+    [SerializeField] private MoneyInput bidInput;
     private AuctionEventHub auctionEventHub;
     private AuctionManager auctionManager;
     private PlayerInfo playerInfo;
@@ -30,7 +30,7 @@ public class BidButton : MonoBehaviour {
         this.playerInfo = playerInfo;
     }
     public void bidClicked() {
-        int bid = bidInput.getEnteredBid();
+        int bid = bidInput.getEnteredInput();
         auctionManager.acceptNewBid(bid, playerInfo);
         auctionEventHub.call_BidMade(playerInfo, bid);
     }

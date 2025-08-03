@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameDataUpdater : MonoBehaviour {
@@ -30,6 +31,9 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_EstateRemovedBuilding(removeBuildingFromEstate);
         dataHub.sub_PropertyMortgaged(mortgageProperty);
         dataHub.sub_PropertyUnmortgaged(unmortgageProperty);
+        dataHub.sub_TradeCommenced(createNewTrade);
+        dataHub.sub_TradeTerminated(removedTerminatedTrade);
+        dataHub.sub_TradeUpdated(updateProposedTrade);
     }
     #endregion
 
@@ -107,6 +111,15 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void unmortgageProperty(PropertyInfo propertyInfo) {
         gamePlayer.unmortgageProperty(propertyInfo);
+    }
+    private void createNewTrade(PlayerInfo playerOne, PlayerInfo playerTwo) {
+        gamePlayer.createNewTrade(playerOne, playerTwo);
+    }
+    private void removedTerminatedTrade() {
+        gamePlayer.removedTerminatedTrade();
+    }
+    private void updateProposedTrade(List<TradableInfo> t1, List<TradableInfo> t2, PlayerInfo moneyGiver, int money) {
+        gamePlayer.updateProposedTrade(t1, t2, moneyGiver, money);
     }
     #endregion
 }

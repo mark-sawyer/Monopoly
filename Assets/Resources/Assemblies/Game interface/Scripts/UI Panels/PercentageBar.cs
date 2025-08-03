@@ -22,8 +22,8 @@ public class PercentageBar : MonoBehaviour {
     public void setup(int totalMoney) {
         this.totalMoney = totalMoney;
     }
-    public void adjustVisual(int currentBid) {
-        float proportion = currentBid / totalMoney;
+    public void adjustVisual(int currentInput) {
+        float proportion = currentInput / totalMoney;
         float newWidth = containerWidth * proportion;
         barRT.sizeDelta = new Vector2(newWidth, 0f);
         Color barColour = getBarColour(proportion);

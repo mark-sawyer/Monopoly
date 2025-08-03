@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 public interface GamePlayer {
     public void rollDice();
     public void moveTurnPlayerAlongBoard(int spacesMoved);
@@ -21,4 +23,7 @@ public interface GamePlayer {
     public void playerGetsGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo);
     public void playerUsesGOOJFCard(CardType cardType);
     public void incrementJailTurn();
+    public void createNewTrade(PlayerInfo playerOne, PlayerInfo playerTwo);
+    public void removedTerminatedTrade();
+    public void updateProposedTrade(List<TradableInfo> t1, List<TradableInfo> t2, PlayerInfo moneyGiver, int money);
 }

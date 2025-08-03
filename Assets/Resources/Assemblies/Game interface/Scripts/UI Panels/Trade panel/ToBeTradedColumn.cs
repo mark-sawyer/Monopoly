@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ToBeTradedColumn : MonoBehaviour {
@@ -7,6 +8,8 @@ public class ToBeTradedColumn : MonoBehaviour {
         OFF
     }
     [SerializeField] private ToBeTradedSpace[] toBeTradedSpaces;
+    [SerializeField] private MoneyInput tradeMoneyInput;
+
 
 
     #region public
@@ -14,6 +17,7 @@ public class ToBeTradedColumn : MonoBehaviour {
         foreach (ToBeTradedSpace toBeTradedSpace in toBeTradedSpaces) {
             toBeTradedSpace.setup(playerInfo);
         }
+        tradeMoneyInput.setup(playerInfo);
     }
     public void shiftIconsUp() {
         int spaces = toBeTradedSpaces.Length;
@@ -24,6 +28,21 @@ public class ToBeTradedColumn : MonoBehaviour {
             SpaceState stateTwo = getSpaceState(spaceTwo);
             handleSpacePairs(stateOne, stateTwo, spaceOne, spaceTwo);
         }
+    }
+    public List<TradableInfo> getProposedTradables() {
+        List<TradableInfo> tradableInfos = new();
+        for (int i = 0; i < toBeTradedSpaces.Length; i++) {
+            ToBeTradedSpace toBeTradedSpace = toBeTradedSpaces[i];
+            if (toBeTradedSpace.FilledOn) {
+                TradableInfo tradableInfo = toBeTradedSpace.getTradableInfo();
+                tradableInfos.Add(tradableInfo);
+            }
+            else break;
+        }
+        return tradableInfos;
+    }
+    public int inputMoney() {
+        return tradeMoneyInput.getEnteredInput();
     }
     #endregion
 

@@ -12,6 +12,7 @@ internal class Game : GameStateInfo, GamePlayer {
     private Queue<Card> communityChestCards;
     private Queue<Card> chanceCards;
     private Card drawnCard;
+    private Trade proposedTrade;
 
 
 
@@ -60,6 +61,7 @@ internal class Game : GameStateInfo, GamePlayer {
     public Creditor BankCreditor => bank;
     public BankInfo BankInfo => bank;
     public CardInfo DrawnCard => drawnCard;
+    public bool TradeIsEmpty => proposedTrade.IsEmpty;
     #endregion
 
 
@@ -162,6 +164,22 @@ internal class Game : GameStateInfo, GamePlayer {
     }
     public void incrementJailTurn() {
         turnPlayer.incrementJailTurn();
+    }
+    public void createNewTrade(PlayerInfo playerOne, PlayerInfo playerTwo) {
+        Player p1 = (Player)playerOne;
+        Player p2 = (Player)playerTwo;
+        proposedTrade = new Trade(p1, p2);
+    }
+    public void removedTerminatedTrade() {
+        proposedTrade = null;
+    }
+    public void updateProposedTrade(List<TradableInfo> t1, List<TradableInfo> t2, PlayerInfo moneyGiver, int money) {
+        List<Tradable> tradablesOne = t1.Cast<Tradable>().ToList();
+        List<Tradable> tradablesTwo = t2.Cast<Tradable>().ToList();
+        Player moneyGivingPlayer = (Player)moneyGiver;
+        proposedTrade.tradablesOneChange(tradablesOne);
+        proposedTrade.tradablesTwoChange(tradablesTwo);
+        proposedTrade.moneyChange(moneyGivingPlayer, money);
     }
     #endregion
 

@@ -10,13 +10,13 @@ public class TradeState : State {
     #region State
     public override void enterState() {
         backButtonPressed = false;
-        UIEventHub.Instance.sub_TradeBackClicked(backButtonListening);
+        UIEventHub.Instance.sub_TradeTerminated(backButtonListening);
     }
     public override bool exitConditionMet() {
         return backButtonPressed;
     }
     public override void exitState() {
-        UIEventHub.Instance.unsub_TradeBackClicked(backButtonListening);
+        UIEventHub.Instance.unsub_TradeTerminated(backButtonListening);
         UIEventHub.Instance.call_TurnMenuClosed();
     }
     public override State getNextState() {

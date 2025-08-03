@@ -5,12 +5,14 @@ public class OwnedIconReceiver : GhostReceiver {
     [SerializeField] private PlacedOwnedIcon placedOwnedIcon;
     private UnplacedOwnedIcon ownedIconSource;
     private PlayerInfo playerOfSide;
+    private TradeEventHub tradeEventHub;
 
 
 
     #region public
     public void setup(PlayerInfo playerOfSide) {
         this.playerOfSide = playerOfSide;
+        tradeEventHub = TradeEventHub.Instance;
     }
     public override bool canReceiveThisGhost(DraggableGhost ghost) {
         OwnedIconGhost ownedIconGhost = (OwnedIconGhost)ghost;
@@ -24,6 +26,7 @@ public class OwnedIconReceiver : GhostReceiver {
         placedOwnedIcon.gameObject.SetActive(true);
         placedOwnedIcon.setup(ownedIconSource);
         turnOnNextReceiver();
+        tradeEventHub.call_TradeChanged();
         gameObject.SetActive(false);
     }
     public void changeIcon(UnplacedOwnedIcon newOwnedIconSource) {

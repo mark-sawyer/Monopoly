@@ -436,9 +436,8 @@ GameObject:
   - component: {fileID: 6555927999494096450}
   - component: {fileID: 1454011818582067123}
   - component: {fileID: 6721447260609067817}
-  - component: {fileID: 358312988878658156}
   m_Layer: 5
-  m_Name: to_be_traded_column
+  m_Name: to_be_traded_icon_column
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -489,31 +488,6 @@ MonoBehaviour:
   rt: {fileID: 6555927999494096450}
   radius: 20
   colour: {r: 0.9411765, g: 0.8156863, b: 0.6313726, a: 1}
---- !u!114 &358312988878658156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4609141685046064842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 174874c8fe49a3346b5f1f0721594d9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toBeTradedSpaces:
-  - {fileID: 8298422302624068004}
-  - {fileID: 1522856559138161800}
-  - {fileID: 315071426973498254}
-  - {fileID: 141916372157111668}
-  - {fileID: 4113287561923376824}
-  - {fileID: 1469972707732522024}
-  - {fileID: 3010369159395340528}
-  - {fileID: 2913187107161446167}
-  - {fileID: 8400940545851092068}
-  - {fileID: 6187860455898149782}
-  - {fileID: 556590800838738806}
-  - {fileID: 5393237079211421129}
 --- !u!1 &5287334336386345761
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +850,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 2507330579586661706, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -976,17 +950,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
   m_PrefabInstance: {fileID: 79199504142044481}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8298422302624068004 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 79199504142044481}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8729147010007106173 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8664212595636768572, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
@@ -1010,7 +973,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_9
@@ -1110,17 +1073,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
   m_PrefabInstance: {fileID: 479235831437021313}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8400940545851092068 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 479235831437021313}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2877526200013475699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1131,7 +1083,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_10
@@ -1226,17 +1178,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
---- !u!114 &6187860455898149782 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 2877526200013475699}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &9080066502218946012 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
@@ -1252,7 +1193,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_12
@@ -1347,17 +1288,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
---- !u!114 &5393237079211421129 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 4100549541299523884}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6991260767434394499 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
@@ -1373,7 +1303,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_5
@@ -1473,17 +1403,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
   m_PrefabInstance: {fileID: 5414982234856327773}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4113287561923376824 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 5414982234856327773}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6511374537719491570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1494,7 +1413,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_8
@@ -1594,17 +1513,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
   m_PrefabInstance: {fileID: 6511374537719491570}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2913187107161446167 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 6511374537719491570}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6626570026727820309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1615,7 +1523,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_7
@@ -1715,17 +1623,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
   m_PrefabInstance: {fileID: 6626570026727820309}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3010369159395340528 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 6626570026727820309}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7374311213086980301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1736,7 +1633,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_6
@@ -1831,17 +1728,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
---- !u!114 &1469972707732522024 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 7374311213086980301}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &4592323959461732962 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
@@ -1857,7 +1743,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_2
@@ -1952,17 +1838,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
---- !u!114 &1522856559138161800 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 7427264135837907053}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &4539373149579125442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
@@ -1978,7 +1853,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_4
@@ -2073,17 +1948,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
---- !u!114 &141916372157111668 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 8343064174459134353}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &3036941399064673086 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
@@ -2099,7 +1963,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_11
@@ -2194,17 +2058,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
---- !u!114 &556590800838738806 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 8469543548732997523}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &3198745744201721148 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
@@ -2220,7 +2073,7 @@ PrefabInstance:
     - target: {fileID: 2032722633244372582, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: toBeTradedColumn
       value: 
-      objectReference: {fileID: 358312988878658156}
+      objectReference: {fileID: 0}
     - target: {fileID: 5132209171506877004, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
       propertyPath: m_Name
       value: to_be_traded_space_3
@@ -2315,17 +2168,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
---- !u!114 &315071426973498254 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8228275090824903909, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}
-  m_PrefabInstance: {fileID: 8534302957266618219}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5d7aee874c2684f9481c9836c69d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &3423309557910248900 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6480089105630878383, guid: cf4c5fead8813c844b44bdadf2dc8406, type: 3}

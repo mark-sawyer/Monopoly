@@ -28,12 +28,12 @@ public class TradingPlayerSelection : ScreenAnimation {
         uiEvents = UIEventHub.Instance;
         uiEvents.sub_TradingPlayerPlaced(adjustTextButtonToggle);
         uiEvents.sub_TradingPlayersConfirmed(createTradePanel);
-        uiEvents.sub_TradeBackClicked(backButtonClicked);
+        uiEvents.sub_TradeTerminated(backButtonClicked);
     }
     private void OnDestroy() {
         uiEvents.unsub_TradingPlayerPlaced(adjustTextButtonToggle);
         uiEvents.unsub_TradingPlayersConfirmed(createTradePanel);
-        uiEvents.unsub_TradeBackClicked(backButtonClicked);
+        uiEvents.unsub_TradeTerminated(backButtonClicked);
     }
     #endregion
 
@@ -65,10 +65,10 @@ public class TradingPlayerSelection : ScreenAnimation {
         }
     }
     private void createTradePanel() {
-        GameObject createTradePanel() {
+        GameObject createTradePanel(PlayerInfo playerOne, PlayerInfo playerTwo) {
             GameObject tradePanelInstance = Instantiate(tradePanelPrefab, transform);
             TradePanel tradePanel = tradePanelInstance.GetComponent<TradePanel>();
-            tradePanel.setup(leftTokenReceiver.PlayerInfo, rightTokenReceiver.PlayerInfo);
+            tradePanel.setup(playerOne, playerTwo);
             return tradePanelInstance;
         }
         void moveObjects() {
@@ -83,10 +83,13 @@ public class TradingPlayerSelection : ScreenAnimation {
             StartCoroutine(dropSequence());
         }
 
+        PlayerInfo playerOne = leftTokenReceiver.PlayerInfo;
+        PlayerInfo playerTwo = rightTokenReceiver.PlayerInfo;
         backButton.interactable = false;
-        tradePanelInstance = createTradePanel();
+        tradePanelInstance = createTradePanel(playerOne, playerTwo);
         moveObjects();
-        UIEventHub.Instance.call_FadeScreenCoverIn(1f);
+        uiEvents.call_FadeScreenCoverIn(1f);
+        DataEventHub.Instance.call_TradeCommenced(playerOne, playerTwo);
     }
     private IEnumerator dropBackButton() {
         RectTransform backButtonRT = (RectTransform)backButton.transform;

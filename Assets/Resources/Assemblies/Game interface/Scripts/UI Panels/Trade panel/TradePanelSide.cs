@@ -9,6 +9,7 @@ public class TradePanelSide : MonoBehaviour {
 
 
 
+    #region public
     public void setup(PlayerInfo playerInfo) {
         Token token = playerInfo.Token;
         PlayerColour colour = playerInfo.Colour;
@@ -19,4 +20,11 @@ public class TradePanelSide : MonoBehaviour {
         ownedTradables.setup(playerInfo);
         toBeTradedColumn.setup(playerInfo);
     }
+    public List<TradableInfo> getProposedTradables() {
+        return toBeTradedColumn.getProposedTradables();
+    }
+    public int inputMoney() {
+        return toBeTradedColumn.inputMoney();
+    }
+    #endregion
 }

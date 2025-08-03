@@ -9,6 +9,7 @@ public class PlacedOwnedIcon : DraggableGhostSource {
     [SerializeField] private Transform squarePanelTransform;
     [SerializeField] private ToBeTradedColumn toBeTradedColumn;
     private UnplacedOwnedIcon ownedIconSource;
+    private TradeEventHub tradeEventHub;
 
 
 
@@ -22,6 +23,7 @@ public class PlacedOwnedIcon : DraggableGhostSource {
         emptySpace.SetActive(true);
         gameObject.SetActive(false);
         toBeTradedColumn.shiftIconsUp();
+        tradeEventHub.call_TradeChanged();
     }
     #endregion
 
@@ -39,6 +41,7 @@ public class PlacedOwnedIcon : DraggableGhostSource {
             squarePanelTransform
         );
         ownedIconSetup.setup(tradableInfo);
+        tradeEventHub = TradeEventHub.Instance;
     }
     #endregion
 }

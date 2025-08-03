@@ -45,3 +45,14 @@ internal class GameEvent<T1, T2, T3> : ScriptableObject {
         action?.Invoke(value1, value2, value3);
     }
 }
+
+internal class GameEvent<T1, T2, T3, T4> : ScriptableObject {
+    private event Action<T1, T2, T3, T4> action;
+    internal event Action<T1, T2, T3, T4> Listeners {
+        add { action += value; }
+        remove { action -= value; }
+    }
+    internal void invoke(T1 value1, T2 value2, T3 value3, T4 value4) {
+        action?.Invoke(value1, value2, value3, value4);
+    }
+}
