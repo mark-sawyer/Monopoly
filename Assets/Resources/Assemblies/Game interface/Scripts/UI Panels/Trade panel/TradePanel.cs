@@ -16,6 +16,7 @@ public class TradePanel : MonoBehaviour {
         dataEventHub = DataEventHub.Instance;
         tradeEventHub = TradeEventHub.Instance;
         tradeEventHub.sub_TradeChanged(callNewProposedTrade);
+        tradeEventHub.sub_HandshakeComplete(finaliseTrade);
     }
     private void OnDestroy() {
         tradeEventHub.unsub_TradeChanged(callNewProposedTrade);
@@ -37,11 +38,23 @@ public class TradePanel : MonoBehaviour {
 
 
     #region private
+    private bool TradeConditionsMet {
+        get {
+            return !GameState.game.TradeIsEmpty
+                && leftSide.AgreeCompressed
+                && rightSide.AgreeCompressed;
+        }
+    }
+    private void finaliseTrade() {
+        if (!TradeConditionsMet) return;
+
+
+    }
     private void callNewProposedTrade() {
-        List<TradableInfo> tradablesOne = leftSide.getProposedTradables();
-        List<TradableInfo> tradablesTwo = rightSide.getProposedTradables();
-        int leftMoney = leftSide.inputMoney();
-        int rightMoney = rightSide.inputMoney();
+        List<TradableInfo> tradablesOne = leftSide.ProposedTradables;
+        List<TradableInfo> tradablesTwo = rightSide.ProposedTradables;
+        int leftMoney = leftSide.InputMoney;
+        int rightMoney = rightSide.InputMoney;
         PlayerInfo moneyGivingPlayer = null;
         int givenMoney = 0;
         if (leftMoney > 0 && rightMoney > 0) throw new System.Exception("Both players cannot trade money.");

@@ -85,11 +85,11 @@ public class TradingPlayerSelection : ScreenAnimation {
 
         PlayerInfo playerOne = leftTokenReceiver.PlayerInfo;
         PlayerInfo playerTwo = rightTokenReceiver.PlayerInfo;
-        backButton.interactable = false;
+        DataEventHub.Instance.call_TradeCommenced(playerOne, playerTwo);
         tradePanelInstance = createTradePanel(playerOne, playerTwo);
         moveObjects();
         uiEvents.call_FadeScreenCoverIn(1f);
-        DataEventHub.Instance.call_TradeCommenced(playerOne, playerTwo);
+        backButton.interactable = false;
     }
     private IEnumerator dropBackButton() {
         RectTransform backButtonRT = (RectTransform)backButton.transform;

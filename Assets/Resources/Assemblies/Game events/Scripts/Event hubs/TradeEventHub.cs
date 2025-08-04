@@ -8,6 +8,9 @@ public class TradeEventHub : ScriptableObject {
     private static TradeEventHub instance;
     [SerializeField] private GameEvent tradeChanged;
     [SerializeField] private GameEvent agreeClicked;
+    [SerializeField] private GameEvent tradeConditionsMet;
+    [SerializeField] private IntEvent numberedButtonClicked;
+    [SerializeField] private GameEvent handshakeComplete;
 
 
 
@@ -29,6 +32,9 @@ public class TradeEventHub : ScriptableObject {
     #region Invoking
     public void call_TradeChanged() => tradeChanged.invoke();
     public void call_AgreeClicked() => agreeClicked.invoke();
+    public void call_TradeConditionsMet() => tradeConditionsMet.invoke();
+    public void call_NumberedButtonClicked(int i) => numberedButtonClicked.invoke(i);
+    public void call_HandshakeComplete() => handshakeComplete.invoke();
     #endregion
 
 
@@ -36,6 +42,9 @@ public class TradeEventHub : ScriptableObject {
     #region Subscribing
     public void sub_TradeChanged(Action a) => tradeChanged.Listeners += a;
     public void sub_AgreeClicked(Action a) => agreeClicked.Listeners += a;
+    public void sub_TradeConditionsMet(Action a) => tradeConditionsMet.Listeners += a;
+    public void sub_NumberedButtonClicked(Action<int> a) => numberedButtonClicked.Listeners += a;
+    public void sub_HandshakeComplete(Action a) => handshakeComplete.Listeners += a;
     #endregion
 
 
@@ -43,5 +52,8 @@ public class TradeEventHub : ScriptableObject {
     #region Unsubscribing
     public void unsub_TradeChanged(Action a) => tradeChanged.Listeners -= a;
     public void unsub_AgreeClicked(Action a) => agreeClicked.Listeners -= a;
+    public void unsub_TradeConditionsMet(Action a) => tradeConditionsMet.Listeners -= a;
+    public void unsub_NumberedButtonClicked(Action<int> a) => numberedButtonClicked.Listeners -= a;
+    public void unsub_HandshakeComplete(Action a) => handshakeComplete.Listeners -= a;
     #endregion
 }

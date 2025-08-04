@@ -18,6 +18,8 @@ internal class Trade {
     internal Trade(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
+        tradablesOne = new();
+        tradablesTwo = new();
     }
     internal void tradablesOneChange(List<Tradable> newTradables) {
         tradablesOne = newTradables;
