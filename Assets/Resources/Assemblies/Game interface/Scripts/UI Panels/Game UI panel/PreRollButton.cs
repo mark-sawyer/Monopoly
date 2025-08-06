@@ -8,9 +8,10 @@ public class PreRollButton : MonoBehaviour {
         ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(() => button.interactable = false);
         ScreenAnimationEventHub.Instance.sub_TradeOpened(() => button.interactable = false);
         UIEventHub uiEvents = UIEventHub.Instance;
-        uiEvents.sub_RollButtonClicked(() => button.interactable = false);
+        UIPipelineEventHub uiPipeline = UIPipelineEventHub.Instance;
+        uiPipeline.sub_RollButtonClicked(() => button.interactable = false);
         uiEvents.sub_PayFiftyButtonClicked(() => button.interactable = false);
-        uiEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => button.interactable = false);
+        uiPipeline.sub_UseGOOJFCardButtonClicked((CardType cardType) => button.interactable = false);
 
         uiEvents.sub_PreRollStateStarting(() => button.interactable = true);
         uiEvents.sub_JailPreRollStateStarting(() => button.interactable = true);

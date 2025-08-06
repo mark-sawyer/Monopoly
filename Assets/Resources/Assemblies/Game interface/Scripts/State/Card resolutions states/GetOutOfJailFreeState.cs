@@ -11,8 +11,8 @@ public class GetOutOfJailFreeState : State {
         cardResolveInvoked = false;
         CardInfo cardInfo = GameState.game.DrawnCard;
         //WaitFrames.Instance.exe(40, pop.play);
-        WaitFrames.Instance.exe(50, () => {
-            DataEventHub.Instance.call_PlayerGetsGOOJFCard(GameState.game.TurnPlayer, cardInfo);
+        WaitFrames.Instance.beforeAction(50, () => {
+            DataUIPipelineEventHub.Instance.call_PlayerGetsGOOJFCard(GameState.game.TurnPlayer, cardInfo);
             DataEventHub.Instance.call_CardResolved();
             cardResolveInvoked = true;
         });

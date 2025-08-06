@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class PlayerPanelManager : MonoBehaviour {
     #region External references
     [SerializeField] private GameObject playerPanelPrefab;
     #endregion
     private const float GAP = 3;
-    UIEventHub uiEvents;
+    UIPipelineEventHub uiPipelineEvents;
     ManagePropertiesEventHub managePropertiesEvents;
+    TradeEventHub tradeEvents;
 
 
 
@@ -60,21 +62,24 @@ public class PlayerPanelManager : MonoBehaviour {
         }
     }
     private void subscribeToEvents() {
-        uiEvents = UIEventHub.Instance;
+        uiPipelineEvents = UIPipelineEventHub.Instance;
         managePropertiesEvents = ManagePropertiesEventHub.Instance;
+        tradeEvents = TradeEventHub.Instance;
 
-        uiEvents.sub_MoneyAdjustment(adjustMoneyVisual);
-        uiEvents.sub_MoneyBetweenPlayers(adjustMoneyVisuals);
-        uiEvents.sub_PlayerPropertyAdjustment(updatePropertyIcons);
-        uiEvents.sub_NextPlayerTurn(updateTurnPlayerHighlight);
-        uiEvents.sub_PlayerGetsGOOJFCard(updateGOOJFCardIcons);
-        uiEvents.sub_UseGOOJFCardButtonClicked(
-            (CardType cardType) => updateGOOJFCardIcons(GameState.game.TurnPlayer, cardType)
+        uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisual);
+        uiPipelineEvents.sub_MoneyBetweenPlayers(adjustMoneyVisuals);
+        uiPipelineEvents.sub_PlayerPropertyAdjustment(updatePropertyIcons);
+        uiPipelineEvents.sub_NextPlayerTurn(updateTurnPlayerHighlight);
+        uiPipelineEvents.sub_PlayerGetsGOOJFCard(updateGOOJFCardIcon);
+        uiPipelineEvents.sub_UseGOOJFCardButtonClicked(
+            (CardType cardType) => updateGOOJFCardIcon(GameState.game.TurnPlayer, cardType)
         );
 
         managePropertiesEvents.sub_ManagePropertiesOpened(() => changeMoneyAdjustListening(true));
         managePropertiesEvents.sub_BackButtonPressed(() => changeMoneyAdjustListening(false));
         managePropertiesEvents.sub_UpdateIconsAfterManagePropertiesClosed(checkForUpdatesAfterBackButtonPushed);
+
+        tradeEvents.sub_UpdateVisualsAfterTradeFinalised(updateVisualsAfterTradeListening);
     }
     #endregion
 
@@ -82,7 +87,7 @@ public class PlayerPanelManager : MonoBehaviour {
 
     #region Listeners
     private void adjustMoneyVisual(PlayerInfo playerInfo) {
-        int playerIndex = GameState.game.getPlayerIndex(playerInfo);
+        int playerIndex = playerInfo.Index;
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
         playerPanel.adjustMoney(playerInfo);
     }
@@ -91,12 +96,12 @@ public class PlayerPanelManager : MonoBehaviour {
         adjustMoneyVisual(playerTwo);
     }
     private void adjustMoneyVisualQuietly(PlayerInfo playerInfo) {
-        int playerIndex = GameState.game.getPlayerIndex(playerInfo);
+        int playerIndex = playerInfo.Index;
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
         playerPanel.adjustMoneyQuietly(playerInfo);
     }
     private void updatePropertyIcons(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
-        int playerIndex = GameState.game.getPlayerIndex(playerInfo);
+        int playerIndex = playerInfo.Index;
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
         playerPanel.updatePropertyIconVisual(playerInfo, propertyInfo);
     }
@@ -106,11 +111,10 @@ public class PlayerPanelManager : MonoBehaviour {
             getPlayerPanel(i).toggleHighlightImage(i == turnPlayerIndex);
         }
     }
-    private void updateGOOJFCardIcons(PlayerInfo playerInfo, CardType cardType) {
-        int playerIndex = GameState.game.getPlayerIndex(playerInfo);
+    private void updateGOOJFCardIcon(PlayerInfo playerInfo, CardType cardType) {
+        int playerIndex = playerInfo.Index;
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
-        bool hasCard = playerInfo.hasGOOJFCardOfType(cardType);
-        playerPanel.toggleGOOJFIcon(cardType, hasCard);
+        StartCoroutine(playerPanel.toggleGOOJFIcon(cardType));
     }
     private void checkForUpdatesAfterBackButtonPushed() {
         List<PropertyGroupIcon> iconsToUpdate = new();
@@ -123,17 +127,22 @@ public class PlayerPanelManager : MonoBehaviour {
             foreach (PropertyGroupIcon PGI in needingUpdateOnThisPanel) iconsToUpdate.Add(PGI);
         }
 
-        StartCoroutine(updateIconsPostManagePropertiesClosed(iconsToUpdate));
+        StartCoroutine(updateIconsInSequence(iconsToUpdate));
     }
     private void changeMoneyAdjustListening(bool quietly) {
         if (quietly) {
-            uiEvents.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
-            uiEvents.unsub_MoneyAdjustment(adjustMoneyVisual);
+            uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
+            uiPipelineEvents.unsub_MoneyAdjustment(adjustMoneyVisual);
         }
         else {
-            uiEvents.sub_MoneyAdjustment(adjustMoneyVisual);
-            uiEvents.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
+            uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisual);
+            uiPipelineEvents.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
         }
+    }
+    private void updateVisualsAfterTradeListening() {
+        TradeInfo completedTrade = GameState.game.CompletedTrade;
+
+        StartCoroutine(updateVisualsAfterTrade(completedTrade));
     }
     #endregion
 
@@ -143,14 +152,70 @@ public class PlayerPanelManager : MonoBehaviour {
     private PlayerPanel getPlayerPanel(int index) {
         return transform.GetChild(index).GetComponent<PlayerPanel>();
     }
-    private IEnumerator updateIconsPostManagePropertiesClosed(List<PropertyGroupIcon> iconsToUpdate) {
+    private IEnumerator updateIconsInSequence(List<PropertyGroupIcon> iconsToUpdate) {
         foreach (PropertyGroupIcon propertyGroupIcon in iconsToUpdate) {
-            yield return StartCoroutine(propertyGroupIcon.pulseAndUpdate());
-            propertyGroupIcon.setNewState();
+            yield return StartCoroutine(propertyGroupIcon.pulseAndUpdateWithPop());
         }
 
-        for (int i = 0; i < 30; i++) yield return null;
+        yield return WaitFrames.Instance.frames(30);
         ManagePropertiesEventHub.Instance.call_UpdateBoardAfterManagePropertiesClosed();
+    }
+    private IEnumerator updateIconsFromTradeSimultaneously(PlayerInfo playerOne, PlayerInfo playerTwo) {
+        PropertyGroupIcon[] getIcons(PlayerInfo playerInfo) {
+            PlayerPanel playerPanel = getPlayerPanel(playerInfo.Index);
+            return playerPanel.PropertyGroupIcons;
+        }
+        PropertyGroupIcon[] iconsOne = getIcons(playerOne);
+        PropertyGroupIcon[] iconsTwo = getIcons(playerTwo);
+        for (int i = 0; i < 10; i++) {
+            PropertyGroupIcon iconOne = iconsOne[i];
+            if (!iconOne.NeedsToUpdate) continue;
+            PropertyGroupIcon iconTwo = iconsTwo[i];
+
+            StartCoroutine(iconOne.pulseAndUpdateWithPop());
+            StartCoroutine(iconTwo.pulseAndUpdate());
+            yield return WaitFrames.Instance.frames(30);
+        }
+    }
+    private IEnumerator updateVisualsAfterTrade(TradeInfo completedTrade) {
+        IEnumerator exchangeMoney() {
+            DataUIPipelineEventHub.Instance.call_MoneyBetweenPlayers(
+                completedTrade.MoneyGivingPlayer,
+                completedTrade.MoneyReceivingPlayer,
+                completedTrade.MoneyPassed
+            );
+            yield return WaitFrames.Instance.frames(InterfaceConstants.FRAMES_FOR_MONEY_UPDATE);
+        }
+        IEnumerator exchangeCard(CardType cardType) {
+            PlayerPanel playerPanelOne = getPlayerPanel(completedTrade.PlayerOne.Index);
+            PlayerPanel playerPanelTwo = getPlayerPanel(completedTrade.PlayerTwo.Index);
+
+            if (playerPanelOne.needsGOOJFIconAdjusted(cardType)) {
+                if (completedTrade.PlayerOne.hasGOOJFCardOfType(cardType)) {
+                    yield return playerPanelTwo.toggleGOOJFIcon(cardType);
+                    yield return WaitFrames.Instance.frames(10);
+                    yield return playerPanelOne.toggleGOOJFIcon(cardType);
+                }
+                else {
+                    yield return playerPanelOne.toggleGOOJFIcon(cardType);
+                    yield return WaitFrames.Instance.frames(10);
+                    yield return playerPanelTwo.toggleGOOJFIcon(cardType);
+                }
+            }
+        }
+
+        yield return WaitFrames.Instance.frames(50);
+        if (completedTrade.MoneyWasExchanged) yield return exchangeMoney();
+        if (completedTrade.PropertyWasExchanged) yield return updateIconsFromTradeSimultaneously(
+            completedTrade.PlayerOne,
+            completedTrade.PlayerTwo
+        );
+        if (completedTrade.CardWasExchanged) {
+            yield return exchangeCard(CardType.CHANCE);
+            yield return exchangeCard(CardType.COMMUNITY_CHEST);
+        }
+        for (int i = 0; i < 30; i++) yield return null;
+        tradeEvents.call_AllVisualsUpdatedAfterTradeFinalised();
     }
     #endregion
 }

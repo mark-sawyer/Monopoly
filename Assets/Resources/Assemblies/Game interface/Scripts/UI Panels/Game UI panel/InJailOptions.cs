@@ -9,19 +9,21 @@ public class InJailOptions : MonoBehaviour {
     [SerializeField] private Button ccCardButton;
     [SerializeField] private TextMeshProUGUI countText;
     private UIEventHub uiEvents;
+    private UIPipelineEventHub uiPipelines;
 
 
     #region MonoBehaviour
     private void OnEnable() {
         uiEvents = UIEventHub.Instance;
-        uiEvents.sub_RollButtonClicked(disableButtons);
+        uiPipelines = UIPipelineEventHub.Instance;
+        uiPipelines.sub_RollButtonClicked(disableButtons);
         uiEvents.sub_PayFiftyButtonClicked(disableButtons);
-        uiEvents.sub_UseGOOJFCardButtonClicked(disableButtons);
+        uiPipelines.sub_UseGOOJFCardButtonClicked(disableButtons);
         uiEvents.sub_JailPreRollStateStarting(setup);
         setup();
     }
     private void OnDisable() {
-        uiEvents.unsub_RollButtonClicked(disableButtons);
+        uiPipelines.unsub_RollButtonClicked(disableButtons);
     }
     #endregion
 

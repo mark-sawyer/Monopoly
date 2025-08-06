@@ -5,7 +5,7 @@ public class HandshakeKeyHold : MonoBehaviour {
     [SerializeField] private KeyCode heldKey;
     [SerializeField] private TextMeshProUGUI textMesh;
     private bool activated;
-    private const float TRANSPARENT_ALPHA = 50f / 255f;
+    private const float TRANSPARENT_ALPHA = 100f / 255f;
 
 
 

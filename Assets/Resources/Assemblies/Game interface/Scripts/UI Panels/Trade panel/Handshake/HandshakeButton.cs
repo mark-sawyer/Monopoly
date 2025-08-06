@@ -27,9 +27,9 @@ public class HandshakeButton : MonoBehaviour {
         whiteBorderRecolourer = new PanelRecolourer(whiteBorderPanel);
         redRecolourer = new PanelRecolourer(redPanel);
         tradeEventHub = TradeEventHub.Instance;
+        tradeEventHub.sub_NumberedButtonClicked(someButtonClicked);
     }
     private void OnEnable() {
-        tradeEventHub.sub_NumberedButtonClicked(someButtonClicked);
         transform.localScale = new Vector3(STARTING_SCALE, STARTING_SCALE, STARTING_SCALE);
         setAlphas(1);
     }

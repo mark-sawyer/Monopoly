@@ -32,7 +32,7 @@ public class IncomeTaxQuestion : ScreenAnimation<PlayerInfo> {
         tenPercentButtonText.updateText(amount);
         if (amount > 200) UIEventHub.Instance.call_CorrectOutcome();
         else UIEventHub.Instance.call_IncorrectOutcome();
-        WaitFrames.Instance.exe(WAITED_FRAMES, completeQuestion, 200);
+        WaitFrames.Instance.beforeAction(WAITED_FRAMES, completeQuestion, 200);
     }
     public void tenPercentClicked() {
         questionCircle.enabled = false;
@@ -40,7 +40,7 @@ public class IncomeTaxQuestion : ScreenAnimation<PlayerInfo> {
         tenPercentButtonText.updateText(amount);
         if (amount <= 200) UIEventHub.Instance.call_CorrectOutcome();
         else UIEventHub.Instance.call_IncorrectOutcome();
-        WaitFrames.Instance.exe(WAITED_FRAMES, completeQuestion, player.IncomeTaxAmount);
+        WaitFrames.Instance.beforeAction(WAITED_FRAMES, completeQuestion, player.IncomeTaxAmount);
     }
     #endregion
 

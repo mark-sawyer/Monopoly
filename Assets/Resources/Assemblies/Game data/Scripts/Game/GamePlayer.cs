@@ -26,4 +26,5 @@ public interface GamePlayer {
     public void createNewTrade(PlayerInfo playerOne, PlayerInfo playerTwo);
     public void removedTerminatedTrade();
     public void updateProposedTrade(List<TradableInfo> t1, List<TradableInfo> t2, PlayerInfo moneyGiver, int money);
+    public void makeProposedTrade();
 }

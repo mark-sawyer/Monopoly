@@ -41,14 +41,13 @@ public class OtherPropertySection : PropertySection {
     #region
     public void buttonClicked() {
         PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
-        DataEventHub dataEvents = DataEventHub.Instance;
         if (propertyInfo.IsMortgaged) {
-            dataEvents.call_PropertyUnmortgaged(propertyInfo);
-            dataEvents.call_MoneyAdjustment(selectedPlayer, -propertyInfo.UnmortgageCost);
+            DataEventHub.Instance.call_PropertyUnmortgaged(propertyInfo);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(selectedPlayer, -propertyInfo.UnmortgageCost);
         }
         else {
-            dataEvents.call_PropertyMortgaged(propertyInfo);
-            dataEvents.call_MoneyAdjustment(selectedPlayer, propertyInfo.MortgageValue);
+            DataEventHub.Instance.call_PropertyMortgaged(propertyInfo);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(selectedPlayer, propertyInfo.MortgageValue);
         }
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer);
     }

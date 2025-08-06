@@ -14,7 +14,7 @@ public class PreRollState : State {
         managePropertiesClicked = false;
         tradeClicked = false;
 
-        UIEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
+        UIPipelineEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(managePropertiesListener);
         ScreenAnimationEventHub.Instance.sub_TradeOpened(tradeListener);
 
@@ -26,7 +26,7 @@ public class PreRollState : State {
             || tradeClicked;
     }
     public override void exitState() {
-        UIEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
+        UIPipelineEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.unsub_ManagePropertiesOpened(managePropertiesListener);
         ScreenAnimationEventHub.Instance.unsub_TradeOpened(tradeListener);
     }
@@ -48,7 +48,7 @@ public class PreRollState : State {
         int turnIndex = GameState.game.IndexOfTurnPlayer;
         TokenVisual turnTokenVisual = TokenVisualManager.Instance.getTokenVisual(turnIndex);
         turnTokenVisual.prepForMoving();
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING,
             () => {
                 rollAnimationOver = true;

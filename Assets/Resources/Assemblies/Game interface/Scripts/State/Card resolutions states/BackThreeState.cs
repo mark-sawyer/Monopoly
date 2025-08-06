@@ -15,7 +15,7 @@ public class BackThreeState : State {
         int oldSpaceIndex = turnPlayer.SpaceIndex;
         int newSpaceIndex = (oldSpaceIndex - 3).mod(GameConstants.TOTAL_SPACES);
         SpaceInfo newSpace = SpaceVisualManager.Instance.getSpaceVisual(newSpaceIndex).SpaceInfo;
-        DataEventHub.Instance.call_TurnPlayerMovedToSpace(newSpace, oldSpaceIndex);
+        DataUIPipelineEventHub.Instance.call_TurnPlayerMovedToSpace(newSpace, oldSpaceIndex);
         DataEventHub.Instance.call_CardResolved();
     }
     public override bool exitConditionMet() {

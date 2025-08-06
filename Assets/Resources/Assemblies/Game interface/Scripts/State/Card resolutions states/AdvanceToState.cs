@@ -17,7 +17,7 @@ public class AdvanceToState : State {
         int oldSpaceIndex = turnPlayer.SpaceIndex;
         int newSpaceIndex = newSpace.Index;
         int spacesMoved = Modulus.mod(newSpaceIndex - oldSpaceIndex, GameConstants.TOTAL_SPACES);
-        DataEventHub.Instance.call_TurnPlayerMovedAlongBoard(oldSpaceIndex, spacesMoved);
+        DataUIPipelineEventHub.Instance.call_TurnPlayerMovedAlongBoard(oldSpaceIndex, spacesMoved);
         DataEventHub.Instance.call_CardResolved();
     }
     public override bool exitConditionMet() {

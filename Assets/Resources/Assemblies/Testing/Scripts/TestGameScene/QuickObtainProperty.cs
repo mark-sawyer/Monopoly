@@ -15,18 +15,18 @@ public class QuickObtainProperty : MonoBehaviour {
                 if (propertyNumber > propertiesInGroup) return;
                 EstateInfo estateInfo = estateGroupInfo.getEstateInfo(propertyNumber - 1);
                 if (estateInfo.IsBought) return;
-                DataEventHub.Instance.call_PlayerObtainedProperty(GameState.game.TurnPlayer, estateInfo);
+                DataUIPipelineEventHub.Instance.call_PlayerObtainedProperty(GameState.game.TurnPlayer, estateInfo);
             }
             else if (propertyGroupNumber == 9) {
                 RailroadInfo railroadInfo = propertyGroupSelect.getRailroadInfo(propertyNumber - 1);
                 if (railroadInfo.IsBought) return;
-                DataEventHub.Instance.call_PlayerObtainedProperty(GameState.game.TurnPlayer, railroadInfo);
+                DataUIPipelineEventHub.Instance.call_PlayerObtainedProperty(GameState.game.TurnPlayer, railroadInfo);
             }
             else {
                 if (propertyNumber > 2) return;
                 UtilityInfo utilityInfo = propertyGroupSelect.getUtilityInfo(propertyNumber - 1);
                 if (utilityInfo.IsBought) return;
-                DataEventHub.Instance.call_PlayerObtainedProperty(GameState.game.TurnPlayer, utilityInfo);
+                DataUIPipelineEventHub.Instance.call_PlayerObtainedProperty(GameState.game.TurnPlayer, utilityInfo);
             }
         }
     }

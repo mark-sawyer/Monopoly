@@ -28,6 +28,10 @@ internal class Card : ScriptableObject, CardInfo, Tradable {
     #region Tradable
     public int TradableOrderID => cardType == CardType.COMMUNITY_CHEST ? 29 : 30;
     public string Abbreviation => "CARD";
+    public void giveFromOneToTwo(Player playerOne, Player playerTwo) {
+        playerOne.handBackGOOJFCard(cardType);
+        playerTwo.getGOOJFCard(this);
+    }
     #endregion
 }
 

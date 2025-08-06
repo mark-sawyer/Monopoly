@@ -18,11 +18,11 @@ public class LuxuryTaxAnimation : ScreenAnimation {
         canvasWidth = ((RectTransform)transform.parent).rect.width;
         StartCoroutine(rollRingAcross());
         StartCoroutine(growAndShrinkText(luxuryTaxTextTransform));
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             ANIMATION_FRAMES - TEXT_ANIMATION_FRAMES,
             () => StartCoroutine(growAndShrinkText(pay100TextTransform))
         );
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             ANIMATION_FRAMES + 20,
             () => ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation()
         );

@@ -34,22 +34,22 @@ public class TestPropertyObtaining : MonoBehaviour {
     }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            DataEventHub.Instance.call_MoneyAdjustment(playerInfo, moneyChange.Amount);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(playerInfo, moneyChange.Amount);
         }
         else if (Input.GetKeyDown(KeyCode.Delete)) {
-            DataEventHub.Instance.call_MoneyAdjustment(playerInfo, -moneyChange.Amount);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(playerInfo, -moneyChange.Amount);
         }
         else if (Input.GetKeyDown(KeyCode.Space)) {
             PropertyInfo property = getProperty(propertyGroupSelected.PropertyGroup, propertySelected.ID);
             if (property == null) return;
             
             if (property.Owner == null && property.Cost <= playerInfo.Money) {
-                DataEventHub.Instance.call_PlayerObtainedProperty(playerInfo, property);
-                DataEventHub.Instance.call_MoneyAdjustment(playerInfo, -property.Cost);
+                DataUIPipelineEventHub.Instance.call_PlayerObtainedProperty(playerInfo, property);
+                DataUIPipelineEventHub.Instance.call_MoneyAdjustment(playerInfo, -property.Cost);
             }
             else if (property is EstateInfo estateInfo && estateInfo.CanAddBuilding && estateInfo.BuildingCost <= playerInfo.Money) {
                 DataEventHub.Instance.call_EstateAddedBuilding(estateInfo);
-                DataEventHub.Instance.call_MoneyAdjustment(playerInfo, -estateInfo.BuildingCost);
+                DataUIPipelineEventHub.Instance.call_MoneyAdjustment(playerInfo, -estateInfo.BuildingCost);
             }
         }            
     }

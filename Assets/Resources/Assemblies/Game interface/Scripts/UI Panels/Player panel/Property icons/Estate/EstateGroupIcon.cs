@@ -41,11 +41,13 @@ public class EstateGroupIcon : PropertyGroupIcon {
 
 
     #region PropertyGroupIcon
-    public override bool iconNeedsToUpdate() {
-        EstateGroupIconState newState = new EstateGroupIconState(estateGroupInfo, PlayerInfo);
-        return estateGroupIconState.stateHasChanged(newState);
+    public override bool NeedsToUpdate {
+        get {
+            EstateGroupIconState newState = new EstateGroupIconState(estateGroupInfo, PlayerInfo);
+            return estateGroupIconState.stateHasChanged(newState);
+        }
     }
-    public override void updateVisual() {
+    protected override void updateVisual() {
         int estatesInGroup = estateGroupInfo.NumberOfPropertiesInGroup;
         int propertiesOwned = estateGroupInfo.propertiesOwnedByPlayer(PlayerInfo);
         bool hasMonopoly = propertiesOwned == estatesInGroup;
@@ -98,7 +100,7 @@ public class EstateGroupIcon : PropertyGroupIcon {
         hotelIcon.SetActive(hotelExists && minBuildings == maxBuildings);
         mortgageM.SetActive(mortgageCount == estatesInGroup);
     }
-    public override void setNewState() {
+    protected override void setNewState() {
         estateGroupIconState = new EstateGroupIconState(estateGroupInfo, PlayerInfo);
     }
     #endregion

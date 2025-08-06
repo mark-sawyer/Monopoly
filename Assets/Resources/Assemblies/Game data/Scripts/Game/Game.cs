@@ -12,6 +12,7 @@ internal class Game : GameStateInfo, GamePlayer {
     private Queue<Card> communityChestCards;
     private Queue<Card> chanceCards;
     private Card drawnCard;
+    private Trade completedTrade;
     private Trade proposedTrade;
 
 
@@ -32,6 +33,9 @@ internal class Game : GameStateInfo, GamePlayer {
         initialiseUtilities();
         players = initialisePlayers(playerNum, startingMoney);
         turnPlayer = players[0];
+    }
+    internal int getPlayerIndex(PlayerInfo player) {
+        return Array.FindIndex(players, x => x == player);
     }
     #endregion
 
@@ -55,13 +59,11 @@ internal class Game : GameStateInfo, GamePlayer {
     public PlayerInfo getPlayerInfo(int index) {
         return players[index];
     }
-    public int getPlayerIndex(PlayerInfo player) {
-        return Array.FindIndex(players, x => x == player);
-    }
     public Creditor BankCreditor => bank;
     public BankInfo BankInfo => bank;
     public CardInfo DrawnCard => drawnCard;
     public bool TradeIsEmpty => proposedTrade.IsEmpty;
+    public TradeInfo CompletedTrade => completedTrade;
     #endregion
 
 
@@ -181,6 +183,11 @@ internal class Game : GameStateInfo, GamePlayer {
         proposedTrade.tradablesTwoChange(tradablesTwo);
         proposedTrade.moneyChange(moneyGivingPlayer, money);
     }
+    public void makeProposedTrade() {
+        proposedTrade.performTradeExceptMoney();
+        completedTrade = proposedTrade;
+        proposedTrade = null;
+    }
     #endregion
 
 
@@ -252,7 +259,8 @@ internal class Game : GameStateInfo, GamePlayer {
                 spaces[0],
                 (Token)UnityEngine.Random.Range(0, 8),
                 (PlayerColour)UnityEngine.Random.Range(0, 8),
-                startingMoney
+                startingMoney,
+                this
             );
             spaces[0].addPlayer(players[i]);
         }

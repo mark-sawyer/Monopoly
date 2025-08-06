@@ -32,8 +32,8 @@ public class TokenVisualManager : MonoBehaviour {
             newToken.GetComponent<TokenVisual>().setup(player, startingSpaceVisual.getScale(player));
             i += 1;
         }
-        UIEventHub.Instance.sub_TurnPlayerMovedAlongBoard(moveTurnPlayer);
-        UIEventHub.Instance.sub_TurnPlayerMovedToSpace(moveTurnPlayerDirectly);
+        UIPipelineEventHub.Instance.sub_TurnPlayerMovedAlongBoard(moveTurnPlayer);
+        UIPipelineEventHub.Instance.sub_TurnPlayerMovedToSpace(moveTurnPlayerDirectly);
     }
     #endregion
 

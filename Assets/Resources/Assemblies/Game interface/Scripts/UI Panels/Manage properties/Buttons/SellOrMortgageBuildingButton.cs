@@ -23,11 +23,11 @@ public class SellOrMortgageBuildingButton : MonoBehaviour {
     public void buttonClicked() {
         void sellClicked(PlayerInfo selectedPlayer) {
             DataEventHub.Instance.call_EstateRemovedBuilding(estateInfo);
-            DataEventHub.Instance.call_MoneyAdjustment(selectedPlayer, estateInfo.BuildingSellCost);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(selectedPlayer, estateInfo.BuildingSellCost);
         }
         void mortgageClicked(PlayerInfo selectedPlayer) {
             DataEventHub.Instance.call_PropertyMortgaged(estateInfo);
-            DataEventHub.Instance.call_MoneyAdjustment(selectedPlayer, estateInfo.MortgageValue);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(selectedPlayer, estateInfo.MortgageValue);
         }
 
 

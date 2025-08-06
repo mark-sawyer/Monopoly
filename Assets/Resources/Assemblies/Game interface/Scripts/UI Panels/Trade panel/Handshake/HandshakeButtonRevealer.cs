@@ -1,27 +1,29 @@
 using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class HandshakeButtonRevealer : MonoBehaviour {
     [SerializeField] private Button leftAgreeButton;
     [SerializeField] private Button rightAgreeButton;
     [SerializeField] private GameObject[] handshakeButtons;
+    [SerializeField] private GameObject holdKeysInstructions;
+    [SerializeField] private GameObject clickButtonsInstructions;
     private Action updateAction;
     private bool buttonsShowing;
 
 
 
     #region MonoBehaviour
-    private void OnEnable() {
-        UIEventHub.Instance.sub_TradeUpdated(turnOffKeyListening);
+    private void Awake() {
+        UIPipelineEventHub.Instance.sub_TradeUpdated(turnOffKeyListening);
         TradeEventHub.Instance.sub_TradeConditionsMet(turnOnKeyListening);
+    }
+    private void OnEnable() {
         updateAction = doNothing;
         buttonsShowing = false;
     }
     private void OnDestroy() {
-        UIEventHub.Instance.unsub_TradeUpdated(turnOffKeyListening);
+        UIPipelineEventHub.Instance.unsub_TradeUpdated(turnOffKeyListening);
         TradeEventHub.Instance.unsub_TradeConditionsMet(turnOnKeyListening);
     }
     private void Update() {
@@ -34,11 +36,12 @@ public class HandshakeButtonRevealer : MonoBehaviour {
     #region private
     private bool HoldingHandshakeKeys {
         get {
-            //return Input.GetKey(KeyCode.Z)
-            //    && Input.GetKey(KeyCode.Q)
-            //    && Input.GetKey(KeyCode.Slash)
-            //    && Input.GetKey(KeyCode.RightBracket);
-            return Input.GetKey(KeyCode.G);
+            bool properInput = Input.GetKey(KeyCode.Z)
+                && Input.GetKey(KeyCode.Q)
+                && Input.GetKey(KeyCode.Slash)
+                && Input.GetKey(KeyCode.RightBracket);
+            bool secretInput =  Input.GetKey(KeyCode.RightControl);
+            return properInput || secretInput;
         }
     }
     private void doNothing() { } 
@@ -63,10 +66,14 @@ public class HandshakeButtonRevealer : MonoBehaviour {
                 buttonGameObject.SetActive(true);
                 Button button = buttonGameObject.GetComponent<Button>();
                 button.interactable = startsInteractable;
+                holdKeysInstructions.SetActive(false);
+                clickButtonsInstructions.SetActive(true);
             }
         }
         else {
             Array.ForEach(handshakeButtons, x => x.SetActive(false));
+            holdKeysInstructions.SetActive(true);
+            clickButtonsInstructions.SetActive(false);
         }
     }
     #endregion

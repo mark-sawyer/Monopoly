@@ -17,11 +17,14 @@ public class WaitFrames : MonoBehaviour {
 
 
     #region public
-    public void exe(int frames, Action a) {
+    public void beforeAction(int frames, Action a) {
         StartCoroutine(waitThenAction(frames, a));
     }
-    public void exe<T>(int frames, Action<T> a, T arg) {
+    public void beforeAction<T>(int frames, Action<T> a, T arg) {
         StartCoroutine(waitThenAction(frames, a, arg));
+    }
+    public IEnumerator frames(int f) {
+        for (int i = 0; i < f; i++) yield return null;
     }
     #endregion
 

@@ -4,18 +4,18 @@ using UnityEngine.UI;
 public class AgreeButton : MonoBehaviour {
     [SerializeField] private Button otherButton;
     [SerializeField] private Button button;
-    private UIEventHub uiEventHub;
+    private UIPipelineEventHub uiPipelineEventHub;
     private TradeEventHub tradeEventHub;
 
 
     #region MonoBehaviour
     private void Start() {
-        uiEventHub = UIEventHub.Instance;
+        uiPipelineEventHub = UIPipelineEventHub.Instance;
         tradeEventHub = TradeEventHub.Instance;
-        uiEventHub.sub_TradeUpdated(adjustInteractability);
+        uiPipelineEventHub.sub_TradeUpdated(adjustInteractability);
     }
     private void OnDestroy() {
-        uiEventHub.unsub_TradeUpdated(adjustInteractability);
+        uiPipelineEventHub.unsub_TradeUpdated(adjustInteractability);
     }
     #endregion
 

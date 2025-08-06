@@ -11,7 +11,7 @@ public class MoneyCardState : State {
         MoneyDifferenceCardInfo moneyDifferenceCardInfo = (MoneyDifferenceCardInfo)GameState.game.DrawnCard.CardMechanicInfo;
         addedToPlayer = moneyDifferenceCardInfo.AddedToPlayer;
         if (addedToPlayer > 0) {
-            DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, addedToPlayer);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, addedToPlayer);
         }
         else DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.BankCreditor, -addedToPlayer);
         DataEventHub.Instance.call_CardResolved();

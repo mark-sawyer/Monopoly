@@ -83,7 +83,7 @@ public class RentAnimation : ScreenAnimation<DebtInfo> {
         StartCoroutine(moveToken(debtorRT, 2 * width / 5f));
         StartCoroutine(moveToken(creditorRT, -2 * width / 5f));
         StartCoroutine(moveText());
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             MOVEMENT_FRAMES + 10,
             () => StartCoroutine(sendMoney())
         );

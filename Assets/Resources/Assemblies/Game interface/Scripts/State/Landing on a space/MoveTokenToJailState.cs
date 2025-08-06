@@ -31,7 +31,7 @@ public class MoveTokenToJailState : State {
     #region private
     private void animationOverCalled() {
         int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
-        DataEventHub.Instance.call_TurnPlayerSentToJail(startingIndex);
+        DataUIPipelineEventHub.Instance.call_TurnPlayerSentToJail(startingIndex);
     }
     private void heardTokenSettle() {
         tokenSettled = true;

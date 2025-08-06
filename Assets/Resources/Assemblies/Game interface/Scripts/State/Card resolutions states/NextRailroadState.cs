@@ -18,7 +18,7 @@ public class NextRailroadState : State {
         int spacesToMove = getSpacesToNextRailroad(oldSpaceIndex);
         int newSpaceIndex = (oldSpaceIndex + spacesToMove) % GameConstants.TOTAL_SPACES;
         SpaceInfo newSpace = SpaceVisualManager.Instance.getSpaceVisual(newSpaceIndex).SpaceInfo;
-        DataEventHub.Instance.call_TurnPlayerMovedToSpace(newSpace, oldSpaceIndex);
+        DataUIPipelineEventHub.Instance.call_TurnPlayerMovedToSpace(newSpace, oldSpaceIndex);
         DataEventHub.Instance.call_CardResolved();
 
         railroadInfo = (RailroadInfo)((PropertySpaceInfo)newSpace).PropertyInfo;

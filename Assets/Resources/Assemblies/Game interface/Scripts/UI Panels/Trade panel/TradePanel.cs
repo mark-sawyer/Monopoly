@@ -7,19 +7,20 @@ public class TradePanel : MonoBehaviour {
     private PlayerInfo leftPlayer;
     private PlayerInfo rightPlayer;
     private TradeEventHub tradeEventHub;
-    private DataEventHub dataEventHub;
+    private DataUIPipelineEventHub dataUIPipelineEventHub;
 
 
 
     #region MonoBehaviour
     private void Start() {
-        dataEventHub = DataEventHub.Instance;
+        dataUIPipelineEventHub = DataUIPipelineEventHub.Instance;
         tradeEventHub = TradeEventHub.Instance;
         tradeEventHub.sub_TradeChanged(callNewProposedTrade);
         tradeEventHub.sub_HandshakeComplete(finaliseTrade);
     }
     private void OnDestroy() {
         tradeEventHub.unsub_TradeChanged(callNewProposedTrade);
+        tradeEventHub.unsub_HandshakeComplete(finaliseTrade);
     }
     #endregion
 
@@ -46,9 +47,9 @@ public class TradePanel : MonoBehaviour {
         }
     }
     private void finaliseTrade() {
-        if (!TradeConditionsMet) return;
+        if (!TradeConditionsMet) return;  // Defensive check in case the proposed trade was adjusted on the last frame.
 
-
+        dataUIPipelineEventHub.call_TradeLockedIn();
     }
     private void callNewProposedTrade() {
         List<TradableInfo> tradablesOne = leftSide.ProposedTradables;
@@ -67,7 +68,7 @@ public class TradePanel : MonoBehaviour {
             givenMoney = rightMoney;
         }
 
-        dataEventHub.call_TradeUpdated(
+        dataUIPipelineEventHub.call_TradeUpdated(
             tradablesOne,
             tradablesTwo,
             moneyGivingPlayer,

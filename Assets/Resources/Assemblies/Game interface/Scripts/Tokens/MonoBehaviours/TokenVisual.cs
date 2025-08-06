@@ -32,14 +32,17 @@ public class TokenVisual : MonoBehaviour {
             transform = tokenVisual.transform;
             playerInfo = tokenVisual.playerInfo;
             goMajorPoint = SpaceVisualManager.Instance.getSpaceVisual(0).getMajorPoint(GameState.game.TurnPlayer);
-            UIEventHub.Instance.sub_LeaveJail(tokenOnJailSpaceChanged);
+            UIPipelineEventHub.Instance.sub_LeaveJail(tokenOnJailSpaceChanged);
             attractivePoint = transform.position;
         }
         public void update() {
             moveToAttractivePoint();
             if (queue.Count > 0 && directionVector().magnitude < DISTANCE_TO_SPACE_THRESHOLD) {
                 if (passingGo()) {
-                    DataEventHub.Instance.call_MoneyAdjustment(tokenVisual.PlayerInfo, GameConstants.MONEY_FOR_PASSING_GO);
+                    DataUIPipelineEventHub.Instance.call_MoneyAdjustment(
+                        tokenVisual.PlayerInfo,
+                        GameConstants.MONEY_FOR_PASSING_GO
+                    );
                 }
                 attractivePoint = queue.Dequeue();
                 if (queue.Count == 0) {
@@ -207,7 +210,7 @@ public class TokenVisual : MonoBehaviour {
         float currentScale = transform.localScale.x;
         if (currentScale < InterfaceConstants.SCALE_FOR_MOVING_TOKEN) {
             beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
-            WaitFrames.Instance.exe(
+            WaitFrames.Instance.beforeAction(
                 InterfaceConstants.FRAMES_FOR_TOKEN_SCALING,
                 () => tokenMover.startMoving(startingIndex, spacesMoved)
             );
@@ -219,7 +222,7 @@ public class TokenVisual : MonoBehaviour {
         float currentScale = transform.localScale.x;
         if (currentScale < InterfaceConstants.SCALE_FOR_MOVING_TOKEN) {
             beginScaleChange(InterfaceConstants.SCALE_FOR_MOVING_TOKEN);
-            WaitFrames.Instance.exe(
+            WaitFrames.Instance.beforeAction(
                 InterfaceConstants.FRAMES_FOR_TOKEN_SCALING,
                 () => tokenMover.startMovingDirectly(startingIndex, newIndex)
             );
@@ -257,7 +260,7 @@ public class TokenVisual : MonoBehaviour {
         tokenSpriteRenderer.color = tokenColours.TokenColour;
     }
     private void setSpriteLayerOrders() {
-        int turnOrder = GameState.game.getPlayerIndex(PlayerInfo);
+        int turnOrder = PlayerInfo.Index;
         int players = GameState.game.NumberOfPlayers;
         int foregroundOrder = 2 * (players - turnOrder);
         tokenSpriteRenderer.sortingOrder = foregroundOrder;

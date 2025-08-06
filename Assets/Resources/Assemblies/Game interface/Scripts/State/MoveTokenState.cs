@@ -10,7 +10,7 @@ public class MoveTokenState : State {
     public override void enterState() {
         int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
         int diceValues = GameState.game.DiceInfo.TotalValue;
-        DataEventHub.Instance.call_TurnPlayerMovedAlongBoard(startingIndex, diceValues);
+        DataUIPipelineEventHub.Instance.call_TurnPlayerMovedAlongBoard(startingIndex, diceValues);
         tokenSettled = false;
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
     }

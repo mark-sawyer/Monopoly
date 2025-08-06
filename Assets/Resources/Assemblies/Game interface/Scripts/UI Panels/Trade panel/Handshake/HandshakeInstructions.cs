@@ -7,12 +7,12 @@ public class HandshakeInstructions : MonoBehaviour {
 
 
     #region MonoBehaviour
-    private void OnEnable() {
-        UIEventHub.Instance.sub_TradeUpdated(turnInstructionsOff);
+    private void Awake() {
+        UIPipelineEventHub.Instance.sub_TradeUpdated(turnInstructionsOff);
         TradeEventHub.Instance.sub_TradeConditionsMet(turnInstructionsOn);
     }
     private void OnDestroy() {
-        UIEventHub.Instance.unsub_TradeUpdated(turnInstructionsOff);
+        UIPipelineEventHub.Instance.unsub_TradeUpdated(turnInstructionsOff);
         TradeEventHub.Instance.unsub_TradeConditionsMet(turnInstructionsOn);
     }
     #endregion

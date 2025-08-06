@@ -46,6 +46,10 @@ internal abstract class Property : ScriptableObject, PropertyInfo, Tradable {
     #region Tradable
     public int TradableOrderID => orderID;
     public string Abbreviation => abbreviation;
+    public void giveFromOneToTwo(Player playerOne, Player playerTwo) {
+        playerOne.removeProperty(this);
+        playerTwo.obtainProperty(this);
+    }
     #endregion
 }
 

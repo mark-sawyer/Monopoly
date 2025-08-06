@@ -7,7 +7,7 @@ public class DiceVisualManager : MonoBehaviour {
 
 
     private void Start() {
-        UIEventHub.Instance.sub_RollButtonClicked(startDiceRoll);
+        UIPipelineEventHub.Instance.sub_RollButtonClicked(startDiceRoll);
     }
     private void startDiceRoll() {
         die1.startDieRoll(InterfaceConstants.DIE_FRAMES_PER_IMAGE, InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING);

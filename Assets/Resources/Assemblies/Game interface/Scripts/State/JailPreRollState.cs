@@ -25,9 +25,9 @@ public class JailPreRollState : State {
             managePropertiesClicked = false;
         }
         void subscribeToEvents() {
-            UIEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
+            UIPipelineEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
             UIEventHub.Instance.sub_PayFiftyButtonClicked(payFiftyListener);
-            UIEventHub.Instance.sub_UseGOOJFCardButtonClicked(useCardListener);
+            UIPipelineEventHub.Instance.sub_UseGOOJFCardButtonClicked(useCardListener);
             ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(managePropertiesListener);
             ScreenAnimationEventHub.Instance.sub_TradeOpened(tradeListener);
         }
@@ -47,9 +47,9 @@ public class JailPreRollState : State {
             || tradeClicked;
     }
     public override void exitState() {
-        UIEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
+        UIPipelineEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
         UIEventHub.Instance.unsub_PayFiftyButtonClicked(payFiftyListener);
-        UIEventHub.Instance.unsub_UseGOOJFCardButtonClicked(useCardListener);
+        UIPipelineEventHub.Instance.unsub_UseGOOJFCardButtonClicked(useCardListener);
         ManagePropertiesEventHub.Instance.unsub_ManagePropertiesOpened(managePropertiesListener);
         ScreenAnimationEventHub.Instance.unsub_TradeOpened(tradeListener);
     }
@@ -72,7 +72,7 @@ public class JailPreRollState : State {
         int turnIndex = GameState.game.IndexOfTurnPlayer;
         TokenVisual turnTokenVisual = TokenVisualManager.Instance.getTokenVisual(turnIndex);
         turnTokenVisual.prepForMoving();
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING,
             resolveDiceRollOutcomes,
             turnTokenVisual
@@ -82,7 +82,7 @@ public class JailPreRollState : State {
         void doublesRolled() {
             DataEventHub.Instance.call_DoublesCountReset();
             turnTokenVisual.prepForMoving();
-            WaitFrames.Instance.exe(
+            WaitFrames.Instance.beforeAction(
                 InterfaceConstants.FRAMES_FOR_TOKEN_SCALING,
                 () => goToMoveToken = true
             );
@@ -91,20 +91,20 @@ public class JailPreRollState : State {
             int jailIndex = GameConstants.JAIL_SPACE_INDEX;
             turnTokenVisual.moveTokenDirectlyToSpace(jailIndex, jailIndex);
 
-            WaitFrames.Instance.exe(
+            WaitFrames.Instance.beforeAction(
                 InterfaceConstants.FRAMES_FOR_TOKEN_SCALING + 3,
                 () => { goToUpdateTurnPlayer = true; }
             );
         }
         void nonDoublesTurnThree() {
-            DataEventHub.Instance.call_LeaveJail();
+            DataUIPipelineEventHub.Instance.call_LeaveJail();
             DataEventHub.Instance.call_PlayerIncurredDebt(
                 GameState.game.TurnPlayer,
                 GameState.game.BankCreditor,
                 GameConstants.PRICE_FOR_LEAVING_JAIL
             );
 
-            WaitFrames.Instance.exe(
+            WaitFrames.Instance.beforeAction(
                 FRAMES_WAITED_FOR_LEAVING_JAIL,
                 () => { goToResolveJailDebt = true; }
             );
@@ -122,8 +122,8 @@ public class JailPreRollState : State {
         bool rolledDoubles = GameState.game.DiceInfo.RolledDoubles;
         if (rolledDoubles) {
             UIEventHub.Instance.call_CorrectOutcome();
-            DataEventHub.Instance.call_LeaveJail();
-            WaitFrames.Instance.exe(FRAMES_WAITED_FOR_LEAVING_JAIL, doublesRolled);
+            DataUIPipelineEventHub.Instance.call_LeaveJail();
+            WaitFrames.Instance.beforeAction(FRAMES_WAITED_FOR_LEAVING_JAIL, doublesRolled);
         }
         else {
             UIEventHub.Instance.call_IncorrectOutcome();
@@ -131,16 +131,16 @@ public class JailPreRollState : State {
         }
     }
     private void payFiftyListener() {
-        DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, -GameConstants.PRICE_FOR_LEAVING_JAIL);
-        DataEventHub.Instance.call_LeaveJail();
-        WaitFrames.Instance.exe(
+        DataUIPipelineEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, -GameConstants.PRICE_FOR_LEAVING_JAIL);
+        DataUIPipelineEventHub.Instance.call_LeaveJail();
+        WaitFrames.Instance.beforeAction(
             FRAMES_WAITED_FOR_LEAVING_JAIL,
             () => { payFiftyButtonClicked = true; }
         );
     }
     private void useCardListener(CardType cardType) {
-        DataEventHub.Instance.call_LeaveJail();
-        WaitFrames.Instance.exe(
+        DataUIPipelineEventHub.Instance.call_LeaveJail();
+        WaitFrames.Instance.beforeAction(
             FRAMES_WAITED_FOR_LEAVING_JAIL,
             () => { useCardButtonClicked = true; }
         );

@@ -19,23 +19,8 @@ public class UIEventHub : ScriptableObject {
     [SerializeField] private GameEvent fadeScreenCoverOut;
     [SerializeField] private GameEvent tradingPlayerPlaced;
     [SerializeField] private GameEvent tradingPlayersConfirmed;
-    [SerializeField] private GameEvent turnMenuClosed;
     [SerializeField] private GameEvent preRollStateStarting;
     [SerializeField] private GameEvent jailPreRollStateStarting;
-    #endregion
-    #region In pipeline
-    [SerializeField] private GameEvent rollButtonClicked;
-    [SerializeField] private PlayerEvent moneyAdjustment;
-    [SerializeField] private PlayerPlayerEvent moneyBetweenPlayers;
-    [SerializeField] private IntIntEvent turnPlayerMovedAlongBoard;
-    [SerializeField] private IntIntEvent turnPlayerMovedToSpace;
-    [SerializeField] private PlayerPropertyEvent playerPropertyAdjustment;
-    [SerializeField] private GameEvent nextPlayerTurn;
-    [SerializeField] private PlayerCardTypeEvent playerGetsGOOJFCard;
-    [SerializeField] private GameEvent leaveJail;
-    [SerializeField] private CardTypeEvent useGOOJFCardButtonClicked;
-    [SerializeField] private GameEvent tradeTerminated;
-    [SerializeField] private GameEvent tradeUpdated;
     #endregion
 
 
@@ -55,23 +40,6 @@ public class UIEventHub : ScriptableObject {
 
 
 
-    #region internal (for pipeline)
-    internal GameEvent RollButtonClicked => rollButtonClicked;
-    internal PlayerEvent MoneyAdjustment => moneyAdjustment;
-    internal PlayerPlayerEvent MoneyBetweenPlayers => moneyBetweenPlayers;
-    internal IntIntEvent TurnPlayerMovedAlongBoard => turnPlayerMovedAlongBoard;
-    internal IntIntEvent TurnPlayerMovedToSpace => turnPlayerMovedToSpace;
-    internal PlayerPropertyEvent PlayerObtainedProperty => playerPropertyAdjustment;
-    internal GameEvent NextPlayerTurn => nextPlayerTurn;
-    internal PlayerCardTypeEvent PlayerGetsGOOJFCard => playerGetsGOOJFCard;
-    internal GameEvent LeaveJail => leaveJail;
-    internal CardTypeEvent UseGOOJFCardButtonClicked => useGOOJFCardButtonClicked;
-    internal GameEvent TradeTerminated => tradeTerminated;
-    internal GameEvent TradeUpdated => tradeUpdated;
-    #endregion
-
-
-
     #region UI invoking
     public void call_DoublesTickBoxUpdate() => doublesTickBoxUpdate.invoke();
     public void call_PayFiftyButtonClicked() => payFiftyButtonClicked.invoke();
@@ -86,15 +54,13 @@ public class UIEventHub : ScriptableObject {
     public void call_FadeScreenCoverIn(float alpha) => fadeScreenCoverIn.invoke(alpha);
     public void call_FadeScreenCoverOut() => fadeScreenCoverOut.invoke();
     public void call_TradingPlayerPlaced() => tradingPlayerPlaced.invoke();
-    public void call_TurnMenuClosed() => turnMenuClosed.invoke();
     public void call_PreRollStateStarting() => preRollStateStarting.invoke();
     public void call_JailPreRollStateStarting() => jailPreRollStateStarting.invoke();
     #endregion
 
 
 
-    #region UI subscribing
-    /* UI only */
+    #region Subscribing
     public void sub_DoublesTickBoxUpdate(Action a) => doublesTickBoxUpdate.Listeners += a;
     public void sub_PayFiftyButtonClicked(Action a) => payFiftyButtonClicked.Listeners += a;
     public void sub_TokenSettled(Action a) => tokenSettled.Listeners += a;
@@ -109,40 +75,18 @@ public class UIEventHub : ScriptableObject {
     public void sub_FadeScreenCoverOut(Action a) => fadeScreenCoverOut.Listeners += a;
     public void sub_TradingPlayerPlaced(Action a) => tradingPlayerPlaced.Listeners += a;
     public void sub_TradingPlayersConfirmed(Action a) => tradingPlayersConfirmed.Listeners += a;
-    public void sub_TurnMenuClosed(Action a) => turnMenuClosed.Listeners += a;
     public void sub_PreRollStateStarting(Action a) => preRollStateStarting.Listeners += a;
     public void sub_JailPreRollStateStarting(Action a) => jailPreRollStateStarting.Listeners += a;
-
-
-    /* In pipeline */
-    public void sub_RollButtonClicked(Action a) => rollButtonClicked.Listeners += a;
-    public void sub_MoneyAdjustment(Action<PlayerInfo> a) => moneyAdjustment.Listeners += a;
-    public void sub_MoneyBetweenPlayers(Action<PlayerInfo, PlayerInfo> a) => moneyBetweenPlayers.Listeners += a;
-    public void sub_TurnPlayerMovedAlongBoard(Action<int, int> a) => turnPlayerMovedAlongBoard.Listeners += a;
-    public void sub_TurnPlayerMovedToSpace(Action<int, int> a) => turnPlayerMovedToSpace.Listeners += a;
-    public void sub_PlayerPropertyAdjustment(Action<PlayerInfo, PropertyInfo> a) => playerPropertyAdjustment.Listeners += a;
-    public void sub_NextPlayerTurn(Action a) => nextPlayerTurn.Listeners += a;
-    public void sub_PlayerGetsGOOJFCard(Action<PlayerInfo, CardType> a) => playerGetsGOOJFCard.Listeners += a;
-    public void sub_LeaveJail(Action a) => leaveJail.Listeners += a;
-    public void sub_UseGOOJFCardButtonClicked(Action<CardType> a) => useGOOJFCardButtonClicked.Listeners += a;
-    public void sub_TradeTerminated(Action a) => tradeTerminated.Listeners += a;
-    public void sub_TradeUpdated(Action a) => tradeUpdated.Listeners += a;
     #endregion
 
 
 
-    #region UI unsubscribing
-    public void unsub_MoneyAdjustment(Action<PlayerInfo> a) => moneyAdjustment.Listeners -= a;
+    #region Unsubscribing
     public void unsub_DoublesTickBoxUpdate(Action a) => doublesTickBoxUpdate.Listeners -= a;
     public void unsub_PayFiftyButtonClicked(Action a) => payFiftyButtonClicked.Listeners -= a;
     public void unsub_TokenSettled(Action a) => tokenSettled.Listeners -= a;
-    public void unsub_RollButtonClicked(Action a) => rollButtonClicked.Listeners -= a;
-    public void unsub_NextPlayerTurn(Action a) => nextPlayerTurn.Listeners -= a;
-    public void unsub_UseGOOJFCardButtonClicked(Action<CardType> a) => useGOOJFCardButtonClicked.Listeners -= a;
-    public void unsub_TradeTerminated(Action a) => tradeTerminated.Listeners -= a;
     public void unsub_JailPreRollStateStarting(Action a) => jailPreRollStateStarting.Listeners -= a;
     public void unsub_TradingPlayerPlaced(Action a) => tradingPlayerPlaced.Listeners -= a;
     public void unsub_TradingPlayersConfirmed(Action a) => tradingPlayersConfirmed.Listeners -= a;
-    public void unsub_TradeUpdated(Action a) => tradeUpdated.Listeners -= a;
     #endregion
 }

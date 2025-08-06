@@ -1,8 +1,7 @@
-
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "State/PostManagePropertiesClosedState")]
-public class PostManagePropertiesClosedState : State {
+[CreateAssetMenu(menuName = "State/PostTradeState")]
+public class PostTradeState : State {
     private bool updateAnimationsOver;
 
 
@@ -10,15 +9,14 @@ public class PostManagePropertiesClosedState : State {
     #region State
     public override void enterState() {
         updateAnimationsOver = false;
-        ManagePropertiesEventHub.Instance.sub_AllVisualsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
-        ManagePropertiesEventHub.Instance.call_UpdateIconsAfterManagePropertiesClosed();
+        TradeEventHub.Instance.sub_AllVisualsUpdatedAfterTradeFinalised(updateAnimationsOverListener);
+        TradeEventHub.Instance.call_UpdateVisualsAfterTradeFinalised();
     }
     public override bool exitConditionMet() {
         return updateAnimationsOver;
     }
     public override void exitState() {
-        ManagePropertiesEventHub.Instance.unsub_AllVisualsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
-        UIEventHub.Instance.call_TurnMenuClosed();
+        TradeEventHub.Instance.unsub_AllVisualsUpdatedAfterTradeFinalised(updateAnimationsOverListener);
     }
     public override State getNextState() {
         if (GameState.game.TurnPlayer.InJail) {

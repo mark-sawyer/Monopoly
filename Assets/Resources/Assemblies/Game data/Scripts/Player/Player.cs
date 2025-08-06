@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 internal class Player : PlayerInfo {
+    private Game game;
     private List<Property> properties = new List<Property>();
     private Debt debt;
     private int money;
@@ -16,16 +17,21 @@ internal class Player : PlayerInfo {
 
 
     #region internal
-    internal Player(Space space, Token token, PlayerColour colour, int startingMoney) {
+    internal Player(Space space, Token token, PlayerColour colour, int startingMoney, Game game) {
         Space = space;
         money = startingMoney;
         this.token = token;
         this.colour = colour;
+        this.game = game;
     }
     internal Space Space { get; set; }
     internal void obtainProperty(Property property) {
         properties.Add(property);
         property.changeOwner(this);
+    }
+    internal void removeProperty(Property property) {
+        properties.Remove(property);
+        property.changeOwner(null);
     }
     internal void adjustMoney(int difference) {
         money += difference;
@@ -61,6 +67,7 @@ internal class Player : PlayerInfo {
 
 
     #region PlayerInfo
+    public int Index => game.getPlayerIndex(this);  
     public int SpaceIndex { get => Space.Index; }
     public SpaceInfo SpaceInfo { get => Space; }
     public Token Token { get => token; }

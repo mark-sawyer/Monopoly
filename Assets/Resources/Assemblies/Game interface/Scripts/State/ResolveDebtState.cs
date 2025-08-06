@@ -31,10 +31,10 @@ public class ResolveDebtState : State {
         int payable = money - owed >= 0 ? owed : money;
 
         if (debt.Creditor is PlayerInfo creditorPlayer) {
-            DataEventHub.Instance.call_MoneyBetweenPlayers(debtor, creditorPlayer, payable);
+            DataUIPipelineEventHub.Instance.call_MoneyBetweenPlayers(debtor, creditorPlayer, payable);
         }
         else {
-            DataEventHub.Instance.call_MoneyAdjustment(debtor, -payable);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(debtor, -payable);
         }
 
         DataEventHub.Instance.call_DebtResolved(debt.Debtor);

@@ -8,7 +8,7 @@ public class TestManager : MonoBehaviour {
     private void Awake() {
         int playerNum = 2;
         GameFactory gameFactory = new GameFactory();
-        gameFactory.makeTestGame(playerNum, 50);
+        gameFactory.makeTestGame(playerNum, 1500);
         GameState.game = gameFactory.GameStateInfo;
         gameDataUpdater.setup(gameFactory.GamePlayer);
     }
@@ -17,10 +17,10 @@ public class TestManager : MonoBehaviour {
             Application.Quit();
         }
         else if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
-            DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, 50);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, 50);
         }
         else if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
-            DataEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, -50);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, -50);
         }
     }
 }

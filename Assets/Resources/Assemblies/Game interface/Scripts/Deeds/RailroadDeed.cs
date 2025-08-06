@@ -1,12 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-public class RailwayDeed : PropertyDeed {
+public class RailroadDeed : PropertyDeed {
     [SerializeField] TextMeshProUGUI propertyNameText;
 
 
 
     public override void setupCard(PropertyInfo propertyInfo) {
-        propertyNameText.text = propertyInfo.Name.ToUpper();
+        throw new System.NotImplementedException();
     }
 }

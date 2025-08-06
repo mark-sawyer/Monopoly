@@ -38,7 +38,7 @@ public class BuyPropertyOptionState : State {
     
     #region private
     private void purchaseAcceptedCalled() {
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             100,  // Waiting for the UI update and bloop sound (occurs in PurchaseQuestion).
             () => { purchaseAccepted = true; }
         );

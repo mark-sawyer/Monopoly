@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 public interface PlayerInfo : Creditor {
+    public int Index { get; }
     public int SpaceIndex { get; }
     public SpaceInfo SpaceInfo { get; }
     public Token Token { get; }

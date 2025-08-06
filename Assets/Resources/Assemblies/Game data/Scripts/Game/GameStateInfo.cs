@@ -12,9 +12,9 @@ public interface GameStateInfo {
     public SpaceInfo getSpaceInfo(int index);
     public int getSpaceIndex(SpaceInfo space);
     public PlayerInfo getPlayerInfo(int index);
-    public int getPlayerIndex(PlayerInfo player);
     public Creditor BankCreditor { get; }
     public BankInfo BankInfo { get; }
     public CardInfo DrawnCard { get; }
     public bool TradeIsEmpty { get; }
+    public TradeInfo CompletedTrade { get; }
 }

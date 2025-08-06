@@ -6,7 +6,7 @@ public class UpdateTurnPlayerState : State {
         DiceInfo diceInfo = GameState.game.DiceInfo;
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         if (!diceInfo.RolledDoubles || turnPlayer.InJail) {
-            DataEventHub.Instance.call_NextPlayerTurn();
+            DataUIPipelineEventHub.Instance.call_NextPlayerTurn();
         }
     }
     public override bool exitConditionMet() {

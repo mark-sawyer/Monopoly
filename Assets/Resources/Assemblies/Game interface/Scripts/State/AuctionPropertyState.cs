@@ -38,12 +38,12 @@ public class AuctionPropertyState : State {
             return;
         }
 
-        DataEventHub.Instance.call_MoneyAdjustment(winningPlayer, -bid);
+        DataUIPipelineEventHub.Instance.call_MoneyAdjustment(winningPlayer, -bid);
         PropertyInfo propertyInfo = ((PropertySpaceInfo)GameState.game.TurnPlayer.SpaceInfo).PropertyInfo;
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             90,
             () => {
-                DataEventHub.Instance.call_PlayerObtainedProperty(winningPlayer, propertyInfo);
+                DataUIPipelineEventHub.Instance.call_PlayerObtainedProperty(winningPlayer, propertyInfo);
                 auctionOver = true;
             }
         );

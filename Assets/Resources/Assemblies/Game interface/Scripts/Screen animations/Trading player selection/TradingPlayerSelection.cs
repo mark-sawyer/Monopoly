@@ -16,6 +16,7 @@ public class TradingPlayerSelection : ScreenAnimation {
     #endregion
     [SerializeField] private GameObject tradePanelPrefab;
     private UIEventHub uiEvents;
+    private UIPipelineEventHub uiPipelineEventHub;
     private GameObject tradePanelInstance;
     private DroppingQuestionsFunctionality droppingQuestionsFunctionality;
 
@@ -26,14 +27,17 @@ public class TradingPlayerSelection : ScreenAnimation {
         droppingQuestionsFunctionality = new DroppingQuestionsFunctionality(droppingQuestionRT);
         droppingQuestionsFunctionality.adjustSize();
         uiEvents = UIEventHub.Instance;
+        uiPipelineEventHub = UIPipelineEventHub.Instance;
         uiEvents.sub_TradingPlayerPlaced(adjustTextButtonToggle);
         uiEvents.sub_TradingPlayersConfirmed(createTradePanel);
-        uiEvents.sub_TradeTerminated(backButtonClicked);
+        uiPipelineEventHub.sub_TradeTerminated(removeTradeDisplay);
+        uiPipelineEventHub.sub_TradeLockedIn(removeTradeDisplay);
     }
     private void OnDestroy() {
         uiEvents.unsub_TradingPlayerPlaced(adjustTextButtonToggle);
         uiEvents.unsub_TradingPlayersConfirmed(createTradePanel);
-        uiEvents.unsub_TradeTerminated(backButtonClicked);
+        uiPipelineEventHub.unsub_TradeTerminated(removeTradeDisplay);
+        uiPipelineEventHub.unsub_TradeLockedIn(removeTradeDisplay);
     }
     #endregion
 
@@ -106,7 +110,7 @@ public class TradingPlayerSelection : ScreenAnimation {
         backButtonRT.anchoredPosition = new Vector2(x, yEnd);
         backButton.interactable = true;
     }
-    private void backButtonClicked() {
+    private void removeTradeDisplay() {
         ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation();
     }
     #endregion

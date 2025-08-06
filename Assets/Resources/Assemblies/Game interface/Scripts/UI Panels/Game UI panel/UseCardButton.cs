@@ -25,6 +25,6 @@ public class UseCardButton : MonoBehaviour {
         }
     }
     public void buttonClicked() {
-        DataEventHub.Instance.call_UseGOOJFCardButtonClicked(cardType);
+        DataUIPipelineEventHub.Instance.call_UseGOOJFCardButtonClicked(cardType);
     }
 }

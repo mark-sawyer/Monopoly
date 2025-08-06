@@ -5,7 +5,6 @@ using UnityEngine;
 public class FloatingMoneyDifference : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI frontText;
     [SerializeField] private TextMeshProUGUI backText;
-    private const int FRAMES = 90;
 
     public void floatAway(int value) {
         Color textColour = value > 0 ? new Color(42f/255f, 202f/255f, 0f) : new Color(255f, 0f, 0f);
@@ -19,9 +18,10 @@ public class FloatingMoneyDifference : MonoBehaviour {
     }
 
     private IEnumerator floatCoroutine(Color textColour, Vector3 positionChange) {
-        for (int i = 0; i < FRAMES; i++) {
+        int frames = InterfaceConstants.FRAMES_FOR_MONEY_UPDATE;
+        for (int i = 0; i < frames; i++) {
             transform.position += positionChange;
-            textColour.a = (float)-i / FRAMES + 1f;
+            textColour.a = (float)-i / frames + 1f;
             frontText.color = textColour;
             backText.color = textColour;
             yield return null;

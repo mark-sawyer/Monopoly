@@ -45,11 +45,13 @@ public class RailroadIcon : PropertyGroupIcon {
 
 
     #region PropertyGroupIcon
-    public override bool iconNeedsToUpdate() {
-        OtherPropertyGroupIconState newState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);
-        return railroadIconState.stateHasChanged(newState);
+    public override bool NeedsToUpdate {
+        get {
+            OtherPropertyGroupIconState newState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);
+            return railroadIconState.stateHasChanged(newState);
+        }
     }
-    public override void updateVisual() {
+    protected override void updateVisual() {
         void setPanelColour(int propertiesOwned) {
             float alpha = propertiesOwned == 0 ? ZeroPropertiesAlpha : NonZeroPropertiesAlpha;
             Color panelColour = propertyGroupPanelColour.Colour;
@@ -82,7 +84,7 @@ public class RailroadIcon : PropertyGroupIcon {
         foreach (RailroadHighlight rh in railroadHighlights) rh.setHighlight();
         setGoldRing(propertiesOwned);
     }
-    public override void setNewState() {
+    protected override void setNewState() {
         railroadIconState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);
     }
     #endregion

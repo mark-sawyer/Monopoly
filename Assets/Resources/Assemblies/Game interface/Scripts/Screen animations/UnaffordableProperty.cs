@@ -38,7 +38,7 @@ public class UnaffordableProperty : ScreenAnimation<PropertyInfo> {
             textRT.localRotation = Quaternion.Euler(euler);
             yield return null;
         }
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             50,
             () => {
                 transferDeed();

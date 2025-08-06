@@ -1,4 +1,3 @@
-using System.Globalization;
 using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour {
@@ -26,19 +25,19 @@ public class SoundPlayer : MonoBehaviour {
     #region MonoBehaviour
     private void Start() {
         UIEventHub uiEvents = UIEventHub.Instance;
+        UIPipelineEventHub uiPipelineEventHub = UIPipelineEventHub.Instance;
         ScreenAnimationEventHub screenEvents = ScreenAnimationEventHub.Instance;
 
         uiEvents.sub_ButtonDown(play_buttonDown);
         uiEvents.sub_ButtonUp(play_buttonUp);
-        uiEvents.sub_RollButtonClicked(play_DiceSound);
-        uiEvents.sub_MoneyAdjustment(play_MoneyChing);
-        uiEvents.sub_MoneyBetweenPlayers(play_MoneyChing);
         uiEvents.sub_CorrectOutcome(play_CorrectSound);
         uiEvents.sub_IncorrectOutcome(play_IncorrectSound);
         uiEvents.sub_CardDrop(play_CardDrop);
         uiEvents.sub_MoneyAppearOrDisappear(play_PaperSound);
         uiEvents.sub_AppearingPop(play_Pop);
-        uiEvents.sub_PlayerGetsGOOJFCard(play_Pop);
+        uiPipelineEventHub.sub_RollButtonClicked(play_DiceSound);
+        uiPipelineEventHub.sub_MoneyAdjustment(play_MoneyChing);
+        uiPipelineEventHub.sub_MoneyBetweenPlayers(play_MoneyChing);
 
         screenEvents.sub_LuxuryTaxAnimationBegins(play_MupMooo);
         screenEvents.sub_SpinningPoliceman(play_Whistle);
@@ -73,8 +72,6 @@ public class SoundPlayer : MonoBehaviour {
     private void play_MoneyChing(PlayerInfo x, PlayerInfo y) => playSound(moneyChing);
     private void play_MupMooo() => playSound(mupMooo);
     private void play_Pop() => playSound(pop);
-    private void play_Pop(PlayerInfo x, CardType y) => playSound(pop);
-    private void play_Pop(PlayerInfo x, PropertyInfo y) => playSound(pop);
     private void play_QuestionChime(PlayerInfo x, PropertyInfo y) => playSound(questionChime);
     private void play_QuestionChime(PlayerInfo x) => playSound(questionChime);
     private void play_UhOh(DebtInfo x) => playSound(uhOh);

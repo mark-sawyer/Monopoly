@@ -48,6 +48,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
     private float onScreenY;
     private EstateSectionGetter estateSectionGetter;
     private UIEventHub uiEvents;
+    private UIPipelineEventHub uiPipelineEvents;
     private ManagePropertiesEventHub managePropertiesEvents;
     #endregion
     #region Numeric constants
@@ -73,6 +74,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
     #region MonoBehaviour
     private void Start() {
         uiEvents = UIEventHub.Instance;
+        uiPipelineEvents = UIPipelineEventHub.Instance;
         managePropertiesEvents = ManagePropertiesEventHub.Instance;
 
         float canvasHeight = ((RectTransform)transform.parent).rect.height;
@@ -154,8 +156,8 @@ public class ManagePropertiesPanel : MonoBehaviour {
         uiEvents.call_FadeScreenCoverIn(1f);
         StartCoroutine(dropCoroutine());
         managePropertiesEvents.call_ManagePropertiesVisualRefresh(GameState.game.TurnPlayer);
-        uiEvents.sub_MoneyAdjustment(adjustMoneyVisual);
-        uiEvents.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
+        uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisual);
+        uiPipelineEvents.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
     }
     private void raise() {
         int raiseFrames = InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_DROP;
@@ -169,8 +171,8 @@ public class ManagePropertiesPanel : MonoBehaviour {
             rt.anchoredPosition = new Vector2(0f, offScreenY);
         }
 
-        uiEvents.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
-        uiEvents.unsub_MoneyAdjustment(adjustMoneyVisual);
+        uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
+        uiPipelineEvents.unsub_MoneyAdjustment(adjustMoneyVisual);
         uiEvents.call_FadeScreenCoverOut();
         StartCoroutine(raiseCoroutine());
     }

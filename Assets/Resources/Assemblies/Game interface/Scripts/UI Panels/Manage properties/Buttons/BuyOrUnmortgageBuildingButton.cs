@@ -23,11 +23,11 @@ public class BuyOrUnmortgageBuildingButton : MonoBehaviour {
     public void buttonClicked() {
         void buyClicked(PlayerInfo selectedPlayer) {
             DataEventHub.Instance.call_EstateAddedBuilding(estateInfo);
-            DataEventHub.Instance.call_MoneyAdjustment(selectedPlayer, -estateInfo.BuildingCost);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(selectedPlayer, -estateInfo.BuildingCost);
         }
         void unmortgageClicked(PlayerInfo selectedPlayer) {
             DataEventHub.Instance.call_PropertyUnmortgaged(estateInfo);
-            DataEventHub.Instance.call_MoneyAdjustment(selectedPlayer, -estateInfo.UnmortgageCost);
+            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(selectedPlayer, -estateInfo.UnmortgageCost);
         }
 
         PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;

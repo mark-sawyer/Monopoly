@@ -4,8 +4,8 @@ public class TestPlayerPanelManager : MonoBehaviour {
     [SerializeField] private PlayerPanel playerPanel;
 
     private void Start() {
-        UIEventHub.Instance.sub_MoneyAdjustment(adjustMoney);
-        UIEventHub.Instance.sub_PlayerPropertyAdjustment(adjustPropertyIcons);
+        UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoney);
+        UIPipelineEventHub.Instance.sub_PlayerPropertyAdjustment(adjustPropertyIcons);
     }
 
     private void adjustMoney(PlayerInfo playerInfo) {

@@ -32,11 +32,13 @@ public class UtilityIcon : PropertyGroupIcon {
 
 
     #region PropertyGroupIcon
-    public override bool iconNeedsToUpdate() {
-        OtherPropertyGroupIconState newState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);
-        return utilityIconState.stateHasChanged(newState);
+    public override bool NeedsToUpdate {
+        get {
+            OtherPropertyGroupIconState newState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);
+            return utilityIconState.stateHasChanged(newState);
+        }
     }
-    public override void updateVisual() {
+    protected override void updateVisual() {
         void setPanelColour(int propertiesOwned) {
             float alpha = propertiesOwned == 0 ? ZeroPropertiesAlpha : NonZeroPropertiesAlpha;
             Color panelColour = propertyGroupPanelColour.Colour;
@@ -57,7 +59,7 @@ public class UtilityIcon : PropertyGroupIcon {
         setIconColours(propertiesOwned);
         setGoldRing(propertiesOwned);
     }
-    public override void setNewState() {
+    protected override void setNewState() {
         utilityIconState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);
     }
     #endregion

@@ -40,11 +40,11 @@ public class PurchaseQuestion : ScreenAnimation<PlayerInfo, PropertyInfo> {
 
     #region public
     public void yesClicked() {
-        DataEventHub.Instance.call_MoneyAdjustment(playerInfo, -propertyInfo.Cost);
+        DataUIPipelineEventHub.Instance.call_MoneyAdjustment(playerInfo, -propertyInfo.Cost);
         ScreenAnimationEventHub.Instance.call_RemoveScreenAnimation();
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             90,
-            () => DataEventHub.Instance.call_PlayerObtainedProperty(playerInfo, propertyInfo)
+            () => DataUIPipelineEventHub.Instance.call_PlayerObtainedProperty(playerInfo, propertyInfo)
         );
     }
     public void noClicked() {

@@ -7,11 +7,11 @@ public class CardMonoBehaviour : MonoBehaviour {
     public void startCoroutines() {
         StartCoroutine(position());
         StartCoroutine(rotation());
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             InterfaceConstants.FRAMES_FOR_CARD_FLIP - 10,
             UIEventHub.Instance.call_CardDrop
         );
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             InterfaceConstants.FRAMES_FOR_CARD_FLIP,
             () => StartCoroutine(tinyShake())
         );

@@ -8,12 +8,12 @@ public class DoublesTickboxes : MonoBehaviour {
 
     #region MonoBehaviour
     private void OnEnable() {
-        UIEventHub.Instance.sub_DoublesTickBoxUpdate(checkForDoubles); 
-        UIEventHub.Instance.sub_NextPlayerTurn(removeAllTicks);
+        UIEventHub.Instance.sub_DoublesTickBoxUpdate(checkForDoubles);
+        UIPipelineEventHub.Instance.sub_NextPlayerTurn(removeAllTicks);
     }
     private void OnDisable() {
         UIEventHub.Instance.unsub_DoublesTickBoxUpdate(checkForDoubles);
-        UIEventHub.Instance.unsub_NextPlayerTurn(removeAllTicks);
+        UIPipelineEventHub.Instance.unsub_NextPlayerTurn(removeAllTicks);
     }
     #endregion
 

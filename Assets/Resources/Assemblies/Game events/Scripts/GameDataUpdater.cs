@@ -9,31 +9,33 @@ public class GameDataUpdater : MonoBehaviour {
     #region MonoBehaviour
     private void Start() {
         DataEventHub dataHub = DataEventHub.Instance;
+        DataUIPipelineEventHub pipelineHub = DataUIPipelineEventHub.Instance;
 
-        dataHub.sub_RollButtonClicked(rollDice);
-        dataHub.sub_TurnPlayerMovedAlongBoard(moveTurnPlayerAlongBoard);
-        dataHub.sub_TurnPlayerMovedToSpace(moveTurnPlayerToSpace);
-        dataHub.sub_TurnPlayerSentToJail(sendTurnPlayerToJail);
         dataHub.sub_CardDrawn(drawCard);
         dataHub.sub_CardResolved(undrawCard);
         dataHub.sub_PlayerIncurredDebt(incurDebt);
         dataHub.sub_DebtResolved(setDebtToNull);
         dataHub.sub_DoublesCountReset(resetDoublesCount);
-        dataHub.sub_PlayerObtainedProperty(purchasedProperty);
-        dataHub.sub_MoneyAdjustment(adjustMoney);
-        dataHub.sub_MoneyBetweenPlayers(tradeMoney);
-        dataHub.sub_NextPlayerTurn(updateTurnPlayer);
-        dataHub.sub_PlayerGetsGOOJFCard(givePlayerGOOJFCard);
         dataHub.sub_IncrementJailTurn(incrementJailTurn);
-        dataHub.sub_LeaveJail(removeTurnPlayerFromJail);
-        dataHub.sub_UseGOOJFCardButtonClicked(useGOOJFCard);
         dataHub.sub_EstateAddedBuilding(addBuildingToEstate);
         dataHub.sub_EstateRemovedBuilding(removeBuildingFromEstate);
         dataHub.sub_PropertyMortgaged(mortgageProperty);
         dataHub.sub_PropertyUnmortgaged(unmortgageProperty);
         dataHub.sub_TradeCommenced(createNewTrade);
-        dataHub.sub_TradeTerminated(removedTerminatedTrade);
-        dataHub.sub_TradeUpdated(updateProposedTrade);
+        pipelineHub.sub_RollButtonClicked(rollDice);
+        pipelineHub.sub_TurnPlayerMovedAlongBoard(moveTurnPlayerAlongBoard);
+        pipelineHub.sub_TurnPlayerMovedToSpace(moveTurnPlayerToSpace);
+        pipelineHub.sub_TurnPlayerSentToJail(sendTurnPlayerToJail);
+        pipelineHub.sub_PlayerObtainedProperty(purchasedProperty);
+        pipelineHub.sub_MoneyAdjustment(adjustMoney);
+        pipelineHub.sub_MoneyBetweenPlayers(tradeMoney);
+        pipelineHub.sub_NextPlayerTurn(updateTurnPlayer);
+        pipelineHub.sub_PlayerGetsGOOJFCard(givePlayerGOOJFCard);
+        pipelineHub.sub_LeaveJail(removeTurnPlayerFromJail);
+        pipelineHub.sub_UseGOOJFCardButtonClicked(useGOOJFCard);
+        pipelineHub.sub_TradeTerminated(removedTerminatedTrade);
+        pipelineHub.sub_TradeUpdated(updateProposedTrade);
+        pipelineHub.sub_TradeLockedIn(makeProposedTrade);
     }
     #endregion
 
@@ -120,6 +122,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void updateProposedTrade(List<TradableInfo> t1, List<TradableInfo> t2, PlayerInfo moneyGiver, int money) {
         gamePlayer.updateProposedTrade(t1, t2, moneyGiver, money);
+    }
+    private void makeProposedTrade() {
+        gamePlayer.makeProposedTrade();
     }
     #endregion
 }

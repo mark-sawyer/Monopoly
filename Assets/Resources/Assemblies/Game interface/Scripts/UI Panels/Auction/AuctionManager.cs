@@ -162,7 +162,7 @@ public class AuctionManager : MonoBehaviour {
         destroyChildren();
         droppingPanelRT.anchoredPosition = new Vector2(0f, DEFAULT_Y_POSITION);
         UIEventHub.Instance.call_FadeScreenCoverOut();
-        WaitFrames.Instance.exe(
+        WaitFrames.Instance.beforeAction(
             InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION,
             () => { AuctionEventHub.Instance.call_WinnerAnnounced(biddingPlayer, currentBid); }
         );
