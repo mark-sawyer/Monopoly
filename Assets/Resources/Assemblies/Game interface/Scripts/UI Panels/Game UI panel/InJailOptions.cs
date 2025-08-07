@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,22 +7,11 @@ public class InJailOptions : MonoBehaviour {
     [SerializeField] private Button chanceCardButton;
     [SerializeField] private Button ccCardButton;
     [SerializeField] private TextMeshProUGUI countText;
-    private UIEventHub uiEvents;
-    private UIPipelineEventHub uiPipelines;
 
 
     #region MonoBehaviour
     private void OnEnable() {
-        uiEvents = UIEventHub.Instance;
-        uiPipelines = UIPipelineEventHub.Instance;
-        uiPipelines.sub_RollButtonClicked(disableButtons);
-        uiEvents.sub_PayFiftyButtonClicked(disableButtons);
-        uiPipelines.sub_UseGOOJFCardButtonClicked(disableButtons);
-        uiEvents.sub_JailPreRollStateStarting(setup);
         setup();
-    }
-    private void OnDisable() {
-        uiPipelines.unsub_RollButtonClicked(disableButtons);
     }
     #endregion
 
@@ -48,16 +36,6 @@ public class InJailOptions : MonoBehaviour {
         RectTransform rt = (RectTransform)countText.transform;
         if (count == 1) rt.anchoredPosition = new Vector3(-2f, 0f, 0f);
         else rt.anchoredPosition = Vector3.zero;
-    }
-    private void disableButtons() {
-        payFiftyButton.interactable = false;
-        chanceCardButton.interactable = false;
-        ccCardButton.interactable = false;
-    }
-    private void disableButtons(CardType ct) {
-        payFiftyButton.interactable = false;
-        chanceCardButton.interactable = false;
-        ccCardButton.interactable = false;
     }
     private bool canUsePayButton(PlayerInfo turnPlayer) {
         return turnPlayer.Money >= 50 && turnPlayer.TurnInJail < 3;

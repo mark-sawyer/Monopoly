@@ -15,6 +15,7 @@ public class ScreenAnimationEventHub : ScriptableObject {
     [SerializeField] private GameEvent removeScreenAnimation;
     [SerializeField] private GameEvent removeScreenAnimationKeepCover;
     [SerializeField] private GameEvent tradeOpened;
+    [SerializeField] private DebtEvent resolveDebt;
 
 
 
@@ -47,6 +48,7 @@ public class ScreenAnimationEventHub : ScriptableObject {
     public void call_RemoveScreenAnimation() => removeScreenAnimation.invoke();
     public void call_RemoveScreenAnimationKeepCover() => removeScreenAnimationKeepCover.invoke();
     public void call_TradeOpened() => tradeOpened.invoke();
+    public void call_ResolveDebt(DebtInfo debtInfo) => resolveDebt.invoke(debtInfo);
     #endregion
 
 
@@ -63,6 +65,7 @@ public class ScreenAnimationEventHub : ScriptableObject {
     public void sub_RemoveScreenAnimation(Action a) => removeScreenAnimation.Listeners += a;
     public void sub_RemoveScreenAnimationKeepCover(Action a) => removeScreenAnimationKeepCover.Listeners += a;
     public void sub_TradeOpened(Action a) => tradeOpened.Listeners += a;
+    public void sub_ResolveDebt(Action<DebtInfo> a) => resolveDebt.Listeners += a;
     #endregion
 
 

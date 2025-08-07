@@ -14,7 +14,6 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_CardDrawn(drawCard);
         dataHub.sub_CardResolved(undrawCard);
         dataHub.sub_PlayerIncurredDebt(incurDebt);
-        dataHub.sub_DebtResolved(setDebtToNull);
         dataHub.sub_DoublesCountReset(resetDoublesCount);
         dataHub.sub_IncrementJailTurn(incrementJailTurn);
         dataHub.sub_EstateAddedBuilding(addBuildingToEstate);
@@ -36,6 +35,7 @@ public class GameDataUpdater : MonoBehaviour {
         pipelineHub.sub_TradeTerminated(removedTerminatedTrade);
         pipelineHub.sub_TradeUpdated(updateProposedTrade);
         pipelineHub.sub_TradeLockedIn(makeProposedTrade);
+        pipelineHub.sub_DebtReduced(reduceDebt);
     }
     #endregion
 
@@ -50,6 +50,18 @@ public class GameDataUpdater : MonoBehaviour {
 
 
     #region Listeners
+    private void drawCard(CardType cardType) {
+        gamePlayer.drawCard(cardType);
+    }
+    private void undrawCard() {
+        gamePlayer.undrawCard();
+    }
+    private void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
+        gamePlayer.incurDebt(debtor, creditor, owed);
+    }
+    private void reduceDebt(PlayerInfo debtor, int paid) {
+        gamePlayer.reduceDebt(debtor, paid);
+    }
     private void rollDice() {
         gamePlayer.rollDice();
     }
@@ -74,18 +86,6 @@ public class GameDataUpdater : MonoBehaviour {
     private void updateTurnPlayer() {
         gamePlayer.updateTurnPlayer();
         gamePlayer.resetDoublesCount();
-    }
-    private void drawCard(CardType cardType) {
-        gamePlayer.drawCard(cardType);
-    }
-    private void undrawCard() {
-        gamePlayer.undrawCard();
-    }
-    private void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
-        gamePlayer.incurDebt(debtor, creditor, owed);
-    }
-    private void setDebtToNull(PlayerInfo debtor) {
-        gamePlayer.removeDebt(debtor);
     }
     private void givePlayerGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
         gamePlayer.playerGetsGOOJFCard(playerInfo, cardInfo);

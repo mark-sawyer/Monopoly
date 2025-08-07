@@ -36,8 +36,12 @@ internal class Trade : TradeInfo {
         if (money == 0) moneyGivingPlayer = null;
         else moneyGivingPlayer = player == playerOne ? playerOne : playerTwo;
     }
-    internal void performTradeExceptMoney() {
-        // The money adjustment called later by the interface so the UI is immediately synced.
+    internal void performTrade() {
+        if (moneyGivingPlayer != null) {
+            moneyGivingPlayer.adjustMoney(-moneyPassed);
+            Player moneyReceivingPlayer = moneyGivingPlayer == playerOne ? playerTwo : playerOne;
+            moneyReceivingPlayer.adjustMoney(moneyPassed);
+        }
 
         foreach (Tradable tradable in tradablesOne) {
             tradable.giveFromOneToTwo(playerOne, playerTwo);

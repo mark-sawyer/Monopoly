@@ -6,7 +6,6 @@ public class DataEventHub : ScriptableObject {
     private static DataEventHub instance;
     [SerializeField] private GameEvent cardResolved;
     [SerializeField] private CardTypeEvent cardDrawn;
-    [SerializeField] private PlayerEvent debtResolved;
     [SerializeField] private GameEvent doublesCountReset;
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     [SerializeField] private EstateEvent estateAddedBuilding;
@@ -36,7 +35,6 @@ public class DataEventHub : ScriptableObject {
     #region Data invoking
     public void call_CardResolved() => cardResolved.invoke();
     public void call_CardDrawn(CardType cardType) => cardDrawn.invoke(cardType);
-    public void call_DebtResolved(PlayerInfo playerInfo) => debtResolved.invoke(playerInfo);
     public void call_DoublesCountReset() => doublesCountReset.invoke();
     public void call_PlayerIncurredDebt(PlayerInfo playerInfo, Creditor creditor, int debtVal) {
         playerIncurredDebt.invoke(playerInfo, creditor, debtVal);
@@ -54,7 +52,6 @@ public class DataEventHub : ScriptableObject {
     #region Internal subscribing
     internal void sub_CardResolved(Action a) => cardResolved.Listeners += a;
     internal void sub_CardDrawn(Action<CardType> a) => cardDrawn.Listeners += a;
-    internal void sub_DebtResolved(Action<PlayerInfo> a) => debtResolved.Listeners += a;
     internal void sub_DoublesCountReset(Action a) => doublesCountReset.Listeners += a;
     internal void sub_PlayerIncurredDebt(Action<PlayerInfo, Creditor, int> a) => playerIncurredDebt.Listeners += a;
     internal void sub_EstateAddedBuilding(Action<EstateInfo> a) => estateAddedBuilding.Listeners += a;

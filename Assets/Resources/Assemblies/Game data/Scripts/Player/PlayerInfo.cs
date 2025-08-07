@@ -18,6 +18,7 @@ public interface PlayerInfo : Creditor {
     public int HousesOwned { get; }
     public int HotelsOwned { get; }
     public IEnumerable<TradableInfo> TradableInfos { get; }
+    public bool CanRaiseMoney { get; }
     public bool hasGOOJFCardOfType(CardType cardType);
     public bool ownsProperty(PropertyInfo propertyInfo);
 }

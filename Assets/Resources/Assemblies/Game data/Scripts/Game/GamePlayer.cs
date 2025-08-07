@@ -12,7 +12,7 @@ public interface GamePlayer {
     public void mortgageProperty(PropertyInfo propertyInfo);
     public void unmortgageProperty(PropertyInfo propertyInfo);
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed);
-    public void removeDebt(PlayerInfo debtor);
+    public void reduceDebt(PlayerInfo debtor, int paid);
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference);
     public void tradePlayerMoney(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount);
     public void sendTurnPlayerToJail();

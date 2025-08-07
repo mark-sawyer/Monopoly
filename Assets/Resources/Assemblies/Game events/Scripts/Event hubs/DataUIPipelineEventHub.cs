@@ -22,6 +22,7 @@ public class DataUIPipelineEventHub : ScriptableObject {
     [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
     [SerializeField] private GameEvent turnPlayerSentToJail;
     [SerializeField] private CardTypeEvent useGOOJFCardButtonClicked;
+    [SerializeField] private PlayerIntEvent debtReduced;
 
 
 
@@ -100,6 +101,16 @@ public class DataUIPipelineEventHub : ScriptableObject {
         tradeLockedIn.invoke();
         uiPipelineEvents.TradeLockedIn.invoke();
     }
+    public void call_DebtReduced(PlayerInfo debtor, int paid) {
+        Creditor creditor = debtor.Debt.Creditor;
+        debtReduced.invoke(debtor, paid);
+        if (creditor is PlayerInfo playerCreditor) {
+            uiPipelineEvents.MoneyBetweenPlayers.invoke(debtor, playerCreditor);
+        }
+        else {
+            uiPipelineEvents.MoneyAdjustment.invoke(debtor);
+        }
+    }
     #endregion
 
 
@@ -121,5 +132,6 @@ public class DataUIPipelineEventHub : ScriptableObject {
     }
     internal void sub_TradeTerminated(Action a) => tradeTerminated.Listeners += a;
     internal void sub_TradeLockedIn(Action a) => tradeLockedIn.Listeners += a;
+    internal void sub_DebtReduced(Action<PlayerInfo, int> a) => debtReduced.Listeners += a;
     #endregion
 }

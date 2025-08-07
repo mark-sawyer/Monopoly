@@ -5,12 +5,19 @@ internal class Debt : DebtInfo {
     private int owed;
 
 
-
+    #region internal
     internal Debt(Player debtor, Creditor creditor, int owed) {
         this.debtor = debtor;
         this.creditor = creditor;
         this.owed = owed;
     }
+    internal void pay(int paid) {
+        owed = owed - paid;
+        if (creditor is Player player) {
+            player.adjustMoney(paid);
+        }
+    }
+    #endregion
 
 
 

@@ -19,8 +19,9 @@ public class UIEventHub : ScriptableObject {
     [SerializeField] private GameEvent fadeScreenCoverOut;
     [SerializeField] private GameEvent tradingPlayerPlaced;
     [SerializeField] private GameEvent tradingPlayersConfirmed;
-    [SerializeField] private GameEvent preRollStateStarting;
-    [SerializeField] private GameEvent jailPreRollStateStarting;
+    [SerializeField] private GameEvent prerollStateStarting;
+    [SerializeField] private GameEvent prerollStateEnding;
+    [SerializeField] private PlayerPlayerEvent updateUIMoney;
     #endregion
 
 
@@ -54,8 +55,9 @@ public class UIEventHub : ScriptableObject {
     public void call_FadeScreenCoverIn(float alpha) => fadeScreenCoverIn.invoke(alpha);
     public void call_FadeScreenCoverOut() => fadeScreenCoverOut.invoke();
     public void call_TradingPlayerPlaced() => tradingPlayerPlaced.invoke();
-    public void call_PreRollStateStarting() => preRollStateStarting.invoke();
-    public void call_JailPreRollStateStarting() => jailPreRollStateStarting.invoke();
+    public void call_PrerollStateStarting() => prerollStateStarting.invoke();
+    public void call_PrerollStateEnding() => prerollStateEnding.invoke();
+    public void call_UpdateUIMoney(PlayerInfo p1, PlayerInfo p2) => updateUIMoney.invoke(p1, p2);
     #endregion
 
 
@@ -75,8 +77,9 @@ public class UIEventHub : ScriptableObject {
     public void sub_FadeScreenCoverOut(Action a) => fadeScreenCoverOut.Listeners += a;
     public void sub_TradingPlayerPlaced(Action a) => tradingPlayerPlaced.Listeners += a;
     public void sub_TradingPlayersConfirmed(Action a) => tradingPlayersConfirmed.Listeners += a;
-    public void sub_PreRollStateStarting(Action a) => preRollStateStarting.Listeners += a;
-    public void sub_JailPreRollStateStarting(Action a) => jailPreRollStateStarting.Listeners += a;
+    public void sub_PrerollStateStarting(Action a) => prerollStateStarting.Listeners += a;
+    public void sub_PrerollStateEnding(Action a) => prerollStateEnding.Listeners += a;
+    public void sub_UpdateUIMoney(Action<PlayerInfo, PlayerInfo> a) => updateUIMoney.Listeners += a;
     #endregion
 
 
@@ -85,7 +88,6 @@ public class UIEventHub : ScriptableObject {
     public void unsub_DoublesTickBoxUpdate(Action a) => doublesTickBoxUpdate.Listeners -= a;
     public void unsub_PayFiftyButtonClicked(Action a) => payFiftyButtonClicked.Listeners -= a;
     public void unsub_TokenSettled(Action a) => tokenSettled.Listeners -= a;
-    public void unsub_JailPreRollStateStarting(Action a) => jailPreRollStateStarting.Listeners -= a;
     public void unsub_TradingPlayerPlaced(Action a) => tradingPlayerPlaced.Listeners -= a;
     public void unsub_TradingPlayersConfirmed(Action a) => tradingPlayersConfirmed.Listeners -= a;
     #endregion

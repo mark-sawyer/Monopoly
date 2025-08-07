@@ -14,17 +14,29 @@ public class UseCardButton : MonoBehaviour {
 
 
 
+    #region MonoBehaviour
     private void Start() {
         if (cardType == CardType.CHANCE) changeColour(chanceColour.Colour, chancePadlockColour.Colour);
         else changeColour(communityChestColour.Colour, communityChestPadlockColour.Colour);
     }
+    #endregion
+
+
+
+    #region public
+    public void buttonClicked() {
+        DataUIPipelineEventHub.Instance.call_UseGOOJFCardButtonClicked(cardType);
+    }
+    #endregion
+
+
+
+    #region private
     private void changeColour(Color panelColour, Color padlockColour) {
         padlockImage.color = padlockColour;
         for (int i = 0; i < colourSectionsTransform.childCount; i++) {
             colourSectionsTransform.GetChild(i).GetComponent<Image>().color = panelColour;
         }
     }
-    public void buttonClicked() {
-        DataUIPipelineEventHub.Instance.call_UseGOOJFCardButtonClicked(cardType);
-    }
+    #endregion
 }

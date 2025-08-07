@@ -1,6 +1,4 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class JailUIAlternator : MonoBehaviour {
     [SerializeField] private GameObject doublesGameObject;
@@ -11,21 +9,26 @@ public class JailUIAlternator : MonoBehaviour {
     #region MonoBehaviour
     private void Start() {
         UIEventHub uiEvents = UIEventHub.Instance;
-        uiEvents.sub_PreRollStateStarting(setDoublesMode);
-        uiEvents.sub_JailPreRollStateStarting(setJailMode);
+        UIPipelineEventHub uiPipelineEvents = UIPipelineEventHub.Instance;
+
+        uiEvents.sub_PrerollStateStarting(setMode);
+        uiPipelineEvents.sub_LeaveJail(setMode);
+        uiPipelineEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => setMode());
     }
     #endregion
 
 
 
     #region private
-    private void setDoublesMode() {
-        doublesGameObject.SetActive(true);
-        jailOptionsGameObject.SetActive(false);
-    }
-    private void setJailMode() {
-        doublesGameObject.SetActive(false);
-        jailOptionsGameObject.SetActive(true);
+    private void setMode() {
+        if (GameState.game.TurnPlayer.InJail) {
+            doublesGameObject.SetActive(false);
+            jailOptionsGameObject.SetActive(true);
+        }
+        else {
+            doublesGameObject.SetActive(true);
+            jailOptionsGameObject.SetActive(false);
+        }
     }
     #endregion
 }

@@ -32,7 +32,9 @@ public class TokenVisual : MonoBehaviour {
             transform = tokenVisual.transform;
             playerInfo = tokenVisual.playerInfo;
             goMajorPoint = SpaceVisualManager.Instance.getSpaceVisual(0).getMajorPoint(GameState.game.TurnPlayer);
-            UIPipelineEventHub.Instance.sub_LeaveJail(tokenOnJailSpaceChanged);
+            UIPipelineEventHub uiPipelineEvents = UIPipelineEventHub.Instance;
+            uiPipelineEvents.sub_LeaveJail(tokenOnJailSpaceChanged);
+            uiPipelineEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => tokenOnJailSpaceChanged());
             attractivePoint = transform.position;
         }
         public void update() {

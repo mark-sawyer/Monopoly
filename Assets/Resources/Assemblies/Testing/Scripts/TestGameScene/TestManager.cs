@@ -8,7 +8,7 @@ public class TestManager : MonoBehaviour {
     private void Awake() {
         int playerNum = 2;
         GameFactory gameFactory = new GameFactory();
-        gameFactory.makeTestGame(playerNum, 1500);
+        gameFactory.makeTestGame(playerNum, 500);
         GameState.game = gameFactory.GameStateInfo;
         gameDataUpdater.setup(gameFactory.GamePlayer);
     }

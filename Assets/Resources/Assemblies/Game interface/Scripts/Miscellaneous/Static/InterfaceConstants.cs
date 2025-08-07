@@ -15,4 +15,5 @@ public static class InterfaceConstants {
     public const int FRAMES_FOR_MANAGE_PROPERTIES_DROP = 20;
     public const int FRAMES_FOR_AUCTION_DROP = 20;
     public const int FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP = 30;
+    public const int FRAMES_WAITED_FOR_LEAVING_JAIL = 200;
 }

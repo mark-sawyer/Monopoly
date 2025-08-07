@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ScreenAnimationManager : MonoBehaviour {
-    #region Prefabs
+    #region Screen animation prefabs
     [SerializeField] private GameObject incomeTaxPrefab;
     [SerializeField] private GameObject purchaseQuestionPrefab;
     [SerializeField] private GameObject spinningPolicemanPrefab;
@@ -11,10 +11,11 @@ public class ScreenAnimationManager : MonoBehaviour {
     [SerializeField] private GameObject luxuryTax;
     [SerializeField] private GameObject unaffordableProperty;
     [SerializeField] private GameObject tradingCharacterSelection;
-    [SerializeField] private GameObject[] chancePrefabs;
-    [SerializeField] private GameObject[] communityChestPrefabs;
+    [SerializeField] private GameObject resolveDebtPanel;
     #endregion
     #region Private attributes
+    [SerializeField] private GameObject[] chancePrefabs;
+    [SerializeField] private GameObject[] communityChestPrefabs;
     private GameObject screenAnimationInstance;
     private Dictionary<int, GameObject> chanceIDToPrefabDictionary = new Dictionary<int, GameObject>();
     private Dictionary<int, GameObject> communityChestIDToPrefabDictionary = new Dictionary<int, GameObject>();
@@ -27,44 +28,47 @@ public class ScreenAnimationManager : MonoBehaviour {
         ScreenAnimationEventHub events = ScreenAnimationEventHub.Instance;
         initialiseChanceDictionary();
         initialiseCommunityChestyDictionary();
+        float alpha = InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA;
+
         events.sub_RemoveScreenAnimation(removeScreenAnimation);
         events.sub_RemoveScreenAnimationKeepCover(removeAnimationKeepCover);
 
-        events.sub_SpinningPoliceman(() => startScreenAnimation(spinningPolicemanPrefab));
-        events.sub_IncomeTaxQuestion((PlayerInfo playerInfo) => startScreenAnimation(incomeTaxPrefab, playerInfo));
+        events.sub_SpinningPoliceman(() => startScreenAnimation(spinningPolicemanPrefab, alpha));
+        events.sub_IncomeTaxQuestion((PlayerInfo playerInfo) => startScreenAnimation(incomeTaxPrefab, playerInfo, alpha));
         events.sub_PurchaseQuestion((PlayerInfo playerInfo, PropertyInfo propertyInfo) => {
-            startScreenAnimation(purchaseQuestionPrefab, playerInfo, propertyInfo);
+            startScreenAnimation(purchaseQuestionPrefab, playerInfo, propertyInfo, alpha);
         });
         events.sub_CardShown(() => {
             CardInfo cardInfo = GameState.game.DrawnCard;
             GameObject cardPrefab;
             if (cardInfo.CardType == CardType.CHANCE) cardPrefab = chanceIDToPrefabDictionary[cardInfo.ID];
             else cardPrefab = communityChestIDToPrefabDictionary[cardInfo.ID];
-            startScreenAnimation(cardFlipperPrefab, cardPrefab);
+            startScreenAnimation(cardFlipperPrefab, cardPrefab, alpha);
         });
-        events.sub_PayingRentAnimationBegins((DebtInfo debtInfo) => startScreenAnimation(debtorCreditor, debtInfo));
-        events.sub_LuxuryTaxAnimationBegins(() => startScreenAnimation(luxuryTax));
-        events.sub_UnaffordableProperty((PropertyInfo propertyInfo) => startScreenAnimation(unaffordableProperty, propertyInfo));
-        events.sub_TradeOpened(() => startScreenAnimation(tradingCharacterSelection));
+        events.sub_PayingRentAnimationBegins((DebtInfo debtInfo) => startScreenAnimation(debtorCreditor, debtInfo, alpha));
+        events.sub_LuxuryTaxAnimationBegins(() => startScreenAnimation(luxuryTax, alpha));
+        events.sub_UnaffordableProperty((PropertyInfo propertyInfo) => startScreenAnimation(unaffordableProperty, propertyInfo, alpha));
+        events.sub_TradeOpened(() => startScreenAnimation(tradingCharacterSelection, alpha));
+        events.sub_ResolveDebt((DebtInfo debtInfo) => startScreenAnimation(resolveDebtPanel, debtInfo, 1));
     }
     #endregion
 
 
     
     #region Screen animation
-    private void startScreenAnimation(GameObject prefab) {
-        UIEventHub.Instance.call_FadeScreenCoverIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
+    private void startScreenAnimation(GameObject prefab, float coverAlpha) {
+        UIEventHub.Instance.call_FadeScreenCoverIn(coverAlpha);
         screenAnimationInstance = Instantiate(prefab, transform);
         screenAnimationInstance.GetComponent<ScreenAnimation>().appear();
     }
-    private void startScreenAnimation<T>(GameObject prefab, T t) {
-        UIEventHub.Instance.call_FadeScreenCoverIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
+    private void startScreenAnimation<T>(GameObject prefab, T t, float coverAlpha) {
+        UIEventHub.Instance.call_FadeScreenCoverIn(coverAlpha);
         screenAnimationInstance = Instantiate(prefab, transform);
         screenAnimationInstance.GetComponent<ScreenAnimation<T>>().setup(t);
         screenAnimationInstance.GetComponent<ScreenAnimation<T>>().appear();
     }
-    private void startScreenAnimation<T1, T2>(GameObject prefab, T1 t1, T2 t2) {
-        UIEventHub.Instance.call_FadeScreenCoverIn(InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA);
+    private void startScreenAnimation<T1, T2>(GameObject prefab, T1 t1, T2 t2, float coverAlpha) {
+        UIEventHub.Instance.call_FadeScreenCoverIn(coverAlpha);
         screenAnimationInstance = Instantiate(prefab, transform);
         screenAnimationInstance.GetComponent<ScreenAnimation<T1, T2>>().setup(t1, t2);
         screenAnimationInstance.GetComponent<ScreenAnimation<T1, T2>>().appear();

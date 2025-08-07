@@ -11,14 +11,14 @@ public class ManagePropertiesPanel : MonoBehaviour {
         public EstateSectionGetter(Transform propertySectionTransform) {
             this.propertySectionTransform = propertySectionTransform;
         }
-        public EstateSection exe(EstateInfo estateInfo) {
+        public MPEstateSection exe(EstateInfo estateInfo) {
             int columnIndex = getColumnIndex(estateInfo.EstateColour);
             Transform columnTransform = propertySectionTransform.GetChild(columnIndex);
             int colourIndex = (int)estateInfo.EstateColour % 2;
             Transform colourTransform = columnTransform.GetChild(colourIndex);
             int estateOrder = estateInfo.EstateOrder;
             Transform estateSectionTransform = colourTransform.GetChild(0).GetChild(estateOrder + 1);
-            EstateSection estateSection = estateSectionTransform.GetComponent<EstateSection>();
+            MPEstateSection estateSection = estateSectionTransform.GetComponent<MPEstateSection>();
             return estateSection;
         }
         private int getColumnIndex(EstateColour estateColour) {

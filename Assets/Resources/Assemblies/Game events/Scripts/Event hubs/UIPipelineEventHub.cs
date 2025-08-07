@@ -75,7 +75,6 @@ public class UIPipelineEventHub : ScriptableObject {
     public void unsub_MoneyAdjustment(Action<PlayerInfo> a) => moneyAdjustment.Listeners -= a;
     public void unsub_RollButtonClicked(Action a) => rollButtonClicked.Listeners -= a;
     public void unsub_NextPlayerTurn(Action a) => nextPlayerTurn.Listeners -= a;
-    public void unsub_UseGOOJFCardButtonClicked(Action<CardType> a) => useGOOJFCardButtonClicked.Listeners -= a;
     public void unsub_TradeTerminated(Action a) => tradeTerminated.Listeners -= a;
     public void unsub_TradeUpdated(Action a) => tradeUpdated.Listeners -= a;
     public void unsub_TradeLockedIn(Action a) => tradeLockedIn.Listeners -= a;

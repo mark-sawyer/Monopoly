@@ -8,9 +8,10 @@ public class PlayerPanelManager : MonoBehaviour {
     [SerializeField] private GameObject playerPanelPrefab;
     #endregion
     private const float GAP = 3;
-    UIPipelineEventHub uiPipelineEvents;
-    ManagePropertiesEventHub managePropertiesEvents;
-    TradeEventHub tradeEvents;
+    private UIEventHub uiEventHub;
+    private UIPipelineEventHub uiPipelineEvents;
+    private ManagePropertiesEventHub managePropertiesEvents;
+    private TradeEventHub tradeEvents;
 
 
 
@@ -63,6 +64,7 @@ public class PlayerPanelManager : MonoBehaviour {
     }
     private void subscribeToEvents() {
         uiPipelineEvents = UIPipelineEventHub.Instance;
+        uiEventHub = UIEventHub.Instance;
         managePropertiesEvents = ManagePropertiesEventHub.Instance;
         tradeEvents = TradeEventHub.Instance;
 
@@ -74,6 +76,8 @@ public class PlayerPanelManager : MonoBehaviour {
         uiPipelineEvents.sub_UseGOOJFCardButtonClicked(
             (CardType cardType) => updateGOOJFCardIcon(GameState.game.TurnPlayer, cardType)
         );
+
+        uiEventHub.sub_UpdateUIMoney(adjustMoneyVisuals);
 
         managePropertiesEvents.sub_ManagePropertiesOpened(() => changeMoneyAdjustListening(true));
         managePropertiesEvents.sub_BackButtonPressed(() => changeMoneyAdjustListening(false));
@@ -179,10 +183,9 @@ public class PlayerPanelManager : MonoBehaviour {
     }
     private IEnumerator updateVisualsAfterTrade(TradeInfo completedTrade) {
         IEnumerator exchangeMoney() {
-            DataUIPipelineEventHub.Instance.call_MoneyBetweenPlayers(
+            uiEventHub.call_UpdateUIMoney(
                 completedTrade.MoneyGivingPlayer,
-                completedTrade.MoneyReceivingPlayer,
-                completedTrade.MoneyPassed
+                completedTrade.MoneyReceivingPlayer
             );
             yield return WaitFrames.Instance.frames(InterfaceConstants.FRAMES_FOR_MONEY_UPDATE);
         }

@@ -19,6 +19,7 @@ public class SoundPlayer : MonoBehaviour {
     [SerializeField] private AudioClip questionChime;
     [SerializeField] private AudioClip uhOh;
     [SerializeField] private AudioClip whistle;
+    [SerializeField] private AudioClip dunDuuuuuuun;
     #endregion
 
 
@@ -35,6 +36,7 @@ public class SoundPlayer : MonoBehaviour {
         uiEvents.sub_CardDrop(play_CardDrop);
         uiEvents.sub_MoneyAppearOrDisappear(play_PaperSound);
         uiEvents.sub_AppearingPop(play_Pop);
+        uiEvents.sub_UpdateUIMoney(play_MoneyChing);
         uiPipelineEventHub.sub_RollButtonClicked(play_DiceSound);
         uiPipelineEventHub.sub_MoneyAdjustment(play_MoneyChing);
         uiPipelineEventHub.sub_MoneyBetweenPlayers(play_MoneyChing);
@@ -45,6 +47,7 @@ public class SoundPlayer : MonoBehaviour {
         screenEvents.sub_CardShown(play_CardDrawn);
         screenEvents.sub_PurchaseQuestion(play_QuestionChime);
         screenEvents.sub_IncomeTaxQuestion(play_QuestionChime);
+        screenEvents.sub_ResolveDebt(play_DunDuuuuuuun);
     }
     #endregion
 
@@ -76,5 +79,6 @@ public class SoundPlayer : MonoBehaviour {
     private void play_QuestionChime(PlayerInfo x) => playSound(questionChime);
     private void play_UhOh(DebtInfo x) => playSound(uhOh);
     private void play_Whistle() => playSound(whistle);
+    private void play_DunDuuuuuuun(DebtInfo x) => playSound(dunDuuuuuuun);
     #endregion
 }

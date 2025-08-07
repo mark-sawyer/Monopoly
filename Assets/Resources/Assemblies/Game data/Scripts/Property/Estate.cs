@@ -10,6 +10,20 @@ internal class Estate : Property, EstateInfo {
 
 
 
+    #region internal
+    internal void setup(BankInfo bankInfo) {
+        this.bankInfo = bankInfo;
+    }
+    internal void addBuilding(Building building) {
+        buildings.Enqueue(building);
+    }
+    internal Building removeBuilding() {
+        return buildings.Dequeue();
+    }
+    #endregion
+
+
+
     #region EstateInfo
     public EstateGroupInfo EstateGroupInfo => estateGroup;
     public EstateColour EstateColour => estateGroup.EstateColour;
@@ -93,20 +107,6 @@ internal class Estate : Property, EstateInfo {
             bool noBuildings = !estateGroup.BuildingExists;
             return noBuildings;
         }
-    }
-    #endregion
-
-
-
-    #region internal
-    internal void setup(BankInfo bankInfo) {
-        this.bankInfo = bankInfo;
-    }
-    internal void addBuilding(Building building) {
-        buildings.Enqueue(building);
-    }
-    internal Building removeBuilding() {
-        return buildings.Dequeue();
     }
     #endregion
 

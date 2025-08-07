@@ -48,8 +48,12 @@ internal class Player : PlayerInfo {
     internal void incurDebt(Creditor creditor, int owed) {
         debt = new Debt(this, creditor, owed);
     }
-    internal void removeDebt() {
-        debt = null;
+    internal void payDebt(int paid) {
+        debt.pay(paid);
+        money -= paid;
+        if (debt.Owed == 0) {
+            debt = null;
+        }
     }
     internal void getGOOJFCard(Card getOutOfJailFreeCard) {
         getOutOfJailFreeCards.Add(getOutOfJailFreeCard);
@@ -118,6 +122,7 @@ internal class Player : PlayerInfo {
             return tradables;
         }
     }
+    public bool CanRaiseMoney => properties.Any(x => !x.IsMortgaged);
     public bool hasGOOJFCardOfType(CardType cardType) {
         return getOutOfJailFreeCards.Any(x => x.CardType == cardType);
     }

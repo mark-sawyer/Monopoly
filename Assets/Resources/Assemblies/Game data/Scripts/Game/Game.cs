@@ -118,8 +118,9 @@ internal class Game : GameStateInfo, GamePlayer {
         Player debtorPlayer = (Player)debtor;
         debtorPlayer.incurDebt(creditor, owed);
     }
-    public void removeDebt(PlayerInfo debtor) {
-        ((Player)debtor).removeDebt();
+    public void reduceDebt(PlayerInfo debtor, int paid) {
+        Player player = (Player)debtor;
+        player.payDebt(paid);
     }
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference) {
         Player player = (Player)playerInfo;
@@ -184,7 +185,7 @@ internal class Game : GameStateInfo, GamePlayer {
         proposedTrade.moneyChange(moneyGivingPlayer, money);
     }
     public void makeProposedTrade() {
-        proposedTrade.performTradeExceptMoney();
+        proposedTrade.performTrade();
         completedTrade = proposedTrade;
         proposedTrade = null;
     }
