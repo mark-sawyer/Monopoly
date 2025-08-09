@@ -29,6 +29,9 @@ public class RailroadHighlight : MonoBehaviour {
         else
             ownedAndUnmortgaged();
     }
+    public void turnOffHighlight() {
+        notOwnedByPlayer();
+    }
     #endregion
 
 

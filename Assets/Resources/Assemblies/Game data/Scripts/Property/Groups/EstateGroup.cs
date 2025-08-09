@@ -6,6 +6,16 @@ using UnityEngine;
 internal class EstateGroup : ScriptableObject, EstateGroupInfo {
     [SerializeField] private EstateColour estateColour;
     [SerializeField] private Estate[] estates;
+    [SerializeField] private int buildingCost;
+
+
+
+    #region internal
+    internal int getPropertyOrder(Estate estate) {
+        return Array.IndexOf(estates, estate);
+    }
+    internal Estate[] Estates => estates;
+    #endregion
 
 
 
@@ -13,6 +23,7 @@ internal class EstateGroup : ScriptableObject, EstateGroupInfo {
     public int NumberOfPropertiesInGroup => estates.Length;
     public bool MortgageExists => estates.Any(x => x.IsMortgaged);
     public int MortgageCount => estates.Count(x => x.IsMortgaged);
+    public int TotalBuildings => estates.Sum(x => x.BuildingCount);
     public int propertiesOwnedByPlayer(PlayerInfo playerInfo) {
         return estates.Count(x => x.Owner == playerInfo);
     }
@@ -25,6 +36,8 @@ internal class EstateGroup : ScriptableObject, EstateGroupInfo {
 
     #region EstateGroupInfo
     public EstateColour EstateColour => estateColour;
+    public int BuildingCost => buildingCost;
+    public int BuildingSellCost => buildingCost / 2;
     public int MinBuildingCount => estates.Min(x => x.BuildingCount);
     public int MaxBuildingCount => estates.Max(x => x.BuildingCount);
     public bool BuildingExists => estates.Any(x => x.BuildingCount > 0);
@@ -33,20 +46,15 @@ internal class EstateGroup : ScriptableObject, EstateGroupInfo {
         return estates[index];
     }
     #endregion
-
-
-
-    #region internal
-    internal int getPropertyOrder(Estate estate) {
-        return Array.IndexOf(estates, estate);
-    }
-    #endregion
 }
 
 public interface EstateGroupInfo : PropertyGroupInfo {
     public EstateColour EstateColour { get; }
+    public int BuildingCost { get; }
+    public int BuildingSellCost { get; }
     public int MinBuildingCount { get; }
     public int MaxBuildingCount { get; }
+    public int TotalBuildings { get; }
     public bool BuildingExists { get; }
     public bool HotelExists { get; }
     public EstateInfo getEstateInfo(int index);

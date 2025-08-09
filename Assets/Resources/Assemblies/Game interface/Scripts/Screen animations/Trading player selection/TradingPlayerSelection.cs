@@ -15,8 +15,6 @@ public class TradingPlayerSelection : ScreenAnimation {
     [SerializeField] private Button backButton;
     #endregion
     [SerializeField] private GameObject tradePanelPrefab;
-    private UIEventHub uiEvents;
-    private UIPipelineEventHub uiPipelineEventHub;
     private GameObject tradePanelInstance;
     private DroppingQuestionsFunctionality droppingQuestionsFunctionality;
 
@@ -26,18 +24,16 @@ public class TradingPlayerSelection : ScreenAnimation {
     private void OnEnable() {
         droppingQuestionsFunctionality = new DroppingQuestionsFunctionality(droppingQuestionRT);
         droppingQuestionsFunctionality.adjustSize();
-        uiEvents = UIEventHub.Instance;
-        uiPipelineEventHub = UIPipelineEventHub.Instance;
-        uiEvents.sub_TradingPlayerPlaced(adjustTextButtonToggle);
-        uiEvents.sub_TradingPlayersConfirmed(createTradePanel);
-        uiPipelineEventHub.sub_TradeTerminated(removeTradeDisplay);
-        uiPipelineEventHub.sub_TradeLockedIn(removeTradeDisplay);
+        UIEventHub.Instance.sub_TradingPlayerPlaced(adjustTextButtonToggle);
+        UIEventHub.Instance.sub_TradingPlayersConfirmed(createTradePanel);
+        UIPipelineEventHub.Instance.sub_TradeTerminated(removeTradeDisplay);
+        UIPipelineEventHub.Instance.sub_TradeLockedIn(removeTradeDisplay);
     }
     private void OnDestroy() {
-        uiEvents.unsub_TradingPlayerPlaced(adjustTextButtonToggle);
-        uiEvents.unsub_TradingPlayersConfirmed(createTradePanel);
-        uiPipelineEventHub.unsub_TradeTerminated(removeTradeDisplay);
-        uiPipelineEventHub.unsub_TradeLockedIn(removeTradeDisplay);
+        UIEventHub.Instance.unsub_TradingPlayerPlaced(adjustTextButtonToggle);
+        UIEventHub.Instance.unsub_TradingPlayersConfirmed(createTradePanel);
+        UIPipelineEventHub.Instance.unsub_TradeTerminated(removeTradeDisplay);
+        UIPipelineEventHub.Instance.unsub_TradeLockedIn(removeTradeDisplay);
     }
     #endregion
 
@@ -92,12 +88,12 @@ public class TradingPlayerSelection : ScreenAnimation {
         DataEventHub.Instance.call_TradeCommenced(playerOne, playerTwo);
         tradePanelInstance = createTradePanel(playerOne, playerTwo);
         moveObjects();
-        uiEvents.call_FadeScreenCoverIn(1f);
+        UIEventHub.Instance.call_FadeScreenCoverIn(1f);
         backButton.interactable = false;
     }
     private IEnumerator dropBackButton() {
         RectTransform backButtonRT = (RectTransform)backButton.transform;
-        int frames = InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION;
+        int frames = FrameConstants.SCREEN_COVER_TRANSITION;
         float x = backButtonRT.anchoredPosition.x;
         float yStart = backButtonRT.anchoredPosition.y;
         float yEnd = -20;

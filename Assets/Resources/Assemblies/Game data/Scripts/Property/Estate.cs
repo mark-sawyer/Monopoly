@@ -4,7 +4,6 @@ using UnityEngine;
 internal class Estate : Property, EstateInfo {
     [SerializeField] private EstateGroup estateGroup;
     [SerializeField] private int[] rent;
-    [SerializeField] private int buildingCost;
     private Queue<Building> buildings = new Queue<Building>(4);
     private BankInfo bankInfo;
 
@@ -27,8 +26,8 @@ internal class Estate : Property, EstateInfo {
     #region EstateInfo
     public EstateGroupInfo EstateGroupInfo => estateGroup;
     public EstateColour EstateColour => estateGroup.EstateColour;
-    public int BuildingCost => buildingCost;
-    public int BuildingSellCost => buildingCost / 2;
+    public int BuildingCost => estateGroup.BuildingCost;
+    public int BuildingSellCost => estateGroup.BuildingSellCost;
     public int BuildingCount => buildings.Count;
     public int EstateOrder => estateGroup.getPropertyOrder(this);
     public bool CanAddBuilding {
@@ -101,7 +100,7 @@ internal class Estate : Property, EstateInfo {
 
 
     #region Property
-    internal override int Worth => Cost + (buildingCost * buildings.Count);
+    internal override int Worth => Cost + (BuildingCost * buildings.Count);
     internal override bool IsCurrentlyTradable {
         get {
             bool noBuildings = !estateGroup.BuildingExists;

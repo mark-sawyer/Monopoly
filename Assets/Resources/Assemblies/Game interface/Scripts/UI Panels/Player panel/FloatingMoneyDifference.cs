@@ -18,7 +18,7 @@ public class FloatingMoneyDifference : MonoBehaviour {
     }
 
     private IEnumerator floatCoroutine(Color textColour, Vector3 positionChange) {
-        int frames = InterfaceConstants.FRAMES_FOR_MONEY_UPDATE;
+        int frames = FrameConstants.MONEY_UPDATE;
         for (int i = 0; i < frames; i++) {
             transform.position += positionChange;
             textColour.a = (float)-i / frames + 1f;

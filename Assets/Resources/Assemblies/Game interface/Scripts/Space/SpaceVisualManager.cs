@@ -17,8 +17,8 @@ public class SpaceVisualManager : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        ManagePropertiesEventHub.Instance.sub_UpdateBoardAfterManagePropertiesClosed(
-            () => StartCoroutine(placeMortgagesHousesAndHotels())
+        UIEventHub.Instance.sub_UpdateExpiredBoardVisuals(
+            () => StartCoroutine(placeHousesAndHotels())
         );
     }
     #endregion
@@ -34,7 +34,7 @@ public class SpaceVisualManager : MonoBehaviour {
 
 
     #region private
-    private IEnumerator placeMortgagesHousesAndHotels() {
+    private IEnumerator placeHousesAndHotels() {
         for (int i = 0; i < GameConstants.TOTAL_SPACES; i++) {
             SpaceInfo space = GameState.game.getSpaceInfo(i);
             if (space is not PropertySpaceInfo propertySpaceInfo) continue;
@@ -58,8 +58,8 @@ public class SpaceVisualManager : MonoBehaviour {
                     houseHotelDifference[1]
                 );
             }
-            ManagePropertiesEventHub.Instance.call_AllVisualsUpdatedAfterManagePropertiesClosed();
         }
+        UIEventHub.Instance.call_AllExpiredPropertyVisualsUpdated();
     }
     private int[] getHouseHotelDifference(bool dataHasHotel, int dataBuildingCount, bool displayHasHotel, int displayBuildingCount) {
         int hotelDifference;

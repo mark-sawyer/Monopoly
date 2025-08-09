@@ -7,9 +7,21 @@ public class ResolveDebtTopRow : MonoBehaviour {
     [SerializeField] private GameObject bankSection;
     [SerializeField] private MoneyAdjuster debtRemainingPlayer;
     [SerializeField] private MoneyAdjuster debtRemainingBank;
+    private DebtInfo debtInfo;
 
 
+
+    #region MonoBehaviour
+    private void OnDestroy() {
+        UIPipelineEventHub.Instance.unsub_MoneyRaisedForDebt(adjustPanelAfterPayment);
+    }
+    #endregion
+
+
+
+    #region public
     public void setup(DebtInfo debtInfo) {
+        this.debtInfo = debtInfo;
         PlayerInfo debtorInfo = debtInfo.Debtor;
         debtorIcon.setup(debtorInfo.Token, debtorInfo.Colour);
         Creditor creditor = debtInfo.Creditor;
@@ -24,5 +36,21 @@ public class ResolveDebtTopRow : MonoBehaviour {
             playerSection.SetActive(false);
             debtRemainingBank.setStartingMoney(debtInfo.Owed);
         }
+
+        UIPipelineEventHub.Instance.sub_MoneyRaisedForDebt(adjustPanelAfterPayment);
     }
+    #endregion
+
+
+
+    #region private
+    private void adjustPanelAfterPayment() {
+        if (playerSection.activeSelf) {
+            debtRemainingPlayer.adjustMoney(debtInfo);
+        }
+        else {
+            debtRemainingBank.adjustMoney(debtInfo);
+        }
+    }
+    #endregion
 }

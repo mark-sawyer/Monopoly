@@ -27,7 +27,7 @@ internal class ManagePropertiesState : State {
     #region private
     private void backButtonListening() {
         WaitFrames.Instance.beforeAction(
-            InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_DROP,
+            FrameConstants.MANAGE_PROPERTIES_DROP,
             () => managePropertiesPanelRaised = true
         );
     }

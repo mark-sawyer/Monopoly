@@ -18,6 +18,7 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_IncrementJailTurn(incrementJailTurn);
         dataHub.sub_EstateAddedBuilding(addBuildingToEstate);
         dataHub.sub_EstateRemovedBuilding(removeBuildingFromEstate);
+        dataHub.sub_EstateGroupRemovedAllBuildings(sellAllBuildingsFromEstateGroup);
         dataHub.sub_PropertyMortgaged(mortgageProperty);
         dataHub.sub_PropertyUnmortgaged(unmortgageProperty);
         dataHub.sub_TradeCommenced(createNewTrade);
@@ -36,6 +37,8 @@ public class GameDataUpdater : MonoBehaviour {
         pipelineHub.sub_TradeUpdated(updateProposedTrade);
         pipelineHub.sub_TradeLockedIn(makeProposedTrade);
         pipelineHub.sub_DebtReduced(reduceDebt);
+        pipelineHub.sub_MoneyRaisedForDebt(raiseMoneyForDebt);
+        pipelineHub.sub_PlayerEliminated(eliminatePlayer);
     }
     #endregion
 
@@ -61,6 +64,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void reduceDebt(PlayerInfo debtor, int paid) {
         gamePlayer.reduceDebt(debtor, paid);
+    }
+    private void raiseMoneyForDebt(PlayerInfo debtor, int moneyRaised) {
+        gamePlayer.raiseMoneyForDebt(debtor, moneyRaised);
     }
     private void rollDice() {
         gamePlayer.rollDice();
@@ -108,6 +114,9 @@ public class GameDataUpdater : MonoBehaviour {
     private void removeBuildingFromEstate(EstateInfo estateInfo) {
         gamePlayer.removeBuilding(estateInfo);
     }
+    private void sellAllBuildingsFromEstateGroup(EstateGroupInfo estateGroupInfo) {
+        gamePlayer.removeAllBuildingsFromEstateGroup(estateGroupInfo);
+    }
     private void mortgageProperty(PropertyInfo propertyInfo) {
         gamePlayer.mortgageProperty(propertyInfo);
     }
@@ -125,6 +134,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void makeProposedTrade() {
         gamePlayer.makeProposedTrade();
+    }
+    private void eliminatePlayer(PlayerInfo player) {
+        gamePlayer.eliminatePlayer(player);
     }
     #endregion
 }

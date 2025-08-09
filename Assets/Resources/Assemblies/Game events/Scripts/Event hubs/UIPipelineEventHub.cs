@@ -17,6 +17,8 @@ public class UIPipelineEventHub : ScriptableObject {
     [SerializeField] private GameEvent tradeTerminated;
     [SerializeField] private GameEvent tradeUpdated;
     [SerializeField] private GameEvent tradeLockedIn;
+    [SerializeField] private GameEvent moneyRaisedForDebt;
+    [SerializeField] private PlayerEvent playerEliminated;
 
 
 
@@ -49,6 +51,8 @@ public class UIPipelineEventHub : ScriptableObject {
     internal GameEvent TradeTerminated => tradeTerminated;
     internal GameEvent TradeUpdated => tradeUpdated;
     internal GameEvent TradeLockedIn => tradeLockedIn;
+    internal GameEvent MoneyRaisedForDebt => moneyRaisedForDebt;
+    internal PlayerEvent PlayerEliminated => playerEliminated;
     #endregion
 
 
@@ -67,6 +71,8 @@ public class UIPipelineEventHub : ScriptableObject {
     public void sub_TradeTerminated(Action a) => tradeTerminated.Listeners += a;
     public void sub_TradeUpdated(Action a) => tradeUpdated.Listeners += a;
     public void sub_TradeLockedIn(Action a) => tradeLockedIn.Listeners += a;
+    public void sub_MoneyRaisedForDebt(Action a) => moneyRaisedForDebt.Listeners += a;
+    public void sub_PlayerEliminated(Action<PlayerInfo> a) => playerEliminated.Listeners += a;
     #endregion
 
 
@@ -78,5 +84,6 @@ public class UIPipelineEventHub : ScriptableObject {
     public void unsub_TradeTerminated(Action a) => tradeTerminated.Listeners -= a;
     public void unsub_TradeUpdated(Action a) => tradeUpdated.Listeners -= a;
     public void unsub_TradeLockedIn(Action a) => tradeLockedIn.Listeners -= a;
+    public void unsub_MoneyRaisedForDebt(Action a) => moneyRaisedForDebt.Listeners -= a;
     #endregion
 }

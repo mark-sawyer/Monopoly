@@ -48,7 +48,7 @@ internal class NextUtilityState : State {
             PlayerInfo owner = utilityInfo.Owner;
             int rent = 10 * GameState.game.DiceInfo.TotalValue;
             DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
-            ScreenAnimationEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.Debt);
+            ScreenAnimationEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.DebtInfo);
         }
         else {
             goToLandedOnSpace = true;

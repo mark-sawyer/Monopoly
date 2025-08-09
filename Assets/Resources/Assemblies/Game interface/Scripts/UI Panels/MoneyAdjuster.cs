@@ -1,3 +1,4 @@
+using Codice.CM.Common.Merge;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -16,16 +17,17 @@ public class MoneyAdjuster : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        frames = InterfaceConstants.FRAMES_FOR_MONEY_UPDATE;
+        frames = FrameConstants.MONEY_UPDATE;
     }
     #endregion
 
 
 
     #region public
+    public int DisplayedMoney => int.Parse(frontText.text.Substring(1));
     public void adjustMoney(PlayerInfo playerInfo) {
         int currentMoney = playerInfo.Money;
-        int priorMoney = int.Parse(frontText.text.Substring(1));
+        int priorMoney = DisplayedMoney;
         int difference = currentMoney - priorMoney;
 
         GameObject floatingMoney = Instantiate(
@@ -37,6 +39,22 @@ public class MoneyAdjuster : MonoBehaviour {
         floatingMoney.GetComponent<FloatingMoneyDifference>().floatAway(difference);
         changeMoneyVisual(currentMoney);
         startMoneyWobble(difference > 0);
+    }
+    public void adjustMoney(DebtInfo debtInfo) {
+        int currentDebt = debtInfo.Owed;
+        int priorDebt = DisplayedMoney;
+        int difference = currentDebt - priorDebt;
+        changeMoneyVisual(currentDebt);
+
+        GameObject floatingMoney = Instantiate(
+            floatingMoneyPrefab,
+            transform.position,
+            Quaternion.identity,
+            transform
+        );
+        floatingMoney.GetComponent<FloatingMoneyDifference>().floatAway(difference);
+        changeMoneyVisual(currentDebt);
+        startMoneyWobble(false);
     }
     public void adjustMoneyQuietly(PlayerInfo playerInfo) {
         int currentMoney = playerInfo.Money;

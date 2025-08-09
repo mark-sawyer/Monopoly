@@ -84,7 +84,7 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
             ManagePropertiesEventHub.Instance.call_TokenSelectedInManageProperties(playerInfo);
             wipeInProgress = true;
             WaitFrames.Instance.beforeAction(
-                2 * InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP + 2,
+                2 * FrameConstants.MANAGE_PROPERTIES_WIPE_UP + 2,
                 () => wipeInProgress = false
             );
         }

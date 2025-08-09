@@ -10,6 +10,7 @@ public class DataEventHub : ScriptableObject {
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
     [SerializeField] private EstateEvent estateAddedBuilding;
     [SerializeField] private EstateEvent estateRemovedBuilding;
+    [SerializeField] private EstateGroupEvent estateGroupRemovedAllBuildings;
     [SerializeField] private PropertyEvent propertyMortgaged;
     [SerializeField] private PropertyEvent propertyUnmortgaged;
     [SerializeField] private GameEvent incrementJailTurn;
@@ -41,6 +42,9 @@ public class DataEventHub : ScriptableObject {
     }
     public void call_EstateAddedBuilding(EstateInfo estateInfo) => estateAddedBuilding.invoke(estateInfo);
     public void call_EstateRemovedBuilding(EstateInfo estateInfo) => estateRemovedBuilding.invoke(estateInfo);
+    public void call_EstateGroupRemovedAllBuildings(EstateGroupInfo estateGroupInfo) {
+        estateGroupRemovedAllBuildings.invoke(estateGroupInfo);
+    }
     public void call_IncrementJailTurn() => incrementJailTurn.invoke();
     public void call_PropertyMortgaged(PropertyInfo propertyInfo) => propertyMortgaged.invoke(propertyInfo);
     public void call_PropertyUnmortgaged(PropertyInfo propertyInfo) => propertyUnmortgaged.invoke(propertyInfo);
@@ -56,6 +60,7 @@ public class DataEventHub : ScriptableObject {
     internal void sub_PlayerIncurredDebt(Action<PlayerInfo, Creditor, int> a) => playerIncurredDebt.Listeners += a;
     internal void sub_EstateAddedBuilding(Action<EstateInfo> a) => estateAddedBuilding.Listeners += a;
     internal void sub_EstateRemovedBuilding(Action<EstateInfo> a) => estateRemovedBuilding.Listeners += a;
+    internal void sub_EstateGroupRemovedAllBuildings(Action<EstateGroupInfo> a) => estateGroupRemovedAllBuildings.Listeners += a;
     internal void sub_IncrementJailTurn(Action a) => incrementJailTurn.Listeners += a;
     internal void sub_PropertyMortgaged(Action<PropertyInfo> a) => propertyMortgaged.Listeners += a;
     internal void sub_PropertyUnmortgaged(Action<PropertyInfo> a) => propertyUnmortgaged.Listeners += a;

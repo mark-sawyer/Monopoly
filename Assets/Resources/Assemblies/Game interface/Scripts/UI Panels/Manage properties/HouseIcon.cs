@@ -7,11 +7,14 @@ public class HouseIcon : MonoBehaviour {
     [SerializeField] private Image houseImage;
     [SerializeField] private int ID;
 
-    private void Start() {
-        toggleOn(false);
-    }
-    public void toggleOn(bool toggle) {
-        if (toggle) houseImage.color = houseIconColour.Colour;
-        else houseImage.color = faintHouseIconColour.Colour;
+
+
+    public void toggleHouse(bool toggle) {
+        if (toggle) {
+            houseImage.color = houseIconColour.Colour;
+        }
+        else {
+            houseImage.color = faintHouseIconColour.Colour;
+        }
     }
 }

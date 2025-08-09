@@ -21,8 +21,8 @@ public class ManagePropertiesWipe : MonoBehaviour {
     }
     private IEnumerator wipeCoroutine(PlayerInfo playerInfo) {
         float width = rt.rect.width;
-        int wipeFrames = InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP;
-        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP; i++) {
+        int wipeFrames = FrameConstants.MANAGE_PROPERTIES_WIPE_UP;
+        for (int i = 1; i <= FrameConstants.MANAGE_PROPERTIES_WIPE_UP; i++) {
             float height = LinearValue.exe(i, 0f, MAX_HEIGHT, wipeFrames);
             rt.sizeDelta = new Vector2(width, height);
             yield return null;

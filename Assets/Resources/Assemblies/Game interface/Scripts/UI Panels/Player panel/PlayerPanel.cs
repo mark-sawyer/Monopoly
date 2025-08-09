@@ -20,6 +20,13 @@ public class PlayerPanel : MonoBehaviour {
 
     #region public
     public PropertyGroupIcon[] PropertyGroupIcons => propertyGroupIcons;
+    public bool NeedsUpdate {
+        get {
+            int dataMoney = playerInfo.Money;
+            int uiMoney = moneyAdjuster.DisplayedMoney;
+            return dataMoney != uiMoney;
+        }
+    }
     public void setup(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
         tokenIcon.setup(playerInfo.Token, playerInfo.Colour);
@@ -60,30 +67,12 @@ public class PlayerPanel : MonoBehaviour {
         }
 
         PropertyGroupIcon propertyGroupIcon = getPropertyGroupIcon();
-        StartCoroutine(propertyGroupIcon.pulseAndUpdateWithPop());
+        SoundOnlyEventHub.Instance.call_AppearingPop();
+        StartCoroutine(propertyGroupIcon.pulseAndUpdate());
     }
     public void toggleHighlightImage(bool toggle) {
         highlightImage.enabled = toggle;
     }
-    /*
-    public IEnumerator toggleGOOJFIcons() {
-        bool onButShouldBeOff(CardType cardType) {
-            return !playerInfo.hasGOOJFCardOfType(cardType)
-                && GOOJFIconDict[cardType].IsOn;
-        }
-        bool offButShouldBeOn(CardType cardType) {
-            return playerInfo.hasGOOJFCardOfType(cardType)
-                && !GOOJFIconDict[cardType].IsOn;
-        }
-        IEnumerator fixCard(CardType cardType) {
-            if (offButShouldBeOn(cardType)) yield return GOOJFIconDict[cardType].enable(true);
-            else if (onButShouldBeOff(cardType)) yield return GOOJFIconDict[cardType].enable(false);
-        }
-
-        yield return fixCard(CardType.CHANCE);
-        yield return fixCard(CardType.COMMUNITY_CHEST);
-    }
-    */
     public IEnumerator toggleGOOJFIcon(CardType cardType) {
         bool offButShouldBeOn = playerInfo.hasGOOJFCardOfType(cardType) && !GOOJFIconDict[cardType].IsOn;
 

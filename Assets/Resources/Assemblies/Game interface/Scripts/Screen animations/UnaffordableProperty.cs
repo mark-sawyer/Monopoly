@@ -11,7 +11,7 @@ public class UnaffordableProperty : ScreenAnimation<PropertyInfo> {
 
     #region ScreenAnimation
     public override void appear() {
-        UIEventHub.Instance.call_IncorrectOutcome();
+        SoundOnlyEventHub.Instance.call_IncorrectOutcome();
         StartCoroutine(deedSpawner.moveDeed());
         StartCoroutine(shakeText());
     }
@@ -23,7 +23,7 @@ public class UnaffordableProperty : ScreenAnimation<PropertyInfo> {
 
 
     private IEnumerator shakeText() {
-        int frames = InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION;
+        int frames = FrameConstants.SCREEN_COVER_TRANSITION;
         Func<float, float> firstHalf = LinearValue.getFunc(5f, -5f, frames / 4f);
         Func<float, float> secondHalf = LinearValue.getFunc(frames / 4f, frames / 2f, -5f, 5f);
         float fullFunc(float x) {

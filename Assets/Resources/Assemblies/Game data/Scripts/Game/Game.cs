@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 internal class Game : GameStateInfo, GamePlayer {
     private DiceInterface dice;
@@ -80,9 +81,14 @@ internal class Game : GameStateInfo, GamePlayer {
         turnPlayer.changeSpace(space);
     }
     public void updateTurnPlayer() {
-        int turnPlayerIndex = Array.IndexOf(players, turnPlayer);
-        int nextTurnPlayer = (turnPlayerIndex + 1) % players.Length;
-        turnPlayer = players[nextTurnPlayer];
+        int index = Array.IndexOf(players, turnPlayer);
+        bool foundNextPlayer = false;
+        while (!foundNextPlayer) {
+            index = (index + 1) % players.Length;
+            Player nextPlayer = players[index];
+            if (nextPlayer.IsActive) foundNextPlayer = true;
+        }
+        turnPlayer = players[index];
     }
     public void obtainProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         Player player = (Player)playerInfo;
@@ -106,6 +112,26 @@ internal class Game : GameStateInfo, GamePlayer {
         }
         else if (removedBuilding is House house) bank.returnHouse(house);
     }
+    public void removeAllBuildingsFromEstateGroup(EstateGroupInfo estateGroupInfo) {
+        void removeAllBuildingsFromEstate(Estate estate) {
+            while (estate.BuildingCount > 0) {
+                Building removedBuilding = estate.removeBuilding();
+                if (removedBuilding is Hotel hotel) {
+                    bank.returnHotel(hotel);
+                }
+                else if (removedBuilding is House house) {
+                    bank.returnHouse(house);
+                }
+            }
+        }
+
+
+        EstateGroup estateGroup = (EstateGroup)estateGroupInfo;
+        foreach (Estate estate in estateGroup.Estates) {
+            removeAllBuildingsFromEstate(estate);
+        }
+
+    }
     public void mortgageProperty(PropertyInfo propertyInfo) {
         Property property = (Property)propertyInfo;
         property.mortgage();
@@ -120,6 +146,14 @@ internal class Game : GameStateInfo, GamePlayer {
     }
     public void reduceDebt(PlayerInfo debtor, int paid) {
         Player player = (Player)debtor;
+        player.payDebt(paid);
+    }
+    public void raiseMoneyForDebt(PlayerInfo debtor, int amount) {
+        Player player = (Player)debtor;
+        player.adjustMoney(amount);
+        Debt debt = player.Debt;
+        int owed = debt.Owed;
+        int paid = amount >= owed ? owed : amount;
         player.payDebt(paid);
     }
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference) {
@@ -188,6 +222,10 @@ internal class Game : GameStateInfo, GamePlayer {
         proposedTrade.performTrade();
         completedTrade = proposedTrade;
         proposedTrade = null;
+    }
+    public void eliminatePlayer(PlayerInfo playerInfo) {
+        Player player = (Player)playerInfo;
+        player.eliminateSelf();
     }
     #endregion
 

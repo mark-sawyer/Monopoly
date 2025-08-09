@@ -9,18 +9,10 @@ public class UtilityIconColourSetter : MonoBehaviour {
     [SerializeField] private GameColour propertyGroupIconColour;
     [SerializeField] private GameColour mortgageColour;
     private float zeroPropertiesAlpha;
-    private PlayerInfo playerInfo;
 
 
-    public void setup(float zeroPropertiesAlpha, PlayerInfo playerInfo) {
+    public void setup(float zeroPropertiesAlpha) {
         this.zeroPropertiesAlpha = zeroPropertiesAlpha;
-        this.playerInfo = playerInfo;
-    }
-    public void setColour(UtilityType utilityType) {
-        Image image = utilityType == UtilityType.ELECTRICITY ? electricityImage : waterImage;
-        Color colour = propertyGroupIconColour.Colour;
-        colour.a = zeroPropertiesAlpha;
-        image.color = colour;
     }
     public void setColour(PlayerInfo playerInfo, UtilityInfo utilityInfo) {
         Image image = utilityInfo.UtilityType == UtilityType.ELECTRICITY ? electricityImage : waterImage;
@@ -38,6 +30,18 @@ public class UtilityIconColourSetter : MonoBehaviour {
                 ? electricityColour.Colour
                 : waterColour.Colour;
         }
+        image.color = colour;
+    }
+    public void setIconsAlpha(float alpha) {
+        Color colour = waterImage.color;
+        colour.a = alpha;
+        waterImage.color = colour;
+        electricityImage.color = colour;
+    }
+    public void setColourOff(UtilityType utilityType) {
+        Image image = utilityType == UtilityType.ELECTRICITY ? electricityImage : waterImage;
+        Color colour = propertyGroupIconColour.Colour;
+        colour.a = zeroPropertiesAlpha;
         image.color = colour;
     }
 }

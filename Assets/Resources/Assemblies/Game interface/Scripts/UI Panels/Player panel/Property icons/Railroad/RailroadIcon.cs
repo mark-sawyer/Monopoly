@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,13 +47,28 @@ public class RailroadIcon : PropertyGroupIcon {
 
 
     #region PropertyGroupIcon
+    public override IEnumerator fadeAway() {
+        Color panelColour = transform.GetChild(0).GetChild(0).GetComponent<Image>().color;
+        Color trainColour = trainImage.color;
+        Func<float, float> getAlpha = LinearValue.getFunc(ZeroPropertiesAlpha, 0, FrameConstants.DYING_PLAYER);
+        PanelRecolourer panelRecolourer = new PanelRecolourer(transform);
+        for (int i = 1; i <= FrameConstants.DYING_PLAYER; i++) {
+            float alpha = getAlpha(i);
+            panelColour.a = alpha;
+            trainColour.a = alpha;
+            panelRecolourer.recolour(panelColour);
+            trainImage.color = trainColour;
+            yield return null;
+        }
+    }
     public override bool NeedsToUpdate {
         get {
             OtherPropertyGroupIconState newState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);
             return railroadIconState.stateHasChanged(newState);
         }
     }
-    protected override void updateVisual() {
+    public override bool IsOn => !railroadIconState.NoOwnership;
+    protected override void updateIcon() {
         void setPanelColour(int propertiesOwned) {
             float alpha = propertiesOwned == 0 ? ZeroPropertiesAlpha : NonZeroPropertiesAlpha;
             Color panelColour = propertyGroupPanelColour.Colour;
@@ -83,6 +100,25 @@ public class RailroadIcon : PropertyGroupIcon {
         setText(propertiesOwned);
         foreach (RailroadHighlight rh in railroadHighlights) rh.setHighlight();
         setGoldRing(propertiesOwned);
+    }
+    protected override void updateOff() {
+        void setPanelColour() {
+            Color panelColour = propertyGroupPanelColour.Colour;
+            panelColour.a = ZeroPropertiesAlpha;
+            updatePanelColour(panelColour);
+        }
+        void setIconColour() {
+            Color iconColour = propertyGroupIconColour.Colour;
+            iconColour.a = ZeroPropertiesAlpha;
+            trainImage.color = iconColour;
+        }
+
+
+        setPanelColour();
+        setIconColour();
+        countText.text = "";
+        foreach (RailroadHighlight rh in railroadHighlights) rh.turnOffHighlight();
+        goldRing.SetActive(false);
     }
     protected override void setNewState() {
         railroadIconState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);

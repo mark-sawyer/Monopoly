@@ -11,18 +11,33 @@ public class BuildingCounter : MonoBehaviour {
 
 
 
+    #region MonoBehaviour
     private void Start() {
-        updateCounter(null);
-        ManagePropertiesEventHub.Instance.sub_ManagePropertiesVisualRefresh(updateCounter);
+        updateCounter();
+        ManagePropertiesEventHub.Instance.sub_ManagePropertiesVisualRefresh(updateCounterListener);
+        ResolveDebtEventHub.Instance.sub_ResolveDebtVisualRefresh(updateCounterListener);
     }
+    private void OnDestroy() {
+        ManagePropertiesEventHub.Instance.unsub_ManagePropertiesVisualRefresh(updateCounterListener);
+        ResolveDebtEventHub.Instance.unsub_ResolveDebtVisualRefresh(updateCounterListener);
+    }
+    #endregion
 
 
 
-    private void updateCounter(PlayerInfo playerInfo) {
+    #region private
+    private void updateCounterListener() {
+        updateCounter();
+    }
+    private void updateCounterListener(PlayerInfo playerInfo) {
+        updateCounter();
+    }
+    private void updateCounter() {
         int remaining = buildingType == BuildingType.HOUSE
             ? GameState.game.BankInfo.HousesRemaining
             : GameState.game.BankInfo.HotelsRemaining;
 
         counterText.text = remaining.ToString();
     }
+    #endregion
 }

@@ -10,14 +10,14 @@ internal class PostManagePropertiesClosedState : State {
     #region State
     public override void enterState() {
         updateAnimationsOver = false;
-        ManagePropertiesEventHub.Instance.sub_AllVisualsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
-        ManagePropertiesEventHub.Instance.call_UpdateIconsAfterManagePropertiesClosed();
+        UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(updateAnimationsOverListener);
+        UIEventHub.Instance.call_UpdateExpiredPropertyVisuals();
     }
     public override bool exitConditionMet() {
         return updateAnimationsOver;
     }
     public override void exitState() {
-        ManagePropertiesEventHub.Instance.unsub_AllVisualsUpdatedAfterManagePropertiesClosed(updateAnimationsOverListener);
+        UIEventHub.Instance.unsub_AllExpiredPropertyVisualsUpdated(updateAnimationsOverListener);
     }
     public override State getNextState() {
         return allStates.getState<PrerollState>();

@@ -30,7 +30,7 @@ public class BuildingIcons : MonoBehaviour {
 
         int houses = estateInfo.BuildingCount;
         for (int i = 0; i < 4; i++) {
-            houseIcons[i].toggleOn(i < houses);
+            houseIcons[i].toggleHouse(i < houses);
         }
     }
     private void turnHotelOn() {

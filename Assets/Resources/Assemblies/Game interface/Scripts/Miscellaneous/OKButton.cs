@@ -18,9 +18,9 @@ public class OKButton : MonoBehaviour {
         StartCoroutine(increaseYPos(yStart, yEnd));
     }
     private IEnumerator increaseYPos(float yStart, float yEnd) {
-        for (int i = 0; i < InterfaceConstants.FRAMES_FOR_CARD_FLIP; i++) yield return null;
+        for (int i = 0; i < FrameConstants.CARD_FLIP; i++) yield return null;
 
-        int length = InterfaceConstants.FRAMES_FOR_CARD_FLIP;
+        int length = FrameConstants.CARD_FLIP;
         for (int i = 1; i <= length; i++) {
             float yPos = i * (yEnd - yStart) / length + yStart;
             transform.localPosition = new Vector3(0f, yPos, 0f);

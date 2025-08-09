@@ -5,36 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ManagePropertiesPanel : MonoBehaviour {
-    private class EstateSectionGetter {
-        private Transform propertySectionTransform;
-
-        public EstateSectionGetter(Transform propertySectionTransform) {
-            this.propertySectionTransform = propertySectionTransform;
-        }
-        public MPEstateSection exe(EstateInfo estateInfo) {
-            int columnIndex = getColumnIndex(estateInfo.EstateColour);
-            Transform columnTransform = propertySectionTransform.GetChild(columnIndex);
-            int colourIndex = (int)estateInfo.EstateColour % 2;
-            Transform colourTransform = columnTransform.GetChild(colourIndex);
-            int estateOrder = estateInfo.EstateOrder;
-            Transform estateSectionTransform = colourTransform.GetChild(0).GetChild(estateOrder + 1);
-            MPEstateSection estateSection = estateSectionTransform.GetComponent<MPEstateSection>();
-            return estateSection;
-        }
-        private int getColumnIndex(EstateColour estateColour) {
-            switch (estateColour) {
-                case EstateColour.BROWN: return 0;
-                case EstateColour.LIGHT_BLUE: return 0;
-                case EstateColour.PINK: return 1;
-                case EstateColour.ORANGE: return 1;
-                case EstateColour.RED: return 2;
-                case EstateColour.YELLOW: return 2;
-                case EstateColour.GREEN: return 3;
-                case EstateColour.DARK_BLUE: return 3;
-            }
-            throw new System.Exception();
-        }
-    }
     #region Internal references
     [SerializeField] private RectTransform rt;
     [SerializeField] private RectTransform tokenIconContainerRT;
@@ -46,10 +16,6 @@ public class ManagePropertiesPanel : MonoBehaviour {
     private PlayerInfo selectedPlayer;
     private float offScreenY;
     private float onScreenY;
-    private EstateSectionGetter estateSectionGetter;
-    private UIEventHub uiEvents;
-    private UIPipelineEventHub uiPipelineEvents;
-    private ManagePropertiesEventHub managePropertiesEvents;
     #endregion
     #region Numeric constants
     private const float VERTICAL_PROPORTION = 800f / 1080f;
@@ -73,10 +39,6 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        uiEvents = UIEventHub.Instance;
-        uiPipelineEvents = UIPipelineEventHub.Instance;
-        managePropertiesEvents = ManagePropertiesEventHub.Instance;
-
         float canvasHeight = ((RectTransform)transform.parent).rect.height;
         float thisHeight = rt.rect.height;
         float scale = VERTICAL_PROPORTION * canvasHeight / thisHeight;
@@ -84,10 +46,9 @@ public class ManagePropertiesPanel : MonoBehaviour {
         offScreenY = canvasHeight * HEIGHT_ABOVE_CANVAS_PROPORTION;
         onScreenY = -canvasHeight * ((1f + VERTICAL_PROPORTION) / 2f);
         rt.anchoredPosition = new Vector3(0f, offScreenY, 0f);
-        estateSectionGetter = new EstateSectionGetter(propertSectionsTransform);
-        managePropertiesEvents.sub_ManagePropertiesOpened(drop);
-        managePropertiesEvents.sub_BackButtonPressed(raise);
-        managePropertiesEvents.sub_TokenSelectedInManageProperties(adjustMoneyVisualQuietly);
+        ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(drop);
+        ManagePropertiesEventHub.Instance.sub_BackButtonPressed(raise);
+        ManagePropertiesEventHub.Instance.sub_TokenSelectedInManageProperties(adjustMoneyVisualQuietly);
     }
     #endregion
 
@@ -123,7 +84,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
         moneyAdjuster.adjustMoneyQuietly(playerInfo);
     }
     private void drop() {
-        int dropFrames = InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_DROP;
+        int dropFrames = FrameConstants.MANAGE_PROPERTIES_DROP;
         IEnumerator dropCoroutine() {
             float length = offScreenY - onScreenY;
             for (int i = 1; i <= dropFrames; i++) {
@@ -153,14 +114,14 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
         setIcons();
         adjustMoneyVisualQuietly(GameState.game.TurnPlayer);
-        uiEvents.call_FadeScreenCoverIn(1f);
+        UIEventHub.Instance.call_FadeScreenCoverIn(1f);
         StartCoroutine(dropCoroutine());
-        managePropertiesEvents.call_ManagePropertiesVisualRefresh(GameState.game.TurnPlayer);
-        uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisual);
-        uiPipelineEvents.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
+        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(GameState.game.TurnPlayer);
+        UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisual);
+        UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
     }
     private void raise() {
-        int raiseFrames = InterfaceConstants.FRAMES_FOR_MANAGE_PROPERTIES_DROP;
+        int raiseFrames = FrameConstants.MANAGE_PROPERTIES_DROP;
         IEnumerator raiseCoroutine() {
             float length = offScreenY - onScreenY;
             for (int i = 1; i <= raiseFrames; i++) {
@@ -171,9 +132,9 @@ public class ManagePropertiesPanel : MonoBehaviour {
             rt.anchoredPosition = new Vector2(0f, offScreenY);
         }
 
-        uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
-        uiPipelineEvents.unsub_MoneyAdjustment(adjustMoneyVisual);
-        uiEvents.call_FadeScreenCoverOut();
+        UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
+        UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisual);
+        UIEventHub.Instance.call_FadeScreenCoverOut();
         StartCoroutine(raiseCoroutine());
     }
     #endregion

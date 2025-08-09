@@ -2584,6 +2584,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2_mayfair
       objectReference: {fileID: 0}
+    - target: {fileID: 3419217528249864321, guid: 7867ec54faa18124d9b5abf41e1aae7a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4513896568610423170, guid: 7867ec54faa18124d9b5abf41e1aae7a, type: 3}
       propertyPath: m_text
       value: MAYFAIR
@@ -3419,6 +3423,10 @@ PrefabInstance:
     - target: {fileID: 80285497304409581, guid: be47ae9412701ad4fb6342e0efafca17, type: 3}
       propertyPath: m_Name
       value: railroad_group
+      objectReference: {fileID: 0}
+    - target: {fileID: 2084870923965020616, guid: be47ae9412701ad4fb6342e0efafca17, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4077298798063517928, guid: be47ae9412701ad4fb6342e0efafca17, type: 3}
       propertyPath: m_SizeDelta.x
@@ -5152,7 +5160,7 @@ PrefabInstance:
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 9c76f23151095df4f9d5172a4d499e9b, type: 2}
+      objectReference: {fileID: 11400000, guid: b8d31642854456049bea52f4742f8172, type: 2}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -5167,7 +5175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: invoke
+      value: call_BackButtonPressed
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -5175,7 +5183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameEvent, GameInterface
+      value: ManagePropertiesEventHub, GameEvents
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -5705,6 +5713,10 @@ PrefabInstance:
     - target: {fileID: 645492835077565898, guid: 240a8d791235a1d459e7ab93d109aac2, type: 3}
       propertyPath: m_SizeDelta.x
       value: 215
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961655591579085102, guid: 240a8d791235a1d459e7ab93d109aac2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3861028721846152578, guid: 240a8d791235a1d459e7ab93d109aac2, type: 3}
       propertyPath: wipeMaskTransform

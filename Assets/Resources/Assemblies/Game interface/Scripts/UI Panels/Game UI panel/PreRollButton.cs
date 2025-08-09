@@ -18,7 +18,7 @@ public class PrerollButton : MonoBehaviour {
     private void turnOffWhileLeavingJail() {
         button.interactable = false;
         WaitFrames.Instance.beforeAction(
-            InterfaceConstants.FRAMES_WAITED_FOR_LEAVING_JAIL,
+            FrameConstants.WAIT_FOR_LEAVING_JAIL,
             () => { button.interactable = true; }
         );
     }

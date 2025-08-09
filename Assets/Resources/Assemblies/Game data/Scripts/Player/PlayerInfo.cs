@@ -8,7 +8,7 @@ public interface PlayerInfo : Creditor {
     public Token Token { get; }
     public PlayerColour Colour { get; }
     public int Money { get; }
-    public DebtInfo Debt { get; }
+    public DebtInfo DebtInfo { get; }
     public int TotalWorth { get; }
     public int IncomeTaxAmount { get; }
     public bool IsActive { get; }

@@ -26,7 +26,7 @@ public class ScreenCover : MonoBehaviour {
         StartCoroutine(fadeOut());
     }
     private IEnumerator fadeIn(float goalAlpha) {
-        int frames = InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION;
+        int frames = FrameConstants.SCREEN_COVER_TRANSITION;
         Color colour = image.color;
         float currentAlpha = colour.a;
         Func<float, float> getAlpha = LinearValue.getFunc(currentAlpha, goalAlpha, frames);
@@ -43,8 +43,8 @@ public class ScreenCover : MonoBehaviour {
     }
     private IEnumerator fadeOut() {
         float currentAlpha = image.color.a * 255f;
-        float slope = -currentAlpha / InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION;
-        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION; i++) {
+        float slope = -currentAlpha / FrameConstants.SCREEN_COVER_TRANSITION;
+        for (int i = 1; i <= FrameConstants.SCREEN_COVER_TRANSITION; i++) {
             float alpha = (currentAlpha + slope * i) / 255f;
             image.color = new Color(0f, 0f, 0f, alpha);
             yield return null;

@@ -4,26 +4,17 @@ using UnityEngine.EventSystems;
 
 public class ButtonSounds : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
     [SerializeField] private Button button;
-    private UIEventHub uiEvents;
-
-
-
-    #region MonoBehaviour
-    private void Start() {
-        uiEvents = UIEventHub.Instance;
-    }
-    #endregion
 
 
 
     #region Implementing
     public void OnPointerDown(PointerEventData eventData) {
         if (!button.interactable) return;
-        uiEvents.call_ButtonDown();
+        SoundOnlyEventHub.Instance.call_ButtonDown();
     }
     public void OnPointerUp(PointerEventData eventData) {
         if (!button.interactable) return;
-        uiEvents.call_ButtonUp();
+        SoundOnlyEventHub.Instance.call_ButtonUp();
     }
     #endregion
 }

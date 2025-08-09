@@ -15,7 +15,7 @@ internal class PayRentState : State {
         PlayerInfo owner = propertyInfo.Owner;
         int rent = propertyInfo.Rent;
         DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
-        ScreenAnimationEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.Debt);
+        ScreenAnimationEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.DebtInfo);
     }
     public override bool exitConditionMet() {
         return animationOver;
@@ -32,7 +32,7 @@ internal class PayRentState : State {
 
     private void animationOverCalled() {
         WaitFrames.Instance.beforeAction(
-            InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION + 20,
+            FrameConstants.SCREEN_COVER_TRANSITION + 20,
             () => animationOver = true
         );
     }

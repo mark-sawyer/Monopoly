@@ -7,6 +7,6 @@ public class RailroadDeed : PropertyDeed {
 
 
     public override void setupCard(PropertyInfo propertyInfo) {
-        throw new System.NotImplementedException();
+        propertyNameText.text = propertyInfo.Name.ToUpper();
     }
 }

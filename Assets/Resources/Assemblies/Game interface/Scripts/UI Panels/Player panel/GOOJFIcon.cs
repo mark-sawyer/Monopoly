@@ -4,15 +4,6 @@ using UnityEngine.UI;
 
 public class GOOJFIcon : MonoBehaviour {
     [SerializeField] private Image image;
-    private UIEventHub uiEventHub;
-
-
-
-    #region MonoBehaviour
-    private void Start() {
-        uiEventHub = UIEventHub.Instance;
-    }
-    #endregion
 
 
 
@@ -33,7 +24,7 @@ public class GOOJFIcon : MonoBehaviour {
             else return 2f - (1f / 15f) * (x - 5f);
         }
 
-        uiEventHub.call_AppearingPop();
+        SoundOnlyEventHub.Instance.call_AppearingPop();
         yield return WaitFrames.Instance.frames(5);
         image.enabled = true;
         for (int i = 1; i <= 20; i++) {
@@ -48,7 +39,7 @@ public class GOOJFIcon : MonoBehaviour {
             return 1f + 0.1f * x;
         }
 
-        uiEventHub.call_AppearingPop();
+        SoundOnlyEventHub.Instance.call_AppearingPop();
         for (int i = 1; i <= 10; i++) {
             float scale = getScale(i);
             transform.localScale = new Vector3(scale, scale, scale);

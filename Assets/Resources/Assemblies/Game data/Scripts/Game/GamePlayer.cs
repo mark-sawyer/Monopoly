@@ -9,10 +9,12 @@ public interface GamePlayer {
     public void obtainProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo);
     public void addBuilding(EstateInfo estateInfo);
     public void removeBuilding(EstateInfo estateInfo);
+    public void removeAllBuildingsFromEstateGroup(EstateGroupInfo estateGroupInfo);
     public void mortgageProperty(PropertyInfo propertyInfo);
     public void unmortgageProperty(PropertyInfo propertyInfo);
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed);
     public void reduceDebt(PlayerInfo debtor, int paid);
+    public void raiseMoneyForDebt(PlayerInfo debtor, int amount);
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference);
     public void tradePlayerMoney(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount);
     public void sendTurnPlayerToJail();
@@ -27,4 +29,5 @@ public interface GamePlayer {
     public void removedTerminatedTrade();
     public void updateProposedTrade(List<TradableInfo> t1, List<TradableInfo> t2, PlayerInfo moneyGiver, int money);
     public void makeProposedTrade();
+    public void eliminatePlayer(PlayerInfo playerInfo);
 }

@@ -110,7 +110,7 @@ public class AuctionManager : MonoBehaviour {
             droppingPanelRT.localScale = new Vector3(usedScale, usedScale, usedScale);
         }
         IEnumerator drop() {
-            int frames = InterfaceConstants.FRAMES_FOR_AUCTION_DROP;
+            int frames = FrameConstants.AUCTION_DROP;
             float yStart = droppingPanelRT.anchoredPosition.y;
             Func<float, float> getY = LinearValue.getFunc(yStart, 0, frames);
             for (int i = 1; i <= frames; i++) {
@@ -135,6 +135,9 @@ public class AuctionManager : MonoBehaviour {
     public void acceptNewBid(int newBid, PlayerInfo newBiddingPlayer) {
         currentBid = newBid;
         biddingPlayer = newBiddingPlayer;
+    }
+    public void startAuctionSequence(IEnumerable<TradableInfo> tradableInfos) {
+        StartCoroutine(auctionSequence(tradableInfos));
     }
     #endregion
 
@@ -163,9 +166,13 @@ public class AuctionManager : MonoBehaviour {
         droppingPanelRT.anchoredPosition = new Vector2(0f, DEFAULT_Y_POSITION);
         UIEventHub.Instance.call_FadeScreenCoverOut();
         WaitFrames.Instance.beforeAction(
-            InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION,
+            FrameConstants.SCREEN_COVER_TRANSITION,
             () => { AuctionEventHub.Instance.call_WinnerAnnounced(biddingPlayer, currentBid); }
         );
+    }
+    private IEnumerator auctionSequence(IEnumerable<TradableInfo> tradableInfos) {
+        yield return null;
+
     }
     #endregion
 }

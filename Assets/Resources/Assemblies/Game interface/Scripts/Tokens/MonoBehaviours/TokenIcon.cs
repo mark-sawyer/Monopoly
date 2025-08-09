@@ -14,6 +14,7 @@ public class TokenIcon : MonoBehaviour {
 
     public Token Token => token;
     public PlayerColour Colour => colour;
+    public TokenColours TokenColours => TokenDictionary.Instance.getColours(colour);
     public void setup(Token token, PlayerColour colour) {
         this.token = token;
         this.colour = colour;

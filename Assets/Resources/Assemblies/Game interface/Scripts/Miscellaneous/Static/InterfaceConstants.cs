@@ -8,12 +8,4 @@ public static class InterfaceConstants {
     public const int DIE_IMAGES_BEFORE_SETTLING = 7;
     public const float SCREEN_ANIMATION_COVER_ALPHA = 220f / 255f;
     public const float SCALE_FOR_MOVING_TOKEN = 3f;
-    public const int FRAMES_FOR_MONEY_UPDATE = 90;
-    public const int FRAMES_FOR_TOKEN_SCALING = 50;
-    public const int FRAMES_FOR_SCREEN_COVER_TRANSITION = 30;
-    public const int FRAMES_FOR_CARD_FLIP = 60;
-    public const int FRAMES_FOR_MANAGE_PROPERTIES_DROP = 20;
-    public const int FRAMES_FOR_AUCTION_DROP = 20;
-    public const int FRAMES_FOR_MANAGE_PROPERTIES_WIPE_UP = 30;
-    public const int FRAMES_WAITED_FOR_LEAVING_JAIL = 200;
 }

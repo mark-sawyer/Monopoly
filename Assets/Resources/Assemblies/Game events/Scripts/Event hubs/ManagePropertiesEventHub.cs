@@ -8,9 +8,6 @@ public class ManagePropertiesEventHub : ScriptableObject {
     [SerializeField] private GameEvent managePropertiesOpened;
     [SerializeField] private PlayerEvent managePropertiesVisualRefresh;
     [SerializeField] private PlayerEvent tokenSelectedInManageProperties;
-    [SerializeField] private GameEvent updateIconsAfterManagePropertiesClosed;
-    [SerializeField] private GameEvent updateBoardAfterManagePropertiesClosed;
-    [SerializeField] private GameEvent allVisualsUpdatedAfterManagePropertiesClosed;
 
 
 
@@ -34,9 +31,6 @@ public class ManagePropertiesEventHub : ScriptableObject {
     public void call_ManagePropertiesOpened() => managePropertiesOpened.invoke();
     public void call_ManagePropertiesVisualRefresh(PlayerInfo playerInfo) => managePropertiesVisualRefresh.invoke(playerInfo);
     public void call_TokenSelectedInManageProperties(PlayerInfo playerInfo) => tokenSelectedInManageProperties.invoke(playerInfo);
-    public void call_UpdateIconsAfterManagePropertiesClosed() => updateIconsAfterManagePropertiesClosed.invoke();
-    public void call_UpdateBoardAfterManagePropertiesClosed() => updateBoardAfterManagePropertiesClosed.invoke();
-    public void call_AllVisualsUpdatedAfterManagePropertiesClosed() => allVisualsUpdatedAfterManagePropertiesClosed.invoke();
     #endregion
 
 
@@ -46,9 +40,6 @@ public class ManagePropertiesEventHub : ScriptableObject {
     public void sub_ManagePropertiesOpened(Action a) => managePropertiesOpened.Listeners += a;
     public void sub_ManagePropertiesVisualRefresh(Action<PlayerInfo> a) => managePropertiesVisualRefresh.Listeners += a;
     public void sub_TokenSelectedInManageProperties(Action<PlayerInfo> a) => tokenSelectedInManageProperties.Listeners += a;
-    public void sub_UpdateIconsAfterManagePropertiesClosed(Action a) => updateIconsAfterManagePropertiesClosed.Listeners += a;
-    public void sub_UpdateBoardAfterManagePropertiesClosed(Action a) => updateBoardAfterManagePropertiesClosed.Listeners += a;
-    public void sub_AllVisualsUpdatedAfterManagePropertiesClosed(Action a) => allVisualsUpdatedAfterManagePropertiesClosed.Listeners += a;
     #endregion
 
 
@@ -56,6 +47,6 @@ public class ManagePropertiesEventHub : ScriptableObject {
     #region Unsubscribing
     public void unsub_BackButtonPressed(Action a) => backButtonPressed.Listeners -= a;
     public void unsub_ManagePropertiesOpened(Action a) => managePropertiesOpened.Listeners -= a;
-    public void unsub_AllVisualsUpdatedAfterManagePropertiesClosed(Action a) => allVisualsUpdatedAfterManagePropertiesClosed.Listeners -= a;
+    public void unsub_ManagePropertiesVisualRefresh(Action<PlayerInfo> a) => managePropertiesVisualRefresh.Listeners -= a;
     #endregion
 }

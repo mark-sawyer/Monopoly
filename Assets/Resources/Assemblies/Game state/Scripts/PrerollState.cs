@@ -40,7 +40,10 @@ internal class PrerollState : State {
     public override bool exitConditionMet() {
         return goToMoveToken
             || managePropertiesClicked
-            || tradeClicked;
+            || tradeClicked
+            || goToJail
+            || goToUpdateTurnPlayer
+            || goToResolveJailDebt;
     }
     public override void exitState() {
         UIPipelineEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
@@ -83,33 +86,33 @@ internal class PrerollState : State {
     }
     private void resolveJailRoll() {
         void doublesRolled() {
-            UIEventHub.Instance.call_CorrectOutcome();
+            SoundOnlyEventHub.Instance.call_CorrectOutcome();
             DataUIPipelineEventHub.Instance.call_LeaveJail();
 
             WaitFrames.Instance.beforeAction(
-                InterfaceConstants.FRAMES_WAITED_FOR_LEAVING_JAIL,
+                FrameConstants.WAIT_FOR_LEAVING_JAIL,
                 () => {
                     DataEventHub.Instance.call_DoublesCountReset();
                     turnTokenVisual.prepForMoving();
                     WaitFrames.Instance.beforeAction(
-                        InterfaceConstants.FRAMES_FOR_TOKEN_SCALING,
+                        FrameConstants.TOKEN_SCALING,
                         () => goToMoveToken = true
                     );
                 }
             );
         }
         void nonDoublesTurnOneTwo() {
-            UIEventHub.Instance.call_IncorrectOutcome();
+            SoundOnlyEventHub.Instance.call_IncorrectOutcome();
             int jailIndex = GameConstants.JAIL_SPACE_INDEX;
             turnTokenVisual.moveTokenDirectlyToSpace(jailIndex, jailIndex);
 
             WaitFrames.Instance.beforeAction(
-                InterfaceConstants.FRAMES_FOR_TOKEN_SCALING + 3,
+                FrameConstants.TOKEN_SCALING + 3,
                 () => { goToUpdateTurnPlayer = true; }
             );
         }
         void nonDoublesTurnThree() {
-            UIEventHub.Instance.call_IncorrectOutcome();
+            SoundOnlyEventHub.Instance.call_IncorrectOutcome();
             DataUIPipelineEventHub.Instance.call_LeaveJail();
             DataEventHub.Instance.call_PlayerIncurredDebt(
                 GameState.game.TurnPlayer,
@@ -118,7 +121,7 @@ internal class PrerollState : State {
             );
 
             WaitFrames.Instance.beforeAction(
-                InterfaceConstants.FRAMES_WAITED_FOR_LEAVING_JAIL,
+                FrameConstants.WAIT_FOR_LEAVING_JAIL,
                 () => { goToResolveJailDebt = true; }
             );
         }

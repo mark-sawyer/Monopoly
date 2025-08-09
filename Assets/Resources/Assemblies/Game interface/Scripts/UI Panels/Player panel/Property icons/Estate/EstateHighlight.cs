@@ -38,6 +38,9 @@ public class EstateHighlight : MonoBehaviour {
         else
             noBuildingsInGroup();
     }
+    public void turnOffHighlight() {
+        notOwnedByPlayer();
+    }
     #endregion
 
 

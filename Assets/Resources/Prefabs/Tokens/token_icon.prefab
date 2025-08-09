@@ -208,7 +208,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.11, y: 0.11, z: 0.11}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1906367390417864928}
   - {fileID: 2722595734370471052}
@@ -357,7 +357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47513fa87fdd0740a10a6231df14337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tokenDictionary: {fileID: 11400000, guid: cfe3a4cd16a4d324da7238834cfa5ba5, type: 2}
   silouhetteImage: {fileID: 6866475798727464972}
   tokenImage: {fileID: 1454303397045988042}
   outerCircleImage: {fileID: 3399384268120920507}

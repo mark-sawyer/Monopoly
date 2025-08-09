@@ -1,3 +1,4 @@
+using System.Linq;
 
 public class EstateGroupIconState : PropertyGroupIconState {
     private enum EstateStatus {
@@ -15,6 +16,7 @@ public class EstateGroupIconState : PropertyGroupIconState {
 
 
     #region public
+    public override bool NoOwnership => estateStatuses.All(x => x == EstateStatus.UNOWNED);
     public EstateGroupIconState(EstateGroupInfo estateGroupInfo, PlayerInfo owner) {
         int estatesInGroup = estateGroupInfo.NumberOfPropertiesInGroup;
         estateStatuses = new EstateStatus[estatesInGroup];

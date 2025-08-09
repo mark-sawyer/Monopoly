@@ -177,7 +177,8 @@ MonoBehaviour:
   - {fileID: 9137060185878064295}
   panelTransform: {fileID: 6407059263810594682}
   estateColour: 0
-  sellAllBuildingsButton: {fileID: 6926164040817596896}
+  sellAllBuildingsButtonGameObject: {fileID: 6926164040817596896}
+  sellAllBuildingsButton: {fileID: 2022634972692965503}
   sellAllBuildingsButtonColourTransform: {fileID: 8947071628935659200}
 --- !u!1 &651558364240453156
 GameObject:
@@ -291,7 +292,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 18, y: 219}
+  m_SizeDelta: {x: 18, y: 239}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3415124032314416542
 CanvasRenderer:
@@ -443,7 +444,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 215, y: 219}
+  m_SizeDelta: {x: 215, y: 239}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7356178945590526072
 CanvasRenderer:
@@ -585,7 +586,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 18, y: 219}
+  m_SizeDelta: {x: 18, y: 239}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &5483863207972121561
 CanvasRenderer:
@@ -1179,6 +1180,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3036224799947363472, guid: d23cf8c4b3a128c47a3c623b28d42a98, type: 3}
   m_PrefabInstance: {fileID: 2459451554604717842}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2022634972692965503 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4481202450687754093, guid: d23cf8c4b3a128c47a3c623b28d42a98, type: 3}
+  m_PrefabInstance: {fileID: 2459451554604717842}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6926164040817596896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c670886c28937c44792e34cf3d0dd7f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6926164040817596896 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4773559796013682418, guid: d23cf8c4b3a128c47a3c623b28d42a98, type: 3}

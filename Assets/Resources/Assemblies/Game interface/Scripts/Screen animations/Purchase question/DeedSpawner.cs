@@ -32,7 +32,7 @@ public class DeedSpawner : MonoBehaviour {
         goalX = getGoalX();
     }
     public IEnumerator moveDeed() {
-        int frames = InterfaceConstants.FRAMES_FOR_SCREEN_COVER_TRANSITION;
+        int frames = FrameConstants.SCREEN_COVER_TRANSITION;
         RectTransform rt = (RectTransform)transform;
         Func<float, float> getXPos = LinearValue.getFunc(rt.anchoredPosition.x, goalX, frames);
         for (int i = 1; i <= frames; i++) {

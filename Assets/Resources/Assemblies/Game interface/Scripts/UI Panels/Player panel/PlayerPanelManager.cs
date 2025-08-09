@@ -1,95 +1,119 @@
-using System.Collections.Generic;
-using System.Collections;
-using UnityEngine;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerPanelManager : MonoBehaviour {
-    #region External references
     [SerializeField] private GameObject playerPanelPrefab;
-    #endregion
+    private PlayerPanel[] playerPanels;
     private const float GAP = 3;
-    private UIEventHub uiEventHub;
-    private UIPipelineEventHub uiPipelineEvents;
-    private ManagePropertiesEventHub managePropertiesEvents;
-    private TradeEventHub tradeEvents;
+
+
+
+    #region Singleton boilerplate
+    public static PlayerPanelManager Instance { get; private set; }
+    private void OnEnable() {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+    private void OnDestroy() {
+        if (Instance == this) Instance = null;
+    }
+    #endregion
 
 
 
     #region MonoBehaviour
     private void Start() {
+        void instantiatePanels() {
+            for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
+                GameObject newPanel = Instantiate(playerPanelPrefab, transform);
+                RectTransform rt = (RectTransform)newPanel.transform;
+                float yPos = -GAP - (rt.rect.height + GAP) * i;
+                rt.anchoredPosition = new Vector3(0f, yPos);
+            }
+        }
+        void scalePanels() {
+            Rect panelRect = ((RectTransform)transform.GetChild(0)).rect;
+            Rect canvasRect = ((RectTransform)transform.parent).rect;
+
+            float panelsHeight = (panelRect.height + GAP) * GameState.game.NumberOfPlayers + GAP;
+            float panelsWidth = panelRect.width + (2 * GAP);
+
+            float maxHeightForPlayerPanels = canvasRect.height;
+            float maxWidthForPlayerPanels = (canvasRect.width - canvasRect.height) / 2f;
+
+            float scaleForHeight = maxHeightForPlayerPanels / panelsHeight;
+            float scaleForWidth = maxWidthForPlayerPanels / panelsWidth;
+
+            float heightIfScaledForWidth = panelsHeight * scaleForWidth;
+            float scaleUsed = heightIfScaledForWidth <= canvasRect.height ? scaleForWidth : scaleForHeight;
+
+            transform.localScale = new Vector3(scaleUsed, scaleUsed, scaleUsed);
+        }
+        void setupPanels() {
+            IEnumerable<PlayerInfo> players = GameState.game.PlayerInfos;
+            int i = 0;
+            foreach (PlayerInfo player in players) {
+                transform.GetChild(i).GetComponent<PlayerPanel>().setup(player);
+                i += 1;
+            }
+        }
+        void subscribeToEvents() {
+            UIPipelineEventHub uiPipelineEvents = UIPipelineEventHub.Instance;
+            UIEventHub uiEventHub = UIEventHub.Instance;
+            ManagePropertiesEventHub managePropertiesEvents = ManagePropertiesEventHub.Instance;
+            TradeEventHub tradeEvents = TradeEventHub.Instance;
+
+
+
+            uiPipelineEvents.sub_NextPlayerTurn(updateTurnPlayerHighlight);
+
+            uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisual);
+            uiPipelineEvents.sub_MoneyBetweenPlayers(adjustMoneyVisuals);
+            uiEventHub.sub_UpdateUIMoney(adjustMoneyVisuals);
+
+            managePropertiesEvents.sub_ManagePropertiesOpened(() => changeMoneyAdjustListening(true));
+            managePropertiesEvents.sub_BackButtonPressed(() => changeMoneyAdjustListening(false));
+
+            uiPipelineEvents.sub_PlayerPropertyAdjustment(updatePropertyIcon);
+
+            uiPipelineEvents.sub_PlayerGetsGOOJFCard(updateGOOJFCardIcon);
+            uiPipelineEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => updateGOOJFCardIcon(GameState.game.TurnPlayer, ct));
+
+            uiEventHub.sub_UpdateExpiredPropertyVisuals(updateAllExpiredPropertyIcons);
+            tradeEvents.sub_UpdateVisualsAfterTradeFinalised(updateVisualsAfterTradeListening);
+
+            uiPipelineEvents.sub_PlayerEliminated(eliminatePlayer);
+        }
+
+
         instantiatePanels();
         scalePanels();
         setupPanels();
         subscribeToEvents();
-        getPlayerPanel(0).toggleHighlightImage(true);
+        playerPanels = getPlayerPanels();
+        playerPanels[0].toggleHighlightImage(true);
     }
     #endregion
 
 
 
-    #region Start functions
-    private void instantiatePanels() {
-        for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
-            GameObject newPanel = Instantiate(playerPanelPrefab, transform);
-            RectTransform rt = (RectTransform)newPanel.transform;
-            float yPos = -GAP - (rt.rect.height + GAP) * i;
-            rt.anchoredPosition = new Vector3(0f, yPos);
-        }
-    }
-    private void scalePanels() {
-        Rect panelRect = ((RectTransform)transform.GetChild(0)).rect;
-        Rect canvasRect = ((RectTransform)transform.parent).rect;
-
-        float panelsHeight = (panelRect.height + GAP) * GameState.game.NumberOfPlayers + GAP;
-        float panelsWidth = panelRect.width + (2 * GAP);
-
-        float maxHeightForPlayerPanels = canvasRect.height;
-        float maxWidthForPlayerPanels = (canvasRect.width - canvasRect.height) / 2f;
-
-        float scaleForHeight = maxHeightForPlayerPanels / panelsHeight;
-        float scaleForWidth = maxWidthForPlayerPanels / panelsWidth;
-
-        float heightIfScaledForWidth = panelsHeight * scaleForWidth;
-        float scaleUsed = heightIfScaledForWidth <= canvasRect.height ? scaleForWidth : scaleForHeight;
-
-        transform.localScale = new Vector3(scaleUsed, scaleUsed, scaleUsed);
-    }
-    private void setupPanels() {
-        IEnumerable<PlayerInfo> players = GameState.game.PlayerInfos;
-        int i = 0;
-        foreach (PlayerInfo player in players) {
-            transform.GetChild(i).GetComponent<PlayerPanel>().setup(player);
-            i += 1;
-        }
-    }
-    private void subscribeToEvents() {
-        uiPipelineEvents = UIPipelineEventHub.Instance;
-        uiEventHub = UIEventHub.Instance;
-        managePropertiesEvents = ManagePropertiesEventHub.Instance;
-        tradeEvents = TradeEventHub.Instance;
-
-        uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisual);
-        uiPipelineEvents.sub_MoneyBetweenPlayers(adjustMoneyVisuals);
-        uiPipelineEvents.sub_PlayerPropertyAdjustment(updatePropertyIcons);
-        uiPipelineEvents.sub_NextPlayerTurn(updateTurnPlayerHighlight);
-        uiPipelineEvents.sub_PlayerGetsGOOJFCard(updateGOOJFCardIcon);
-        uiPipelineEvents.sub_UseGOOJFCardButtonClicked(
-            (CardType cardType) => updateGOOJFCardIcon(GameState.game.TurnPlayer, cardType)
-        );
-
-        uiEventHub.sub_UpdateUIMoney(adjustMoneyVisuals);
-
-        managePropertiesEvents.sub_ManagePropertiesOpened(() => changeMoneyAdjustListening(true));
-        managePropertiesEvents.sub_BackButtonPressed(() => changeMoneyAdjustListening(false));
-        managePropertiesEvents.sub_UpdateIconsAfterManagePropertiesClosed(checkForUpdatesAfterBackButtonPushed);
-
-        tradeEvents.sub_UpdateVisualsAfterTradeFinalised(updateVisualsAfterTradeListening);
+    #region public
+    public PlayerPanel getPlayerPanel(int index) {
+        return playerPanels[index];
     }
     #endregion
 
 
 
     #region Listeners
+    private void updateTurnPlayerHighlight() {
+        int turnPlayerIndex = GameState.game.IndexOfTurnPlayer;
+        for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
+            getPlayerPanel(i).toggleHighlightImage(i == turnPlayerIndex);
+        }
+    }
     private void adjustMoneyVisual(PlayerInfo playerInfo) {
         int playerIndex = playerInfo.Index;
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
@@ -99,70 +123,80 @@ public class PlayerPanelManager : MonoBehaviour {
         adjustMoneyVisual(playerOne);
         adjustMoneyVisual(playerTwo);
     }
+    private void adjustMoneyVisuals(PlayerInfo[] players) {
+        foreach (PlayerInfo playerInfo in players) {
+            adjustMoneyVisual(playerInfo);
+        }
+    }
     private void adjustMoneyVisualQuietly(PlayerInfo playerInfo) {
         int playerIndex = playerInfo.Index;
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
         playerPanel.adjustMoneyQuietly(playerInfo);
     }
-    private void updatePropertyIcons(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
+    private void changeMoneyAdjustListening(bool quietly) {
+        if (quietly) {
+            UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
+            UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisual);
+        }
+        else {
+            UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisual);
+            UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
+        }
+    }
+    private void updatePropertyIcon(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         int playerIndex = playerInfo.Index;
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
         playerPanel.updatePropertyIconVisual(playerInfo, propertyInfo);
     }
-    private void updateTurnPlayerHighlight() {
-        int turnPlayerIndex = GameState.game.IndexOfTurnPlayer;
-        for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
-            getPlayerPanel(i).toggleHighlightImage(i == turnPlayerIndex);
-        }
-    }
-    private void updateGOOJFCardIcon(PlayerInfo playerInfo, CardType cardType) {
-        int playerIndex = playerInfo.Index;
-        PlayerPanel playerPanel = getPlayerPanel(playerIndex);
-        StartCoroutine(playerPanel.toggleGOOJFIcon(cardType));
-    }
-    private void checkForUpdatesAfterBackButtonPushed() {
+    private void updateAllExpiredPropertyIcons() {
         List<PropertyGroupIcon> iconsToUpdate = new();
         for (int i = 0; i < transform.childCount; i++) {
             PlayerInfo playerInfo = GameState.game.getPlayerInfo(i);
             if (!playerInfo.IsActive) continue;
 
-            PlayerPanel playerPanel = getPlayerPanel(i);
+            PlayerPanel playerPanel = playerPanels[i];
             List<PropertyGroupIcon> needingUpdateOnThisPanel = playerPanel.propertyGroupIconsNeedingAnUpdate();
             foreach (PropertyGroupIcon PGI in needingUpdateOnThisPanel) iconsToUpdate.Add(PGI);
         }
 
         StartCoroutine(updateIconsInSequence(iconsToUpdate));
     }
-    private void changeMoneyAdjustListening(bool quietly) {
-        if (quietly) {
-            uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
-            uiPipelineEvents.unsub_MoneyAdjustment(adjustMoneyVisual);
-        }
-        else {
-            uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisual);
-            uiPipelineEvents.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
-        }
+    private void updateGOOJFCardIcon(PlayerInfo playerInfo, CardType cardType) {
+        int playerIndex = playerInfo.Index;
+        PlayerPanel playerPanel = getPlayerPanel(playerIndex);
+        StartCoroutine(playerPanel.toggleGOOJFIcon(cardType));
     }
     private void updateVisualsAfterTradeListening() {
         TradeInfo completedTrade = GameState.game.CompletedTrade;
 
         StartCoroutine(updateVisualsAfterTrade(completedTrade));
     }
+    private void eliminatePlayer(PlayerInfo eliminatedPlayer) {
+        int index = eliminatedPlayer.Index;
+        PlayerBeingEliminated playerBeingEliminated = getPlayerPanel(index).GetComponent<PlayerBeingEliminated>();
+        StartCoroutine(playerBeingEliminated.eliminatePlayerSequence());
+    }
     #endregion
 
 
 
     #region private
-    private PlayerPanel getPlayerPanel(int index) {
-        return transform.GetChild(index).GetComponent<PlayerPanel>();
+    private PlayerPanel[] getPlayerPanels() {
+        int players = GameState.game.NumberOfPlayers;
+        PlayerPanel[] playerPanels = new PlayerPanel[players];
+        for (int i = 0; i < players; i++) {
+            playerPanels[i] = transform.GetChild(i).GetComponent<PlayerPanel>();
+        }
+        return playerPanels;
     }
     private IEnumerator updateIconsInSequence(List<PropertyGroupIcon> iconsToUpdate) {
         foreach (PropertyGroupIcon propertyGroupIcon in iconsToUpdate) {
-            yield return StartCoroutine(propertyGroupIcon.pulseAndUpdateWithPop());
+            SoundOnlyEventHub.Instance.call_AppearingPop();
+            yield return propertyGroupIcon.pulseAndUpdate();
         }
 
         yield return WaitFrames.Instance.frames(30);
-        ManagePropertiesEventHub.Instance.call_UpdateBoardAfterManagePropertiesClosed();
+        UIEventHub.Instance.call_UpdateExpiredBoardVisuals();
     }
     private IEnumerator updateIconsFromTradeSimultaneously(PlayerInfo playerOne, PlayerInfo playerTwo) {
         PropertyGroupIcon[] getIcons(PlayerInfo playerInfo) {
@@ -176,18 +210,19 @@ public class PlayerPanelManager : MonoBehaviour {
             if (!iconOne.NeedsToUpdate) continue;
             PropertyGroupIcon iconTwo = iconsTwo[i];
 
-            StartCoroutine(iconOne.pulseAndUpdateWithPop());
+            SoundOnlyEventHub.Instance.call_AppearingPop();
+            StartCoroutine(iconOne.pulseAndUpdate());
             StartCoroutine(iconTwo.pulseAndUpdate());
             yield return WaitFrames.Instance.frames(30);
         }
     }
     private IEnumerator updateVisualsAfterTrade(TradeInfo completedTrade) {
         IEnumerator exchangeMoney() {
-            uiEventHub.call_UpdateUIMoney(
+            UIEventHub.Instance.call_UpdateUIMoney(new PlayerInfo[] {
                 completedTrade.MoneyGivingPlayer,
                 completedTrade.MoneyReceivingPlayer
-            );
-            yield return WaitFrames.Instance.frames(InterfaceConstants.FRAMES_FOR_MONEY_UPDATE);
+            });
+            yield return WaitFrames.Instance.frames(FrameConstants.MONEY_UPDATE);
         }
         IEnumerator exchangeCard(CardType cardType) {
             PlayerPanel playerPanelOne = getPlayerPanel(completedTrade.PlayerOne.Index);
@@ -218,7 +253,7 @@ public class PlayerPanelManager : MonoBehaviour {
             yield return exchangeCard(CardType.COMMUNITY_CHEST);
         }
         for (int i = 0; i < 30; i++) yield return null;
-        tradeEvents.call_AllVisualsUpdatedAfterTradeFinalised();
+        TradeEventHub.Instance.call_AllVisualsUpdatedAfterTradeFinalised();
     }
     #endregion
 }

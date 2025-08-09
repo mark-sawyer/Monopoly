@@ -8,11 +8,11 @@ public class CardMonoBehaviour : MonoBehaviour {
         StartCoroutine(position());
         StartCoroutine(rotation());
         WaitFrames.Instance.beforeAction(
-            InterfaceConstants.FRAMES_FOR_CARD_FLIP - 10,
+            FrameConstants.CARD_FLIP - 10,
             UIEventHub.Instance.call_CardDrop
         );
         WaitFrames.Instance.beforeAction(
-            InterfaceConstants.FRAMES_FOR_CARD_FLIP,
+            FrameConstants.CARD_FLIP,
             () => StartCoroutine(tinyShake())
         );
     }
@@ -24,9 +24,9 @@ public class CardMonoBehaviour : MonoBehaviour {
             yStart,
             0.5f * yStart,
             0f,
-            0.25f * InterfaceConstants.FRAMES_FOR_CARD_FLIP
+            0.25f * FrameConstants.CARD_FLIP
         );
-        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_CARD_FLIP; i++) {
+        for (int i = 1; i <= FrameConstants.CARD_FLIP; i++) {
             transform.localPosition = new Vector3(
                 getLinearValue(xStart, 0f, i),
                 getQuadraticValue(quadraticCoefs, i),
@@ -39,11 +39,11 @@ public class CardMonoBehaviour : MonoBehaviour {
     private IEnumerator rotation() {
         Quaternion startingRotation = transform.localRotation;
         bool backToggled = false;
-        for (int i = 1; i <= InterfaceConstants.FRAMES_FOR_CARD_FLIP; i++) {
+        for (int i = 1; i <= FrameConstants.CARD_FLIP; i++) {
             transform.localRotation = Quaternion.Slerp(
                 startingRotation,
                 Quaternion.identity,
-                (float)i / InterfaceConstants.FRAMES_FOR_CARD_FLIP
+                (float)i / FrameConstants.CARD_FLIP
             );
             if (!backToggled && facingCamera(Camera.main.transform)) {
                 toggleBack(false);
@@ -69,7 +69,7 @@ public class CardMonoBehaviour : MonoBehaviour {
 
     #region private
     private float getLinearValue(float start, float end, float x) {
-        return (x * (end - start) / InterfaceConstants.FRAMES_FOR_CARD_FLIP) + start;
+        return (x * (end - start) / FrameConstants.CARD_FLIP) + start;
     }
     private float getQuadraticValue(Vector3 v, float x) {
         return v.x * Mathf.Pow(x, 2)
@@ -79,7 +79,7 @@ public class CardMonoBehaviour : MonoBehaviour {
     private Vector3 getQuadraticCoefs(float yStart, float yMid, float yEnd, float xMid) {
         Matrix3x3 mat = new Matrix3x3(
             0f, 0f, 1f,
-            Mathf.Pow(InterfaceConstants.FRAMES_FOR_CARD_FLIP, 2), InterfaceConstants.FRAMES_FOR_CARD_FLIP, 1f,
+            Mathf.Pow(FrameConstants.CARD_FLIP, 2), FrameConstants.CARD_FLIP, 1f,
             Mathf.Pow(xMid, 2), xMid, 1
         );
         Matrix3x3 inv = mat.inverse();

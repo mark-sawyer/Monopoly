@@ -14,28 +14,17 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
     #region public
     public PlayerInfo PlayerInfo => playerInfo;
     public abstract bool NeedsToUpdate { get; }
+    public abstract bool IsOn { get; }
+    public abstract IEnumerator fadeAway();
     public void setup(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
     }
     public IEnumerator pulseAndUpdate() {
-        yield return WaitFrames.Instance.frames(10);
-
-        canvas.overrideSorting = true;
-        canvas.sortingOrder = 1;
-        for (int i = 1; i <= 20; i++) {
-            float scale = getScale(i);
-            transform.localScale = new Vector3(scale, scale, scale);
-            if (i == 5) updateVisual();
-            yield return null;
-        }
-        transform.localScale = new Vector3(1f, 1f, 1f);
-        canvas.overrideSorting = false;
-        canvas.sortingOrder = 0;
-        setNewState();
+        yield return WaitFrames.Instance.frames(10);  // Helps to make it time nicer with the pop sound.
+        yield return pulseAndChangeIcon(updateIcon);
     }
-    public IEnumerator pulseAndUpdateWithPop() {
-        UIEventHub.Instance.call_AppearingPop();
-        yield return pulseAndUpdate();
+    public IEnumerator pulseAndTurnOff() {
+        yield return pulseAndChangeIcon(updateOff);
     }
     #endregion
 
@@ -48,7 +37,8 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
             transform.GetChild(0).GetChild(i).GetComponent<Image>().color = colour;
         }
     }
-    protected abstract void updateVisual();
+    protected abstract void updateIcon();
+    protected abstract void updateOff();
     protected float ZeroPropertiesAlpha => ZERO_PROPERTIES_ALPHA;
     protected float NonZeroPropertiesAlpha => NON_ZERO_PROPERTIES_ALPHA;
     #endregion
@@ -59,6 +49,20 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
     private float getScale(float x) {
         if (x <= 5) return 1f + 0.2f * x;
         else return 2f - (1f / 15f) * (x - 5f);
+    }
+    private IEnumerator pulseAndChangeIcon(Action iconUpdate) {
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = 1;
+        for (int i = 1; i <= 20; i++) {
+            float scale = getScale(i);
+            transform.localScale = new Vector3(scale, scale, scale);
+            if (i == 5) iconUpdate();
+            yield return null;
+        }
+        transform.localScale = new Vector3(1f, 1f, 1f);
+        canvas.overrideSorting = false;
+        canvas.sortingOrder = 0;
+        setNewState();
     }
     #endregion
 }

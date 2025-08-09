@@ -4,13 +4,14 @@ using System.Linq;
 
 internal class Player : PlayerInfo {
     private Game game;
-    private List<Property> properties = new List<Property>();
+    private Space space;
+    private List<Property> properties;
     private Debt debt;
     private int money;
-    private bool inJail = false;
-    private bool isActive = true;
-    private int turnInJail = 0;
-    private List<Card> getOutOfJailFreeCards = new(2);
+    private bool inJail;
+    private bool isActive;
+    private int turnInJail;
+    private List<Card> getOutOfJailFreeCards;
     private Token token;
     private PlayerColour colour;
 
@@ -18,13 +19,21 @@ internal class Player : PlayerInfo {
 
     #region internal
     internal Player(Space space, Token token, PlayerColour colour, int startingMoney, Game game) {
-        Space = space;
-        money = startingMoney;
+        this.space = space;
         this.token = token;
         this.colour = colour;
         this.game = game;
+        money = startingMoney;
+
+
+        properties = new List<Property>();
+        inJail = false;
+        isActive = true;
+        turnInJail = 0;
+        getOutOfJailFreeCards = new(2);
     }
-    internal Space Space { get; set; }
+    internal Space Space => space;
+    internal Debt Debt => debt;
     internal void obtainProperty(Property property) {
         properties.Add(property);
         property.changeOwner(this);
@@ -43,7 +52,7 @@ internal class Player : PlayerInfo {
     internal void changeSpace(Space newSpace) {
         Space.removePlayer(this);
         newSpace.addPlayer(this);
-        Space = newSpace;
+        space = newSpace;
     }
     internal void incurDebt(Creditor creditor, int owed) {
         debt = new Debt(this, creditor, owed);
@@ -66,6 +75,12 @@ internal class Player : PlayerInfo {
         getOutOfJailFreeCards.Remove(getOutOfJailFreeCard);
         return getOutOfJailFreeCard;
     }
+    internal void eliminateSelf() {
+        isActive = false;
+        space.removePlayer(this);
+        space = null;
+        inJail = false;
+    }
     #endregion
 
 
@@ -77,7 +92,7 @@ internal class Player : PlayerInfo {
     public Token Token { get => token; }
     public PlayerColour Colour { get => colour; }
     public int Money => money;
-    public DebtInfo Debt => debt;
+    public DebtInfo DebtInfo => debt;
     public int TotalWorth => money + properties.Sum(x => x.Worth);
     public int IncomeTaxAmount {
         get {
