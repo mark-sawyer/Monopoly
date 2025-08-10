@@ -9,16 +9,16 @@ internal class IncomeTaxState : State {
     #region GameState
     public override void enterState() {
         questionAnswered = false;
-        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(screenAnimationRemoved);
+        ScreenOverlayEventHub.Instance.sub_RemoveScreenAnimation(screenAnimationRemoved);
 
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
-        ScreenAnimationEventHub.Instance.call_IncomeTaxQuestion(playerInfo);
+        ScreenOverlayEventHub.Instance.call_IncomeTaxQuestion(playerInfo);
     }
     public override bool exitConditionMet() {
         return questionAnswered;
     }
     public override void exitState() {
-        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(screenAnimationRemoved);
+        ScreenOverlayEventHub.Instance.unsub_RemoveScreenAnimation(screenAnimationRemoved);
     }
     public override State getNextState() {
         return allStates.getState<ResolveDebtState>();

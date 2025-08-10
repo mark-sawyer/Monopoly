@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,12 +21,16 @@ public class GOOJFIcon : MonoBehaviour {
     #region private
     private IEnumerator pulse() {
         float getScale(float x) {
-            if (x <= 5) return 1f + 0.2f * x;
-            else return 2f - (1f / 15f) * (x - 5f);
+            Func<float, float> getEarlyX = LinearValue.getFunc(0f, 5f, 1f, 2f);
+            Func<float, float> getLateX = LinearValue.getFunc(5f, 20f, 2f, 1f);
+
+            if (x <= 5) return getEarlyX(x);
+            else return getLateX(x);
         }
 
+
         SoundOnlyEventHub.Instance.call_AppearingPop();
-        yield return WaitFrames.Instance.frames(5);
+        yield return WaitFrames.Instance.frames(10);
         image.enabled = true;
         for (int i = 1; i <= 20; i++) {
             float scale = getScale(i);
@@ -39,14 +44,16 @@ public class GOOJFIcon : MonoBehaviour {
             return 1f + 0.1f * x;
         }
 
+
         SoundOnlyEventHub.Instance.call_AppearingPop();
+        yield return WaitFrames.Instance.frames(10);
         for (int i = 1; i <= 10; i++) {
             float scale = getScale(i);
             transform.localScale = new Vector3(scale, scale, scale);
             yield return null;
         }
-        image.enabled = false;
         transform.localScale = new Vector3(1f, 1f, 1f);
+        image.enabled = false;
     }
     #endregion
 }

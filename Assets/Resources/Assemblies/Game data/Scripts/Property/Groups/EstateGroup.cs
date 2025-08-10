@@ -30,6 +30,9 @@ internal class EstateGroup : ScriptableObject, EstateGroupInfo {
     public bool playerHasMortgageInGroup(PlayerInfo playerInfo) {
         return estates.Any(x => x.Owner == playerInfo && x.IsMortgaged);
     }
+    public PropertyInfo getPropertyInfo(int index) {
+        return estates[index];
+    }
     #endregion
 
 

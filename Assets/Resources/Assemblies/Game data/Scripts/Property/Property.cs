@@ -53,7 +53,7 @@ internal abstract class Property : ScriptableObject, PropertyInfo, Tradable {
     #endregion
 }
 
-public interface PropertyInfo {
+public interface PropertyInfo : TradableInfo {
     public int Cost { get; }
     public string Name { get; }
     public int MortgageValue { get; }

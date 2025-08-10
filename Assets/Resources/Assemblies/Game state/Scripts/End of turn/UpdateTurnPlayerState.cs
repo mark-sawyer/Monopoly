@@ -5,7 +5,7 @@ internal class UpdateTurnPlayerState : State {
     public override void enterState() {
         DiceInfo diceInfo = GameState.game.DiceInfo;
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
-        if (!diceInfo.RolledDoubles || turnPlayer.InJail) {
+        if (!diceInfo.RolledDoubles || turnPlayer.InJail || !turnPlayer.IsActive) {
             DataUIPipelineEventHub.Instance.call_NextPlayerTurn();
         }
     }

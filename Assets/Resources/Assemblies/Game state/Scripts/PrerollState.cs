@@ -25,11 +25,11 @@ internal class PrerollState : State {
         void subscribeToEvents() {
             UIPipelineEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
             ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(managePropertiesListener);
-            ScreenAnimationEventHub.Instance.sub_TradeOpened(tradeListener);
+            ScreenOverlayEventHub.Instance.sub_TradeOpened(tradeListener);
         }
 
 
-        int turnIndex = GameState.game.IndexOfTurnPlayer;
+        int turnIndex = GameState.game.TurnPlayer.Index;
         turnTokenVisual = TokenVisualManager.Instance.getTokenVisual(turnIndex);
 
         setBoolsToFalse();
@@ -48,7 +48,7 @@ internal class PrerollState : State {
     public override void exitState() {
         UIPipelineEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.unsub_ManagePropertiesOpened(managePropertiesListener);
-        ScreenAnimationEventHub.Instance.unsub_TradeOpened(tradeListener);
+        ScreenOverlayEventHub.Instance.unsub_TradeOpened(tradeListener);
 
         UIEventHub.Instance.call_PrerollStateEnding();
     }

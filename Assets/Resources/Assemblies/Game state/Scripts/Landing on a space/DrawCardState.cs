@@ -13,14 +13,14 @@ internal class DrawCardState : State {
         CardSpaceInfo cardSpaceInfo = (CardSpaceInfo)playerInfo.SpaceInfo;
         CardType cardType = cardSpaceInfo.CardType;
         DataEventHub.Instance.call_CardDrawn(cardType);
-        ScreenAnimationEventHub.Instance.call_CardShown();
-        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(screenAnimationRemoved);
+        ScreenOverlayEventHub.Instance.call_CardShown();
+        ScreenOverlayEventHub.Instance.sub_RemoveScreenAnimation(screenAnimationRemoved);
     }
     public override bool exitConditionMet() {
         return okClicked;
     }
     public override void exitState() {
-        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(screenAnimationRemoved);
+        ScreenOverlayEventHub.Instance.unsub_RemoveScreenAnimation(screenAnimationRemoved);
     }
     public override State getNextState() {
         CardMechanicInfo cardMechanicInfo = GameState.game.DrawnCard.CardMechanicInfo;

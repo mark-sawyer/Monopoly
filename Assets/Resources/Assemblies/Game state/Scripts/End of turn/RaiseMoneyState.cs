@@ -10,15 +10,15 @@ internal class RaiseMoneyState : State {
     public override void enterState() {
         panelRemoved = false;
         DebtInfo debtInfo = GameState.game.TurnPlayer.DebtInfo;
-        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(panelRemovedListener);
+        ScreenOverlayEventHub.Instance.sub_RemoveScreenAnimation(panelRemovedListener);
 
-        ScreenAnimationEventHub.Instance.call_ResolveDebt(debtInfo);
+        ScreenOverlayEventHub.Instance.call_ResolveDebt(debtInfo);
     }
     public override bool exitConditionMet() {
         return panelRemoved;
     }
     public override void exitState() {
-        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(panelRemovedListener);
+        ScreenOverlayEventHub.Instance.unsub_RemoveScreenAnimation(panelRemovedListener);
     }
     public override State getNextState() {
         return allStates.getState<PostRaiseMoneyState>();

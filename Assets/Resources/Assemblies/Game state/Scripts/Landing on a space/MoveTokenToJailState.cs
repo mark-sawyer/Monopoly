@@ -9,17 +9,17 @@ internal class MoveTokenToJailState : State {
     public override void enterState() {
         tokenSettled = false;
 
-        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
+        ScreenOverlayEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
 
-        ScreenAnimationEventHub.Instance.call_SpinningPoliceman();
+        ScreenOverlayEventHub.Instance.call_SpinningPoliceman();
     }
     public override bool exitConditionMet() {
         return tokenSettled;
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
-        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
+        ScreenOverlayEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
     }
     public override State getNextState() {
         return allStates.getState<UpdateTurnPlayerState>();
@@ -30,7 +30,7 @@ internal class MoveTokenToJailState : State {
 
     #region private
     private void animationOverCalled() {
-        int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
+        int startingIndex = GameState.game.TurnPlayer.SpaceIndex;
         DataUIPipelineEventHub.Instance.call_TurnPlayerSentToJail(startingIndex);
     }
     private void heardTokenSettle() {

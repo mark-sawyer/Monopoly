@@ -4,9 +4,6 @@ public interface GameStateInfo {
     public IEnumerable<PlayerInfo> PlayerInfos { get; }
     public IEnumerable<PlayerInfo> ActivePlayers { get; }
     public PlayerInfo TurnPlayer { get; }
-    public int IndexOfTurnPlayer { get; }
-    public int SpaceIndexOfTurnPlayer { get; }
-    public SpaceInfo SpaceInfoOfTurnPlayer { get; }
     public DiceInfo DiceInfo { get; }
     public int NumberOfPlayers { get; }
     public Creditor BankCreditor { get; }

@@ -5,4 +5,5 @@ public interface PropertyGroupInfo {
     public int MortgageCount { get; }
     public int propertiesOwnedByPlayer(PlayerInfo playerInfo);
     public bool playerHasMortgageInGroup(PlayerInfo playerInfo);
+    public PropertyInfo getPropertyInfo(int index);
 }

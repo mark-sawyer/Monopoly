@@ -8,7 +8,7 @@ internal class RailroadGroup : ScriptableObject, RailroadGroupInfo {
 
 
     #region PropertyGroupInfo
-    public int NumberOfPropertiesInGroup => railroads.Length;
+    public int NumberOfPropertiesInGroup => 4;
     public bool MortgageExists => railroads.Any(x => x.IsMortgaged);
     public int MortgageCount => railroads.Count(x => x.IsMortgaged);
     public int propertiesOwnedByPlayer(PlayerInfo playerInfo) {
@@ -16,6 +16,9 @@ internal class RailroadGroup : ScriptableObject, RailroadGroupInfo {
     }
     public bool playerHasMortgageInGroup(PlayerInfo playerInfo) {
         return railroads.Any(x => x.Owner == playerInfo && x.IsMortgaged);
+    }
+    public PropertyInfo getPropertyInfo(int index) {
+        return railroads[index];
     }
     #endregion
 

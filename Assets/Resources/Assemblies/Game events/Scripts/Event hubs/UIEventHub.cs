@@ -15,7 +15,7 @@ public class UIEventHub : ScriptableObject {
     [SerializeField] private GameEvent tradingPlayersConfirmed;
     [SerializeField] private GameEvent prerollStateStarting;
     [SerializeField] private GameEvent prerollStateEnding;
-    [SerializeField] private ArrayPlayerEvent updateUIMoney;
+    [SerializeField] private PlayerArrayEvent updateUIMoney;
     [SerializeField] private GameEvent updateExpiredPropertyVisuals;
     [SerializeField] private GameEvent updateExpiredBoardVisuals;
     [SerializeField] private GameEvent allExpiredPropertyVisualsUpdated;

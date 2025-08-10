@@ -8,13 +8,13 @@ using UnityEngine;
 public class DataUIPipelineEventHub : ScriptableObject {
     private static DataUIPipelineEventHub instance;
     private UIPipelineEventHub uiPipelineEvents;
-    [SerializeField] private PlayerCardEvent playerGetsGOOJFCard;
+    [SerializeField] private GameEvent rollButtonClicked;
     [SerializeField] private GameEvent leaveJail;
     [SerializeField] private PlayerIntEvent moneyAdjustment;
     [SerializeField] private PlayerPlayerIntEvent moneyBetweenPlayers;
-    [SerializeField] private GameEvent nextPlayerTurn;
     [SerializeField] private PlayerPropertyEvent playerObtainedProperty;
-    [SerializeField] private GameEvent rollButtonClicked;
+    [SerializeField] private PlayerCardEvent playerGetsGOOJFCard;
+    [SerializeField] private GameEvent nextPlayerTurn;
     [SerializeField] private GameEvent tradeTerminated;
     [SerializeField] private TradablesPlayerIntEvent tradeUpdated;
     [SerializeField] private GameEvent tradeLockedIn;
@@ -75,13 +75,13 @@ public class DataUIPipelineEventHub : ScriptableObject {
         playerObtainedProperty.invoke(playerInfo, propertyInfo);
         uiPipelineEvents.PlayerObtainedProperty.invoke(playerInfo, propertyInfo);
     }
-    public void call_NextPlayerTurn() {
-        nextPlayerTurn.invoke();
-        uiPipelineEvents.NextPlayerTurn.invoke();
-    }
     public void call_PlayerGetsGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo) {
         playerGetsGOOJFCard.invoke(playerInfo, cardInfo);
         uiPipelineEvents.PlayerGetsGOOJFCard.invoke(playerInfo, cardInfo.CardType);
+    }
+    public void call_NextPlayerTurn() {
+        nextPlayerTurn.invoke();
+        uiPipelineEvents.NextPlayerTurn.invoke();
     }
     public void call_LeaveJail() {
         leaveJail.invoke();

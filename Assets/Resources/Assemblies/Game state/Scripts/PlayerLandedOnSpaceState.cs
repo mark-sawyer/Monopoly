@@ -6,7 +6,7 @@ internal class PlayerLandedOnSpaceState : State {
         return true;
     }
     public override State getNextState() {
-        SpaceInfo spaceInfo = GameState.game.SpaceInfoOfTurnPlayer;
+        SpaceInfo spaceInfo = GameState.game.TurnPlayer.SpaceInfo;
         if (spaceInfo is IncomeTaxSpaceInfo) return allStates.getState<IncomeTaxState>();
         if (spaceInfo is GoToJailSpaceInfo) return allStates.getState<MoveTokenToJailState>();
         if (spaceInfo is CardSpaceInfo) return allStates.getState<DrawCardState>();

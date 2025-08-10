@@ -15,13 +15,8 @@ MonoBehaviour:
   doublesTickBoxUpdate: {fileID: 11400000, guid: 5bf76c87c87426b41b5eae33a09fd9fd, type: 2}
   payFiftyButtonClicked: {fileID: 11400000, guid: 82c6cccab3474fd499120072421f4fe1, type: 2}
   tokenSettled: {fileID: 11400000, guid: 89c3c09748a18f04f97dde544eeb9785, type: 2}
-  correctOutcome: {fileID: 11400000, guid: 7209d62b441f43c428e78ff0b11b9a5a, type: 2}
-  incorrectOutcome: {fileID: 11400000, guid: 933572eecc6a0e34a9a7e6f0adfe077a, type: 2}
-  appearingPop: {fileID: 11400000, guid: 8f3053b98317e5149a3661cd69491630, type: 2}
   cardDrop: {fileID: 11400000, guid: 62362ff10ae4dbb4d80d2b08ae54bdc6, type: 2}
   moneyAppearOrDisappear: {fileID: 11400000, guid: 0c9eb6c8631e9ab4ab99bcad9570001a, type: 2}
-  buttonDown: {fileID: 11400000, guid: 69d74f3c04a399e4f9b489398bf78078, type: 2}
-  buttonUp: {fileID: 11400000, guid: 700cf8c52c20ba847b513d810e86ff2f, type: 2}
   fadeScreenCoverIn: {fileID: 11400000, guid: 6522af588bc302f4aafa0d4e1d518beb, type: 2}
   fadeScreenCoverOut: {fileID: 11400000, guid: e1fc75832ef437946ac696aefc3ba49c, type: 2}
   tradingPlayerPlaced: {fileID: 11400000, guid: 09c5f9f834ee4454a94749c4f389a49d, type: 2}
@@ -29,6 +24,7 @@ MonoBehaviour:
   prerollStateStarting: {fileID: 11400000, guid: d89c151eb2195a84b914a10cd2fedc92, type: 2}
   prerollStateEnding: {fileID: 11400000, guid: 6b28ba3e676232c4f8fb71751d0c2257, type: 2}
   updateUIMoney: {fileID: 11400000, guid: adbbb14e85bd68b4cadca89628077e2d, type: 2}
-  updateIconsAfterPropertyManagement: {fileID: 11400000, guid: 6b3800d2a836f224393eafa0d85b17a5, type: 2}
-  updateBoardAfterPropertyManagement: {fileID: 11400000, guid: 336f9f303e1ebda448dde139506ebd9e, type: 2}
-  allVisualsUpdatedAfterPropertyManagement: {fileID: 11400000, guid: dd935c6bbcc319d40b5940c2690b69e1, type: 2}
+  updateExpiredPropertyVisuals: {fileID: 11400000, guid: 6b3800d2a836f224393eafa0d85b17a5, type: 2}
+  updateExpiredBoardVisuals: {fileID: 11400000, guid: 336f9f303e1ebda448dde139506ebd9e, type: 2}
+  allExpiredPropertyVisualsUpdated: {fileID: 11400000, guid: dd935c6bbcc319d40b5940c2690b69e1, type: 2}
+  playerEliminatedAnimationOver: {fileID: 11400000, guid: e3d158b92546645489ae43c782be3454, type: 2}

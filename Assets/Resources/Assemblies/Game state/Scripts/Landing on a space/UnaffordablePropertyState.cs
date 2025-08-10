@@ -2,21 +2,21 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/UnaffordablePropertyState")]
 internal class UnaffordablePropertyState : State {
-    private ScreenAnimationEventHub screenAnimationEvents;
+    private ScreenOverlayEventHub screenAnimationEvents;
     private bool animationOver;
 
 
 
     #region State
     public override void enterState() {
-        if (screenAnimationEvents == null) screenAnimationEvents = ScreenAnimationEventHub.Instance;
+        if (screenAnimationEvents == null) screenAnimationEvents = ScreenOverlayEventHub.Instance;
         animationOver = false;
         screenAnimationEvents.sub_RemoveScreenAnimationKeepCover(animationOverListening);
 
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         PropertySpaceInfo propertySpaceInfo = (PropertySpaceInfo)turnPlayer.SpaceInfo;
         PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
-        ScreenAnimationEventHub.Instance.call_UnaffordableProperty(propertyInfo);
+        ScreenOverlayEventHub.Instance.call_UnaffordableProperty(propertyInfo);
     }
     public override bool exitConditionMet() {
         return animationOver;

@@ -47,9 +47,6 @@ internal class Game : GameStateInfo, GamePlayer {
     public IEnumerable<PlayerInfo> ActivePlayers => players.Where(x => x.IsActive);
     public DiceInfo DiceInfo => dice;
     public PlayerInfo TurnPlayer => turnPlayer;
-    public int IndexOfTurnPlayer => getPlayerIndex(turnPlayer);
-    public int SpaceIndexOfTurnPlayer => turnPlayer.SpaceIndex;
-    public SpaceInfo SpaceInfoOfTurnPlayer => turnPlayer.SpaceInfo;
     public int NumberOfPlayers => players.Length;
     public SpaceInfo getSpaceInfo(int index) {
         return spaces[index];

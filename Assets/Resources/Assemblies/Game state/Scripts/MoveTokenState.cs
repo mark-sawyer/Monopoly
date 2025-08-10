@@ -8,7 +8,7 @@ internal class MoveTokenState : State {
 
     #region GameState
     public override void enterState() {
-        int startingIndex = GameState.game.SpaceIndexOfTurnPlayer;
+        int startingIndex = GameState.game.TurnPlayer.SpaceIndex;
         int diceValues = GameState.game.DiceInfo.TotalValue;
         DataUIPipelineEventHub.Instance.call_TurnPlayerMovedAlongBoard(startingIndex, diceValues);
         tokenSettled = false;

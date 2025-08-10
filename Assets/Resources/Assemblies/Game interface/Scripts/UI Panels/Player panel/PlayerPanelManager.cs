@@ -109,7 +109,7 @@ public class PlayerPanelManager : MonoBehaviour {
 
     #region Listeners
     private void updateTurnPlayerHighlight() {
-        int turnPlayerIndex = GameState.game.IndexOfTurnPlayer;
+        int turnPlayerIndex = GameState.game.TurnPlayer.Index;
         for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
             getPlayerPanel(i).toggleHighlightImage(i == turnPlayerIndex);
         }
@@ -146,7 +146,7 @@ public class PlayerPanelManager : MonoBehaviour {
     private void updatePropertyIcon(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         int playerIndex = playerInfo.Index;
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
-        playerPanel.updatePropertyIconVisual(playerInfo, propertyInfo);
+        StartCoroutine(playerPanel.updatePropertyIconVisual(playerInfo, propertyInfo));
     }
     private void updateAllExpiredPropertyIcons() {
         List<PropertyGroupIcon> iconsToUpdate = new();
@@ -213,7 +213,7 @@ public class PlayerPanelManager : MonoBehaviour {
             SoundOnlyEventHub.Instance.call_AppearingPop();
             StartCoroutine(iconOne.pulseAndUpdate());
             StartCoroutine(iconTwo.pulseAndUpdate());
-            yield return WaitFrames.Instance.frames(30);
+            yield return WaitFrames.Instance.frames(FrameConstants.PLAYER_PANEL_ICON_POP);
         }
     }
     private IEnumerator updateVisualsAfterTrade(TradeInfo completedTrade) {
@@ -230,14 +230,18 @@ public class PlayerPanelManager : MonoBehaviour {
 
             if (playerPanelOne.needsGOOJFIconAdjusted(cardType)) {
                 if (completedTrade.PlayerOne.hasGOOJFCardOfType(cardType)) {
-                    yield return playerPanelTwo.toggleGOOJFIcon(cardType);
-                    yield return WaitFrames.Instance.frames(10);
-                    yield return playerPanelOne.toggleGOOJFIcon(cardType);
+                    StartCoroutine(playerPanelTwo.toggleGOOJFIcon(cardType));
+                    yield return WaitFrames.Instance.frames(FrameConstants.PLAYER_PANEL_ICON_POP);
+
+                    StartCoroutine(playerPanelOne.toggleGOOJFIcon(cardType));
+                    yield return WaitFrames.Instance.frames(FrameConstants.PLAYER_PANEL_ICON_POP);
                 }
                 else {
-                    yield return playerPanelOne.toggleGOOJFIcon(cardType);
-                    yield return WaitFrames.Instance.frames(10);
-                    yield return playerPanelTwo.toggleGOOJFIcon(cardType);
+                    StartCoroutine(playerPanelOne.toggleGOOJFIcon(cardType));
+                    yield return WaitFrames.Instance.frames(FrameConstants.PLAYER_PANEL_ICON_POP);
+
+                    StartCoroutine(playerPanelTwo.toggleGOOJFIcon(cardType));
+                    yield return WaitFrames.Instance.frames(FrameConstants.PLAYER_PANEL_ICON_POP);
                 }
             }
         }

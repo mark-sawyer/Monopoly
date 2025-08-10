@@ -31,7 +31,7 @@ public class SoundPlayer : MonoBehaviour {
         SoundOnlyEventHub soundEvents = SoundOnlyEventHub.Instance;
         UIEventHub uiEvents = UIEventHub.Instance;
         UIPipelineEventHub uiPipelineEventHub = UIPipelineEventHub.Instance;
-        ScreenAnimationEventHub screenEvents = ScreenAnimationEventHub.Instance;
+        ScreenOverlayEventHub screenEvents = ScreenOverlayEventHub.Instance;
 
         soundEvents.sub_ButtonDown(play_buttonDown);
         soundEvents.sub_ButtonUp(play_buttonUp);

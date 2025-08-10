@@ -35,7 +35,7 @@ internal class Card : ScriptableObject, CardInfo, Tradable {
     #endregion
 }
 
-public interface CardInfo {
+public interface CardInfo : TradableInfo {
     public int ID { get; }
     public CardType CardType { get; }
     public CardMechanicInfo CardMechanicInfo { get; }

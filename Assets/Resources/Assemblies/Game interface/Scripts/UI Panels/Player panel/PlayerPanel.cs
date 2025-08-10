@@ -20,7 +20,7 @@ public class PlayerPanel : MonoBehaviour {
 
     #region public
     public PropertyGroupIcon[] PropertyGroupIcons => propertyGroupIcons;
-    public bool NeedsUpdate {
+    public bool NeedsMoneyUpdate {
         get {
             int dataMoney = playerInfo.Money;
             int uiMoney = moneyAdjuster.DisplayedMoney;
@@ -55,7 +55,7 @@ public class PlayerPanel : MonoBehaviour {
     public void adjustMoneyQuietly(PlayerInfo player) {
         moneyAdjuster.adjustMoneyQuietly(player);
     }
-    public void updatePropertyIconVisual(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
+    public IEnumerator updatePropertyIconVisual(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         PropertyGroupIcon getPropertyGroupIcon() {
             if (propertyInfo is EstateInfo estateInfo) {
                 int groupID = (int)estateInfo.EstateColour;
@@ -68,7 +68,7 @@ public class PlayerPanel : MonoBehaviour {
 
         PropertyGroupIcon propertyGroupIcon = getPropertyGroupIcon();
         SoundOnlyEventHub.Instance.call_AppearingPop();
-        StartCoroutine(propertyGroupIcon.pulseAndUpdate());
+        yield return propertyGroupIcon.pulseAndUpdate();
     }
     public void toggleHighlightImage(bool toggle) {
         highlightImage.enabled = toggle;
@@ -76,10 +76,14 @@ public class PlayerPanel : MonoBehaviour {
     public IEnumerator toggleGOOJFIcon(CardType cardType) {
         bool offButShouldBeOn = playerInfo.hasGOOJFCardOfType(cardType) && !GOOJFIconDict[cardType].IsOn;
 
-        if (offButShouldBeOn)
+        if (offButShouldBeOn) {
+            SoundOnlyEventHub.Instance.call_AppearingPop();
             yield return GOOJFIconDict[cardType].enable(true);
-        else
+        }
+        else {
+            SoundOnlyEventHub.Instance.call_AppearingPop();
             yield return GOOJFIconDict[cardType].enable(false);
+        }
     }
     public bool needsGOOJFIconAdjusted(CardType cardType) {
         return playerInfo.hasGOOJFCardOfType(cardType)

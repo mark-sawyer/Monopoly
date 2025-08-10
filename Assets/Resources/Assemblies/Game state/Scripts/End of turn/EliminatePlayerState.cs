@@ -1,17 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/EliminatePlayerState")]
 internal class EliminatePlayerState : State {
-    private bool playerAssetsRedistributed;
+    private bool toUpdateTurnPlayer;
+    private bool toAssetAuctioning;
 
 
 
     #region State
     public override void enterState() {
-        playerAssetsRedistributed = false;
+        toUpdateTurnPlayer = false;
+        toAssetAuctioning = false;
 
         UIEventHub.Instance.sub_PlayerEliminatedAnimationOver(afterPlayerEliminatedAnimation);
         UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(afterVisualsUpdated);
@@ -20,14 +21,18 @@ internal class EliminatePlayerState : State {
         DataUIPipelineEventHub.Instance.call_PlayerEliminated(turnPlayer);
     }
     public override bool exitConditionMet() {
-        return playerAssetsRedistributed;
+        return toUpdateTurnPlayer
+            || toAssetAuctioning;
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_PlayerEliminatedAnimationOver(afterPlayerEliminatedAnimation);
         UIEventHub.Instance.unsub_AllExpiredPropertyVisualsUpdated(afterVisualsUpdated);
     }
     public override State getNextState() {
-        return allStates.getState<UpdateTurnPlayerState>();
+        if (toUpdateTurnPlayer) return allStates.getState<UpdateTurnPlayerState>();
+        if (toAssetAuctioning) return allStates.getState<AssetAuctioningState>();
+
+        throw new System.Exception();
     }
     #endregion
 
@@ -38,7 +43,7 @@ internal class EliminatePlayerState : State {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         DebtInfo debtInfo = turnPlayer.DebtInfo;
         IEnumerable<TradableInfo> tradableInfos = turnPlayer.TradableInfos;
-        if (tradableInfos.Count() == 0) playerAssetsRedistributed = true;
+        if (tradableInfos.Count() == 0) toUpdateTurnPlayer = true;
         else if (debtInfo.Creditor is PlayerInfo creditorPlayer) {
             DataEventHub.Instance.call_TradeCommenced(turnPlayer, creditorPlayer);
             DataUIPipelineEventHub.Instance.call_TradeUpdated(
@@ -50,12 +55,10 @@ internal class EliminatePlayerState : State {
             DataUIPipelineEventHub.Instance.call_TradeLockedIn();
             UIEventHub.Instance.call_UpdateExpiredPropertyVisuals();
         }
-        else {
-
-        }        
+        else toAssetAuctioning = true;
     }
     private void afterVisualsUpdated() {
-        playerAssetsRedistributed = true;
+        toUpdateTurnPlayer = true;
     }
     #endregion
 }

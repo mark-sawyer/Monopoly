@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/AuctionPropertyState")]
@@ -11,17 +10,27 @@ internal class AuctionPropertyState : State {
     #region State
     public override void enterState() {
         auctionOver = false;
-        AuctionEventHub.Instance.sub_WinnerAnnounced(auctionOverListening);
 
-        UIEventHub.Instance.call_FadeScreenCoverIn(1f);
-        List<PlayerInfo> activePlayers = GameState.game.ActivePlayers.ToList();
-        AuctionManager.Instance.appear(activePlayers);
+        Queue<TradableInfo> tradableInfos = new();
+        PropertyInfo propertyLandedOn = ((PropertySpaceInfo)GameState.game.TurnPlayer.SpaceInfo).PropertyInfo;
+        tradableInfos.Enqueue(propertyLandedOn);
+        ScreenOverlayEventHub.Instance.call_AuctionsBegin(tradableInfos);
+
+        AuctionEventHub.Instance.sub_AllAuctionsFinished(auctionOverListening);
+
+        //AuctionEventHub.Instance.sub_AuctionFinished(auctionOverListening);
+        //
+        //UIEventHub.Instance.call_FadeScreenCoverIn(1f);
+        //List<PlayerInfo> activePlayers = GameState.game.ActivePlayers.ToList();
+        //PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+        //PropertyInfo propertyLandedOn = ((PropertySpaceInfo)turnPlayer.SpaceInfo).PropertyInfo;
+        //AuctionManagerOld.Instance.appear(activePlayers, propertyLandedOn);
     }
     public override bool exitConditionMet() {
         return auctionOver;
     }
     public override void exitState() {
-        AuctionEventHub.Instance.unsub_WinnerAnnounced(auctionOverListening);
+        AuctionEventHub.Instance.unsub_AllAuctionsFinished(auctionOverListening);
     }
     public override State getNextState() {
         return allStates.getState<UpdateTurnPlayerState>();
@@ -31,21 +40,9 @@ internal class AuctionPropertyState : State {
 
 
     #region private
-    private void auctionOverListening(PlayerInfo winningPlayer, int bid) {
-        if (winningPlayer == null) {
-            auctionOver = true;
-            return;
-        }
-
-        DataUIPipelineEventHub.Instance.call_MoneyAdjustment(winningPlayer, -bid);
-        PropertyInfo propertyInfo = ((PropertySpaceInfo)GameState.game.TurnPlayer.SpaceInfo).PropertyInfo;
-        WaitFrames.Instance.beforeAction(
-            90,
-            () => {
-                DataUIPipelineEventHub.Instance.call_PlayerObtainedProperty(winningPlayer, propertyInfo);
-                auctionOver = true;
-            }
-        );
+    private void auctionOverListening() {
+        ScreenOverlayEventHub.Instance.call_RemoveScreenAnimationKeepCover();
+        auctionOver = true;
     }
     #endregion
 }

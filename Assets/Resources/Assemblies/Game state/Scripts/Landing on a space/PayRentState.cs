@@ -9,13 +9,13 @@ internal class PayRentState : State {
     #region State
     public override void enterState() {
         animationOver = false;
-        ScreenAnimationEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
-        PropertySpaceInfo propertySpaceInfo = (PropertySpaceInfo)GameState.game.SpaceInfoOfTurnPlayer;
+        ScreenOverlayEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
+        PropertySpaceInfo propertySpaceInfo = (PropertySpaceInfo)GameState.game.TurnPlayer.SpaceInfo;
         PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
         PlayerInfo owner = propertyInfo.Owner;
         int rent = propertyInfo.Rent;
         DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
-        ScreenAnimationEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.DebtInfo);
+        ScreenOverlayEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.DebtInfo);
     }
     public override bool exitConditionMet() {
         return animationOver;
@@ -24,7 +24,7 @@ internal class PayRentState : State {
         return allStates.getState<ResolveDebtState>();
     }
     public override void exitState() {
-        ScreenAnimationEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
+        ScreenOverlayEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
     }
     #endregion
 

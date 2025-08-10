@@ -53,12 +53,12 @@ public class TokenVisualManager : MonoBehaviour {
         return startingSpaceVisual.getMinorPoint(player);
     }
     private void moveTurnPlayer(int startingIndex, int diceValues) {
-        int playerIndex = GameState.game.IndexOfTurnPlayer;
+        int playerIndex = GameState.game.TurnPlayer.Index;
         TokenVisual turnTokenVisual = getTokenVisual(playerIndex);
         turnTokenVisual.moveTokenAlongBoard(startingIndex, diceValues);
     }
     private void moveTurnPlayerDirectly(int startingIndex, int newIndex) {
-        int playerIndex = GameState.game.IndexOfTurnPlayer;
+        int playerIndex = GameState.game.TurnPlayer.Index;
         TokenVisual turnTokenVisual = getTokenVisual(playerIndex);
         turnTokenVisual.moveTokenDirectlyToSpace(startingIndex, newIndex);
     }

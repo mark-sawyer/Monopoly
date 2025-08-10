@@ -17,7 +17,7 @@ internal class PostRaiseMoneyState : State {
                 if (!playerInfo.IsActive) continue;
 
                 PlayerPanel playerPanel = playerPanelManager.getPlayerPanel(i);
-                if (!playerPanel.NeedsUpdate) continue;
+                if (!playerPanel.NeedsMoneyUpdate) continue;
 
                 playersToUpdate.Add(playerInfo);
             }
@@ -29,11 +29,16 @@ internal class PostRaiseMoneyState : State {
         UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(updateAnimationsOverListener);
 
         PlayerInfo[] playersNeedingUIUpdate = getPlayersNeedingUIUpdate();
-        UIEventHub.Instance.call_UpdateUIMoney(playersNeedingUIUpdate);
-        WaitFrames.Instance.beforeAction(
-            FrameConstants.MONEY_UPDATE,
-            () => UIEventHub.Instance.call_UpdateExpiredPropertyVisuals()
-        );
+        if (playersNeedingUIUpdate.Length > 0) {
+            UIEventHub.Instance.call_UpdateUIMoney(playersNeedingUIUpdate);
+            WaitFrames.Instance.beforeAction(
+                FrameConstants.MONEY_UPDATE,
+                () => UIEventHub.Instance.call_UpdateExpiredPropertyVisuals()
+            );
+        }
+        else {
+            UIEventHub.Instance.call_UpdateExpiredPropertyVisuals();
+        }
     }
     public override bool exitConditionMet() {
         return updateAnimationsOver;
