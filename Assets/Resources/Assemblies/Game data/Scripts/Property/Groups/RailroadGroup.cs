@@ -14,6 +14,9 @@ internal class RailroadGroup : ScriptableObject, RailroadGroupInfo {
     public int propertiesOwnedByPlayer(PlayerInfo playerInfo) {
         return railroads.Count(x => x.Owner == playerInfo);
     }
+    public int propertiesMortgagedByPlayer(PlayerInfo playerInfo) {
+        return railroads.Count(x => x.Owner == playerInfo && x.IsMortgaged);
+    }
     public bool playerHasMortgageInGroup(PlayerInfo playerInfo) {
         return railroads.Any(x => x.Owner == playerInfo && x.IsMortgaged);
     }

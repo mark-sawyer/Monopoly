@@ -13,6 +13,7 @@ public class ScreenOverlayManager : MonoBehaviour {
     [SerializeField] private GameObject tradingCharacterSelection;
     [SerializeField] private GameObject resolveDebtPanel;
     [SerializeField] private GameObject auctionManager;
+    [SerializeField] private GameObject resolveMortgage;
     #endregion
     #region Private attributes
     [SerializeField] private GameObject[] chancePrefabs;
@@ -31,8 +32,8 @@ public class ScreenOverlayManager : MonoBehaviour {
         initialiseCommunityChestyDictionary();
         float alpha = InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA;
 
-        events.sub_RemoveScreenAnimation(removeScreenOverlay);
-        events.sub_RemoveScreenAnimationKeepCover(removeOverlayKeepCover);
+        events.sub_RemoveScreenOverlay(removeScreenOverlay);
+        events.sub_RemoveScreenOverlayKeepCover(removeOverlayKeepCover);
 
         events.sub_SpinningPoliceman(() => startScreenOverlay(spinningPolicemanPrefab, alpha));
         events.sub_IncomeTaxQuestion((PlayerInfo playerInfo) => startScreenOverlay(incomeTaxPrefab, playerInfo, alpha));
@@ -52,6 +53,7 @@ public class ScreenOverlayManager : MonoBehaviour {
         events.sub_TradeOpened(() => startScreenOverlay(tradingCharacterSelection, alpha));
         events.sub_ResolveDebt((DebtInfo debtInfo) => startScreenOverlay(resolveDebtPanel, debtInfo, 1));
         events.sub_AuctionsBegin((Queue<TradableInfo> tradableInfos) => startScreenOverlay(auctionManager, tradableInfos, 1));
+        events.sub_ResolveMortgage((PlayerInfo pl, PropertyInfo pr) => startScreenOverlay(resolveMortgage, pl, pr, alpha));
     }
     #endregion
 

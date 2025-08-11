@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 103095dee1b2d184faf1f61abf920a5c, type: 3}
+  m_Name: screen_overlay_event_hub
+  m_EditorClassIdentifier: 
+  incomeTaxQuestion: {fileID: 11400000, guid: 78f50cfbec166e0408237475a1081cc3, type: 2}
+  purchaseQuestion: {fileID: 11400000, guid: a5b1acb66b7f35843b93252bd2942388, type: 2}
+  payingRentAnimationBegins: {fileID: 11400000, guid: 08b3063bbc22e864692fc85fa3f1966c, type: 2}
+  cardShown: {fileID: 11400000, guid: 88d2647cd8d9c2e4f93e2d606873e328, type: 2}
+  spinningPoliceman: {fileID: 11400000, guid: 2a6a4c2feb367e04dbb32f056bf22f91, type: 2}
+  luxuryTaxAnimationBegins: {fileID: 11400000, guid: 9749140e5112e3a4a910876e88971e32, type: 2}
+  unaffordableProperty: {fileID: 11400000, guid: 606f7be73dc4fb146860bc724df0c086, type: 2}
+  tradeOpened: {fileID: 11400000, guid: 4ca744208075eb14bb310b37aef588c9, type: 2}
+  resolveDebt: {fileID: 11400000, guid: 367c65c892a04974f84fc549f05cfad3, type: 2}
+  auctionsBegin: {fileID: 11400000, guid: 2c9f75ce042ee38439c8409f9f3f7b72, type: 2}
+  resolveMortgage: {fileID: 11400000, guid: 989b0a094432ada408e0cd77c921f3d3, type: 2}
+  purchaseYesClicked: {fileID: 11400000, guid: bd248c8563c9d3945b75c47d472cceeb, type: 2}
+  purchaseNoClicked: {fileID: 11400000, guid: d024e034644e5694dbff2fd9f96c5025, type: 2}
+  cardOKClicked: {fileID: 11400000, guid: 9e00ad819c8c6ab48a3273fbab91e684, type: 2}
+  keepMortgageClicked: {fileID: 0}
+  unmortgageClicked: {fileID: 0}
+  removeScreenAnimation: {fileID: 11400000, guid: 95a5d8e01da77f143984302821c22adb, type: 2}
+  removeScreenAnimationKeepCover: {fileID: 11400000, guid: f92fa5db7c89a8c4a936d110a9d9cb31, type: 2}

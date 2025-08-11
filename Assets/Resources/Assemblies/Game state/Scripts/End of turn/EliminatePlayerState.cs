@@ -6,6 +6,7 @@ using UnityEngine;
 internal class EliminatePlayerState : State {
     private bool toUpdateTurnPlayer;
     private bool toAssetAuctioning;
+    private PlayerInfo eliminatedPlayer;
 
 
 
@@ -17,8 +18,8 @@ internal class EliminatePlayerState : State {
         UIEventHub.Instance.sub_PlayerEliminatedAnimationOver(afterPlayerEliminatedAnimation);
         UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(afterVisualsUpdated);
 
-        PlayerInfo turnPlayer = GameState.game.TurnPlayer;
-        DataUIPipelineEventHub.Instance.call_PlayerEliminated(turnPlayer);
+        eliminatedPlayer = GameState.game.PlayerInDebt;
+        DataUIPipelineEventHub.Instance.call_PlayerEliminated(eliminatedPlayer);
     }
     public override bool exitConditionMet() {
         return toUpdateTurnPlayer
@@ -40,12 +41,11 @@ internal class EliminatePlayerState : State {
 
     #region private
     private void afterPlayerEliminatedAnimation() {
-        PlayerInfo turnPlayer = GameState.game.TurnPlayer;
-        DebtInfo debtInfo = turnPlayer.DebtInfo;
-        IEnumerable<TradableInfo> tradableInfos = turnPlayer.TradableInfos;
+        DebtInfo debtInfo = GameState.game.BankInfo.EliminatedPlayerDebt;
+        IEnumerable<TradableInfo> tradableInfos = GameState.game.BankInfo.EliminatedPlayerAssets;
         if (tradableInfos.Count() == 0) toUpdateTurnPlayer = true;
         else if (debtInfo.Creditor is PlayerInfo creditorPlayer) {
-            DataEventHub.Instance.call_TradeCommenced(turnPlayer, creditorPlayer);
+            DataEventHub.Instance.call_TradeCommenced(eliminatedPlayer, creditorPlayer);
             DataUIPipelineEventHub.Instance.call_TradeUpdated(
                 tradableInfos.ToList(),
                 new List<TradableInfo>(),

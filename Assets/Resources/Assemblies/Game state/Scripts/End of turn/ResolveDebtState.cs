@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/ResolveTurnState")]
@@ -11,18 +12,17 @@ internal class ResolveDebtState : State {
 
     #region State
     public override void enterState() {
-        debtResolved = true;
+        debtResolved = false;
         goToRaiseMoney = false;
         playerBankrupt = false;
 
-        IEnumerable<PlayerInfo> playerInfos = GameState.game.PlayerInfos;
-        foreach (PlayerInfo playerInfo in playerInfos) {
-            DebtInfo debtInfo = playerInfo.DebtInfo;
-            if (debtInfo != null) {
-                debtResolved = false;
-                resolveDebt(playerInfo, debtInfo);
-                break;
-            }
+
+        PlayerInfo playerInDebt = GameState.game.PlayerInDebt;
+        if (playerInDebt != null) {
+            resolveDebt(playerInDebt, playerInDebt.DebtInfo);
+        }
+        else {
+            debtResolved = true;
         }
     }
     public override bool exitConditionMet() {

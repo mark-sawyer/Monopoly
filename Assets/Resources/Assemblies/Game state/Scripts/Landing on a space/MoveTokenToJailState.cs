@@ -9,7 +9,7 @@ internal class MoveTokenToJailState : State {
     public override void enterState() {
         tokenSettled = false;
 
-        ScreenOverlayEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
+        ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
 
         ScreenOverlayEventHub.Instance.call_SpinningPoliceman();
@@ -19,7 +19,7 @@ internal class MoveTokenToJailState : State {
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
-        ScreenOverlayEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
+        ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
     }
     public override State getNextState() {
         return allStates.getState<UpdateTurnPlayerState>();

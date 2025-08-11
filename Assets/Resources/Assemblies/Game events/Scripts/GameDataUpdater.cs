@@ -22,6 +22,8 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_PropertyMortgaged(mortgageProperty);
         dataHub.sub_PropertyUnmortgaged(unmortgageProperty);
         dataHub.sub_TradeCommenced(createNewTrade);
+        dataHub.sub_MortgageIsResolved(setMortgageResolved);
+        dataHub.sub_TurnPlayerWillLoseTurn(markTurnPlayerForLosingTurn);
         pipelineHub.sub_RollButtonClicked(rollDice);
         pipelineHub.sub_TurnPlayerMovedAlongBoard(moveTurnPlayerAlongBoard);
         pipelineHub.sub_TurnPlayerMovedToSpace(moveTurnPlayerToSpace);
@@ -135,8 +137,14 @@ public class GameDataUpdater : MonoBehaviour {
     private void makeProposedTrade() {
         gamePlayer.makeProposedTrade();
     }
-    private void eliminatePlayer(PlayerInfo player) {
-        gamePlayer.eliminatePlayer(player);
+    private void eliminatePlayer(PlayerInfo playerInfo) {
+        gamePlayer.eliminatePlayer(playerInfo);
+    }
+    private void setMortgageResolved(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
+        gamePlayer.setMortgageResolved(playerInfo, propertyInfo);
+    }
+    private void markTurnPlayerForLosingTurn() {
+        gamePlayer.markTurnPlayerForLosingTurn();
     }
     #endregion
 }

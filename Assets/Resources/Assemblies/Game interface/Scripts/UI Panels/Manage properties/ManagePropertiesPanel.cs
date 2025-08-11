@@ -118,7 +118,6 @@ public class ManagePropertiesPanel : MonoBehaviour {
         StartCoroutine(dropCoroutine());
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(GameState.game.TurnPlayer);
         UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisual);
-        UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisualQuietly);
     }
     private void raise() {
         int raiseFrames = FrameConstants.MANAGE_PROPERTIES_DROP;
@@ -132,7 +131,6 @@ public class ManagePropertiesPanel : MonoBehaviour {
             rt.anchoredPosition = new Vector2(0f, offScreenY);
         }
 
-        UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisualQuietly);
         UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisual);
         UIEventHub.Instance.call_FadeScreenCoverOut();
         StartCoroutine(raiseCoroutine());

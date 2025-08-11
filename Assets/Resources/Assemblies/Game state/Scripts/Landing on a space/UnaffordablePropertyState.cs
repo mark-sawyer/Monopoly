@@ -11,7 +11,7 @@ internal class UnaffordablePropertyState : State {
     public override void enterState() {
         if (screenAnimationEvents == null) screenAnimationEvents = ScreenOverlayEventHub.Instance;
         animationOver = false;
-        screenAnimationEvents.sub_RemoveScreenAnimationKeepCover(animationOverListening);
+        screenAnimationEvents.sub_RemoveScreenOverlayKeepCover(animationOverListening);
 
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         PropertySpaceInfo propertySpaceInfo = (PropertySpaceInfo)turnPlayer.SpaceInfo;
@@ -22,7 +22,7 @@ internal class UnaffordablePropertyState : State {
         return animationOver;
     }
     public override void exitState() {
-        screenAnimationEvents.unsub_RemoveScreenAnimationKeepCover(animationOverListening);
+        screenAnimationEvents.unsub_RemoveScreenOverlayKeepCover(animationOverListening);
     }
     public override State getNextState() {
         return allStates.getState<AuctionPropertyState>();

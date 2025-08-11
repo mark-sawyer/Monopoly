@@ -42,7 +42,7 @@ public class RailroadHighlight : MonoBehaviour {
         image.color = noColour;
     }
     private void railroadIsMortgaged() {
-        if (railroadGroupInfo.MortgageCount == railroadGroupInfo.NumberOfPropertiesInGroup) {
+        if (railroadGroupInfo.propertiesMortgagedByPlayer(playerInfo) == 4) {
             mortgageSquarePanel.SetActive(false);
             image.color = noColour;
         }

@@ -38,6 +38,7 @@ internal class Game : GameStateInfo, GamePlayer {
     internal int getPlayerIndex(PlayerInfo player) {
         return Array.FindIndex(players, x => x == player);
     }
+    internal Bank Bank => bank;
     #endregion
 
 
@@ -45,8 +46,9 @@ internal class Game : GameStateInfo, GamePlayer {
     #region GameStateInfo
     public IEnumerable<PlayerInfo> PlayerInfos => players;
     public IEnumerable<PlayerInfo> ActivePlayers => players.Where(x => x.IsActive);
-    public DiceInfo DiceInfo => dice;
+    public PlayerInfo PlayerInDebt => players.FirstOrDefault(x => x.Debt != null);
     public PlayerInfo TurnPlayer => turnPlayer;
+    public DiceInfo DiceInfo => dice;
     public int NumberOfPlayers => players.Length;
     public SpaceInfo getSpaceInfo(int index) {
         return spaces[index];
@@ -86,6 +88,7 @@ internal class Game : GameStateInfo, GamePlayer {
             if (nextPlayer.IsActive) foundNextPlayer = true;
         }
         turnPlayer = players[index];
+        turnPlayer.HasLostTurn = false;
     }
     public void obtainProperty(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         Player player = (Player)playerInfo;
@@ -136,6 +139,10 @@ internal class Game : GameStateInfo, GamePlayer {
     public void unmortgageProperty(PropertyInfo propertyInfo) {
         Property property = (Property)propertyInfo;
         property.unmortgage();
+    }
+    public void setMortgageResolved(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
+        Player player = (Player)playerInfo;
+        player.removeUnresolvedMortgage(propertyInfo);
     }
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
         Player debtorPlayer = (Player)debtor;
@@ -223,6 +230,9 @@ internal class Game : GameStateInfo, GamePlayer {
     public void eliminatePlayer(PlayerInfo playerInfo) {
         Player player = (Player)playerInfo;
         player.eliminateSelf();
+    }
+    public void markTurnPlayerForLosingTurn() {
+        turnPlayer.HasLostTurn = true;
     }
     #endregion
 

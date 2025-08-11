@@ -22,10 +22,12 @@ internal class EstateGroup : ScriptableObject, EstateGroupInfo {
     #region PropertyGroupInfo
     public int NumberOfPropertiesInGroup => estates.Length;
     public bool MortgageExists => estates.Any(x => x.IsMortgaged);
-    public int MortgageCount => estates.Count(x => x.IsMortgaged);
     public int TotalBuildings => estates.Sum(x => x.BuildingCount);
     public int propertiesOwnedByPlayer(PlayerInfo playerInfo) {
         return estates.Count(x => x.Owner == playerInfo);
+    }
+    public int propertiesMortgagedByPlayer(PlayerInfo playerInfo) {
+        return estates.Count(x => x.Owner == playerInfo && x.IsMortgaged);
     }
     public bool playerHasMortgageInGroup(PlayerInfo playerInfo) {
         return estates.Any(x => x.Owner == playerInfo && x.IsMortgaged);

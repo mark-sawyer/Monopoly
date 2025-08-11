@@ -12,6 +12,7 @@ public interface GamePlayer {
     public void removeAllBuildingsFromEstateGroup(EstateGroupInfo estateGroupInfo);
     public void mortgageProperty(PropertyInfo propertyInfo);
     public void unmortgageProperty(PropertyInfo propertyInfo);
+    public void setMortgageResolved(PlayerInfo playerInfo, PropertyInfo propertyInfo);
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed);
     public void reduceDebt(PlayerInfo debtor, int paid);
     public void raiseMoneyForDebt(PlayerInfo debtor, int amount);
@@ -30,4 +31,5 @@ public interface GamePlayer {
     public void updateProposedTrade(List<TradableInfo> t1, List<TradableInfo> t2, PlayerInfo moneyGiver, int money);
     public void makeProposedTrade();
     public void eliminatePlayer(PlayerInfo playerInfo);
+    public void markTurnPlayerForLosingTurn();
 }

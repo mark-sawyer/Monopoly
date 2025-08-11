@@ -77,7 +77,7 @@ public class RailroadIcon : PropertyGroupIcon {
         }
         void setIconColour(int propertiesOwned) {
             float alpha = propertiesOwned == 0 ? ZeroPropertiesAlpha : NonZeroPropertiesAlpha;
-            Color iconColour = propertiesOwned == 4 && railroadGroupInfo.MortgageCount == 4
+            Color iconColour = railroadGroupInfo.propertiesMortgagedByPlayer(PlayerInfo) == 4
                 ? mortgageColour.Colour
                 : propertyGroupIconColour.Colour;
             iconColour.a = alpha;

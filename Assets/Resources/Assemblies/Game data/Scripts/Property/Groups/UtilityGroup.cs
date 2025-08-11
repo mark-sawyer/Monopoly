@@ -12,9 +12,11 @@ internal class UtilityGroup : ScriptableObject, UtilityGroupInfo {
     #region PropertyGroupInfo
     public int NumberOfPropertiesInGroup => 2;
     public bool MortgageExists => utilities.Any(x => x.IsMortgaged);
-    public int MortgageCount => utilities.Count(x => x.IsMortgaged);
     public int propertiesOwnedByPlayer(PlayerInfo playerInfo) {
         return utilities.Count(x => x.Owner == playerInfo);
+    }
+    public int propertiesMortgagedByPlayer(PlayerInfo playerInfo) {
+        return utilities.Count(x => x.Owner == playerInfo && x.IsMortgaged);
     }
     public bool playerHasMortgageInGroup(PlayerInfo playerInfo) {
         return utilities.Any(x => x.Owner == playerInfo && x.IsMortgaged);

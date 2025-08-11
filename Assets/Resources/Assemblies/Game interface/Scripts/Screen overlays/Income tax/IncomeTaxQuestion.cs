@@ -6,18 +6,18 @@ public class IncomeTaxQuestion : ScreenOverlay<PlayerInfo> {
     [SerializeField] private QuestionCircle questionCircle;
     [SerializeField] private TenPercentButton tenPercentButtonText;
     private PlayerInfo player;
-    private DroppingQuestionsFunctionality droppingQuestionsFunctionality;
+    private ScreenOverlayDropper screenOverlayDropper;
     private const int WAITED_FRAMES = 150;
 
 
 
     #region ScreenAnimation
     public override void appear() {
-        StartCoroutine(droppingQuestionsFunctionality.drop());
+        StartCoroutine(screenOverlayDropper.drop());
     }
     public override void setup(PlayerInfo player) {
-        droppingQuestionsFunctionality = new DroppingQuestionsFunctionality((RectTransform)transform);
-        droppingQuestionsFunctionality.adjustSize();
+        screenOverlayDropper = new ScreenOverlayDropper((RectTransform)transform);
+        screenOverlayDropper.adjustSize();
         this.player = player;
         tokenIcon.setup(player.Token, player.Colour);
     }

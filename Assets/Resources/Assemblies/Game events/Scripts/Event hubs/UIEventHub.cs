@@ -16,6 +16,7 @@ public class UIEventHub : ScriptableObject {
     [SerializeField] private GameEvent prerollStateStarting;
     [SerializeField] private GameEvent prerollStateEnding;
     [SerializeField] private PlayerArrayEvent updateUIMoney;
+    [SerializeField] private PlayerPropertyEvent playerPropertyAdjustment;
     [SerializeField] private GameEvent updateExpiredPropertyVisuals;
     [SerializeField] private GameEvent updateExpiredBoardVisuals;
     [SerializeField] private GameEvent allExpiredPropertyVisualsUpdated;
@@ -50,6 +51,7 @@ public class UIEventHub : ScriptableObject {
     public void call_PrerollStateStarting() => prerollStateStarting.invoke();
     public void call_PrerollStateEnding() => prerollStateEnding.invoke();
     public void call_UpdateUIMoney(PlayerInfo[] players) => updateUIMoney.invoke(players);
+    public void call_PlayerPropertyAdjustment(PlayerInfo pl, PropertyInfo pr) => playerPropertyAdjustment.invoke(pl, pr);  // Subscribed to in UI pipeline
     public void call_UpdateExpiredPropertyVisuals() => updateExpiredPropertyVisuals.invoke();
     public void call_UpdateExpiredBoardVisuals() => updateExpiredBoardVisuals.invoke();
     public void call_AllExpiredPropertyVisualsUpdated() => allExpiredPropertyVisualsUpdated.invoke();

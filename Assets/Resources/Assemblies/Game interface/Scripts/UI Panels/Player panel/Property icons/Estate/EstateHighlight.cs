@@ -51,7 +51,7 @@ public class EstateHighlight : MonoBehaviour {
         image.color = noColour;
     }
     private void estateIsMortgaged() {
-        if (estateGroupInfo.MortgageCount == estateGroupInfo.NumberOfPropertiesInGroup) {
+        if (estateGroupInfo.propertiesMortgagedByPlayer(playerInfo) == estateGroupInfo.NumberOfPropertiesInGroup) {
             mortgageSquarePanel.SetActive(false);
             image.color = noColour;
         }

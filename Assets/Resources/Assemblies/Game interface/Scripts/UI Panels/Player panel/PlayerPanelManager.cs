@@ -61,27 +61,27 @@ public class PlayerPanelManager : MonoBehaviour {
         }
         void subscribeToEvents() {
             UIPipelineEventHub uiPipelineEvents = UIPipelineEventHub.Instance;
-            UIEventHub uiEventHub = UIEventHub.Instance;
+            UIEventHub uiEvents = UIEventHub.Instance;
             ManagePropertiesEventHub managePropertiesEvents = ManagePropertiesEventHub.Instance;
             TradeEventHub tradeEvents = TradeEventHub.Instance;
 
 
 
-            uiPipelineEvents.sub_NextPlayerTurn(updateTurnPlayerHighlight);
-
-            uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisual);
-            uiPipelineEvents.sub_MoneyBetweenPlayers(adjustMoneyVisuals);
-            uiEventHub.sub_UpdateUIMoney(adjustMoneyVisuals);
+            uiEvents.sub_PrerollStateStarting(updateTurnPlayerHighlight);
 
             managePropertiesEvents.sub_ManagePropertiesOpened(() => changeMoneyAdjustListening(true));
             managePropertiesEvents.sub_BackButtonPressed(() => changeMoneyAdjustListening(false));
+
+            uiPipelineEvents.sub_MoneyAdjustment(adjustMoneyVisual);
+            uiPipelineEvents.sub_MoneyBetweenPlayers(adjustMoneyVisuals);
+            uiEvents.sub_UpdateUIMoney(adjustMoneyVisuals);
 
             uiPipelineEvents.sub_PlayerPropertyAdjustment(updatePropertyIcon);
 
             uiPipelineEvents.sub_PlayerGetsGOOJFCard(updateGOOJFCardIcon);
             uiPipelineEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => updateGOOJFCardIcon(GameState.game.TurnPlayer, ct));
 
-            uiEventHub.sub_UpdateExpiredPropertyVisuals(updateAllExpiredPropertyIcons);
+            uiEvents.sub_UpdateExpiredPropertyVisuals(updateAllExpiredPropertyIcons);
             tradeEvents.sub_UpdateVisualsAfterTradeFinalised(updateVisualsAfterTradeListening);
 
             uiPipelineEvents.sub_PlayerEliminated(eliminatePlayer);

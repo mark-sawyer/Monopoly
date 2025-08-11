@@ -6,7 +6,7 @@ public class CardFlipper : ScreenOverlay<GameObject> {
     [SerializeField] private GameObject okButton;
     private GameObject cardPrefab;
     private GameObject cardInstance;
-    private ScreenOverlaySizeAdjuster screenAnimationSizeAdjuster;
+    private ScreenOverlaySizeAdjuster screenOverlaySizeAdjuster;
     private const float HORIZONTAL_PROPORTION = 710f / 1920f;
 
 
@@ -18,17 +18,17 @@ public class CardFlipper : ScreenOverlay<GameObject> {
         ScreenOverlayEventHub.Instance.sub_CardOKClicked(
             () => ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation()
         );
-        screenAnimationSizeAdjuster = new ScreenOverlaySizeAdjuster(
+        screenOverlaySizeAdjuster = new ScreenOverlaySizeAdjuster(
             HORIZONTAL_PROPORTION,
             ((RectTransform)cardPrefab.transform).rect.width,
             rt
         );
-        screenAnimationSizeAdjuster.adjustChildrenSize();
+        screenOverlaySizeAdjuster.adjustChildrenSize();
     }
     public override void appear() {
         float canvasHeight = rt.rect.height;
         float canvasWidth = rt.rect.width;
-        cardInstance = screenAnimationSizeAdjuster.InstantiateAdjusted(cardPrefab);
+        cardInstance = screenOverlaySizeAdjuster.InstantiateAdjusted(cardPrefab);
         cardInstance.transform.localPosition = new Vector3(
             -canvasWidth / 4f,
             -1.1f * canvasHeight / 2f,
@@ -36,7 +36,7 @@ public class CardFlipper : ScreenOverlay<GameObject> {
         );
         cardInstance.transform.localRotation = Quaternion.Euler(-100f, 20, 0);
         cardInstance.GetComponent<CardMonoBehaviour>().startCoroutines();        
-        okButton.GetComponent<OKButton>().raise(((RectTransform)cardPrefab.transform).rect.height * screenAnimationSizeAdjuster.Scale);
+        okButton.GetComponent<OKButton>().raise(((RectTransform)cardPrefab.transform).rect.height * screenOverlaySizeAdjuster.Scale);
     }
     #endregion
 }

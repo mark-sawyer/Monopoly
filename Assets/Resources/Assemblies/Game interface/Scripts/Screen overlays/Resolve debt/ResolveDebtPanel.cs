@@ -3,9 +3,11 @@ using UnityEngine;
 public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
     [SerializeField] private RectTransform rt;
     [SerializeField] private ResolveDebtTopRow resolveDebtTopRow;
-    private DroppingQuestionsFunctionality droppingQuestionsFunctionality;
+    [SerializeField] private RDEstateGroupSection[] estateGroupSections;
+    [SerializeField] private RDOtherPropertyGroupSection[] otherPropertyGroupSections;
+    private ScreenOverlayDropper screenOverlayDropper;
 
-
+    
 
     #region MonoBehaviour
     private void Start() {
@@ -20,12 +22,14 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
 
     #region ScreenAnimation
     public override void setup(DebtInfo debtInfo) {
-        droppingQuestionsFunctionality = new DroppingQuestionsFunctionality(rt);
-        droppingQuestionsFunctionality.adjustSize();
+        screenOverlayDropper = new ScreenOverlayDropper(rt);
+        screenOverlayDropper.adjustSize();
         resolveDebtTopRow.setup(debtInfo);
+        foreach (RDEstateGroupSection estateGroupSection in estateGroupSections) estateGroupSection.setup(debtInfo.Debtor);
+        foreach (RDOtherPropertyGroupSection otherPropertyGroupSection in otherPropertyGroupSections) otherPropertyGroupSection.setup(debtInfo.Debtor);
     }
     public override void appear() {
-        StartCoroutine(droppingQuestionsFunctionality.drop());
+        StartCoroutine(screenOverlayDropper.drop());
     }
     #endregion
 

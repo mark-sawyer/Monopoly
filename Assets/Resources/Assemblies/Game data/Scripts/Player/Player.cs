@@ -6,10 +6,12 @@ internal class Player : PlayerInfo {
     private Game game;
     private Space space;
     private List<Property> properties;
+    private List<Property> unresolvedMortgages;
     private Debt debt;
     private int money;
     private bool inJail;
     private bool isActive;
+    private bool hasLostTurn;
     private int turnInJail;
     private List<Card> getOutOfJailFreeCards;
     private Token token;
@@ -27,6 +29,7 @@ internal class Player : PlayerInfo {
 
 
         properties = new List<Property>();
+        unresolvedMortgages = new List<Property>();
         inJail = false;
         isActive = true;
         turnInJail = 0;
@@ -37,6 +40,9 @@ internal class Player : PlayerInfo {
     internal void obtainProperty(Property property) {
         properties.Add(property);
         property.changeOwner(this);
+        if (property.IsMortgaged) {
+            unresolvedMortgages.Add(property);
+        }
     }
     internal void removeProperty(Property property) {
         properties.Remove(property);
@@ -78,8 +84,20 @@ internal class Player : PlayerInfo {
     internal void eliminateSelf() {
         isActive = false;
         space.removePlayer(this);
+        game.Bank.takeEliminatedPlayerDebts(
+            getTradablesList(),
+            debt
+        );
+        debt = null;
         space = null;
         inJail = false;
+        turnInJail = 0;
+        properties.Clear();
+        getOutOfJailFreeCards.Clear();
+    }
+    internal void removeUnresolvedMortgage(PropertyInfo propertyInfo) {
+        Property property = (Property)propertyInfo;
+        unresolvedMortgages.Remove(property);
     }
     #endregion
 
@@ -122,28 +140,38 @@ internal class Player : PlayerInfo {
             return hotelCount;
         }
     }
-    public IEnumerable<TradableInfo> TradableInfos {
-        get {
-            List<Tradable> tradables = new();
-            foreach (Property property in properties) {
-                if (property.IsCurrentlyTradable) {
-                    tradables.Add(property);
-                }
-            }
-            foreach (Card cardInstance in getOutOfJailFreeCards) {
-                tradables.Add(cardInstance);
-            }
-            tradables.Sort((a, b) => a.TradableOrderID.CompareTo(b.TradableOrderID));
-            return tradables;
-        }
-    }
+    public IEnumerable<TradableInfo> TradableInfos => getTradablesList();
     public bool CanRaiseMoney => properties.Any(x => !x.IsMortgaged);
+    public bool HasAnUnresolvedMortgage => unresolvedMortgages.Count > 0;
+    public PropertyInfo UnresolvedMortgageProperty => unresolvedMortgages[0];
     public bool hasGOOJFCardOfType(CardType cardType) {
         return getOutOfJailFreeCards.Any(x => x.CardType == cardType);
     }
     public bool ownsProperty(PropertyInfo propertyInfo) {
         Property property = (Property)propertyInfo;
         return properties.Contains(property);
+    }
+    public bool HasLostTurn {
+        get {  return hasLostTurn; }
+        internal set { hasLostTurn = value; }
+    }
+    #endregion
+
+
+
+    #region private
+    private List<Tradable> getTradablesList() {
+        List<Tradable> tradables = new();
+        foreach (Property property in properties) {
+            if (property.IsCurrentlyTradable) {
+                tradables.Add(property);
+            }
+        }
+        foreach (Card cardInstance in getOutOfJailFreeCards) {
+            tradables.Add(cardInstance);
+        }
+        tradables.Sort((a, b) => a.TradableOrderID.CompareTo(b.TradableOrderID));
+        return tradables;
     }
     #endregion
 }

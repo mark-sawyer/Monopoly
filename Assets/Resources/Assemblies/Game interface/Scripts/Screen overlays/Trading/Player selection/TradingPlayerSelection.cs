@@ -16,14 +16,14 @@ public class TradingPlayerSelection : ScreenOverlay {
     #endregion
     [SerializeField] private GameObject tradePanelPrefab;
     private GameObject tradePanelInstance;
-    private DroppingQuestionsFunctionality droppingQuestionsFunctionality;
+    private ScreenOverlayDropper screenOverlayDropper;
 
 
 
     #region MonoBehaviour
     private void OnEnable() {
-        droppingQuestionsFunctionality = new DroppingQuestionsFunctionality(droppingQuestionRT);
-        droppingQuestionsFunctionality.adjustSize();
+        screenOverlayDropper = new ScreenOverlayDropper(droppingQuestionRT);
+        screenOverlayDropper.adjustSize();
         UIEventHub.Instance.sub_TradingPlayerPlaced(adjustTextButtonToggle);
         UIEventHub.Instance.sub_TradingPlayersConfirmed(createTradePanel);
         UIPipelineEventHub.Instance.sub_TradeTerminated(removeTradeDisplay);
@@ -43,7 +43,7 @@ public class TradingPlayerSelection : ScreenOverlay {
     public override void appear() {
         IEnumerable<PlayerInfo> activePlayers = GameState.game.ActivePlayers;
         tradingCharacterSelectionRow.displayCharacters(activePlayers);
-        StartCoroutine(droppingQuestionsFunctionality.drop());
+        StartCoroutine(screenOverlayDropper.drop());
         StartCoroutine(dropBackButton());
     }
     #endregion
@@ -74,7 +74,7 @@ public class TradingPlayerSelection : ScreenOverlay {
         void moveObjects() {
             Destroy(droppingQuestionRT.gameObject);
             RectTransform tradePanelRT = (RectTransform)tradePanelInstance.transform;
-            DroppingQuestionsFunctionality dqf = new DroppingQuestionsFunctionality(tradePanelRT);
+            ScreenOverlayDropper dqf = new ScreenOverlayDropper(tradePanelRT);
             dqf.adjustSize();
             IEnumerator dropSequence() {
                 yield return dqf.drop();

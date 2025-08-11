@@ -13,14 +13,21 @@ public class RDEstateGroupSection : MonoBehaviour {
 
 
     #region MonoBehaviour
-    private void Start() {
+    private void OnDestroy() {
+        ResolveDebtEventHub.Instance.unsub_ResolveDebtVisualRefresh(refreshVisuals);
+    }
+    #endregion
+
+
+
+    #region public
+    public void setup(PlayerInfo debtor) {
         void turnOnOwnedSections(EstateGroupColours estateGroupColours) {
-            PlayerInfo playerInfo = GameState.game.TurnPlayer;
             foreach (RDEstateSection estateSection in estateSections) {
                 EstateInfo estateInfo = estateSection.EstateInfo;
-                if (playerInfo.ownsProperty(estateInfo)) {
+                if (debtor.ownsProperty(estateInfo)) {
                     estateSection.gameObject.SetActive(true);
-                    estateSection.setup(estateGroupColours);
+                    estateSection.setup(debtor, estateGroupColours);
                 }
                 else {
                     estateSection.gameObject.SetActive(false);
@@ -48,12 +55,9 @@ public class RDEstateGroupSection : MonoBehaviour {
         EstateGroupInfo estateGroupInfo = EstateGroupDictionary.Instance.lookupInfo(estateColour);
         turnOnOwnedSections(estateGroupColours);
         setPanelColour(estateGroupColours);
-        sellAllBuildingsButton.setup(estateGroupInfo);
+        sellAllBuildingsButton.setup(estateGroupInfo, debtor);
         sellAllBuildingsButton.adjustCorrectInteractability();
         ResolveDebtEventHub.Instance.sub_ResolveDebtVisualRefresh(refreshVisuals);
-    }
-    private void OnDestroy() {
-        ResolveDebtEventHub.Instance.unsub_ResolveDebtVisualRefresh(refreshVisuals);
     }
     #endregion
 

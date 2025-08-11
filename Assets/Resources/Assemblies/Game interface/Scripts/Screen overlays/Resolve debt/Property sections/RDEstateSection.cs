@@ -14,16 +14,16 @@ public class RDEstateSection : MonoBehaviour {
     [SerializeField] private Transform buttonColourPanelTransform;
     #endregion
     #region Updating visuals
-    [SerializeField] private SellOrMortgageBuildingButton sellOrMortgageBuildingMono;
+    [SerializeField] private RDSellOrMortgageBuildingButton sellOrMortgageBuildingMono;
     [SerializeField] private BuildingIcons buildingIcons;
     #endregion
 
 
 
     public EstateInfo EstateInfo => (EstateInfo)estateSO;
-    public void setup(EstateGroupColours estateGroupColours) {
+    public void setup(PlayerInfo debtor, EstateGroupColours estateGroupColours) {
         void setEstateReferences() {
-            sellOrMortgageBuildingMono.setup(EstateInfo);
+            sellOrMortgageBuildingMono.setup(debtor, EstateInfo);
             buildingIcons.setup(EstateInfo);
         }
         void setTexts() {

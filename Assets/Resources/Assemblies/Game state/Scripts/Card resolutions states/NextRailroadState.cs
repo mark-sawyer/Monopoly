@@ -13,7 +13,7 @@ internal class NextRailroadState : State {
         goToLandedOnSpace = false;
 
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
-        ScreenOverlayEventHub.Instance.sub_RemoveScreenAnimation(animationOverCalled);
+        ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
 
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         int oldSpaceIndex = turnPlayer.SpaceIndex;
@@ -31,7 +31,7 @@ internal class NextRailroadState : State {
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
-        ScreenOverlayEventHub.Instance.unsub_RemoveScreenAnimation(animationOverCalled);
+        ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
     }
     public override State getNextState() {
         if (goToResolveDebt) return allStates.getState<ResolveDebtState>();

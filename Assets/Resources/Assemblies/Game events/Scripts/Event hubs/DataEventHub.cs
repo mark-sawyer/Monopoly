@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameEvent/Hubs/DataEventHub")]
@@ -15,6 +16,8 @@ public class DataEventHub : ScriptableObject {
     [SerializeField] private PropertyEvent propertyUnmortgaged;
     [SerializeField] private GameEvent incrementJailTurn;
     [SerializeField] private PlayerPlayerEvent tradeCommenced;
+    [SerializeField] private PlayerPropertyEvent mortgageIsResolved;
+    [SerializeField] private GameEvent turnPlayerWillLoseTurn;
 
 
 
@@ -49,6 +52,8 @@ public class DataEventHub : ScriptableObject {
     public void call_PropertyMortgaged(PropertyInfo propertyInfo) => propertyMortgaged.invoke(propertyInfo);
     public void call_PropertyUnmortgaged(PropertyInfo propertyInfo) => propertyUnmortgaged.invoke(propertyInfo);
     public void call_TradeCommenced(PlayerInfo p1, PlayerInfo p2) => tradeCommenced.invoke(p1, p2);
+    public void call_MortgageIsResolved(PlayerInfo playerInfo, PropertyInfo propertyInfo) => mortgageIsResolved.invoke(playerInfo, propertyInfo);
+    public void call_TurnPlayerWillLoseTurn() => turnPlayerWillLoseTurn.invoke();
     #endregion
 
 
@@ -65,5 +70,7 @@ public class DataEventHub : ScriptableObject {
     internal void sub_PropertyMortgaged(Action<PropertyInfo> a) => propertyMortgaged.Listeners += a;
     internal void sub_PropertyUnmortgaged(Action<PropertyInfo> a) => propertyUnmortgaged.Listeners += a;
     internal void sub_TradeCommenced(Action<PlayerInfo, PlayerInfo> a) => tradeCommenced.Listeners += a;
+    internal void sub_MortgageIsResolved(Action<PlayerInfo, PropertyInfo> a) => mortgageIsResolved.Listeners += a;
+    internal void sub_TurnPlayerWillLoseTurn(Action a) => turnPlayerWillLoseTurn.Listeners += a;
     #endregion
 }

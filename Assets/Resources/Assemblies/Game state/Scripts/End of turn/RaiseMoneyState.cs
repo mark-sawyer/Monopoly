@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/RaiseMoneyState")]
@@ -9,16 +10,16 @@ internal class RaiseMoneyState : State {
     #region State
     public override void enterState() {
         panelRemoved = false;
-        DebtInfo debtInfo = GameState.game.TurnPlayer.DebtInfo;
-        ScreenOverlayEventHub.Instance.sub_RemoveScreenAnimation(panelRemovedListener);
+        ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(panelRemovedListener);
 
+        DebtInfo debtInfo = GameState.game.PlayerInDebt.DebtInfo;
         ScreenOverlayEventHub.Instance.call_ResolveDebt(debtInfo);
     }
     public override bool exitConditionMet() {
         return panelRemoved;
     }
     public override void exitState() {
-        ScreenOverlayEventHub.Instance.unsub_RemoveScreenAnimation(panelRemovedListener);
+        ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(panelRemovedListener);
     }
     public override State getNextState() {
         return allStates.getState<PostRaiseMoneyState>();

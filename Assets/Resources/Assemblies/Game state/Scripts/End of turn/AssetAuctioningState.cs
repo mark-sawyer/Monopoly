@@ -12,7 +12,7 @@ internal class AssetAuctioningState : State {
         auctionsOver = false;
         AuctionEventHub.Instance.sub_AllAuctionsFinished(auctionsOverListening);
 
-        IEnumerable<TradableInfo> tradableInfos = GameState.game.TurnPlayer.TradableInfos;
+        IEnumerable<TradableInfo> tradableInfos = GameState.game.BankInfo.EliminatedPlayerAssets;
         Queue<TradableInfo> tradablesQueue = new Queue<TradableInfo>(tradableInfos);
         ScreenOverlayEventHub.Instance.call_AuctionsBegin(tradablesQueue);
     }

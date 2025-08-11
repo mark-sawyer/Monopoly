@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 [ExecuteAlways]
 public class EstateGroupIcon : PropertyGroupIcon {
@@ -58,7 +56,7 @@ public class EstateGroupIcon : PropertyGroupIcon {
         int estatesInGroup = estateGroupInfo.NumberOfPropertiesInGroup;
         int propertiesOwned = estateGroupInfo.propertiesOwnedByPlayer(PlayerInfo);
         bool hasMonopoly = propertiesOwned == estatesInGroup;
-        int mortgageCount = estateGroupInfo.MortgageCount;
+        int mortgageCount = estateGroupInfo.propertiesMortgagedByPlayer(PlayerInfo);
         bool hotelExists = estateGroupInfo.HotelExists;
         int minBuildings = estateGroupInfo.MinBuildingCount;
         int maxBuildings = estateGroupInfo.MaxBuildingCount;

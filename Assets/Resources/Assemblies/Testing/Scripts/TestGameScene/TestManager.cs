@@ -6,7 +6,7 @@ public class TestManager : MonoBehaviour {
 
 
     private void Awake() {
-        int playerNum = 2;
+        int playerNum = 4;
         GameFactory gameFactory = new GameFactory();
         gameFactory.makeTestGame(playerNum, 500);
         GameState.game = gameFactory.GameStateInfo;
@@ -20,7 +20,12 @@ public class TestManager : MonoBehaviour {
             DataUIPipelineEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, 50);
         }
         else if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
-            DataUIPipelineEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, -50);
+            PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+            int money = turnPlayer.Money;
+            if (money > 0) {
+                int moneyLost = money < 50 ? money : 50;
+                DataUIPipelineEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, -moneyLost);
+            }
         }
     }
 }

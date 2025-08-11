@@ -56,6 +56,7 @@ public class SoundPlayer : MonoBehaviour {
         screenEvents.sub_CardShown(play_CardDrawn);
         screenEvents.sub_PurchaseQuestion(play_QuestionChime);
         screenEvents.sub_IncomeTaxQuestion(play_QuestionChime);
+        screenEvents.sub_ResolveMortgage(play_QuestionChime);
         screenEvents.sub_ResolveDebt(play_DunDuuuuuuun);
     }
     #endregion

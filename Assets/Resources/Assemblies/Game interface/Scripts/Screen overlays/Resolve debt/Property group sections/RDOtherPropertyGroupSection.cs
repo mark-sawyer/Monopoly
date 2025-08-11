@@ -11,12 +11,19 @@ public class RDOtherPropertyGroupSection : MonoBehaviour {
 
 
     #region MonoBehaviour
-    private void Start() {
+    private void OnDestroy() {
+        ResolveDebtEventHub.Instance.unsub_ResolveDebtVisualRefresh(refreshVisuals);
+    }
+    #endregion
+
+
+
+    #region public
+    public void setup(PlayerInfo debtor) {
         void turnOnOwnedSections() {
-            PlayerInfo playerInfo = GameState.game.TurnPlayer;
             foreach (RDOtherPropertySection otherPropertySection in otherPropertySections) {
                 PropertyInfo propertyInfo = otherPropertySection.PropertyInfo;
-                if (playerInfo.ownsProperty(propertyInfo)) {
+                if (debtor.ownsProperty(propertyInfo)) {
                     otherPropertySection.gameObject.SetActive(true);
                 }
                 else {
@@ -25,7 +32,7 @@ public class RDOtherPropertyGroupSection : MonoBehaviour {
             }
         }
         void setPanelColour() {
-            PropertyGroupInfo propertyGroupInfo = (PropertyGroupInfo)propertyGroupSO;            
+            PropertyGroupInfo propertyGroupInfo = (PropertyGroupInfo)propertyGroupSO;
             int owned = otherPropertySections.Count(x => x.gameObject.activeSelf);
             if (owned == 0) {
                 Color colour = panelTransform.GetChild(0).GetChild(0).GetComponent<Image>().color;
@@ -39,9 +46,7 @@ public class RDOtherPropertyGroupSection : MonoBehaviour {
         turnOnOwnedSections();
         setPanelColour();
         ResolveDebtEventHub.Instance.sub_ResolveDebtVisualRefresh(refreshVisuals);
-    }
-    private void OnDestroy() {
-        ResolveDebtEventHub.Instance.unsub_ResolveDebtVisualRefresh(refreshVisuals);
+
     }
     #endregion
 
