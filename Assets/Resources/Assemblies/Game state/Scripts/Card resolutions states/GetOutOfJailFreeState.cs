@@ -21,7 +21,7 @@ internal class GetOutOfJailFreeState : State {
         return cardResolveInvoked;
     }
     public override State getNextState() {
-        return allStates.getState<UpdateTurnPlayerState>();
+        return allStates.getState<PrerollState>();
     }
     #endregion
 }

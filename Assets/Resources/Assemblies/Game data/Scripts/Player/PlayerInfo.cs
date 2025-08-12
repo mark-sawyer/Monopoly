@@ -24,4 +24,5 @@ public interface PlayerInfo : Creditor {
     public bool hasGOOJFCardOfType(CardType cardType);
     public bool ownsProperty(PropertyInfo propertyInfo);
     public bool HasLostTurn { get; }
+    public bool ToMoveAfterJailDebtResolving { get; }
 }

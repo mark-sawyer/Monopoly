@@ -12,6 +12,10 @@ public class InJailOptions : MonoBehaviour {
     #region MonoBehaviour
     private void OnEnable() {
         setup();
+        UIEventHub.Instance.sub_PrerollStateStarting(setup);
+    }
+    private void OnDisable() {
+        UIEventHub.Instance.unsub_PrerollStateStarting(setup);
     }
     #endregion
 

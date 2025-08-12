@@ -32,7 +32,14 @@ internal class ResolveDebtState : State {
             || playerBankrupt;
     }
     public override State getNextState() {
-        if (allDebtsResolved) return allStates.getState<UpdateTurnPlayerState>();
+        PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+        if (allDebtsResolved) {
+            if (turnPlayer.ToMoveAfterJailDebtResolving && turnPlayer.IsActive) {
+                DataEventHub.Instance.call_SetJailDebtBool(GameState.game.TurnPlayer, false);
+                return allStates.getState<MoveTokenState>();
+            }
+            else return allStates.getState<ResolveMortgageState>();
+        }
         if (debtsRemaining) return this;
         if (goToRaiseMoney) return allStates.getState<RaiseMoneyState>();
         if (playerBankrupt) return allStates.getState<EliminatePlayerState>();
@@ -73,10 +80,17 @@ internal class ResolveDebtState : State {
 
 
         int money = debtor.Money;
-        int owed = debtInfo.Owed;
+        int owed = debtInfo.TotalOwed;
         int paid = money - owed >= 0 ? owed : money;
-        if (paid > 0) DataUIPipelineEventHub.Instance.call_DebtReduced(debtor, paid);
-        if (debtInfo.Owed == 0) {
+        if (paid > 0) {
+            if (debtInfo is SingleCreditorDebtInfo) {
+                DataUIPipelineEventHub.Instance.call_SingleCreditorDebtReduced(debtor, paid);
+            }
+            else {
+                DataUIPipelineEventHub.Instance.call_MultiCreditorDebtReduced(debtor, paid);
+            }
+        }
+        if (debtInfo.TotalOwed == 0) {
             WaitFrames.Instance.beforeAction(
                 FrameConstants.MONEY_UPDATE,
                 confirmWhetherMoreDebts

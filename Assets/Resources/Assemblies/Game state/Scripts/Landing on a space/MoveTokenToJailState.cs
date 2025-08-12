@@ -24,7 +24,7 @@ internal class MoveTokenToJailState : State {
         ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
     }
     public override State getNextState() {
-        return allStates.getState<UpdateTurnPlayerState>();
+        return allStates.getState<PrerollState>();
     }
     #endregion
 

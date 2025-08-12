@@ -25,7 +25,7 @@ internal class AuctionPropertyState : State {
         AuctionEventHub.Instance.unsub_AllAuctionsFinished(auctionOverListening);
     }
     public override State getNextState() {
-        return allStates.getState<UpdateTurnPlayerState>();
+        return allStates.getState<PrerollState>();
     }
     #endregion
 

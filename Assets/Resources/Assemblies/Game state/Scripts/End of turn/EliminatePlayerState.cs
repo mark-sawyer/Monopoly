@@ -45,10 +45,8 @@ internal class EliminatePlayerState : State {
         IEnumerable<TradableInfo> tradableInfos = GameState.game.BankInfo.EliminatedPlayerAssets;
 
 
-
-
         if (tradableInfos.Count() == 0) toResolveDebt = true;
-        else if (debtInfo.Creditor is PlayerInfo creditorPlayer) {
+        else if (debtInfo is SingleCreditorDebtInfo singleCreditorDebtInfo && singleCreditorDebtInfo.Creditor is PlayerInfo creditorPlayer) {
             DataEventHub.Instance.call_TradeCommenced(eliminatedPlayer, creditorPlayer);
             DataUIPipelineEventHub.Instance.call_TradeUpdated(
                 tradableInfos.ToList(),

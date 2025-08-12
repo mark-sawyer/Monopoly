@@ -15,7 +15,8 @@ internal class PayRentState : State {
         PlayerInfo owner = propertyInfo.Owner;
         int rent = propertyInfo.Rent;
         DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
-        ScreenOverlayEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.DebtInfo);
+        SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)GameState.game.TurnPlayer.DebtInfo;
+        ScreenOverlayEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
     }
     public override bool exitConditionMet() {
         return animationOver;

@@ -7,6 +7,7 @@ public class UIPipelineEventHub : ScriptableObject {
     [SerializeField] private GameEvent rollButtonClicked;
     [SerializeField] private PlayerEvent moneyAdjustment;
     [SerializeField] private PlayerPlayerEvent moneyBetweenPlayers;
+    [SerializeField] private PlayerArrayEvent moneyPaidToPlayerFromPlayers;
     [SerializeField] private IntIntEvent turnPlayerMovedAlongBoard;
     [SerializeField] private IntIntEvent turnPlayerMovedToSpace;
     [SerializeField] private PlayerPropertyEvent playerPropertyAdjustment;
@@ -41,6 +42,7 @@ public class UIPipelineEventHub : ScriptableObject {
     internal GameEvent RollButtonClicked => rollButtonClicked;
     internal PlayerEvent MoneyAdjustment => moneyAdjustment;
     internal PlayerPlayerEvent MoneyBetweenPlayers => moneyBetweenPlayers;
+    internal PlayerArrayEvent MoneyPaidToPlayerFromPlayers => moneyPaidToPlayerFromPlayers;
     internal IntIntEvent TurnPlayerMovedAlongBoard => turnPlayerMovedAlongBoard;
     internal IntIntEvent TurnPlayerMovedToSpace => turnPlayerMovedToSpace;
     internal PlayerPropertyEvent PlayerObtainedProperty => playerPropertyAdjustment;

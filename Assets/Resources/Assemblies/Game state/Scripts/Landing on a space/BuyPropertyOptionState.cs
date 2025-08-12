@@ -28,7 +28,7 @@ internal class BuyPropertyOptionState : State {
         ScreenOverlayEventHub.Instance.unsub_PurchaseNoClicked(noClicked);
     }
     public override State getNextState() {
-        if (purchaseAccepted) return allStates.getState<UpdateTurnPlayerState>();
+        if (purchaseAccepted) return allStates.getState<PrerollState>();
         else return allStates.getState<AuctionPropertyState>();
     }
     #endregion

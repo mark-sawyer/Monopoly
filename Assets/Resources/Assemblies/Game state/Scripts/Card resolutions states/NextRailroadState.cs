@@ -48,7 +48,8 @@ internal class NextRailroadState : State {
             PlayerInfo owner = railroadInfo.Owner;
             int rent = 2 * railroadInfo.Rent;
             DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
-            ScreenOverlayEventHub.Instance.call_PayingRentAnimationBegins(GameState.game.TurnPlayer.DebtInfo);
+            SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)GameState.game.TurnPlayer.DebtInfo;
+            ScreenOverlayEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
         }
         else {
             goToLandedOnSpace = true;

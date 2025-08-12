@@ -8,7 +8,7 @@ internal class PlayerMoneyCardState : State {
         PlayerMoneyDifferenceCardInfo pmdCardInfo = (PlayerMoneyDifferenceCardInfo)GameState.game.DrawnCard.CardMechanicInfo;
         int subtracted = pmdCardInfo.SubtractedFromOtherPlayers;
         if (subtracted > 0) othersGiveMoney(subtracted);
-        else { }
+        else turnPlayerGivesMoney(-subtracted);
     }
     public override bool exitConditionMet() {
         return true;
@@ -30,6 +30,11 @@ internal class PlayerMoneyCardState : State {
             DataEventHub.Instance.call_PlayerIncurredDebt(activePlayer, turnPlayer, given);
         }
     }
-    private void turnPlayerGivesMoney() { }
+    private void turnPlayerGivesMoney(int given) {
+        PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+        IEnumerable<PlayerInfo> activePlayers = GameState.game.ActivePlayers;
+
+        DataEventHub.Instance.call_PlayerIncurredMultiCreditorDebt(turnPlayer, given);
+    }
     #endregion
 }

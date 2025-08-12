@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
@@ -22,7 +23,8 @@ public class DataUIPipelineEventHub : ScriptableObject {
     [SerializeField] private SpaceEvent turnPlayerMovedToSpace;
     [SerializeField] private GameEvent turnPlayerSentToJail;
     [SerializeField] private CardTypeEvent useGOOJFCardButtonClicked;
-    [SerializeField] private PlayerIntEvent debtReduced;
+    [SerializeField] private PlayerIntEvent singleCreditorDebtReduced;
+    [SerializeField] private PlayerIntEvent multiCreditorDebtReduced;
     [SerializeField] private PlayerIntEvent moneyRaisedForDebt;
     [SerializeField] private PlayerEvent playerEliminated;
 
@@ -103,15 +105,27 @@ public class DataUIPipelineEventHub : ScriptableObject {
         tradeLockedIn.invoke();
         uiPipelineEvents.TradeLockedIn.invoke();
     }
-    public void call_DebtReduced(PlayerInfo debtor, int paid) {
-        Creditor creditor = debtor.DebtInfo.Creditor;
-        debtReduced.invoke(debtor, paid);
+    public void call_SingleCreditorDebtReduced(PlayerInfo debtor, int paid) {
+        SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)debtor.DebtInfo;
+        Creditor creditor = debtInfo.Creditor;
+        singleCreditorDebtReduced.invoke(debtor, paid);
         if (creditor is PlayerInfo playerCreditor) {
             uiPipelineEvents.MoneyBetweenPlayers.invoke(debtor, playerCreditor);
         }
         else {
             uiPipelineEvents.MoneyAdjustment.invoke(debtor);
         }
+    }
+    public void call_MultiCreditorDebtReduced(PlayerInfo debtor, int paid) {
+        MultiCreditorDebtInfo debtInfo = (MultiCreditorDebtInfo)debtor.DebtInfo;
+        IEnumerable<PlayerInfo> creditors = debtInfo.Creditors;
+        multiCreditorDebtReduced.invoke(debtor, paid);
+        PlayerInfo[] allInvolvedPlayers = new PlayerInfo[creditors.Count() + 1];
+        allInvolvedPlayers[0] = debtor;
+        for (int i = 0; i < creditors.Count(); i++) {
+            allInvolvedPlayers[i + 1] = creditors.ElementAt(i);
+        }
+        uiPipelineEvents.MoneyPaidToPlayerFromPlayers.invoke(allInvolvedPlayers);
     }
     public void call_MoneyRaisedForDebt(PlayerInfo debtor, int moneyRaised) {
         moneyRaisedForDebt.invoke(debtor, moneyRaised);
@@ -142,7 +156,8 @@ public class DataUIPipelineEventHub : ScriptableObject {
     }
     internal void sub_TradeTerminated(Action a) => tradeTerminated.Listeners += a;
     internal void sub_TradeLockedIn(Action a) => tradeLockedIn.Listeners += a;
-    internal void sub_DebtReduced(Action<PlayerInfo, int> a) => debtReduced.Listeners += a;
+    internal void sub_SingleCreditorDebtReduced(Action<PlayerInfo, int> a) => singleCreditorDebtReduced.Listeners += a;
+    internal void sub_MultiCreditorDebtReduced(Action<PlayerInfo, int> a) => multiCreditorDebtReduced.Listeners += a; 
     internal void sub_MoneyRaisedForDebt(Action<PlayerInfo, int> a) => moneyRaisedForDebt.Listeners += a;
     internal void sub_PlayerEliminated(Action<PlayerInfo> a) => playerEliminated.Listeners += a;
     #endregion

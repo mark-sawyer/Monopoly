@@ -54,9 +54,9 @@ public class RentAnimation : ScreenOverlay<DebtInfo> {
             return totalGameWealth;
         }
 
-        owed = debtInfo.Owed;
-        PlayerInfo debtorPlayer = debtInfo.Debtor;
-        PlayerInfo creditorPlayer = (PlayerInfo)debtInfo.Creditor;
+        owed = debtInfo.TotalOwed;
+        PlayerInfo debtorPlayer = debtInfo.DebtorInfo;
+        PlayerInfo creditorPlayer = (PlayerInfo)((SingleCreditorDebtInfo)debtInfo).Creditor;
         debtorRT.GetComponent<TokenIcon>().setup(debtorPlayer.Token, debtorPlayer.Colour);
         creditorRT.GetComponent<TokenIcon>().setup(creditorPlayer.Token, creditorPlayer.Colour);
         owedText.text = "$" + owed.ToString();

@@ -4,36 +4,35 @@ using System.Linq;
 
 internal class Player : PlayerInfo {
     private Game game;
-    private Space space;
-    private List<Property> properties;
-    private List<Property> unresolvedMortgages;
-    private Debt debt;
-    private int money;
-    private bool inJail;
     private bool isActive;
-    private bool hasLostTurn;
-    private int turnInJail;
-    private List<Card> getOutOfJailFreeCards;
     private Token token;
     private PlayerColour colour;
+    private int money;
+    private Space space;
+    private List<Property> properties;
+    private List<Card> getOutOfJailFreeCards;
+    private bool inJail;
+    private int turnInJail;
+    private Debt debt;
+    private List<Property> unresolvedMortgages;
 
 
 
     #region internal
     internal Player(Space space, Token token, PlayerColour colour, int startingMoney, Game game) {
-        this.space = space;
+        this.game = game;
+        isActive = true;
         this.token = token;
         this.colour = colour;
-        this.game = game;
         money = startingMoney;
-
-
+        this.space = space;
         properties = new List<Property>();
-        unresolvedMortgages = new List<Property>();
+        getOutOfJailFreeCards = new List<Card>(2);
         inJail = false;
-        isActive = true;
         turnInJail = 0;
-        getOutOfJailFreeCards = new(2);
+        unresolvedMortgages = new List<Property>();
+        HasLostTurn = false;
+        ToMoveAfterJailDebtResolving = false;
     }
     internal Space Space => space;
     internal Debt Debt => debt;
@@ -61,12 +60,15 @@ internal class Player : PlayerInfo {
         space = newSpace;
     }
     internal void incurDebt(Creditor creditor, int owed) {
-        debt = new Debt(this, creditor, owed);
+        debt = new SingleCreditorDebt(this, creditor, owed);
+    }
+    internal void incurDebt(Player[] creditors, int owedToEach) {
+        debt = new MultiCreditorDebt(this, creditors, owedToEach);
     }
     internal void payDebt(int paid) {
         debt.pay(paid);
         money -= paid;
-        if (debt.Owed == 0) {
+        if (debt.TotalOwed == 0) {
             debt = null;
         }
     }
@@ -151,10 +153,8 @@ internal class Player : PlayerInfo {
         Property property = (Property)propertyInfo;
         return properties.Contains(property);
     }
-    public bool HasLostTurn {
-        get {  return hasLostTurn; }
-        internal set { hasLostTurn = value; }
-    }
+    public bool HasLostTurn { get; internal set; }
+    public bool ToMoveAfterJailDebtResolving { get; internal set; }
     #endregion
 
 

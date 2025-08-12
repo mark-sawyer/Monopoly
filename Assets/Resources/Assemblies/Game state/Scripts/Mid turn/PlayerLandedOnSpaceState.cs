@@ -13,16 +13,9 @@ internal class PlayerLandedOnSpaceState : State {
         if (spaceInfo is LuxuryTaxSpaceInfo) return allStates.getState<LuxuryTaxState>();
         if (spaceInfo is PropertySpaceInfo propertySpaceInfo) {
             PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
-            int cost = propertyInfo.Cost;
-            PlayerInfo turnPlayer = GameState.game.TurnPlayer;
-            int turnPlayerMoney = turnPlayer.Money;
-            bool canAfford = cost <= turnPlayerMoney;
-            bool unbought = !propertyInfo.IsBought;
-
-            if (unbought && canAfford) return allStates.getState<BuyPropertyOptionState>();
-            else if (unbought) return allStates.getState<UnaffordablePropertyState>();
+            if (!propertyInfo.IsBought) return allStates.getState<BuyPropertyOptionState>();
             else if (propertyInfo.Owner != GameState.game.TurnPlayer) return allStates.getState<PayRentState>();
         }
-        return allStates.getState<UpdateTurnPlayerState>();
+        return allStates.getState<PrerollState>();
     }
 }

@@ -5,11 +5,10 @@ using UnityEngine;
 internal class PrerollState : State {
     private bool goToMoveToken;
     private bool goToJail;
-    private bool goToResolveJailDebt;
-    private bool goToUpdateTurnPlayer;
     private bool managePropertiesClicked;
     private bool tradeClicked;
-    private bool goToResolveMortgage;
+    private bool goToPreroll;
+    private bool goToResolveDebt;
 
 
 
@@ -18,53 +17,54 @@ internal class PrerollState : State {
         void setBoolsToFalse() {
             goToMoveToken = false;
             goToJail = false;
-            goToResolveJailDebt = false;
-            goToUpdateTurnPlayer = false;
             managePropertiesClicked = false;
             tradeClicked = false;
-            goToResolveMortgage = false;
+            goToPreroll = false;
+            goToResolveDebt = false;
         }
         void subscribeToEvents() {
             UIPipelineEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
             ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(managePropertiesListener);
             ScreenOverlayEventHub.Instance.sub_TradeOpened(tradeListener);
         }
+        void adjustTurnPlayer() {
+            DiceInfo diceInfo = GameState.game.DiceInfo;
+            PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+            if (turnPlayer.HasLostTurn || !turnPlayer.IsActive) {
+                DataUIPipelineEventHub.Instance.call_NextPlayerTurn();
+                PlayerInfo newTurnPlayer = GameState.game.TurnPlayer;
+                if (newTurnPlayer.InJail) {
+                    DataEventHub.Instance.call_IncrementJailTurn();
+                }
+            }
+        }
+
 
         setBoolsToFalse();
         subscribeToEvents();
-
-        PlayerInfo playerWithUnresolvedMortgage = getPlayerWithUnresolvedMortgage();
-        if (playerWithUnresolvedMortgage == null) {
-            UIEventHub.Instance.call_PrerollStateStarting();
-        }
-        else {
-            goToResolveMortgage = true;
-        }
+        adjustTurnPlayer();
+        UIEventHub.Instance.call_PrerollStateStarting();
     }
     public override bool exitConditionMet() {
         return goToMoveToken
             || managePropertiesClicked
             || tradeClicked
             || goToJail
-            || goToUpdateTurnPlayer
-            || goToResolveJailDebt
-            || goToResolveMortgage;
+            || goToPreroll
+            || goToResolveDebt;
     }
     public override void exitState() {
         UIPipelineEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.unsub_ManagePropertiesOpened(managePropertiesListener);
         ScreenOverlayEventHub.Instance.unsub_TradeOpened(tradeListener);
-
-        UIEventHub.Instance.call_PrerollStateEnding();
     }
     public override State getNextState() {
         if (goToMoveToken) return allStates.getState<MoveTokenState>();
-        if (goToJail) return allStates.getState<MoveTokenToJailState>();
-        //if (goToResolveJailDebt) return allStates.getState<ResolveJailDebtState>();
-        if (goToUpdateTurnPlayer) return allStates.getState<UpdateTurnPlayerState>();
         if (managePropertiesClicked) return allStates.getState<ManagePropertiesState>();
         if (tradeClicked) return allStates.getState<TradeState>();
-        if (goToResolveMortgage) return allStates.getState<ResolveMortgageState>();            
+        if (goToJail) return allStates.getState<MoveTokenToJailState>();
+        if (goToPreroll) return this;
+        if (goToResolveDebt) return allStates.getState<ResolveDebtState>();
         throw new System.Exception();
     }
     #endregion
@@ -73,6 +73,7 @@ internal class PrerollState : State {
 
     #region Listeners
     private void rollButtonListener() {
+        UIEventHub.Instance.call_PrerollStateEnding();
         getTurnTokenVisual().prepForMoving();
         WaitFrames.Instance.beforeAction(
             InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING,
@@ -80,9 +81,11 @@ internal class PrerollState : State {
         );
     }
     private void managePropertiesListener() {
+        UIEventHub.Instance.call_PrerollStateEnding();
         managePropertiesClicked = true;
     }
     private void tradeListener() {
+        UIEventHub.Instance.call_PrerollStateEnding();
         tradeClicked = true;
     }
     #endregion
@@ -138,7 +141,7 @@ internal class PrerollState : State {
 
             WaitFrames.Instance.beforeAction(
                 FrameConstants.TOKEN_SCALING + 3,
-                () => { goToUpdateTurnPlayer = true; }
+                () => { goToPreroll = true; }
             );
         }
         void nonDoublesTurnThree() {
@@ -152,7 +155,10 @@ internal class PrerollState : State {
 
             WaitFrames.Instance.beforeAction(
                 FrameConstants.WAIT_FOR_LEAVING_JAIL,
-                () => { goToResolveJailDebt = true; }
+                () => {
+                    DataEventHub.Instance.call_SetJailDebtBool(GameState.game.TurnPlayer, true);
+                    goToResolveDebt = true;
+                }
             );
         }
 
@@ -167,17 +173,6 @@ internal class PrerollState : State {
         else {
             nonDoublesTurnThree();
         }
-    }
-    private PlayerInfo getPlayerWithUnresolvedMortgage() {
-        PlayerInfo playerInfo = null;
-        IEnumerable<PlayerInfo> activePlayers = GameState.game.ActivePlayers;
-        foreach (PlayerInfo thisPlayer in activePlayers) {
-            if (thisPlayer.HasAnUnresolvedMortgage) {
-                playerInfo = thisPlayer;
-                break;
-            }
-        }
-        return playerInfo;
     }
     private TokenVisual getTurnTokenVisual() {
         int turnIndex = GameState.game.TurnPlayer.Index;

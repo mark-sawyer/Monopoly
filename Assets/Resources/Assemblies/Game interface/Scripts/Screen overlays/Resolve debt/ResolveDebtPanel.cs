@@ -25,8 +25,8 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
         screenOverlayDropper = new ScreenOverlayDropper(rt);
         screenOverlayDropper.adjustSize();
         resolveDebtTopRow.setup(debtInfo);
-        foreach (RDEstateGroupSection estateGroupSection in estateGroupSections) estateGroupSection.setup(debtInfo.Debtor);
-        foreach (RDOtherPropertyGroupSection otherPropertyGroupSection in otherPropertyGroupSections) otherPropertyGroupSection.setup(debtInfo.Debtor);
+        foreach (RDEstateGroupSection estateGroupSection in estateGroupSections) estateGroupSection.setup(debtInfo.DebtorInfo);
+        foreach (RDOtherPropertyGroupSection otherPropertyGroupSection in otherPropertyGroupSections) otherPropertyGroupSection.setup(debtInfo.DebtorInfo);
     }
     public override void appear() {
         StartCoroutine(screenOverlayDropper.drop());

@@ -14,6 +14,7 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_CardDrawn(drawCard);
         dataHub.sub_CardResolved(undrawCard);
         dataHub.sub_PlayerIncurredDebt(incurDebt);
+        dataHub.sub_PlayerIncurredMultiCreditorDebt(incurMultiCreditorDebt);
         dataHub.sub_DoublesCountReset(resetDoublesCount);
         dataHub.sub_IncrementJailTurn(incrementJailTurn);
         dataHub.sub_EstateAddedBuilding(addBuildingToEstate);
@@ -25,6 +26,7 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_MortgageIsResolved(setMortgageResolved);
         dataHub.sub_TurnPlayerWillLoseTurn(markTurnPlayerForLosingTurn);
         dataHub.sub_CardReturned(returnGOOJFCard);
+        dataHub.sub_SetJailDebtBool(setJailDebtBool);
         pipelineHub.sub_RollButtonClicked(rollDice);
         pipelineHub.sub_TurnPlayerMovedAlongBoard(moveTurnPlayerAlongBoard);
         pipelineHub.sub_TurnPlayerMovedToSpace(moveTurnPlayerToSpace);
@@ -39,8 +41,9 @@ public class GameDataUpdater : MonoBehaviour {
         pipelineHub.sub_TradeTerminated(removedTerminatedTrade);
         pipelineHub.sub_TradeUpdated(updateProposedTrade);
         pipelineHub.sub_TradeLockedIn(makeProposedTrade);
-        pipelineHub.sub_DebtReduced(reduceDebt);
-        pipelineHub.sub_MoneyRaisedForDebt(raiseMoneyForDebt);
+        pipelineHub.sub_SingleCreditorDebtReduced(reduceDebt);
+        pipelineHub.sub_MultiCreditorDebtReduced(reduceDebt);
+        pipelineHub.sub_MoneyRaisedForDebt(payDebtFromMoneyRaised);
         pipelineHub.sub_PlayerEliminated(eliminatePlayer);
     }
     #endregion
@@ -65,11 +68,14 @@ public class GameDataUpdater : MonoBehaviour {
     private void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
         gamePlayer.incurDebt(debtor, creditor, owed);
     }
+    private void incurMultiCreditorDebt(PlayerInfo debtor, int debtValToEach) {
+        gamePlayer.incurMultiCreditorDebt(debtor, debtValToEach);
+    }
     private void reduceDebt(PlayerInfo debtor, int paid) {
         gamePlayer.reduceDebt(debtor, paid);
     }
-    private void raiseMoneyForDebt(PlayerInfo debtor, int moneyRaised) {
-        gamePlayer.raiseMoneyForDebt(debtor, moneyRaised);
+    private void payDebtFromMoneyRaised(PlayerInfo debtor, int moneyRaised) {
+        gamePlayer.payDebtFromMoneyRaised(debtor, moneyRaised);
     }
     private void rollDice() {
         gamePlayer.rollDice();
@@ -149,6 +155,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void returnGOOJFCard(CardInfo cardInfo) {
         gamePlayer.eliminatedPlayerGOOJFCardReturned(cardInfo);
+    }
+    private void setJailDebtBool(PlayerInfo playerInfo, bool b) {
+        gamePlayer.setJailDebtBool(playerInfo, b);
     }
     #endregion
 }

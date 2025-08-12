@@ -1,4 +1,3 @@
-using Codice.CM.Common.Merge;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -41,7 +40,7 @@ public class MoneyAdjuster : MonoBehaviour {
         startMoneyWobble(difference > 0);
     }
     public void adjustMoney(DebtInfo debtInfo) {
-        int currentDebt = debtInfo.Owed;
+        int currentDebt = debtInfo.TotalOwed;
         int priorDebt = DisplayedMoney;
         int difference = currentDebt - priorDebt;
         changeMoneyVisual(currentDebt);

@@ -1,4 +1,4 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameEvent/ArrayPlayerEvent")]
+[CreateAssetMenu(menuName = "GameEvent/PlayerArrayEvent")]
 internal class PlayerArrayEvent : GameEvent<PlayerInfo[]> { }

@@ -56,7 +56,7 @@ internal class PostRaiseMoneyState : State {
     #region private
     private void updateAnimationsOverListener() {
         WaitFrames.Instance.beforeAction(
-            100,
+            50,
             () => updateAnimationsOver = true
         );
     }

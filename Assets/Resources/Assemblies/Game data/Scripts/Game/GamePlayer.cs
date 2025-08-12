@@ -14,8 +14,9 @@ public interface GamePlayer {
     public void unmortgageProperty(PropertyInfo propertyInfo);
     public void setMortgageResolved(PlayerInfo playerInfo, PropertyInfo propertyInfo);
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed);
+    public void incurMultiCreditorDebt(PlayerInfo debtor, int owedToEach);
     public void reduceDebt(PlayerInfo debtor, int paid);
-    public void raiseMoneyForDebt(PlayerInfo debtor, int amount);
+    public void payDebtFromMoneyRaised(PlayerInfo debtor, int amount);
     public void adjustPlayerMoney(PlayerInfo playerInfo, int difference);
     public void tradePlayerMoney(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount);
     public void sendTurnPlayerToJail();
@@ -33,4 +34,5 @@ public interface GamePlayer {
     public void makeProposedTrade();
     public void eliminatePlayer(PlayerInfo playerInfo);
     public void markTurnPlayerForLosingTurn();
+    public void setJailDebtBool(PlayerInfo playerInfo, bool b);
 }

@@ -82,6 +82,7 @@ public class UIEventHub : ScriptableObject {
 
 
     #region Unsubscribing
+    public void unsub_PrerollStateStarting(Action a) => prerollStateStarting.Listeners -= a;
     public void unsub_DoublesTickBoxUpdate(Action a) => doublesTickBoxUpdate.Listeners -= a;
     public void unsub_PayFiftyButtonClicked(Action a) => payFiftyButtonClicked.Listeners -= a;
     public void unsub_TokenSettled(Action a) => tokenSettled.Listeners -= a;

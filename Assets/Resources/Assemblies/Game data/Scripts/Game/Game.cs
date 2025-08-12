@@ -148,15 +148,20 @@ internal class Game : GameStateInfo, GamePlayer {
         Player debtorPlayer = (Player)debtor;
         debtorPlayer.incurDebt(creditor, owed);
     }
+    public void incurMultiCreditorDebt(PlayerInfo debtor, int owedToEach) {
+        Player debtorPlayer = (Player)debtor;
+        Player[] creditors = players.Where(x => x.IsActive && x != debtorPlayer).ToArray();
+        debtorPlayer.incurDebt(creditors, owedToEach);
+    }
     public void reduceDebt(PlayerInfo debtor, int paid) {
         Player player = (Player)debtor;
         player.payDebt(paid);
     }
-    public void raiseMoneyForDebt(PlayerInfo debtor, int amount) {
+    public void payDebtFromMoneyRaised(PlayerInfo debtor, int amount) {
         Player player = (Player)debtor;
         player.adjustMoney(amount);
         Debt debt = player.Debt;
-        int owed = debt.Owed;
+        int owed = debt.TotalOwed;
         int paid = amount >= owed ? owed : amount;
         player.payDebt(paid);
     }
@@ -238,6 +243,10 @@ internal class Game : GameStateInfo, GamePlayer {
     }
     public void markTurnPlayerForLosingTurn() {
         turnPlayer.HasLostTurn = true;
+    }
+    public void setJailDebtBool(PlayerInfo playerInfo, bool b) {
+        Player player = (Player)playerInfo;
+        player.ToMoveAfterJailDebtResolving = b;
     }
     #endregion
 

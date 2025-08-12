@@ -20,7 +20,7 @@ internal class MoneyCardState : State {
         return goToNextState;
     }
     public override State getNextState() {
-        if (addedToPlayer > 0) return allStates.getState<UpdateTurnPlayerState>();
+        if (addedToPlayer > 0) return allStates.getState<PrerollState>();
         else return allStates.getState<ResolveDebtState>();
     }
     #endregion

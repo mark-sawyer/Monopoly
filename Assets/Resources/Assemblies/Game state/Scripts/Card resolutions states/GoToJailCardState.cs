@@ -20,7 +20,7 @@ internal class GoToJailCardState : State {
         return tokenSettled;
     }
     public override State getNextState() {
-        return allStates.getState<UpdateTurnPlayerState>();
+        return allStates.getState<PrerollState>();
     }
     #endregion
 

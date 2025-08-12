@@ -9,6 +9,7 @@ public class DataEventHub : ScriptableObject {
     [SerializeField] private CardTypeEvent cardDrawn;
     [SerializeField] private GameEvent doublesCountReset;
     [SerializeField] private PlayerCreditorIntEvent playerIncurredDebt;
+    [SerializeField] private PlayerIntEvent playerIncurredMultiCreditorDebt;
     [SerializeField] private EstateEvent estateAddedBuilding;
     [SerializeField] private EstateEvent estateRemovedBuilding;
     [SerializeField] private EstateGroupEvent estateGroupRemovedAllBuildings;
@@ -19,6 +20,7 @@ public class DataEventHub : ScriptableObject {
     [SerializeField] private PlayerPropertyEvent mortgageIsResolved;
     [SerializeField] private GameEvent turnPlayerWillLoseTurn;
     [SerializeField] private CardInfoEvent cardReturned;
+    [SerializeField] private PlayerBoolEvent setJailDebtBool;
 
 
 
@@ -44,6 +46,9 @@ public class DataEventHub : ScriptableObject {
     public void call_PlayerIncurredDebt(PlayerInfo playerInfo, Creditor creditor, int debtVal) {
         playerIncurredDebt.invoke(playerInfo, creditor, debtVal);
     }
+    public void call_PlayerIncurredMultiCreditorDebt(PlayerInfo playerInfo, int debtValToEach) {
+        playerIncurredMultiCreditorDebt.invoke(playerInfo, debtValToEach);
+    }
     public void call_EstateAddedBuilding(EstateInfo estateInfo) => estateAddedBuilding.invoke(estateInfo);
     public void call_EstateRemovedBuilding(EstateInfo estateInfo) => estateRemovedBuilding.invoke(estateInfo);
     public void call_EstateGroupRemovedAllBuildings(EstateGroupInfo estateGroupInfo) {
@@ -56,6 +61,7 @@ public class DataEventHub : ScriptableObject {
     public void call_MortgageIsResolved(PlayerInfo playerInfo, PropertyInfo propertyInfo) => mortgageIsResolved.invoke(playerInfo, propertyInfo);
     public void call_TurnPlayerWillLoseTurn() => turnPlayerWillLoseTurn.invoke();
     public void call_CardReturned(CardInfo cardInfo) => cardReturned.invoke(cardInfo);
+    public void call_SetJailDebtBool(PlayerInfo playerInfo, bool b) => setJailDebtBool.invoke(playerInfo, b);
     #endregion
 
 
@@ -65,6 +71,7 @@ public class DataEventHub : ScriptableObject {
     internal void sub_CardDrawn(Action<CardType> a) => cardDrawn.Listeners += a;
     internal void sub_DoublesCountReset(Action a) => doublesCountReset.Listeners += a;
     internal void sub_PlayerIncurredDebt(Action<PlayerInfo, Creditor, int> a) => playerIncurredDebt.Listeners += a;
+    internal void sub_PlayerIncurredMultiCreditorDebt(Action<PlayerInfo, int> a) => playerIncurredMultiCreditorDebt.Listeners += a;
     internal void sub_EstateAddedBuilding(Action<EstateInfo> a) => estateAddedBuilding.Listeners += a;
     internal void sub_EstateRemovedBuilding(Action<EstateInfo> a) => estateRemovedBuilding.Listeners += a;
     internal void sub_EstateGroupRemovedAllBuildings(Action<EstateGroupInfo> a) => estateGroupRemovedAllBuildings.Listeners += a;
@@ -75,5 +82,6 @@ public class DataEventHub : ScriptableObject {
     internal void sub_MortgageIsResolved(Action<PlayerInfo, PropertyInfo> a) => mortgageIsResolved.Listeners += a;
     internal void sub_TurnPlayerWillLoseTurn(Action a) => turnPlayerWillLoseTurn.Listeners += a;
     internal void sub_CardReturned(Action<CardInfo> a) => cardReturned.Listeners += a;
+    internal void sub_SetJailDebtBool(Action<PlayerInfo, bool> a) => setJailDebtBool.Listeners += a;
     #endregion
 }

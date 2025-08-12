@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class ResolveDebtTopRow : MonoBehaviour {
@@ -5,8 +6,11 @@ public class ResolveDebtTopRow : MonoBehaviour {
     [SerializeField] private TokenIcon creditorIcon;
     [SerializeField] private GameObject playerSection;
     [SerializeField] private GameObject bankSection;
+    [SerializeField] private GameObject everyoneSection;
     [SerializeField] private MoneyAdjuster debtRemainingPlayer;
     [SerializeField] private MoneyAdjuster debtRemainingBank;
+    [SerializeField] private MoneyAdjuster debtRemainingEveryone;
+    private MoneyAdjuster moneyAdjusterInUse;
     private DebtInfo debtInfo;
 
 
@@ -22,20 +26,17 @@ public class ResolveDebtTopRow : MonoBehaviour {
     #region public
     public void setup(DebtInfo debtInfo) {
         this.debtInfo = debtInfo;
-        PlayerInfo debtorInfo = debtInfo.Debtor;
+        PlayerInfo debtorInfo = debtInfo.DebtorInfo;
         debtorIcon.setup(debtorInfo.Token, debtorInfo.Colour);
-        Creditor creditor = debtInfo.Creditor;
-        if (creditor is PlayerInfo creditorInfo) {
-            playerSection.SetActive(true);
-            bankSection.SetActive(false);
-            creditorIcon.setup(creditorInfo.Token, creditorInfo.Colour);
-            debtRemainingPlayer.setStartingMoney(debtInfo.Owed);
+
+        if (debtInfo is SingleCreditorDebtInfo singleCreditorDebtInfo) {
+            setupSingleCreditor(singleCreditorDebtInfo);
         }
         else {
-            bankSection.SetActive(true);
-            playerSection.SetActive(false);
-            debtRemainingBank.setStartingMoney(debtInfo.Owed);
+            MultiCreditorDebtInfo multiCreditorDebtInfo = (MultiCreditorDebtInfo)debtInfo;
+            setupMultiCreditor(multiCreditorDebtInfo);
         }
+        moneyAdjusterInUse.setStartingMoney(debtInfo.TotalOwed);
 
         UIPipelineEventHub.Instance.sub_MoneyRaisedForDebt(adjustPanelAfterPayment);
     }
@@ -44,13 +45,30 @@ public class ResolveDebtTopRow : MonoBehaviour {
 
 
     #region private
-    private void adjustPanelAfterPayment() {
-        if (playerSection.activeSelf) {
-            debtRemainingPlayer.adjustMoney(debtInfo);
+    private void setupSingleCreditor(SingleCreditorDebtInfo singleCreditorDebtInfo) {
+        Creditor creditor = singleCreditorDebtInfo.Creditor;
+        if (creditor is PlayerInfo creditorInfo) {
+            playerSection.SetActive(true);
+            bankSection.SetActive(false);
+            everyoneSection.SetActive(false);
+            creditorIcon.setup(creditorInfo.Token, creditorInfo.Colour);
+            moneyAdjusterInUse = debtRemainingPlayer;
         }
         else {
-            debtRemainingBank.adjustMoney(debtInfo);
+            playerSection.SetActive(false);
+            bankSection.SetActive(true);
+            everyoneSection.SetActive(false);
+            moneyAdjusterInUse = debtRemainingBank;
         }
+    }
+    private void setupMultiCreditor(MultiCreditorDebtInfo multiCreditorDebtInfo) {
+        playerSection.SetActive(false);
+        bankSection.SetActive(false);
+        everyoneSection.SetActive(true);
+        moneyAdjusterInUse = debtRemainingEveryone;
+    }
+    private void adjustPanelAfterPayment() {
+        moneyAdjusterInUse.adjustMoney(debtInfo);
     }
     #endregion
 }
