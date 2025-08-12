@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/ResolveTurnState")]
 internal class ResolveDebtState : State {
-    private bool debtResolved;
+    private bool allDebtsResolved;
+    private bool debtsRemaining;
     private bool playerBankrupt;
     private bool goToRaiseMoney;
 
@@ -12,7 +11,8 @@ internal class ResolveDebtState : State {
 
     #region State
     public override void enterState() {
-        debtResolved = false;
+        allDebtsResolved = false;
+        debtsRemaining = false;
         goToRaiseMoney = false;
         playerBankrupt = false;
 
@@ -22,14 +22,18 @@ internal class ResolveDebtState : State {
             resolveDebt(playerInDebt, playerInDebt.DebtInfo);
         }
         else {
-            debtResolved = true;
+            allDebtsResolved = true;
         }
     }
     public override bool exitConditionMet() {
-        return debtResolved || goToRaiseMoney || playerBankrupt;
+        return allDebtsResolved
+            || debtsRemaining
+            || goToRaiseMoney
+            || playerBankrupt;
     }
     public override State getNextState() {
-        if (debtResolved) return allStates.getState<UpdateTurnPlayerState>();
+        if (allDebtsResolved) return allStates.getState<UpdateTurnPlayerState>();
+        if (debtsRemaining) return this;
         if (goToRaiseMoney) return allStates.getState<RaiseMoneyState>();
         if (playerBankrupt) return allStates.getState<EliminatePlayerState>();
 
@@ -61,6 +65,11 @@ internal class ResolveDebtState : State {
                 playerBankrupt = true;
             }
         }
+        void confirmWhetherMoreDebts() {
+            PlayerInfo nextDebtPlayer = GameState.game.PlayerInDebt;
+            if (nextDebtPlayer == null) allDebtsResolved = true;
+            else debtsRemaining = true;
+        }
 
 
         int money = debtor.Money;
@@ -70,7 +79,7 @@ internal class ResolveDebtState : State {
         if (debtInfo.Owed == 0) {
             WaitFrames.Instance.beforeAction(
                 FrameConstants.MONEY_UPDATE,
-                () => debtResolved = true
+                confirmWhetherMoreDebts
             );
         }
         else handleDebtRemaining(paid);

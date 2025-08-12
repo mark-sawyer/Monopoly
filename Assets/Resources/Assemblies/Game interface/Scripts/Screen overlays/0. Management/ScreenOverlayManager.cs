@@ -52,7 +52,7 @@ public class ScreenOverlayManager : MonoBehaviour {
         events.sub_UnaffordableProperty((PropertyInfo propertyInfo) => startScreenOverlay(unaffordableProperty, propertyInfo, alpha));
         events.sub_TradeOpened(() => startScreenOverlay(tradingCharacterSelection, alpha));
         events.sub_ResolveDebt((DebtInfo debtInfo) => startScreenOverlay(resolveDebtPanel, debtInfo, 1));
-        events.sub_AuctionsBegin((Queue<TradableInfo> tradableInfos) => startScreenOverlay(auctionManager, tradableInfos, 1));
+        events.sub_AuctionsBegin((Queue<PropertyInfo> propertyInfos) => startScreenOverlay(auctionManager, propertyInfos, 1));
         events.sub_ResolveMortgage((PlayerInfo pl, PropertyInfo pr) => startScreenOverlay(resolveMortgage, pl, pr, alpha));
     }
     #endregion

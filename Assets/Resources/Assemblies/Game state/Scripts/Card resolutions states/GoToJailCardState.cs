@@ -2,11 +2,33 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/GoToJailCardState")]
 internal class GoToJailCardState : State {
-    public override bool exitConditionMet() {
-        throw new System.NotImplementedException();
-    }
+    private bool tokenSettled;
 
-    public override State getNextState() {
-        return allStates.getState<ResolveDebtState>();
+
+
+    #region State
+    public override void enterState() {
+        tokenSettled = false;
+        UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
+
+        int startingIndex = GameState.game.TurnPlayer.SpaceIndex;
+        DataUIPipelineEventHub.Instance.call_TurnPlayerSentToJail(startingIndex);
+
+        DataEventHub.Instance.call_TurnPlayerWillLoseTurn();
     }
+    public override bool exitConditionMet() {
+        return tokenSettled;
+    }
+    public override State getNextState() {
+        return allStates.getState<UpdateTurnPlayerState>();
+    }
+    #endregion
+
+
+
+    #region private
+    private void heardTokenSettle() {
+        tokenSettled = true;
+    }
+    #endregion
 }

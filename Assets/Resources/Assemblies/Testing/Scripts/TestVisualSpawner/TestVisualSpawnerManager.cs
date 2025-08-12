@@ -12,7 +12,6 @@ public class TestVisualSpawnerManager : MonoBehaviour {
     }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Alpha1)) spawnDeed();
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) spawnCard();
         else if (Input.GetKeyDown(KeyCode.Space)) AccompanyingVisualSpawner.Instance.removeObjectAndResetPosition();
     }
     #endregion
@@ -28,13 +27,6 @@ public class TestVisualSpawnerManager : MonoBehaviour {
         int indexTwo = Random.Range(0, propertyGroupInfo.NumberOfPropertiesInGroup);
         PropertyInfo propertyInfo = propertyGroupInfo.getPropertyInfo(indexTwo);
         accompanyingVisualSpawner.spawnAndMove(rt, propertyInfo);
-    }
-    private void spawnCard() {
-        AccompanyingVisualSpawner accompanyingVisualSpawner = AccompanyingVisualSpawner.Instance;
-        int index = Random.Range(0, cards.Length);
-        ScriptableObject card = cards[index];
-        CardInfo cardInfo = (CardInfo)card;
-        accompanyingVisualSpawner.spawnAndMove(rt, cardInfo);
     }
     #endregion
 }

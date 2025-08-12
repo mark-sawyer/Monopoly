@@ -203,6 +203,11 @@ internal class Game : GameStateInfo, GamePlayer {
         if (cardType == CardType.CHANCE) chanceCards.Enqueue(getOutOfJailFreeCard);
         else communityChestCards.Enqueue(getOutOfJailFreeCard);
     }
+    public void eliminatedPlayerGOOJFCardReturned(CardInfo cardInfo) {
+        Card card = (Card)cardInfo;
+        if (card.CardType == CardType.CHANCE) chanceCards.Enqueue(card);
+        else communityChestCards.Enqueue(card);
+    }
     public void incrementJailTurn() {
         turnPlayer.incrementJailTurn();
     }

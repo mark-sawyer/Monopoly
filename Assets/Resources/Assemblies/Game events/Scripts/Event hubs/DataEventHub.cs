@@ -18,6 +18,7 @@ public class DataEventHub : ScriptableObject {
     [SerializeField] private PlayerPlayerEvent tradeCommenced;
     [SerializeField] private PlayerPropertyEvent mortgageIsResolved;
     [SerializeField] private GameEvent turnPlayerWillLoseTurn;
+    [SerializeField] private CardInfoEvent cardReturned;
 
 
 
@@ -54,6 +55,7 @@ public class DataEventHub : ScriptableObject {
     public void call_TradeCommenced(PlayerInfo p1, PlayerInfo p2) => tradeCommenced.invoke(p1, p2);
     public void call_MortgageIsResolved(PlayerInfo playerInfo, PropertyInfo propertyInfo) => mortgageIsResolved.invoke(playerInfo, propertyInfo);
     public void call_TurnPlayerWillLoseTurn() => turnPlayerWillLoseTurn.invoke();
+    public void call_CardReturned(CardInfo cardInfo) => cardReturned.invoke(cardInfo);
     #endregion
 
 
@@ -72,5 +74,6 @@ public class DataEventHub : ScriptableObject {
     internal void sub_TradeCommenced(Action<PlayerInfo, PlayerInfo> a) => tradeCommenced.Listeners += a;
     internal void sub_MortgageIsResolved(Action<PlayerInfo, PropertyInfo> a) => mortgageIsResolved.Listeners += a;
     internal void sub_TurnPlayerWillLoseTurn(Action a) => turnPlayerWillLoseTurn.Listeners += a;
+    internal void sub_CardReturned(Action<CardInfo> a) => cardReturned.Listeners += a;
     #endregion
 }

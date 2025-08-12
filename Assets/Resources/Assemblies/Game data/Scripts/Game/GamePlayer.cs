@@ -25,6 +25,7 @@ public interface GamePlayer {
     public void undrawCard();
     public void playerGetsGOOJFCard(PlayerInfo playerInfo, CardInfo cardInfo);
     public void playerUsesGOOJFCard(CardType cardType);
+    public void eliminatedPlayerGOOJFCardReturned(CardInfo cardInfo);
     public void incrementJailTurn();
     public void createNewTrade(PlayerInfo playerOne, PlayerInfo playerTwo);
     public void removedTerminatedTrade();

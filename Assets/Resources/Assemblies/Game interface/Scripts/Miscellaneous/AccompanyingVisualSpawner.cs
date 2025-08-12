@@ -7,8 +7,6 @@ public class AccompanyingVisualSpawner : MonoBehaviour {
     [SerializeField] private GameObject estateDeedPrefab;
     [SerializeField] private GameObject railroadDeedPrefab;
     [SerializeField] private GameObject utilityDeedPrefab;
-    [SerializeField] private GameObject chanceCard;
-    [SerializeField] private GameObject ccCard;
     private GameObject spawnedObjectInstance;
     private const int DEFAULT_X_POSITION = 100;
 
@@ -29,8 +27,8 @@ public class AccompanyingVisualSpawner : MonoBehaviour {
 
     #region public
     public bool VisualExists => spawnedObjectInstance != null;
-    public void spawnAndMove(RectTransform middleRT, TradableInfo tradableInfo) {
-        spawnedObjectInstance = spawnCorrectPrefab(tradableInfo);
+    public void spawnAndMove(RectTransform middleRT, PropertyInfo propertyInfo) {
+        spawnedObjectInstance = spawnCorrectPrefab(propertyInfo);
         RectTransform spawnedRT = (RectTransform)spawnedObjectInstance.transform;
         adjustSpawnedPivotAndPosition(spawnedRT);
         scaleSpawnedObject(middleRT, spawnedRT);
@@ -53,21 +51,13 @@ public class AccompanyingVisualSpawner : MonoBehaviour {
 
 
     #region private
-    private GameObject spawnCorrectPrefab(TradableInfo tradableInfo) {
+    private GameObject spawnCorrectPrefab(PropertyInfo propertyInfo) {
         GameObject spawnedGameObject;
-        if (tradableInfo is PropertyInfo propertyInfo) {
-            if (propertyInfo is EstateInfo) spawnedGameObject = Instantiate(estateDeedPrefab, rt);
-            else if (propertyInfo is RailroadInfo) spawnedGameObject = Instantiate(railroadDeedPrefab, rt);
-            else spawnedGameObject = Instantiate(utilityDeedPrefab, rt);
-            PropertyDeed propertyDeed = spawnedGameObject.GetComponent<PropertyDeed>();
-            propertyDeed.setupCard(propertyInfo);
-        }
-        else {
-            CardInfo cardInfo = (CardInfo)tradableInfo;
-            GameObject cardToSpawn = cardInfo.CardType == CardType.CHANCE ? chanceCard : ccCard;
-            spawnedGameObject = Instantiate(cardToSpawn, rt);
-            spawnedGameObject.GetComponent<CardMonoBehaviour>().turnOffBack();
-        }
+        if (propertyInfo is EstateInfo) spawnedGameObject = Instantiate(estateDeedPrefab, rt);
+        else if (propertyInfo is RailroadInfo) spawnedGameObject = Instantiate(railroadDeedPrefab, rt);
+        else spawnedGameObject = Instantiate(utilityDeedPrefab, rt);
+        PropertyDeed propertyDeed = spawnedGameObject.GetComponent<PropertyDeed>();
+        propertyDeed.setupCard(propertyInfo);        
         return spawnedGameObject;
     }
     private void adjustSpawnedPivotAndPosition(RectTransform spawnedRT) {

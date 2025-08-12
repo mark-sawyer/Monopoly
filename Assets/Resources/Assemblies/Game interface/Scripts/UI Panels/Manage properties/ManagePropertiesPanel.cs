@@ -39,16 +39,9 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        float canvasHeight = ((RectTransform)transform.parent).rect.height;
-        float thisHeight = rt.rect.height;
-        float scale = VERTICAL_PROPORTION * canvasHeight / thisHeight;
-        transform.localScale = new Vector3(scale, scale, scale);
-        offScreenY = canvasHeight * HEIGHT_ABOVE_CANVAS_PROPORTION;
-        onScreenY = -canvasHeight * ((1f + VERTICAL_PROPORTION) / 2f);
-        rt.anchoredPosition = new Vector3(0f, offScreenY, 0f);
+        setScaleAndPosition();
         ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(drop);
         ManagePropertiesEventHub.Instance.sub_BackButtonPressed(raise);
-        ManagePropertiesEventHub.Instance.sub_TokenSelectedInManageProperties(adjustMoneyVisualQuietly);
     }
     #endregion
 
@@ -58,6 +51,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
     public PlayerInfo SelectedPlayer => selectedPlayer;
     public void setSelectedPlayer(PlayerInfo playerInfo) {
         selectedPlayer = playerInfo;
+        moneyAdjuster.adjustMoneyQuietly(playerInfo);
     }
     public ManagePropertiesTokenIcon getManagePropertiesTokenIcon(PlayerInfo playerInfo) {
         ManagePropertiesTokenIcon returnManagePropertiesTokenIcon = null;
@@ -77,11 +71,17 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
 
     #region private
+    private void setScaleAndPosition() {
+        float canvasHeight = ((RectTransform)transform.parent).rect.height;
+        float thisHeight = rt.rect.height;
+        float scale = VERTICAL_PROPORTION * canvasHeight / thisHeight;
+        transform.localScale = new Vector3(scale, scale, scale);
+        offScreenY = canvasHeight * HEIGHT_ABOVE_CANVAS_PROPORTION;
+        onScreenY = -canvasHeight * ((1f + VERTICAL_PROPORTION) / 2f);
+        rt.anchoredPosition = new Vector3(0f, offScreenY, 0f);
+    }
     private void adjustMoneyVisual(PlayerInfo playerInfo) {
         moneyAdjuster.adjustMoney(playerInfo);
-    }
-    private void adjustMoneyVisualQuietly(PlayerInfo playerInfo) {
-        moneyAdjuster.adjustMoneyQuietly(playerInfo);
     }
     private void drop() {
         int dropFrames = FrameConstants.MANAGE_PROPERTIES_DROP;
@@ -106,14 +106,19 @@ public class ManagePropertiesPanel : MonoBehaviour {
                     PlayerInfo activePlayer = activePlayers.ElementAt(i);
                     ManagePropertiesTokenIcon managePropertiesTokenIcon = getComponent(i);
                     managePropertiesTokenIcon.setup(activePlayer);
-                    if (activePlayer == GameState.game.TurnPlayer) managePropertiesTokenIcon.select(true);
+                    if (activePlayer == GameState.game.TurnPlayer) {
+                        managePropertiesTokenIcon.selectFromDrop();
+                    }
+                    else {
+                        managePropertiesTokenIcon.deselect();
+                    }
                 }
                 else tokenIconContainerRT.GetChild(i).gameObject.SetActive(false);
             }
+
         }
 
         setIcons();
-        adjustMoneyVisualQuietly(GameState.game.TurnPlayer);
         UIEventHub.Instance.call_FadeScreenCoverIn(1f);
         StartCoroutine(dropCoroutine());
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(GameState.game.TurnPlayer);

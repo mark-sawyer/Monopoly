@@ -5,6 +5,7 @@ internal class Debt : DebtInfo {
     private int owed;
 
 
+
     #region internal
     internal Debt(Player debtor, Creditor creditor, int owed) {
         this.debtor = debtor;

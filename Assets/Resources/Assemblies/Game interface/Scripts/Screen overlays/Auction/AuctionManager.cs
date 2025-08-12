@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class AuctionManager : ScreenOverlay<Queue<TradableInfo>> {
+public class AuctionManager : ScreenOverlay<Queue<PropertyInfo>> {
     [SerializeField] private RectTransform rt;
     [SerializeField] private RectTransform auctionPanelParentRT;
     [SerializeField] private GameObject top;
     [SerializeField] private GameObject onePlayer;
     [SerializeField] private GameObject twoPlayers;
     [SerializeField] private GameObject bottom;
-    private Queue<TradableInfo> tradablesQueue;
-    private TradableInfo currentlyBeingAuctioned;
+    [SerializeField] private Button confirmButton;
+    private Queue<PropertyInfo> propertiesQueue;
+    private PropertyInfo currentlyBeingAuctioned;
     private int currentBid;
     private PlayerInfo biddingPlayer;
     private const float IDEAL_SCALE = 1.6f;
@@ -43,9 +45,9 @@ public class AuctionManager : ScreenOverlay<Queue<TradableInfo>> {
         movePanelToStartingPosition();
         StartCoroutine(drop());
     }
-    public override void setup(Queue<TradableInfo> tradablesQueue) {
-        this.tradablesQueue = tradablesQueue;
-        currentlyBeingAuctioned = tradablesQueue.Dequeue();
+    public override void setup(Queue<PropertyInfo> propertiesQueue) {
+        this.propertiesQueue = propertiesQueue;
+        currentlyBeingAuctioned = propertiesQueue.Dequeue();
     }
     #endregion
 
@@ -176,9 +178,9 @@ public class AuctionManager : ScreenOverlay<Queue<TradableInfo>> {
         UIEventHub.Instance.call_FadeScreenCoverOut();
         yield return WaitFrames.Instance.frames(FrameConstants.SCREEN_COVER_TRANSITION);
         yield return WaitFrames.Instance.frames(30);
-        if (biddingPlayer != null) yield return obtainTradable();
-        if (tradablesQueue.Count > 0) {
-            currentlyBeingAuctioned = tradablesQueue.Dequeue();
+        yield return obtainTradable();
+        if (propertiesQueue.Count > 0) {
+            currentlyBeingAuctioned = propertiesQueue.Dequeue();
             biddingPlayer = null;
             currentBid = 0;
             yield return WaitFrames.Instance.frames(50);

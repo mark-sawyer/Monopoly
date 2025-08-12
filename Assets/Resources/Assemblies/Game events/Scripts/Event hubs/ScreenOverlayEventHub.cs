@@ -15,7 +15,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
     [SerializeField] private PropertyEvent unaffordableProperty;
     [SerializeField] private GameEvent tradeOpened;
     [SerializeField] private DebtEvent resolveDebt;
-    [SerializeField] private QueueTradablesEvent auctionsBegin;
+    [SerializeField] private QueuePropertiesEvent auctionsBegin;
     [SerializeField] private PlayerPropertyEvent resolveMortgage;
     #endregion
     [SerializeField] private GameEvent purchaseYesClicked;
@@ -60,7 +60,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void call_RemoveScreenAnimationKeepCover() => removeScreenOverlayKeepCover.invoke();
     public void call_TradeOpened() => tradeOpened.invoke();
     public void call_ResolveDebt(DebtInfo debtInfo) => resolveDebt.invoke(debtInfo);
-    public void call_AuctionsBegin(Queue<TradableInfo> tradableInfos) => auctionsBegin.invoke(tradableInfos);
+    public void call_AuctionsBegin(Queue<PropertyInfo> propertyInfos) => auctionsBegin.invoke(propertyInfos);
     public void call_ResolveMortgage(PlayerInfo playerInfo, PropertyInfo propertyInfo) => resolveMortgage.invoke(playerInfo, propertyInfo);
     public void call_KeepMortgageClicked() => keepMortgageClicked.invoke();
     public void call_UnmortgageClicked() => unmortgageClicked.invoke();
@@ -83,7 +83,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void sub_RemoveScreenOverlayKeepCover(Action a) => removeScreenOverlayKeepCover.Listeners += a;
     public void sub_TradeOpened(Action a) => tradeOpened.Listeners += a;
     public void sub_ResolveDebt(Action<DebtInfo> a) => resolveDebt.Listeners += a;
-    public void sub_AuctionsBegin(Action<Queue<TradableInfo>> a) => auctionsBegin.Listeners += a;
+    public void sub_AuctionsBegin(Action<Queue<PropertyInfo>> a) => auctionsBegin.Listeners += a;
     public void sub_ResolveMortgage(Action<PlayerInfo, PropertyInfo> a) => resolveMortgage.Listeners += a;
     public void sub_KeepMortgageClicked(Action a) => keepMortgageClicked.Listeners += a;
     public void sub_UnmortgageClicked(Action a) => unmortgageClicked.Listeners += a;

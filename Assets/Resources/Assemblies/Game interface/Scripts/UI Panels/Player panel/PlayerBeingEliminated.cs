@@ -13,6 +13,8 @@ public class PlayerBeingEliminated : MonoBehaviour {
     [SerializeField] private Image tokenImage;
     [SerializeField] private Image outerCircleImage;
     [SerializeField] private Image innerCircleImage;
+    [SerializeField] private GOOJFIcon chanceCardIcon;
+    [SerializeField] private GOOJFIcon ccCardIcon;
     [SerializeField] private TextMeshProUGUI frontMoneyText;
     [SerializeField] private TextMeshProUGUI backMoneyText;
     [SerializeField] private PropertyGroupIcon[] propertyGroupIcons;
@@ -35,6 +37,7 @@ public class PlayerBeingEliminated : MonoBehaviour {
         StartCoroutine(fadeToken());
         StartCoroutine(fadeAwayMoney());
         fadeAwayPropertyIcons();
+        fadeAwayGOOJFCardIcons();
         StartCoroutine(fadeAwayPropertyIconPanel());
         yield return WaitFrames.Instance.frames(FrameConstants.DYING_PLAYER);
 
@@ -178,6 +181,10 @@ public class PlayerBeingEliminated : MonoBehaviour {
         foreach (PropertyGroupIcon propertyGroupIcon in propertyGroupIcons) {
             StartCoroutine(propertyGroupIcon.fadeAway());
         }
+    }
+    private void fadeAwayGOOJFCardIcons() {
+        if (chanceCardIcon.IsOn) StartCoroutine(chanceCardIcon.fadeAway());
+        if (ccCardIcon.IsOn) StartCoroutine(ccCardIcon.fadeAway());
     }
     private IEnumerator fadeAwayPropertyIconPanel() {
         PanelRecolourer panelRecolourer = new PanelRecolourer(propertyIconContainerPanel);

@@ -58,7 +58,7 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
     public void OnPointerClick(PointerEventData eventData) {
         if (Selected || wipeInProgress) return;
 
-        select(false);
+        selectFromIconClick();
     }
     #endregion
 
@@ -70,24 +70,25 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         this.playerInfo = playerInfo;
         tokenIcon.setup(playerInfo.Token, playerInfo.Colour);
     }
-    public void select(bool isFromOpen) {
+    public void selectFromDrop() {
+        ManagePropertiesPanel.Instance.setSelectedPlayer(playerInfo);
+        canvas.sortingOrder = 2;
+        setAlphaOfCover(0f);
+    }
+    public void selectFromIconClick() {
         PlayerInfo priorSelectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
-        if (priorSelectedPlayer != null) {
-            ManagePropertiesTokenIcon priorIcon = ManagePropertiesPanel.Instance.getManagePropertiesTokenIcon(priorSelectedPlayer);
-            priorIcon.deselect();
-        }
+        ManagePropertiesTokenIcon priorIcon = ManagePropertiesPanel.Instance.getManagePropertiesTokenIcon(priorSelectedPlayer);
+        priorIcon.deselect();
         ManagePropertiesPanel.Instance.setSelectedPlayer(playerInfo);
         canvas.sortingOrder = 2;
         setAlphaOfCover(0f);
         StartCoroutine(pulse());
-        if (!isFromOpen) {
-            ManagePropertiesEventHub.Instance.call_TokenSelectedInManageProperties(playerInfo);
-            wipeInProgress = true;
-            WaitFrames.Instance.beforeAction(
-                2 * FrameConstants.MANAGE_PROPERTIES_WIPE_UP + 2,
-                () => wipeInProgress = false
-            );
-        }
+        ManagePropertiesEventHub.Instance.call_TokenSelectedInManageProperties(playerInfo);
+        wipeInProgress = true;
+        WaitFrames.Instance.beforeAction(
+            2 * FrameConstants.MANAGE_PROPERTIES_WIPE_UP + 2,
+            () => wipeInProgress = false
+        );
     }
     public void deselect() {
         canvas.sortingOrder = 1;

@@ -12,7 +12,13 @@ internal class DrawCardState : State {
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
         CardSpaceInfo cardSpaceInfo = (CardSpaceInfo)playerInfo.SpaceInfo;
         CardType cardType = cardSpaceInfo.CardType;
+
         DataEventHub.Instance.call_CardDrawn(cardType);
+        CardInfo cardInfo = GameState.game.DrawnCard;
+        CardMechanicInfo cardMechanicInfo = cardInfo.CardMechanicInfo;
+
+        if (cardMechanicInfo is GoToJailCardInfo) SoundOnlyEventHub.Instance.call_Whistle();
+        else SoundOnlyEventHub.Instance.call_CardDrawn();
         ScreenOverlayEventHub.Instance.call_CardShown();
         ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(screenAnimationRemoved);
     }
@@ -31,7 +37,9 @@ internal class DrawCardState : State {
         if (cardMechanicInfo is GoToNextUtilityCardInfo) return allStates.getState<NextUtilityState>();
         if (cardMechanicInfo is GetOutOfJailFreeCardInfo) return allStates.getState<GetOutOfJailFreeState>();
         if (cardMechanicInfo is BuildingCostCardInfo) return allStates.getState<BuildingCostState>();
-        return allStates.getState<UpdateTurnPlayerState>();
+        if (cardMechanicInfo is GoToJailCardInfo) return allStates.getState<GoToJailCardState>();
+        if (cardMechanicInfo is PlayerMoneyDifferenceCardInfo) return allStates.getState<PlayerMoneyCardState>();
+        throw new System.Exception("Card mechanic not found.");
     }
     #endregion
 

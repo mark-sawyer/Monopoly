@@ -40,6 +40,8 @@ public class SoundPlayer : MonoBehaviour {
         soundEvents.sub_DramaticWail(play_DramaticWail);
         soundEvents.sub_AppearingPop(play_Pop);
         soundEvents.sub_Punch(play_Punch);
+        soundEvents.sub_Whistle(play_Whistle);
+        soundEvents.sub_CardDrawn(play_CardDrawn);
 
         uiEvents.sub_CardDrop(play_CardDrop);
         uiEvents.sub_MoneyAppearOrDisappear(play_PaperSound);
@@ -53,7 +55,6 @@ public class SoundPlayer : MonoBehaviour {
         screenEvents.sub_LuxuryTaxAnimationBegins(play_MupMooo);
         screenEvents.sub_SpinningPoliceman(play_Whistle);
         screenEvents.sub_PayingRentAnimationBegins(play_UhOh);
-        screenEvents.sub_CardShown(play_CardDrawn);
         screenEvents.sub_PurchaseQuestion(play_QuestionChime);
         screenEvents.sub_IncomeTaxQuestion(play_QuestionChime);
         screenEvents.sub_ResolveMortgage(play_QuestionChime);

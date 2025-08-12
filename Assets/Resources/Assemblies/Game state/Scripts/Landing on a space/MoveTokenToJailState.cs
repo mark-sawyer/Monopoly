@@ -5,6 +5,7 @@ internal class MoveTokenToJailState : State {
     private bool tokenSettled;
 
 
+
     #region GameState
     public override void enterState() {
         tokenSettled = false;
@@ -12,6 +13,7 @@ internal class MoveTokenToJailState : State {
         ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
 
+        DataEventHub.Instance.call_TurnPlayerWillLoseTurn();
         ScreenOverlayEventHub.Instance.call_SpinningPoliceman();
     }
     public override bool exitConditionMet() {

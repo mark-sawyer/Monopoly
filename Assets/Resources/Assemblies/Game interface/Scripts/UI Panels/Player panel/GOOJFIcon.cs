@@ -14,6 +14,16 @@ public class GOOJFIcon : MonoBehaviour {
         if (toggle) yield return pulse();
         else yield return pulseOff();        
     }
+    public IEnumerator fadeAway() {
+        Func<float, float> getAlpha = LinearValue.getFunc(1, 0, FrameConstants.DYING_PLAYER);
+        Color colour = image.color;
+        for (int i = 1; i <= FrameConstants.DYING_PLAYER; i++) {
+            colour.a = getAlpha(i);
+            image.color = colour;
+            yield return null;
+        }
+        image.enabled = false;
+    }
     #endregion
 
 

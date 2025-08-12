@@ -24,6 +24,7 @@ public class GameDataUpdater : MonoBehaviour {
         dataHub.sub_TradeCommenced(createNewTrade);
         dataHub.sub_MortgageIsResolved(setMortgageResolved);
         dataHub.sub_TurnPlayerWillLoseTurn(markTurnPlayerForLosingTurn);
+        dataHub.sub_CardReturned(returnGOOJFCard);
         pipelineHub.sub_RollButtonClicked(rollDice);
         pipelineHub.sub_TurnPlayerMovedAlongBoard(moveTurnPlayerAlongBoard);
         pipelineHub.sub_TurnPlayerMovedToSpace(moveTurnPlayerToSpace);
@@ -145,6 +146,9 @@ public class GameDataUpdater : MonoBehaviour {
     }
     private void markTurnPlayerForLosingTurn() {
         gamePlayer.markTurnPlayerForLosingTurn();
+    }
+    private void returnGOOJFCard(CardInfo cardInfo) {
+        gamePlayer.eliminatedPlayerGOOJFCardReturned(cardInfo);
     }
     #endregion
 }

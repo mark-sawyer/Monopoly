@@ -11,6 +11,8 @@ public class SoundOnlyEventHub : ScriptableObject {
     [SerializeField] private GameEvent dramaticWail;
     [SerializeField] private GameEvent appearingPop;
     [SerializeField] private GameEvent punch;
+    [SerializeField] private GameEvent cardDrawn;
+    [SerializeField] private GameEvent whistle;
 
 
 
@@ -37,6 +39,8 @@ public class SoundOnlyEventHub : ScriptableObject {
     public void call_DramaticWail() => dramaticWail.invoke();
     public void call_AppearingPop() => appearingPop.invoke();
     public void call_Punch() => punch.invoke();
+    public void call_CardDrawn() => cardDrawn.invoke();
+    public void call_Whistle() => whistle.invoke();
     #endregion
 
 
@@ -48,5 +52,7 @@ public class SoundOnlyEventHub : ScriptableObject {
     public void sub_DramaticWail(Action a) => dramaticWail.Listeners += a;
     public void sub_AppearingPop(Action a) => appearingPop.Listeners += a;
     public void sub_Punch(Action a) => punch.Listeners += a;
+    public void sub_CardDrawn(Action a) => cardDrawn.Listeners += a;
+    public void sub_Whistle(Action a) => whistle.Listeners += a;
     #endregion
 }
