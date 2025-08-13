@@ -40,7 +40,7 @@ internal class BuyPropertyOptionState : State {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         PropertyInfo propertyInfo = ((PropertySpaceInfo)turnPlayer.SpaceInfo).PropertyInfo;
         DataUIPipelineEventHub.Instance.call_MoneyAdjustment(turnPlayer, -propertyInfo.Cost);
-        ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation();
+        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
         AccompanyingVisualSpawner.Instance.removeObjectAndResetPosition();
         WaitFrames.Instance.beforeAction(
             FrameConstants.MONEY_UPDATE,
@@ -51,7 +51,7 @@ internal class BuyPropertyOptionState : State {
         );
     }
     private void noClicked() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenAnimationKeepCover();
+        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover();
         purchaseDeclined = true;
     }
     #endregion

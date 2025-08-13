@@ -107,7 +107,7 @@ public class TradingPlayerSelection : ScreenOverlay {
         backButton.interactable = true;
     }
     private void removeTradeDisplay() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation();
+        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
     }
     #endregion
 }

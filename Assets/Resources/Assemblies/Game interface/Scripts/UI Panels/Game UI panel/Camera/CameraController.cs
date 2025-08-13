@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour {
     private Action cameraUpdate;
-    private float anglePerFrame;
     private const int TURN_FRAMES = 40;
+    private const float ANGLE_PER_FRAME = 90f / TURN_FRAMES;
+    private const float GAME_ZOOM = 45;
+    private const int START_GAME_ANIMATION_FRAMES = 150;
 
 
 
@@ -24,11 +25,11 @@ public class CameraController : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
+        UIEventHub.Instance.sub_StartGameClicked(setMoveToDefault);
         CameraEventHub.Instance.sub_RotationFinished(rotationFinished);
         CameraEventHub.Instance.sub_ClockwiseTurnClicked(() => setManualRotation(90f));
         CameraEventHub.Instance.sub_CounterClockwiseTurnClicked(() => setManualRotation(-90f));
-        cameraUpdate = nothing;
-        anglePerFrame = 90f / TURN_FRAMES;
+        cameraUpdate = spin;
     }
     private void Update() {
         cameraUpdate();
@@ -65,7 +66,19 @@ public class CameraController : MonoBehaviour {
 
     #region Camera actions
     private void nothing() { }
-    private void rotation(Quaternion startRotation, Quaternion targetRotation, float startAngle) {
+    private void spin() {
+        Camera.main.transform.rotation *= Quaternion.Euler(0f, 0f, 0.1f);
+    }
+    private void zoomToDefault(float perFrameZoom) {
+        float currentZoom = Camera.main.orthographicSize;
+        float remaining = currentZoom - GAME_ZOOM;
+        if (remaining > 0.001f) Camera.main.orthographicSize -= perFrameZoom;
+        else {
+            Camera.main.orthographicSize = GAME_ZOOM;
+            cameraUpdate = nothing;
+        }
+    }
+    private void rotation(Quaternion startRotation, Quaternion targetRotation, float startAngle, float anglePerFrame) {
         float remaining = Quaternion.Angle(Camera.main.transform.rotation, targetRotation);
         float angleSoFar = startAngle - remaining;
         float lerpProp = (angleSoFar + anglePerFrame) / startAngle;
@@ -82,11 +95,36 @@ public class CameraController : MonoBehaviour {
 
 
     #region private
+    private void setMoveToDefault() {
+        Action getZoomAction() {
+            float currentSize = Camera.main.orthographicSize;
+            float zoomDistance = currentSize - GAME_ZOOM;
+            float perFrameZoom = zoomDistance / START_GAME_ANIMATION_FRAMES;
+            Action zoomAction = () => zoomToDefault(perFrameZoom);
+            return zoomAction;
+        }
+        Action getRotationAction() {
+            Quaternion currentRotation = Camera.main.transform.rotation;
+            Quaternion targetRotation = getGoalQuaternion(0);
+            float currentAngle = Quaternion.Angle(currentRotation, targetRotation);
+            float anglePerFrame = currentAngle / START_GAME_ANIMATION_FRAMES;
+            Action rotationAction = () => rotation(currentRotation, targetRotation, currentAngle, anglePerFrame);
+            return rotationAction;
+        }
+
+
+        Action zoomAction = getZoomAction();
+        Action rotationAction = getRotationAction();
+        cameraUpdate = () => {
+            zoomAction();
+            rotationAction();
+        };
+    }
     private void setManualRotation(float angle) {
         Quaternion startRotation = Camera.main.transform.rotation;
         Quaternion targetRotation = startRotation * Quaternion.Euler(0f, 0f, angle);
         float startAngle = Quaternion.Angle(startRotation, targetRotation);
-        cameraUpdate = () => rotation(startRotation, targetRotation, startAngle);
+        cameraUpdate = () => rotation(startRotation, targetRotation, startAngle, ANGLE_PER_FRAME);
     }
     private void setAutoRotation() {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
@@ -97,7 +135,7 @@ public class CameraController : MonoBehaviour {
         float currentAngle = Quaternion.Angle(currentrotation, targetRotation);
         if (currentAngle > 1f) {
             CameraEventHub.Instance.call_RotationStarted();
-            cameraUpdate = () => rotation(currentrotation, targetRotation, currentAngle);
+            cameraUpdate = () => rotation(currentrotation, targetRotation, currentAngle, ANGLE_PER_FRAME);
         }
     }
     private void rotationFinished() {

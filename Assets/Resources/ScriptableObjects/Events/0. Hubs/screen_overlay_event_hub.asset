@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103095dee1b2d184faf1f61abf920a5c, type: 3}
   m_Name: screen_overlay_event_hub
   m_EditorClassIdentifier: 
+  playerNumberSelection: {fileID: 11400000, guid: f05389a6179eb254aa27dca7fb209ffa, type: 2}
+  playerNumberConfirmed: {fileID: 11400000, guid: e4e04527c56445f4fa52e46c962e2b5a, type: 2}
   incomeTaxQuestion: {fileID: 11400000, guid: 78f50cfbec166e0408237475a1081cc3, type: 2}
   purchaseQuestion: {fileID: 11400000, guid: a5b1acb66b7f35843b93252bd2942388, type: 2}
   payingRentAnimationBegins: {fileID: 11400000, guid: 08b3063bbc22e864692fc85fa3f1966c, type: 2}
@@ -30,3 +32,4 @@ MonoBehaviour:
   unmortgageClicked: {fileID: 11400000, guid: b0ca0155447ddc54aaba3454333a9cb6, type: 2}
   removeScreenOverlay: {fileID: 11400000, guid: 95a5d8e01da77f143984302821c22adb, type: 2}
   removeScreenOverlayKeepCover: {fileID: 11400000, guid: f92fa5db7c89a8c4a936d110a9d9cb31, type: 2}
+  selectedTokensChanged: {fileID: 11400000, guid: d773d943dc691a24fa9367042c9e0a3d, type: 2}

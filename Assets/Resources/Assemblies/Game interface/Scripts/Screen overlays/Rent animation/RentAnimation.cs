@@ -133,7 +133,7 @@ public class RentAnimation : ScreenOverlay<DebtInfo> {
             for (int i = 0; i < 20; i++) yield return null;
         }
         for (int i = 0; i < MONEY_THROW_FRAMES + 50; i++) yield return null;
-        ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation();
+        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
     }
     private IEnumerator moveMoneyNote(Transform moneyTransform, int amount) {
         void adjustCreditorScale(float paymentReceived) {

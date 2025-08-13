@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 internal class Game : GameStateInfo, GamePlayer {
     private DiceInterface dice;
@@ -19,6 +18,21 @@ internal class Game : GameStateInfo, GamePlayer {
 
 
     #region internal
+    internal Game(
+        List<Token> tokens,
+        List<PlayerColour> colours,
+        Queue<Card> communityChestCards,
+        Queue<Card> chanceCards
+    ) {
+        dice = new Dice();
+        this.communityChestCards = communityChestCards;
+        this.chanceCards = chanceCards;
+        bank = new Bank();
+        spaces = initialiseSpaces();
+        initialiseUtilities();
+        players = initialisePlayers(tokens, colours);
+        turnPlayer = players[0];
+    }
     internal Game(
         int playerNum,
         int startingMoney,
@@ -73,7 +87,9 @@ internal class Game : GameStateInfo, GamePlayer {
         dice.roll();
     }
     public void moveTurnPlayerAlongBoard(int spacesMoved) {
-        movePlayer(turnPlayer, spacesMoved);
+        int oldIndex = turnPlayer.SpaceIndex;
+        int newIndex = (oldIndex + spacesMoved) % GameConstants.TOTAL_SPACES;
+        turnPlayer.changeSpace(spaces[newIndex]);
     }
     public void moveTurnPlayerToSpace(SpaceInfo spaceInfo) {
         Space space = (Space)spaceInfo;
@@ -253,11 +269,6 @@ internal class Game : GameStateInfo, GamePlayer {
 
 
     #region private
-    private void movePlayer(Player player, int spacesMoved) {
-        int oldIndex = player.SpaceIndex;
-        int newIndex = (oldIndex + spacesMoved) % GameConstants.TOTAL_SPACES;
-        player.changeSpace(spaces[newIndex]);
-    }
     private Space[] initialiseSpaces() {
         Space[] spaces = new Space[] {
             Resources.Load<Space>("ScriptableObjects/Spaces/00_goSpace"),
@@ -311,6 +322,21 @@ internal class Game : GameStateInfo, GamePlayer {
         Utility waterWorks = Resources.Load<Utility>("ScriptableObjects/Properties/20_WaterWorks");
         electricCompany.setup(dice);
         waterWorks.setup(dice);
+    }
+    private Player[] initialisePlayers(List<Token> tokens, List<PlayerColour> colours) {
+        int playerNum = tokens.Count;
+        Player[] players = new Player[playerNum];
+        for (int i = 0; i < playerNum; i++) {
+            players[i] = new Player(
+                spaces[0],
+                tokens[i],
+                colours[i],
+                GameConstants.STARTING_MONEY,
+                this
+            );
+            spaces[0].addPlayer(players[i]);
+        }
+        return players;
     }
     private Player[] initialisePlayers(int playerNum, int startingMoney) {
         Player[] players = new Player[playerNum];

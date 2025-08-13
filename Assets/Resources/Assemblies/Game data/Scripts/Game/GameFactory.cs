@@ -9,6 +9,13 @@ public class GameFactory {
 
 
     #region Factory
+    public void makeGame(List<Token> tokens, List<PlayerColour> colours) {
+        Queue<Card> communityChestCards = initialiseCards(CardType.COMMUNITY_CHEST);
+        Queue<Card> chanceCards = initialiseCards(CardType.CHANCE);
+        game = new Game(tokens, colours, communityChestCards, chanceCards);
+        setGameRefForCards(communityChestCards, game);
+        setGameRefForCards(chanceCards, game);
+    }
     public void makeGame(int playerNum) {
         Queue<Card> communityChestCards = initialiseCards(CardType.COMMUNITY_CHEST);
         Queue<Card> chanceCards = initialiseCards(CardType.CHANCE);

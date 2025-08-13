@@ -38,7 +38,7 @@ public class UnaffordableProperty : ScreenOverlay<PropertyInfo> {
         }
         WaitFrames.Instance.beforeAction(
             50,
-            () => ScreenOverlayEventHub.Instance.call_RemoveScreenAnimationKeepCover()
+            () => ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover()
         );
     }
 }

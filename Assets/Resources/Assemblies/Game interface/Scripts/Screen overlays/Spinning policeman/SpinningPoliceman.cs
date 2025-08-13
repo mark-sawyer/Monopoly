@@ -35,6 +35,6 @@ public class SpinningPoliceman : ScreenOverlay {
             );
             yield return null;
         }
-        ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation();
+        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
     }
 }

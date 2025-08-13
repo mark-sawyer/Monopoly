@@ -50,13 +50,13 @@ internal class ResolveMortgageState : State {
 
     #region private
     private void keepClickedListener() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation();
+        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
         DataEventHub.Instance.call_MortgageIsResolved(unresolvedPlayer, unresolvedProperty);
         DataEventHub.Instance.call_PlayerIncurredDebt(unresolvedPlayer, GameState.game.BankCreditor, unresolvedProperty.RetainMortgageCost);
         goToResolveDebt = true;
     }
     private void unmortgageClickedListener() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation();
+        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
         DataEventHub.Instance.call_MortgageIsResolved(unresolvedPlayer, unresolvedProperty);
         DataEventHub.Instance.call_PropertyUnmortgaged(unresolvedProperty);
         DataEventHub.Instance.call_PlayerIncurredDebt(unresolvedPlayer, GameState.game.BankCreditor, unresolvedProperty.UnmortgageCost);

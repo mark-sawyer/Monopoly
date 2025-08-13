@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ScreenOverlayManager : MonoBehaviour {
     #region Screen overlay prefabs
+    [SerializeField] private GameObject numberOfPlayers;
+    [SerializeField] private GameObject tokenSelection;
     [SerializeField] private GameObject incomeTaxPrefab;
     [SerializeField] private GameObject purchaseQuestionPrefab;
     [SerializeField] private GameObject spinningPolicemanPrefab;
@@ -35,6 +37,8 @@ public class ScreenOverlayManager : MonoBehaviour {
         events.sub_RemoveScreenOverlay(removeScreenOverlay);
         events.sub_RemoveScreenOverlayKeepCover(removeOverlayKeepCover);
 
+        events.sub_PlayerNumberSelection(() => startScreenOverlay(numberOfPlayers, alpha));
+        events.sub_PlayerNumberConfirmed((int players) => startScreenOverlay(tokenSelection, players, alpha));
         events.sub_SpinningPoliceman(() => startScreenOverlay(spinningPolicemanPrefab, alpha));
         events.sub_IncomeTaxQuestion((PlayerInfo playerInfo) => startScreenOverlay(incomeTaxPrefab, playerInfo, alpha));
         events.sub_PurchaseQuestion((PlayerInfo playerInfo, PropertyInfo propertyInfo) => {

@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameEvent/Hubs/UIEventHub")]
 public class UIEventHub : ScriptableObject {
     private static UIEventHub instance;
+    [SerializeField] private GameEvent startGameClicked;
     [SerializeField] private GameEvent doublesTickBoxUpdate;
     [SerializeField] private GameEvent payFiftyButtonClicked;
     [SerializeField] private GameEvent tokenSettled;
@@ -40,6 +41,7 @@ public class UIEventHub : ScriptableObject {
 
 
     #region UI invoking
+    public void call_StartGameClicked() => startGameClicked.invoke();
     public void call_DoublesTickBoxUpdate() => doublesTickBoxUpdate.invoke();
     public void call_PayFiftyButtonClicked() => payFiftyButtonClicked.invoke();
     public void call_TokenSettled() => tokenSettled.invoke();
@@ -61,6 +63,7 @@ public class UIEventHub : ScriptableObject {
 
 
     #region Subscribing
+    public void sub_StartGameClicked(Action a) => startGameClicked.Listeners += a;
     public void sub_DoublesTickBoxUpdate(Action a) => doublesTickBoxUpdate.Listeners += a;
     public void sub_PayFiftyButtonClicked(Action a) => payFiftyButtonClicked.Listeners += a;
     public void sub_TokenSettled(Action a) => tokenSettled.Listeners += a;

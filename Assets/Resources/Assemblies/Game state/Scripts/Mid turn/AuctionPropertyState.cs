@@ -33,7 +33,7 @@ internal class AuctionPropertyState : State {
 
     #region private
     private void auctionOverListening() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenAnimationKeepCover();
+        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover();
         auctionOver = true;
     }
     #endregion

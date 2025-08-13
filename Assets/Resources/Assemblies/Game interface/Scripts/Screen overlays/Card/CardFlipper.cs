@@ -16,7 +16,7 @@ public class CardFlipper : ScreenOverlay<GameObject> {
     public override void setup(GameObject cardPrefab) {
         this.cardPrefab = cardPrefab;
         ScreenOverlayEventHub.Instance.sub_CardOKClicked(
-            () => ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation()
+            () => ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay()
         );
         screenOverlaySizeAdjuster = new ScreenOverlaySizeAdjuster(
             HORIZONTAL_PROPORTION,

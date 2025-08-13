@@ -300,7 +300,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5982392884175762427}
-  - component: {fileID: 9175853592624586516}
   m_Layer: 5
   m_Name: GameObject
   m_TagString: Untagged
@@ -331,18 +330,6 @@ RectTransform:
   m_AnchoredPosition: {x: 4.5, y: 184}
   m_SizeDelta: {x: 495.9, y: 93.100006}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9175853592624586516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2512459134845413971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6635d0f4da1a8384c842d06788a2c5b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2560565582284025675
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,7 +1878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb20834dd76480f409e1dff1731ec343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraController: {fileID: 9175853592624586516}
+  cameraController: {fileID: 0}
   button: {fileID: 6797292193339959955}
 --- !u!114 &6797292193339959955 stripped
 MonoBehaviour:

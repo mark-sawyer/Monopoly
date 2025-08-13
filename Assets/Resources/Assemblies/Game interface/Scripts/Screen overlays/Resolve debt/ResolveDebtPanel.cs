@@ -43,7 +43,7 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
         if (debtPaid || !canRaiseMoney) {
             WaitFrames.Instance.beforeAction(
                 FrameConstants.MONEY_UPDATE + 50,
-                () => ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation()
+                () => ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay()
             );
         }
     }

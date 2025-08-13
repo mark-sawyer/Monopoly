@@ -24,7 +24,7 @@ public class LuxuryTaxAnimation : ScreenOverlay {
         );
         WaitFrames.Instance.beforeAction(
             ANIMATION_FRAMES + 20,
-            () => ScreenOverlayEventHub.Instance.call_RemoveScreenAnimation()
+            () => ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay()
         );
     }
     private IEnumerator rollRingAcross() {

@@ -1,7 +1,8 @@
 using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour {
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource musicAudioSource;
+    [SerializeField] private AudioSource soundEffectAudioSource;
     #region RandomAudioClips
     [SerializeField] private RandomAudioClip diceSounds;
     [SerializeField] private RandomAudioClip paperSounds;
@@ -28,6 +29,8 @@ public class SoundPlayer : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
+        //musicAudioSource.Play();
+
         SoundOnlyEventHub soundEvents = SoundOnlyEventHub.Instance;
         UIEventHub uiEvents = UIEventHub.Instance;
         UIPipelineEventHub uiPipelineEventHub = UIPipelineEventHub.Instance;
@@ -52,6 +55,8 @@ public class SoundPlayer : MonoBehaviour {
         uiPipelineEventHub.sub_MoneyBetweenPlayers(play_MoneyChing);
         uiPipelineEventHub.sub_MoneyRaisedForDebt(play_MoneyChing);
 
+        screenEvents.sub_PlayerNumberSelection(play_QuestionChime);
+        screenEvents.sub_PlayerNumberConfirmed(play_QuestionChime);
         screenEvents.sub_LuxuryTaxAnimationBegins(play_MupMooo);
         screenEvents.sub_SpinningPoliceman(play_Whistle);
         screenEvents.sub_PayingRentAnimationBegins(play_UhOh);
@@ -66,7 +71,7 @@ public class SoundPlayer : MonoBehaviour {
 
     #region private
     private void playSound(AudioClip sound) {
-        audioSource.PlayOneShot(sound);
+        soundEffectAudioSource.PlayOneShot(sound);
     }
     #endregion
 
@@ -88,6 +93,8 @@ public class SoundPlayer : MonoBehaviour {
     private void play_MoneyChing(PlayerInfo[] x) => playSound(moneyChing);
     private void play_MupMooo() => playSound(mupMooo);
     private void play_Pop() => playSound(pop);
+    private void play_QuestionChime() => playSound(questionChime);
+    private void play_QuestionChime(int x) => playSound(questionChime);
     private void play_QuestionChime(PlayerInfo x, PropertyInfo y) => playSound(questionChime);
     private void play_QuestionChime(PlayerInfo x) => playSound(questionChime);
     private void play_UhOh(DebtInfo x) => playSound(uhOh);

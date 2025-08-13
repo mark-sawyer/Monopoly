@@ -6,6 +6,8 @@ using UnityEngine;
 public class ScreenOverlayEventHub : ScriptableObject {
     private static ScreenOverlayEventHub instance;
     #region Starters
+    [SerializeField] private GameEvent playerNumberSelection;
+    [SerializeField] private IntEvent playerNumberConfirmed;
     [SerializeField] private PlayerEvent incomeTaxQuestion;
     [SerializeField] private PlayerPropertyEvent purchaseQuestion;
     [SerializeField] private DebtEvent payingRentAnimationBegins;
@@ -18,6 +20,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
     [SerializeField] private QueuePropertiesEvent auctionsBegin;
     [SerializeField] private PlayerPropertyEvent resolveMortgage;
     #endregion
+    #region Other
     [SerializeField] private GameEvent purchaseYesClicked;
     [SerializeField] private GameEvent purchaseNoClicked;
     [SerializeField] private GameEvent cardOKClicked;
@@ -25,6 +28,8 @@ public class ScreenOverlayEventHub : ScriptableObject {
     [SerializeField] private GameEvent unmortgageClicked;
     [SerializeField] private GameEvent removeScreenOverlay;
     [SerializeField] private GameEvent removeScreenOverlayKeepCover;
+    [SerializeField] private GameEvent selectedTokensChanged;
+    #endregion
 
 
 
@@ -44,6 +49,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
 
 
     #region Invoking
+    public void call_PlayerNumberSelection() => playerNumberSelection.invoke();
     public void call_IncomeTaxQuestion(PlayerInfo playerInfo) => incomeTaxQuestion.invoke(playerInfo);
     public void call_PurchaseQuestion(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         purchaseQuestion.invoke(playerInfo, propertyInfo);
@@ -56,19 +62,22 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void call_LuxuryTaxAnimationBegins() => luxuryTaxAnimationBegins.invoke();
     public void call_CardOKClicked() => cardOKClicked.invoke();
     public void call_UnaffordableProperty(PropertyInfo propertyInfo) => unaffordableProperty.invoke(propertyInfo);
-    public void call_RemoveScreenAnimation() => removeScreenOverlay.invoke();
-    public void call_RemoveScreenAnimationKeepCover() => removeScreenOverlayKeepCover.invoke();
+    public void call_RemoveScreenOverlay() => removeScreenOverlay.invoke();
+    public void call_RemoveScreenOverlayKeepCover() => removeScreenOverlayKeepCover.invoke();
     public void call_TradeOpened() => tradeOpened.invoke();
     public void call_ResolveDebt(DebtInfo debtInfo) => resolveDebt.invoke(debtInfo);
     public void call_AuctionsBegin(Queue<PropertyInfo> propertyInfos) => auctionsBegin.invoke(propertyInfos);
     public void call_ResolveMortgage(PlayerInfo playerInfo, PropertyInfo propertyInfo) => resolveMortgage.invoke(playerInfo, propertyInfo);
     public void call_KeepMortgageClicked() => keepMortgageClicked.invoke();
     public void call_UnmortgageClicked() => unmortgageClicked.invoke();
+    public void call_PlayerNumberConfirmed(int players) => playerNumberConfirmed.invoke(players);
+    public void call_SelectedTokensChanged() => selectedTokensChanged.invoke();
     #endregion
 
 
 
     #region Subscribing
+    public void sub_PlayerNumberSelection(Action a) => playerNumberSelection.Listeners += a;
     public void sub_IncomeTaxQuestion(Action<PlayerInfo> a) => incomeTaxQuestion.Listeners += a;
     public void sub_PurchaseQuestion(Action<PlayerInfo, PropertyInfo> a) => purchaseQuestion.Listeners += a;
     public void sub_PurchaseYesClicked(Action a) => purchaseYesClicked.Listeners += a;
@@ -87,6 +96,8 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void sub_ResolveMortgage(Action<PlayerInfo, PropertyInfo> a) => resolveMortgage.Listeners += a;
     public void sub_KeepMortgageClicked(Action a) => keepMortgageClicked.Listeners += a;
     public void sub_UnmortgageClicked(Action a) => unmortgageClicked.Listeners += a;
+    public void sub_PlayerNumberConfirmed(Action<int> a) => playerNumberConfirmed.Listeners += a;
+    public void sub_SelectedTokensChanged(Action a) => selectedTokensChanged.Listeners += a;
     #endregion
 
 
@@ -99,5 +110,6 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void unsub_PurchaseNoClicked(Action a) => purchaseNoClicked.Listeners -= a;
     public void unsub_KeepMortgageClicked(Action a) => keepMortgageClicked.Listeners -= a;
     public void unsub_UnmortgageClicked(Action a) => unmortgageClicked.Listeners -= a;
+    public void unsub_SelectedTokensChanged(Action a) => selectedTokensChanged.Listeners -= a;
     #endregion
 }
