@@ -176,6 +176,7 @@ public class TokenVisual : MonoBehaviour {
     private PlayerInfo playerInfo;
     private TokenSprites tokenSprites;
     private TokenColours tokenColours;
+    private const float ROTATION_LERP_PROPORTION = 0.03f;
     #endregion
 
 
@@ -188,6 +189,14 @@ public class TokenVisual : MonoBehaviour {
     }
     private void Update() {
         tokenMover.update();
+        Vector3 thisUp = transform.up;
+        Vector3 cameraUp = Camera.main.transform.up;
+        Quaternion rotationDifference = Quaternion.FromToRotation(thisUp, cameraUp);
+        transform.rotation = Quaternion.Lerp(
+            transform.rotation,
+            Camera.main.transform.rotation,
+            ROTATION_LERP_PROPORTION
+        );
     }
     #endregion
 

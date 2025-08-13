@@ -1,16 +1,12 @@
 using UnityEngine;
 
 public class TestManager : MonoBehaviour {
-    [SerializeField] private GameDataUpdater gameDataUpdater;
-
-
-
     private void Awake() {
-        int playerNum = 2;
+        int playerNum = 1;
         GameFactory gameFactory = new GameFactory();
         gameFactory.makeTestGame(playerNum, 500);
         GameState.game = gameFactory.GameStateInfo;
-        gameDataUpdater.setup(gameFactory.GamePlayer);
+        GameDataUpdater gameDataUpdater = new GameDataUpdater(gameFactory.GamePlayer);
     }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.KeypadPlus)) {

@@ -1,13 +1,14 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class GameDataUpdater : MonoBehaviour {
+public class GameDataUpdater {
     private GamePlayer gamePlayer;
 
 
 
     #region MonoBehaviour
-    private void Start() {
+    public GameDataUpdater(GamePlayer gamePlayer) {
+        this.gamePlayer = gamePlayer;
+
         DataEventHub dataHub = DataEventHub.Instance;
         DataUIPipelineEventHub pipelineHub = DataUIPipelineEventHub.Instance;
 
@@ -45,14 +46,6 @@ public class GameDataUpdater : MonoBehaviour {
         pipelineHub.sub_MultiCreditorDebtReduced(reduceDebt);
         pipelineHub.sub_MoneyRaisedForDebt(payDebtFromMoneyRaised);
         pipelineHub.sub_PlayerEliminated(eliminatePlayer);
-    }
-    #endregion
-
-
-
-    #region public
-    public void setup(GamePlayer gamePlayer) {
-        this.gamePlayer = gamePlayer;
     }
     #endregion
 

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db8a7cf0c8897343bd4bb55e0a17124, type: 3}
+  m_Name: camera_event_hub
+  m_EditorClassIdentifier: 
+  clockwiseTurnClicked: {fileID: 11400000, guid: ddfb05103b1d2dc47b86ff75ff4bff57, type: 2}
+  counterClockwiseTurnClicked: {fileID: 11400000, guid: 69dcd911c8faa30458c529bd7709ef04, type: 2}
+  autoCameraButtonClicked: {fileID: 11400000, guid: 26eaa4876b334d54990d951d17ab5f26, type: 2}
+  rotationStarted: {fileID: 11400000, guid: c23557562c7dacc468b055df0936c815, type: 2}
+  rotationFinished: {fileID: 11400000, guid: ce1876c9b34ba424995d53e2d70ea1fb, type: 2}
