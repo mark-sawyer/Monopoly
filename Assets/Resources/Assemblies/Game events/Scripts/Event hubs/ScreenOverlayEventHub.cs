@@ -19,6 +19,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
     [SerializeField] private DebtEvent resolveDebt;
     [SerializeField] private QueuePropertiesEvent auctionsBegin;
     [SerializeField] private PlayerPropertyEvent resolveMortgage;
+    [SerializeField] private PlayerEvent winnerAnnounced;
     #endregion
     #region Other
     [SerializeField] private GameEvent purchaseYesClicked;
@@ -72,6 +73,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void call_UnmortgageClicked() => unmortgageClicked.invoke();
     public void call_PlayerNumberConfirmed(int players) => playerNumberConfirmed.invoke(players);
     public void call_SelectedTokensChanged() => selectedTokensChanged.invoke();
+    public void call_WinnerAnnounced(PlayerInfo winner) => winnerAnnounced.invoke(winner);
     #endregion
 
 
@@ -98,6 +100,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void sub_UnmortgageClicked(Action a) => unmortgageClicked.Listeners += a;
     public void sub_PlayerNumberConfirmed(Action<int> a) => playerNumberConfirmed.Listeners += a;
     public void sub_SelectedTokensChanged(Action a) => selectedTokensChanged.Listeners += a;
+    public void sub_WinnerAnnounced(Action<PlayerInfo> a) => winnerAnnounced.Listeners += a;
     #endregion
 
 

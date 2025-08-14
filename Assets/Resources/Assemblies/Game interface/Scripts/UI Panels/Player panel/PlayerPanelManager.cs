@@ -85,6 +85,8 @@ public class PlayerPanelManager : MonoBehaviour {
             tradeEvents.sub_UpdateVisualsAfterTradeFinalised(updateVisualsAfterTradeListening);
 
             uiPipelineEvents.sub_PlayerEliminated(eliminatePlayer);
+
+            ScreenOverlayEventHub.Instance.sub_WinnerAnnounced(removeHighlight);
         }
 
 
@@ -175,6 +177,11 @@ public class PlayerPanelManager : MonoBehaviour {
         int index = eliminatedPlayer.Index;
         PlayerBeingEliminated playerBeingEliminated = getPlayerPanel(index).GetComponent<PlayerBeingEliminated>();
         StartCoroutine(playerBeingEliminated.eliminatePlayerSequence());
+    }
+    private void removeHighlight(PlayerInfo winner) {
+        for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
+            getPlayerPanel(i).toggleHighlightImage(false);
+        }
     }
     #endregion
 

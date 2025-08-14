@@ -6,6 +6,7 @@ using UnityEngine;
 internal class EliminatePlayerState : State {
     private bool toResolveDebt;
     private bool toAssetAuctioning;
+    private bool gameComplete;
     private PlayerInfo eliminatedPlayer;
 
 
@@ -14,6 +15,7 @@ internal class EliminatePlayerState : State {
     public override void enterState() {
         toResolveDebt = false;
         toAssetAuctioning = false;
+        gameComplete = false;
 
         UIEventHub.Instance.sub_PlayerEliminatedAnimationOver(afterPlayerEliminatedAnimation);
         UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(afterVisualsUpdated);
@@ -23,7 +25,8 @@ internal class EliminatePlayerState : State {
     }
     public override bool exitConditionMet() {
         return toResolveDebt
-            || toAssetAuctioning;
+            || toAssetAuctioning
+            || gameComplete;
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_PlayerEliminatedAnimationOver(afterPlayerEliminatedAnimation);
@@ -32,6 +35,7 @@ internal class EliminatePlayerState : State {
     public override State getNextState() {
         if (toResolveDebt) return allStates.getState<ResolveDebtState>();
         if (toAssetAuctioning) return allStates.getState<AssetAuctioningState>();
+        if (gameComplete) return allStates.getState<GameCompleteState>();
 
         throw new System.Exception();
     }
@@ -45,7 +49,8 @@ internal class EliminatePlayerState : State {
         IEnumerable<TradableInfo> tradableInfos = GameState.game.BankInfo.EliminatedPlayerAssets;
 
 
-        if (tradableInfos.Count() == 0) toResolveDebt = true;
+        if (GameState.game.ActivePlayers.Count() == 1) gameComplete = true;
+        else if (tradableInfos.Count() == 0) toResolveDebt = true;
         else if (debtInfo is SingleCreditorDebtInfo singleCreditorDebtInfo && singleCreditorDebtInfo.Creditor is PlayerInfo creditorPlayer) {
             DataEventHub.Instance.call_TradeCommenced(eliminatedPlayer, creditorPlayer);
             DataUIPipelineEventHub.Instance.call_TradeUpdated(

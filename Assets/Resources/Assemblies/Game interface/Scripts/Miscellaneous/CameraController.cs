@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
+    [SerializeField] private bool startOnSpin;
     private Action cameraUpdate;
     private const int TURN_FRAMES = 40;
     private const float ANGLE_PER_FRAME = 90f / TURN_FRAMES;
@@ -29,7 +30,7 @@ public class CameraController : MonoBehaviour {
         CameraEventHub.Instance.sub_RotationFinished(rotationFinished);
         CameraEventHub.Instance.sub_ClockwiseTurnClicked(() => setManualRotation(90f));
         CameraEventHub.Instance.sub_CounterClockwiseTurnClicked(() => setManualRotation(-90f));
-        cameraUpdate = spin;
+        cameraUpdate = startOnSpin ? spin : nothing;
     }
     private void Update() {
         cameraUpdate();
