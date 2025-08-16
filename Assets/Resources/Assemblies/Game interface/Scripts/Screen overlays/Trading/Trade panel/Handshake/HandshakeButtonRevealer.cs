@@ -40,7 +40,7 @@ public class HandshakeButtonRevealer : MonoBehaviour {
                 && Input.GetKey(KeyCode.Q)
                 && Input.GetKey(KeyCode.Slash)
                 && Input.GetKey(KeyCode.RightBracket);
-            bool secretInput =  Input.GetKey(KeyCode.RightControl);
+            bool secretInput = GameState.game.IsTestGame ? Input.GetKey(KeyCode.RightControl) : false;
             return properInput || secretInput;
         }
     }

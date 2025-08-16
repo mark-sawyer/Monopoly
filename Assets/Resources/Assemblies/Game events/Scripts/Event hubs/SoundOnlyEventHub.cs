@@ -13,6 +13,13 @@ public class SoundOnlyEventHub : ScriptableObject {
     [SerializeField] private GameEvent punch;
     [SerializeField] private GameEvent cardDrawn;
     [SerializeField] private GameEvent whistle;
+    [SerializeField] private GameEvent put;
+    [SerializeField] private GameEvent take;
+    [SerializeField] private GameEvent swoop;
+    [SerializeField] private GameEvent otherChime;
+    [SerializeField] private GameEvent flourish;
+    [SerializeField] private IntEvent risingBom;
+    [SerializeField] private GameEvent brickLaying;
 
 
 
@@ -41,6 +48,13 @@ public class SoundOnlyEventHub : ScriptableObject {
     public void call_Punch() => punch.invoke();
     public void call_CardDrawn() => cardDrawn.invoke();
     public void call_Whistle() => whistle.invoke();
+    public void call_Put() => put.invoke();
+    public void call_Take() => take.invoke();
+    public void call_Swoop() => swoop.invoke();
+    public void call_OtherChime() => otherChime.invoke();
+    public void call_Flourish() => flourish.invoke();
+    public void call_RisingBom(int i) => risingBom.invoke(i);
+    public void call_BrickLaying() => brickLaying.invoke();
     #endregion
 
 
@@ -54,5 +68,12 @@ public class SoundOnlyEventHub : ScriptableObject {
     public void sub_Punch(Action a) => punch.Listeners += a;
     public void sub_CardDrawn(Action a) => cardDrawn.Listeners += a;
     public void sub_Whistle(Action a) => whistle.Listeners += a;
+    public void sub_Put(Action a) => put.Listeners += a;
+    public void sub_Take(Action a) => take.Listeners += a;
+    public void sub_Swoop(Action a) => swoop.Listeners += a;
+    public void sub_OtherChime(Action a) => otherChime.Listeners += a;
+    public void sub_Flourish(Action a) => flourish.Listeners += a;
+    public void sub_RisingBom(Action<int> a) => risingBom.Listeners += a;
+    public void sub_BrickLaying(Action a) => brickLaying.Listeners += a;
     #endregion
 }

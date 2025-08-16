@@ -1,5 +1,6 @@
 
 public class MPSellOrMortgageBuildingButton : SellOrMortgageBuildingButton {
+    #region SellOrMortgageBuildingButton
     public override void buttonClicked() {
         void sellClicked(PlayerInfo selectedPlayer) {
             DataEventHub.Instance.call_EstateRemovedBuilding(EstateInfo);
@@ -15,6 +16,22 @@ public class MPSellOrMortgageBuildingButton : SellOrMortgageBuildingButton {
         PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
         if (CurrentMode == ButtonMode.SELL) sellClicked(selectedPlayer);
         else mortgageClicked(selectedPlayer);
-        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer);
+        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer, true);
     }
+    #endregion
+
+
+
+    #region public
+    public void adjustForBuildingPlacementMode() {
+        if (EstateInfo.BuildingCount > 0) {
+            toggleMode(ButtonMode.SELL);
+            Button.interactable = false;
+        }
+        else {
+            toggleMode(ButtonMode.MORTGAGE);
+            Button.interactable = false;
+        }
+    }
+    #endregion
 }

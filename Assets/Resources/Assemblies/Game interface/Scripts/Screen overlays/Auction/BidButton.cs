@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,11 +28,11 @@ public class BidButton : MonoBehaviour {
     }
     public void bidClicked() {
         int bid = bidInput.getEnteredInput();
-        AuctionManager.Instance.acceptNewBid(bid, playerInfo);
+        acceptBid(bid);
         AuctionEventHub.Instance.call_BidMade(playerInfo, bid);
     }
     public void adjustInteractability(int textInputBid) {
-        int minimumBid = AuctionManager.Instance.CurrentBid + 1;
+        int minimumBid = getCorrectBid() + 1;
         button.interactable = textInputBid >= minimumBid;
     }
     #endregion
@@ -42,6 +44,22 @@ public class BidButton : MonoBehaviour {
         if (biddingPlayer == playerInfo) {
             button.interactable = false;
             return;
+        }
+    }
+    private void acceptBid(int bid) {
+        if (AuctionManager<Queue<PropertyInfo>>.Instance != null) {
+            AuctionManager<Queue<PropertyInfo>>.Instance.acceptNewBid(bid, playerInfo);
+        }
+        else {
+            AuctionManager<BuildingType>.Instance.acceptNewBid(bid, playerInfo);
+        }
+    }
+    private int getCorrectBid() {
+        if (AuctionManager<Queue<PropertyInfo>>.Instance != null) {
+            return AuctionManager<Queue<PropertyInfo>>.Instance.CurrentBid;
+        }
+        else {
+            return AuctionManager<BuildingType>.Instance.CurrentBid;
         }
     }
     #endregion

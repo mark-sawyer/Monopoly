@@ -9,7 +9,7 @@ public class ManagePropertiesWipe : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        ManagePropertiesEventHub.Instance.sub_TokenSelectedInManageProperties(wipe);
+        ManagePropertiesEventHub.Instance.sub_WipeToCommence(wipe);
     }
     #endregion
 
@@ -29,7 +29,8 @@ public class ManagePropertiesWipe : MonoBehaviour {
         }
 
         rt.sizeDelta = new Vector2(width, MAX_HEIGHT);
-        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(playerInfo);
+        bool regularRefresh = ManagePropertiesPanel.Instance.IsRegularRefreshMode;
+        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(playerInfo, regularRefresh);
         yield return null;
 
         for (int i = 1; i <= wipeFrames; i++) {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
 
 public class AccompanyingVisualSpawner : MonoBehaviour {
@@ -7,6 +8,8 @@ public class AccompanyingVisualSpawner : MonoBehaviour {
     [SerializeField] private GameObject estateDeedPrefab;
     [SerializeField] private GameObject railroadDeedPrefab;
     [SerializeField] private GameObject utilityDeedPrefab;
+    [SerializeField] private GameObject auctionHousePrefab;
+    [SerializeField] private GameObject auctionHotelPrefab;
     private GameObject spawnedObjectInstance;
     private const int DEFAULT_X_POSITION = 100;
 
@@ -29,11 +32,11 @@ public class AccompanyingVisualSpawner : MonoBehaviour {
     public bool VisualExists => spawnedObjectInstance != null;
     public void spawnAndMove(RectTransform middleRT, PropertyInfo propertyInfo) {
         spawnedObjectInstance = spawnCorrectPrefab(propertyInfo);
-        RectTransform spawnedRT = (RectTransform)spawnedObjectInstance.transform;
-        adjustSpawnedPivotAndPosition(spawnedRT);
-        scaleSpawnedObject(middleRT, spawnedRT);
-        float goalX = getGoalX(middleRT, spawnedRT);
-        StartCoroutine(moveObject(spawnedRT, goalX));
+        spawnAndMove(middleRT);
+    }
+    public void spawnAndMove(RectTransform middleRT, BuildingType buildingType) {
+        spawnedObjectInstance = spawnCorrectPrefab(buildingType);
+        spawnAndMove(middleRT);
     }
     public void removeObjectAndResetPosition() {
         Destroy(spawnedObjectInstance);
@@ -51,6 +54,13 @@ public class AccompanyingVisualSpawner : MonoBehaviour {
 
 
     #region private
+    private void spawnAndMove(RectTransform middleRT) {
+        RectTransform spawnedRT = (RectTransform)spawnedObjectInstance.transform;
+        adjustSpawnedPivotAndPosition(spawnedRT);
+        scaleSpawnedObject(middleRT, spawnedRT);
+        float goalX = getGoalX(middleRT, spawnedRT);
+        StartCoroutine(moveObject(spawnedRT, goalX));
+    }
     private GameObject spawnCorrectPrefab(PropertyInfo propertyInfo) {
         GameObject spawnedGameObject;
         if (propertyInfo is EstateInfo) spawnedGameObject = Instantiate(estateDeedPrefab, rt);
@@ -59,6 +69,13 @@ public class AccompanyingVisualSpawner : MonoBehaviour {
         PropertyDeed propertyDeed = spawnedGameObject.GetComponent<PropertyDeed>();
         propertyDeed.setupCard(propertyInfo);        
         return spawnedGameObject;
+    }
+    private GameObject spawnCorrectPrefab(BuildingType buildingType) {
+        GameObject prefab = buildingType == BuildingType.HOUSE
+            ? auctionHousePrefab
+            : auctionHotelPrefab;
+        GameObject instance = Instantiate(prefab, rt);
+        return instance;
     }
     private void adjustSpawnedPivotAndPosition(RectTransform spawnedRT) {
         spawnedRT.pivot = new Vector2(0f, 0.5f);

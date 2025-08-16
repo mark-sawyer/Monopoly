@@ -76,8 +76,15 @@ public class CameraController : MonoBehaviour {
         if (remaining > 0.001f) Camera.main.orthographicSize -= perFrameZoom;
         else {
             Camera.main.orthographicSize = GAME_ZOOM;
+            Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             cameraUpdate = nothing;
         }
+    }
+    private void rotateToDefault(Quaternion startRotation, Quaternion targetRotation, float startAngle, float anglePerFrame) {
+        float remaining = Quaternion.Angle(Camera.main.transform.rotation, targetRotation);
+        float angleSoFar = startAngle - remaining;
+        float lerpProp = (angleSoFar + anglePerFrame) / startAngle;
+        Camera.main.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, lerpProp);
     }
     private void rotation(Quaternion startRotation, Quaternion targetRotation, float startAngle, float anglePerFrame) {
         float remaining = Quaternion.Angle(Camera.main.transform.rotation, targetRotation);
@@ -109,7 +116,7 @@ public class CameraController : MonoBehaviour {
             Quaternion targetRotation = getGoalQuaternion(0);
             float currentAngle = Quaternion.Angle(currentRotation, targetRotation);
             float anglePerFrame = currentAngle / START_GAME_ANIMATION_FRAMES;
-            Action rotationAction = () => rotation(currentRotation, targetRotation, currentAngle, anglePerFrame);
+            Action rotationAction = () => rotateToDefault(currentRotation, targetRotation, currentAngle, anglePerFrame);
             return rotationAction;
         }
 

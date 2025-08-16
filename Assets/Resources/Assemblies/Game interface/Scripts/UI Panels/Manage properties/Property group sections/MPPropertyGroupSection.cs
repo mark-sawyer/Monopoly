@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public abstract class MPPropertyGroupSection : MonoBehaviour {
     #region MonoBehaviour
     private void Start() {
         ManagePropertiesEventHub.Instance.sub_ManagePropertiesVisualRefresh(refreshVisuals);
+        ManagePropertiesEventHub.Instance.sub_ManagePropertiesVisualClear(turnOffVisuals);
         setupTransitionPanel(TransitionPanelColour);
         setup();
     }
@@ -34,20 +36,13 @@ public abstract class MPPropertyGroupSection : MonoBehaviour {
         panelRecolourer.recolour(colour);
         transitionPanel.SetParent(transitionPanelParent);
     }
-    private void refreshVisuals(PlayerInfo playerInfo) {
-        void adjustPanelOpacity(int owned) {
-            Color panelColour = panelTransform.GetChild(0).GetChild(0).GetComponent<Image>().color;
-            panelColour.a = owned == 0 ? NO_PROPERTIES_ALPHA : 1f;
-            PanelRecolourer panelRecolourer = new PanelRecolourer(panelTransform);
-            panelRecolourer.recolour(panelColour);
-        }
-
+    private void refreshVisuals(PlayerInfo playerInfo, bool isRegular) {
         int owned = 0;
         foreach (MPPropertySection propertySection in propertySections) {
             PropertyInfo propertyInfo = propertySection.PropertyInfo;
             if (playerInfo.ownsProperty(propertyInfo)) {
                 propertySection.gameObject.SetActive(true);
-                propertySection.refreshVisual(playerInfo);
+                propertySection.getCorrectRefreshFunction(isRegular)(playerInfo);
                 owned++;
             }
             else {
@@ -55,6 +50,19 @@ public abstract class MPPropertyGroupSection : MonoBehaviour {
             }
         }
         adjustPanelOpacity(owned);
+    }
+    private void turnOffVisuals() {
+        foreach (MPPropertySection propertySection in propertySections) {
+            PropertyInfo propertyInfo = propertySection.PropertyInfo;
+            propertySection.gameObject.SetActive(false);
+        }
+        adjustPanelOpacity(0);
+    }
+    private void adjustPanelOpacity(int owned) {
+        Color panelColour = panelTransform.GetChild(0).GetChild(0).GetComponent<Image>().color;
+        panelColour.a = owned == 0 ? NO_PROPERTIES_ALPHA : 1f;
+        PanelRecolourer panelRecolourer = new PanelRecolourer(panelTransform);
+        panelRecolourer.recolour(panelColour);
     }
     #endregion
 }

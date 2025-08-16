@@ -28,6 +28,7 @@ public class OwnedIconReceiver : GhostReceiver {
         turnOnNextReceiver();
         tradeEventHub.call_TradeChanged();
         gameObject.SetActive(false);
+        SoundOnlyEventHub.Instance.call_Put();
     }
     public void changeIcon(UnplacedOwnedIcon newOwnedIconSource) {
         ownedIconSource = newOwnedIconSource;

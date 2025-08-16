@@ -8,6 +8,7 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private Image transparentCover;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private GraphicRaycaster graphicRaycaster;
     #endregion
     #region External references
     [SerializeField] private GameColour panelColour;
@@ -29,6 +30,7 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
     private void Start() {
         goalScale = 1f;
         wipeInProgress = false;
+
     }
     private void Update() {
         if (Selected) return;
@@ -70,30 +72,25 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         this.playerInfo = playerInfo;
         tokenIcon.setup(playerInfo.Token, playerInfo.Colour);
     }
-    public void selectFromDrop() {
-        ManagePropertiesPanel.Instance.setSelectedPlayer(playerInfo);
+    public void selectQuietly() {
+        ManagePropertiesPanel.Instance.SelectedPlayer = playerInfo;
         canvas.sortingOrder = 2;
         setAlphaOfCover(0f);
-    }
-    public void selectFromIconClick() {
-        PlayerInfo priorSelectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
-        ManagePropertiesTokenIcon priorIcon = ManagePropertiesPanel.Instance.getManagePropertiesTokenIcon(priorSelectedPlayer);
-        priorIcon.deselect();
-        ManagePropertiesPanel.Instance.setSelectedPlayer(playerInfo);
-        canvas.sortingOrder = 2;
-        setAlphaOfCover(0f);
-        StartCoroutine(pulse());
-        ManagePropertiesEventHub.Instance.call_TokenSelectedInManageProperties(playerInfo);
-        wipeInProgress = true;
-        WaitFrames.Instance.beforeAction(
-            2 * FrameConstants.MANAGE_PROPERTIES_WIPE_UP + 2,
-            () => wipeInProgress = false
-        );
     }
     public void deselect() {
         canvas.sortingOrder = 1;
         goalScale = 1f;
         setAlphaOfCover(UNSELECTED_COLOUR);
+    }
+    public void setForBuildingAuctionWinner(PlayerInfo auctionWinner) {
+        if (auctionWinner == playerInfo) selectQuietly();
+        else {
+            deselect();
+            graphicRaycaster.enabled = false;
+        }
+    }
+    public void setForRegularSelection() {
+        graphicRaycaster.enabled = true;
     }
     #endregion
 
@@ -119,6 +116,21 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         }
         transform.parent.localScale = new Vector3(SELECTED_SCALE, SELECTED_SCALE, SELECTED_SCALE);
     }
-    private bool Selected => ManagePropertiesPanel.Instance.SelectedPlayer == playerInfo;
+    private void selectFromIconClick() {
+        PlayerInfo priorSelectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
+        ManagePropertiesTokenIcon priorIcon = ManagePropertiesPanel.Instance.getManagePropertiesTokenIcon(priorSelectedPlayer);
+        priorIcon.deselect();
+        ManagePropertiesPanel.Instance.SelectedPlayer = playerInfo;
+        canvas.sortingOrder = 2;
+        setAlphaOfCover(0f);
+        StartCoroutine(pulse());
+        ManagePropertiesEventHub.Instance.call_WipeToCommence(playerInfo);
+        wipeInProgress = true;
+        WaitFrames.Instance.beforeAction(
+            2 * FrameConstants.MANAGE_PROPERTIES_WIPE_UP + 2,
+            () => wipeInProgress = false
+        );
+    }
+    private bool Selected => ManagePropertiesPanel.Instance.SelectedPlayer == playerInfo;    
     #endregion
 }

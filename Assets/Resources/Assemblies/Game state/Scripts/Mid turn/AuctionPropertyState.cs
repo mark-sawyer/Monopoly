@@ -10,13 +10,13 @@ internal class AuctionPropertyState : State {
     #region State
     public override void enterState() {
         auctionOver = false;
+        AuctionEventHub.Instance.sub_AllAuctionsFinished(auctionOverListening);
 
         Queue<PropertyInfo> propertyInfos = new();
         PropertyInfo propertyLandedOn = ((PropertySpaceInfo)GameState.game.TurnPlayer.SpaceInfo).PropertyInfo;
         propertyInfos.Enqueue(propertyLandedOn);
         ScreenOverlayEventHub.Instance.call_AuctionsBegin(propertyInfos);
-
-        AuctionEventHub.Instance.sub_AllAuctionsFinished(auctionOverListening);
+        SoundOnlyEventHub.Instance.call_OtherChime();
     }
     public override bool exitConditionMet() {
         return auctionOver;

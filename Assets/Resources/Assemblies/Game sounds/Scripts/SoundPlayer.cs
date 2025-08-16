@@ -6,6 +6,7 @@ public class SoundPlayer : MonoBehaviour {
     #region RandomAudioClips
     [SerializeField] private RandomAudioClip diceSounds;
     [SerializeField] private RandomAudioClip paperSounds;
+    [SerializeField] private RandomAudioClip wailSounds;
     #endregion
     #region AudioClips
     [SerializeField] private AudioClip buttonDown;
@@ -22,15 +23,19 @@ public class SoundPlayer : MonoBehaviour {
     [SerializeField] private AudioClip whistle;
     [SerializeField] private AudioClip dunDuuuuuuun;
     [SerializeField] private AudioClip punch;
-    [SerializeField] private AudioClip dramaticWail;
+    [SerializeField] private AudioClip put;
+    [SerializeField] private AudioClip take;
+    [SerializeField] private AudioClip swoop;
+    [SerializeField] private AudioClip otherChime;
+    [SerializeField] private AudioClip flourish;
+    [SerializeField] private AudioClip[] risingBoms;
+    [SerializeField] private AudioClip brickLaying;
     #endregion
 
 
 
     #region MonoBehaviour
     private void Start() {
-        //musicAudioSource.Play();
-
         SoundOnlyEventHub soundEvents = SoundOnlyEventHub.Instance;
         UIEventHub uiEvents = UIEventHub.Instance;
         UIPipelineEventHub uiPipelineEventHub = UIPipelineEventHub.Instance;
@@ -45,6 +50,13 @@ public class SoundPlayer : MonoBehaviour {
         soundEvents.sub_Punch(play_Punch);
         soundEvents.sub_Whistle(play_Whistle);
         soundEvents.sub_CardDrawn(play_CardDrawn);
+        soundEvents.sub_Put(play_Put);
+        soundEvents.sub_Take(play_Take);
+        soundEvents.sub_Swoop(play_Swoop);
+        soundEvents.sub_OtherChime(play_OtherChime);
+        soundEvents.sub_Flourish(play_Flourish);
+        soundEvents.sub_RisingBom(play_Bom);
+        soundEvents.sub_BrickLaying(play_BrickLaying);
 
         uiEvents.sub_CardDrop(play_CardDrop);
         uiEvents.sub_MoneyAppearOrDisappear(play_PaperSound);
@@ -64,6 +76,8 @@ public class SoundPlayer : MonoBehaviour {
         screenEvents.sub_IncomeTaxQuestion(play_QuestionChime);
         screenEvents.sub_ResolveMortgage(play_QuestionChime);
         screenEvents.sub_ResolveDebt(play_DunDuuuuuuun);
+
+        uiEvents.sub_SoundButtonClicked(toggleMusic);
     }
     #endregion
 
@@ -73,6 +87,9 @@ public class SoundPlayer : MonoBehaviour {
     private void playSound(AudioClip sound) {
         soundEffectAudioSource.PlayOneShot(sound);
     }
+    private void toggleMusic() {
+        musicAudioSource.enabled = !musicAudioSource.enabled;
+    }
     #endregion
 
 
@@ -80,6 +97,7 @@ public class SoundPlayer : MonoBehaviour {
     #region Event listeners
     private void play_DiceSound() => playSound(diceSounds.getRandom());
     private void play_PaperSound() => playSound(paperSounds.getRandom());
+    private void play_DramaticWail() => playSound(wailSounds.getRandom());
 
     private void play_buttonDown() => playSound(buttonDown);
     private void play_buttonUp() => playSound(buttonUp);
@@ -101,6 +119,14 @@ public class SoundPlayer : MonoBehaviour {
     private void play_Whistle() => playSound(whistle);
     private void play_DunDuuuuuuun(DebtInfo x) => playSound(dunDuuuuuuun);
     private void play_Punch() => playSound(punch);
-    private void play_DramaticWail() => playSound(dramaticWail);
+    private void play_Put() => playSound(put);
+    private void play_Take() => playSound(take);
+    private void play_Swoop() => playSound(swoop);
+    private void play_OtherChime() => playSound(otherChime);
+    private void play_Flourish() => playSound(flourish);
+    private void play_Bom(int i) {
+        playSound(risingBoms[i - 1]);
+    }
+    private void play_BrickLaying() => playSound(brickLaying);
     #endregion
 }

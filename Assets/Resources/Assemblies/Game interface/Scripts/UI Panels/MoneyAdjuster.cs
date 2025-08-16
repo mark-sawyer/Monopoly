@@ -62,6 +62,10 @@ public class MoneyAdjuster : MonoBehaviour {
     public void setStartingMoney(int startingMoney) {
         changeMoneyVisual(startingMoney);
     }
+    public void interruptWobbling() {
+        StopAllCoroutines();
+        frontText.color = new Color(0f, 0f, 0f);
+    }
     #endregion
 
 

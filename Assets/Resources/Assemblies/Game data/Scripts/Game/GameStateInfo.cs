@@ -15,4 +15,5 @@ public interface GameStateInfo {
     public SpaceInfo getSpaceInfo(int index);
     public int getSpaceIndex(SpaceInfo space);
     public PlayerInfo getPlayerInfo(int index);
+    public bool IsTestGame { get; }
 }

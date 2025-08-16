@@ -46,6 +46,7 @@ public class HandshakeButton : MonoBehaviour {
 
     #region public
     public void thisButtonClicked() {
+        SoundOnlyEventHub.Instance.call_RisingBom(index);
         tradeEventHub.call_NumberedButtonClicked(index);
         button.interactable = false;
         StartCoroutine(expandAndDisappear());

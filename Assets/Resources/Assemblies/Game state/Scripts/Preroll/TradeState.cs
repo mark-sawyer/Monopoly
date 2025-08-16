@@ -14,6 +14,8 @@ internal class TradeState : State {
         tradeFinalised = false;
         UIPipelineEventHub.Instance.sub_TradeTerminated(backButtonListening);
         UIPipelineEventHub.Instance.sub_TradeLockedIn(tradeFinalisedListening);
+
+        SoundOnlyEventHub.Instance.call_OtherChime();
     }
     public override bool exitConditionMet() {
         return backButtonPressed || tradeFinalised;

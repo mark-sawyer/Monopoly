@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class MPPropertySection : MonoBehaviour {
@@ -16,6 +17,11 @@ public abstract class MPPropertySection : MonoBehaviour {
     #region PropertySection
     public PropertyInfo PropertyInfo => (PropertyInfo)propertySO;
     public virtual void setup() { }
-    public abstract void refreshVisual(PlayerInfo playerInfo);
+    public abstract void refreshRegularVisual(PlayerInfo playerInfo);
+    public abstract void refreshBuildingPlacementVisual(PlayerInfo playerInfo);
+    public Action<PlayerInfo> getCorrectRefreshFunction(bool isRegular) {
+        if (isRegular) return refreshRegularVisual;
+        else return refreshBuildingPlacementVisual;
+    }
     #endregion
 }

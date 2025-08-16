@@ -7,6 +7,8 @@ public class AuctionEventHub : ScriptableObject {
     [SerializeField] private PlayerIntEvent bidMade;
     [SerializeField] private GameEvent auctionFinished;
     [SerializeField] private GameEvent allAuctionsFinished;
+    [SerializeField] private GameEvent auctionBuildingsBackButtonClicked;
+    [SerializeField] private GameEvent auctionRemainingBuildingsButtonClicked;
 
 
 
@@ -29,6 +31,8 @@ public class AuctionEventHub : ScriptableObject {
     public void call_BidMade(PlayerInfo playerInfo, int bid) => bidMade.invoke(playerInfo, bid);
     public void call_AuctionFinished() => auctionFinished.invoke();
     public void call_AllAuctionsFinished() => allAuctionsFinished.invoke();
+    public void call_AuctionBuildingsBackButtonClicked() => auctionBuildingsBackButtonClicked.invoke();
+    public void call_AuctionRemainingBuildingsButtonClicked() => auctionRemainingBuildingsButtonClicked.invoke();
     #endregion
 
 
@@ -37,6 +41,8 @@ public class AuctionEventHub : ScriptableObject {
     public void sub_BidMade(Action<PlayerInfo, int> a) => bidMade.Listeners += a;
     public void sub_AuctionFinished(Action a) => auctionFinished.Listeners += a;
     public void sub_AllAuctionsFinished(Action a) => allAuctionsFinished.Listeners += a;
+    public void sub_AuctionBuildingsBackButtonClicked(Action a) => auctionBuildingsBackButtonClicked.Listeners += a;
+    public void sub_AuctionRemainingBuildingsButtonClicked(Action a) => auctionRemainingBuildingsButtonClicked.Listeners += a;
     #endregion
 
 
@@ -45,5 +51,7 @@ public class AuctionEventHub : ScriptableObject {
     public void unsub_AuctionFinished(Action a) => auctionFinished.Listeners -= a;
     public void unsub_AllAuctionsFinished(Action a) => allAuctionsFinished.Listeners -= a;
     public void unsub_BidMade(Action<PlayerInfo, int> a) => bidMade.Listeners -= a;
+    public void unsub_AuctionBuildingsBackButtonClicked(Action a) => auctionBuildingsBackButtonClicked.Listeners -= a;
+    public void unsub_AuctionRemainingBuildingsButtonClicked(Action a) => auctionRemainingBuildingsButtonClicked.Listeners -= a;
     #endregion
 }

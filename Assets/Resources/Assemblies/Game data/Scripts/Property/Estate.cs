@@ -62,6 +62,8 @@ internal class Estate : Property, EstateInfo {
             return bankHasHouse;
         }
     }
+    public bool CanAddHouse => CanAddBuilding && buildings.Count < 4;
+    public bool CanAddHotel => CanAddBuilding && buildings.Count == 4;
     public bool CanRemoveBuilding {
         get {
             int buildingCount = buildings.Count;

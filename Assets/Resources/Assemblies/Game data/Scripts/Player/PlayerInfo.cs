@@ -25,4 +25,5 @@ public interface PlayerInfo : Creditor {
     public bool ownsProperty(PropertyInfo propertyInfo);
     public bool HasLostTurn { get; }
     public bool ToMoveAfterJailDebtResolving { get; }
+    public int buildingsCanAdd(BuildingType buildingType);
 }

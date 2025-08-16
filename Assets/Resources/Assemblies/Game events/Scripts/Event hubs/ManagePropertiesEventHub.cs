@@ -6,8 +6,10 @@ public class ManagePropertiesEventHub : ScriptableObject {
     private static ManagePropertiesEventHub instance;
     [SerializeField] private GameEvent backButtonPressed;
     [SerializeField] private GameEvent managePropertiesOpened;
-    [SerializeField] private PlayerEvent managePropertiesVisualRefresh;
-    [SerializeField] private PlayerEvent tokenSelectedInManageProperties;
+    [SerializeField] private PlayerBoolEvent managePropertiesVisualRefresh;
+    [SerializeField] private GameEvent managePropertiesVisualClear;
+    [SerializeField] private PlayerEvent wipeToCommence;
+    [SerializeField] private GameEvent remainingBuildingsPlaced;
 
 
 
@@ -29,8 +31,10 @@ public class ManagePropertiesEventHub : ScriptableObject {
     #region Invoking
     public void call_BackButtonPressed() => backButtonPressed.invoke();
     public void call_ManagePropertiesOpened() => managePropertiesOpened.invoke();
-    public void call_ManagePropertiesVisualRefresh(PlayerInfo playerInfo) => managePropertiesVisualRefresh.invoke(playerInfo);
-    public void call_TokenSelectedInManageProperties(PlayerInfo playerInfo) => tokenSelectedInManageProperties.invoke(playerInfo);
+    public void call_ManagePropertiesVisualRefresh(PlayerInfo playerInfo, bool isRegular) => managePropertiesVisualRefresh.invoke(playerInfo, isRegular);
+    public void call_ManagePropertiesVisualClear() => managePropertiesVisualClear.invoke();
+    public void call_WipeToCommence(PlayerInfo playerInfo) => wipeToCommence.invoke(playerInfo);
+    public void call_RemainingBuildingsPlaced() => remainingBuildingsPlaced.invoke();
     #endregion
 
 
@@ -38,8 +42,10 @@ public class ManagePropertiesEventHub : ScriptableObject {
     #region Subscribing
     public void sub_BackButtonPressed(Action a) => backButtonPressed.Listeners += a;
     public void sub_ManagePropertiesOpened(Action a) => managePropertiesOpened.Listeners += a;
-    public void sub_ManagePropertiesVisualRefresh(Action<PlayerInfo> a) => managePropertiesVisualRefresh.Listeners += a;
-    public void sub_TokenSelectedInManageProperties(Action<PlayerInfo> a) => tokenSelectedInManageProperties.Listeners += a;
+    public void sub_ManagePropertiesVisualRefresh(Action<PlayerInfo, bool> a) => managePropertiesVisualRefresh.Listeners += a;
+    public void sub_ManagePropertiesVisualClear(Action a) => managePropertiesVisualClear.Listeners += a;
+    public void sub_WipeToCommence(Action<PlayerInfo> a) => wipeToCommence.Listeners += a;
+    public void sub_RemainingBuildingsPlaced(Action a) => remainingBuildingsPlaced.Listeners += a;
     #endregion
 
 
@@ -47,6 +53,7 @@ public class ManagePropertiesEventHub : ScriptableObject {
     #region Unsubscribing
     public void unsub_BackButtonPressed(Action a) => backButtonPressed.Listeners -= a;
     public void unsub_ManagePropertiesOpened(Action a) => managePropertiesOpened.Listeners -= a;
-    public void unsub_ManagePropertiesVisualRefresh(Action<PlayerInfo> a) => managePropertiesVisualRefresh.Listeners -= a;
+    public void unsub_ManagePropertiesVisualRefresh(Action<PlayerInfo, bool> a) => managePropertiesVisualRefresh.Listeners -= a;
+    public void unsub_RemainingBuildingsPlaced(Action a) => remainingBuildingsPlaced.Listeners -= a;
     #endregion
 }

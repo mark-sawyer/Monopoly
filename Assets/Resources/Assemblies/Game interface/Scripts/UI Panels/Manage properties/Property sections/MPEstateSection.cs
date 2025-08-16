@@ -18,7 +18,7 @@ public class MPEstateSection : MPPropertySection {
     private EstateGroupColours estateGroupColours;
     #region Updating visuals
     [SerializeField] private BuyOrUnmortgageBuildingButton buyOrUnmortgageBuildingMono;
-    [SerializeField] private SellOrMortgageBuildingButton sellOrMortgageBuildingMono;
+    [SerializeField] private MPSellOrMortgageBuildingButton sellOrMortgageBuildingMono;
     [SerializeField] private BuildingIcons buildingIcons;
     #endregion
 
@@ -70,9 +70,14 @@ public class MPEstateSection : MPPropertySection {
         setBackgroundImageColour();
         setButtonColours();
     }
-    public override void refreshVisual(PlayerInfo playerInfo) {
+    public override void refreshRegularVisual(PlayerInfo playerInfo) {
         buyOrUnmortgageBuildingMono.adjustToAppropriateOption(playerInfo);
         sellOrMortgageBuildingMono.adjustToAppropriateOption();
+        buildingIcons.updateIcons();
+    }
+    public override void refreshBuildingPlacementVisual(PlayerInfo playerInfo) {
+        sellOrMortgageBuildingMono.adjustForBuildingPlacementMode();
+        buyOrUnmortgageBuildingMono.adjustForBuildingPlacementMode(playerInfo, ManagePropertiesPanel.Instance.BuildingTypeAuctioned);
         buildingIcons.updateIcons();
     }
     #endregion

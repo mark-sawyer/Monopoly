@@ -49,6 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1842ddf449f95d4f9de3381b95c8d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerUI: {fileID: 0}
+  gameUI: {fileID: 0}
+  manageProperties: {fileID: 0}
+  tokens: {fileID: 0}
+  stateManager: {fileID: 0}
 --- !u!114 &5980539943454841028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +82,7 @@ MonoBehaviour:
   soundEffectAudioSource: {fileID: 6678790370182696534}
   diceSounds: {fileID: 11400000, guid: 33dae0fd90b5e6440bbe0949e141b13a, type: 2}
   paperSounds: {fileID: 11400000, guid: 0ccc68c46df979a4c962dad5dae4e8f3, type: 2}
+  wailSounds: {fileID: 11400000, guid: 44117984a96758f47b621f99b1b536e4, type: 2}
   buttonDown: {fileID: 8300000, guid: 17ab4dded1b4c2a48983974e6b3c478d, type: 3}
   buttonUp: {fileID: 8300000, guid: 0c4f360cb02a08742aa13b829f913e2f, type: 3}
   cardDrawn: {fileID: 8300000, guid: 0e1c523eb677add488203adee84897c0, type: 3}
@@ -91,7 +97,16 @@ MonoBehaviour:
   whistle: {fileID: 8300000, guid: 46835630ab6f1de4183eb23ffef8a129, type: 3}
   dunDuuuuuuun: {fileID: 8300000, guid: c454bb09a6e54854194b71e45fde74b7, type: 3}
   punch: {fileID: 8300000, guid: a3fb518b5fba3ac48b50957220b32416, type: 3}
-  dramaticWail: {fileID: 8300000, guid: fa970a4084f0e334983ec2efeafe5bec, type: 3}
+  put: {fileID: 8300000, guid: 89687180c6c38f54daf541644adfaae1, type: 3}
+  take: {fileID: 8300000, guid: fb1e2da4dab24354cbb94256ecb11dbe, type: 3}
+  swoop: {fileID: 8300000, guid: f4f72c436134cf24fa980cfc2a5584f3, type: 3}
+  otherChime: {fileID: 8300000, guid: f7d4e8cd4882d6d4aa8787f4c223dab3, type: 3}
+  flourish: {fileID: 8300000, guid: 325aa2c92d78d5744a411fc32db7d396, type: 3}
+  risingBoms:
+  - {fileID: 8300000, guid: 682e3bcb04fc33e44a01e193e280f5fd, type: 3}
+  - {fileID: 8300000, guid: faa52a56a472a9545bd93991b54a05b3, type: 3}
+  - {fileID: 8300000, guid: e859db22db2f9f8429b283a965816d21, type: 3}
+  brickLaying: {fileID: 8300000, guid: 539febbaa5f53654dbac1444b961391a, type: 3}
 --- !u!82 &9086906944283943817
 AudioSource:
   m_ObjectHideFlags: 0

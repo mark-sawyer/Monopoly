@@ -15,6 +15,19 @@ internal class EstateGroup : ScriptableObject, EstateGroupInfo {
         return Array.IndexOf(estates, estate);
     }
     internal Estate[] Estates => estates;
+    internal int housesPlayerCanAdd(Player player) {
+        if (propertiesOwnedByPlayer(player) < NumberOfPropertiesInGroup) return 0;
+        if (MortgageExists) return 0;
+        if (HotelExists) return estates.Count(x => x.BuildingCount == 3);
+
+        return (4 * NumberOfPropertiesInGroup) - TotalBuildings;
+    }
+    internal int hotelsPlayerCanAdd(Player player) {
+        if (propertiesOwnedByPlayer(player) < NumberOfPropertiesInGroup) return 0;
+        if (MortgageExists) return 0;
+
+        return estates.Count(x => x.BuildingCount == 4);
+    }
     #endregion
 
 

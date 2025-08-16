@@ -155,6 +155,24 @@ internal class Player : PlayerInfo {
     }
     public bool HasLostTurn { get; internal set; }
     public bool ToMoveAfterJailDebtResolving { get; internal set; }
+    public int buildingsCanAdd(BuildingType buildingType) {
+        List<EstateGroup> estateGroupsWithMonopolies = properties
+            .OfType<Estate>()
+            .Select(x => x.EstateGroupInfo)
+            .Distinct()
+            .Where(x => x.propertiesOwnedByPlayer(this) == x.NumberOfPropertiesInGroup)
+            .Cast<EstateGroup>()
+            .ToList();
+
+        int canAdd = 0;
+        foreach (EstateGroup estateGroup in estateGroupsWithMonopolies) {
+            canAdd += buildingType == BuildingType.HOUSE
+                ? estateGroup.housesPlayerCanAdd(this)
+                : estateGroup.hotelsPlayerCanAdd(this);
+        }
+
+        return canAdd;
+    }
     #endregion
 
 

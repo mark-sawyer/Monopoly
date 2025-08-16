@@ -20,6 +20,7 @@ public class TokenReceiver : GhostReceiver {
 
     #region GhostReceiver
     public override void receiveGhost(DraggableGhost ghost) {
+        SoundOnlyEventHub.Instance.call_Put();
         TokenDraggableGhost tokenGhost = (TokenDraggableGhost)ghost;
         token = tokenGhost.Token;
         upButton.interactable = true;

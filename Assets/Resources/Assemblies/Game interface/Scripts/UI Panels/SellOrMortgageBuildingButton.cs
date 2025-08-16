@@ -41,12 +41,7 @@ public abstract class SellOrMortgageBuildingButton : MonoBehaviour {
     protected EstateInfo EstateInfo => estateInfo;
     protected ButtonMode CurrentMode => buttonMode;
     protected Button Button => button;
-    #endregion
-
-
-
-    #region private
-    private void toggleMode(ButtonMode mode) {
+    protected void toggleMode(ButtonMode mode) {
         buttonMode = mode;
         if (mode == ButtonMode.SELL) {
             sellGameObject.SetActive(true);

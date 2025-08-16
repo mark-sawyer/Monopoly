@@ -32,6 +32,7 @@ internal class Game : GameStateInfo, GamePlayer {
         initialiseUtilities();
         players = initialisePlayers(tokens, colours);
         turnPlayer = players[0];
+        IsTestGame = false;
     }
     internal Game(
         int playerNum,
@@ -48,6 +49,7 @@ internal class Game : GameStateInfo, GamePlayer {
         initialiseUtilities();
         players = initialisePlayers(playerNum, startingMoney);
         turnPlayer = players[0];
+        IsTestGame = true;
     }
     internal int getPlayerIndex(PlayerInfo player) {
         return Array.FindIndex(players, x => x == player);
@@ -78,6 +80,7 @@ internal class Game : GameStateInfo, GamePlayer {
     public CardInfo DrawnCard => drawnCard;
     public bool TradeIsEmpty => proposedTrade.IsEmpty;
     public TradeInfo CompletedTrade => completedTrade;
+    public bool IsTestGame { get; set; }
     #endregion
 
 

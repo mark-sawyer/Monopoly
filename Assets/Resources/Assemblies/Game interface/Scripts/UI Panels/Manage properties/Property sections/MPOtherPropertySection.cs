@@ -16,7 +16,7 @@ public class MPOtherPropertySection : MPPropertySection {
     public override void setup() {
         propertyInfo = PropertyInfo;
     }
-    public override void refreshVisual(PlayerInfo playerInfo) {
+    public override void refreshRegularVisual(PlayerInfo playerInfo) {
         if (propertyInfo.IsMortgaged) {
             buttonText.text = "UNMORTGAGE " + propertyTypeString;
             moneyText.text = "$" + propertyInfo.UnmortgageCost.ToString();
@@ -34,11 +34,25 @@ public class MPOtherPropertySection : MPPropertySection {
             button.interactable = true;
         }
     }
+    public override void refreshBuildingPlacementVisual(PlayerInfo playerInfo) {
+        if (propertyInfo.IsMortgaged) {
+            buttonText.text = "UNMORTGAGE " + propertyTypeString;
+            moneyText.text = "$" + propertyInfo.UnmortgageCost.ToString();
+            mortgagedGameObject.SetActive(true);
+            button.interactable = false;
+        }
+        else {
+            buttonText.text = "MORTGAGE " + propertyTypeString;
+            moneyText.text = "$" + propertyInfo.MortgageValue.ToString();
+            mortgagedGameObject.SetActive(false);
+            button.interactable = false;
+        }
+    }
     #endregion
 
 
 
-    #region
+    #region public
     public void buttonClicked() {
         PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
         if (propertyInfo.IsMortgaged) {
@@ -49,7 +63,9 @@ public class MPOtherPropertySection : MPPropertySection {
             DataEventHub.Instance.call_PropertyMortgaged(propertyInfo);
             DataUIPipelineEventHub.Instance.call_MoneyAdjustment(selectedPlayer, propertyInfo.MortgageValue);
         }
-        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer);
+
+        bool regularRefresh = ManagePropertiesPanel.Instance.IsRegularRefreshMode;
+        ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer, regularRefresh);
     }
     #endregion
 }

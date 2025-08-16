@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AutoButton : MonoBehaviour {
     [SerializeField] private CameraController cameraController;
     [SerializeField] private Button button;
+    [SerializeField] private TextMeshProUGUI onOffText;
     private bool autoOn;
 
 
@@ -12,7 +14,7 @@ public class AutoButton : MonoBehaviour {
     private void Start() {
         CameraEventHub.Instance.sub_RotationStarted(rotationStarted);
         CameraEventHub.Instance.sub_RotationFinished(rotationFinished);
-        CameraEventHub.Instance.sub_AutoCameraButtonClicked(() => toggleAuto(true));
+        CameraEventHub.Instance.sub_AutoCameraButtonClicked(() => toggleAuto(!autoOn));
         CameraEventHub.Instance.sub_ClockwiseTurnClicked(() => toggleAuto(false));
         CameraEventHub.Instance.sub_CounterClockwiseTurnClicked(() => toggleAuto(false));
         toggleAuto(true);
@@ -24,16 +26,17 @@ public class AutoButton : MonoBehaviour {
     #region private
     private void toggleAuto(bool toggle) {
         autoOn = toggle;
-        button.interactable = false;
         if (toggle) {
             UIEventHub.Instance.unsub_PrerollStateStarting(turnOnButton);
             UIEventHub.Instance.unsub_PrerollStateEnding(turnOffButton);
             cameraController.turnOnAutoMode();
+            onOffText.text = "ON";
         }
         else {
             UIEventHub.Instance.sub_PrerollStateStarting(turnOnButton);
             UIEventHub.Instance.sub_PrerollStateEnding(turnOffButton);
             cameraController.turnOffAutoMode();
+            onOffText.text = "OFF";
         }
     }
     private void turnOnButton() {

@@ -63,6 +63,10 @@ internal class Bank : BankInfo, Creditor {
 public interface BankInfo {
     public int HousesRemaining { get; }
     public int HotelsRemaining { get; }
+    public int buildingsRemaining(BuildingType buildingType) {
+        if (buildingType == BuildingType.HOUSE) return HousesRemaining;
+        else return HotelsRemaining;
+    }
     public IEnumerable<TradableInfo> EliminatedPlayerAssets { get; }
     public DebtInfo EliminatedPlayerDebt { get; }
 }
