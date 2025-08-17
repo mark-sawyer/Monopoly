@@ -21,6 +21,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
     [SerializeField] private PlayerPropertyEvent resolveMortgage;
     [SerializeField] private PlayerEvent winnerAnnounced;
     [SerializeField] private BuildingTypeEvent auctionBuildingsBegins;
+    [SerializeField] private GameEvent escapeMenu;
     #endregion
     #region Other
     [SerializeField] private GameEvent purchaseYesClicked;
@@ -31,6 +32,7 @@ public class ScreenOverlayEventHub : ScriptableObject {
     [SerializeField] private GameEvent removeScreenOverlay;
     [SerializeField] private GameEvent removeScreenOverlayKeepCover;
     [SerializeField] private GameEvent selectedTokensChanged;
+    [SerializeField] private GameEvent continueClicked;
     #endregion
 
 
@@ -76,6 +78,8 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void call_PlayerNumberConfirmed(int players) => playerNumberConfirmed.invoke(players);
     public void call_SelectedTokensChanged() => selectedTokensChanged.invoke();
     public void call_WinnerAnnounced(PlayerInfo winner) => winnerAnnounced.invoke(winner);
+    public void call_EscapeMenu() => escapeMenu.invoke();
+    public void call_ContinueClicked() => continueClicked.invoke();
     #endregion
 
 
@@ -105,6 +109,8 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void sub_PlayerNumberConfirmed(Action<int> a) => playerNumberConfirmed.Listeners += a;
     public void sub_SelectedTokensChanged(Action a) => selectedTokensChanged.Listeners += a;
     public void sub_WinnerAnnounced(Action<PlayerInfo> a) => winnerAnnounced.Listeners += a;
+    public void sub_EscapeMenu(Action a) => escapeMenu.Listeners += a;
+    public void sub_ContinueClicked(Action a) => continueClicked.Listeners += a;
     #endregion
 
 
@@ -119,5 +125,6 @@ public class ScreenOverlayEventHub : ScriptableObject {
     public void unsub_KeepMortgageClicked(Action a) => keepMortgageClicked.Listeners -= a;
     public void unsub_UnmortgageClicked(Action a) => unmortgageClicked.Listeners -= a;
     public void unsub_SelectedTokensChanged(Action a) => selectedTokensChanged.Listeners -= a;
+    public void unsub_ContinueClicked(Action a) => continueClicked.Listeners -= a;
     #endregion
 }

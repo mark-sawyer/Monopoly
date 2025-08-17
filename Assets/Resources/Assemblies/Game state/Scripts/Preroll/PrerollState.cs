@@ -8,6 +8,7 @@ internal class PrerollState : State {
     private bool tradeClicked;
     private bool goToPreroll;
     private bool goToResolveDebt;
+    private bool goToEscapeMenu;
 
 
 
@@ -20,11 +21,13 @@ internal class PrerollState : State {
             tradeClicked = false;
             goToPreroll = false;
             goToResolveDebt = false;
+            goToEscapeMenu = false;
         }
         void subscribeToEvents() {
             UIPipelineEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
             ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(managePropertiesListener);
             ScreenOverlayEventHub.Instance.sub_TradeOpened(tradeListener);
+            UIEventHub.Instance.sub_EscapeClicked(escapeListener);
         }
         void adjustTurnPlayer() {
             DiceInfo diceInfo = GameState.game.DiceInfo;
@@ -50,14 +53,19 @@ internal class PrerollState : State {
             || tradeClicked
             || goToJail
             || goToPreroll
-            || goToResolveDebt;
+            || goToResolveDebt
+            || goToEscapeMenu;
     }
     public override void exitState() {
+        UIEventHub.Instance.call_PrerollStateEnding();
+
         UIPipelineEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.unsub_ManagePropertiesOpened(managePropertiesListener);
         ScreenOverlayEventHub.Instance.unsub_TradeOpened(tradeListener);
+        UIEventHub.Instance.unsub_EscapeClicked(escapeListener);
     }
     public override State getNextState() {
+        if (goToEscapeMenu) return allStates.getState<EscapeMenuState>();
         if (goToMoveToken) return allStates.getState<MoveTokenState>();
         if (managePropertiesClicked) return allStates.getState<ManagePropertiesState>();
         if (tradeClicked) return allStates.getState<TradeState>();
@@ -72,7 +80,6 @@ internal class PrerollState : State {
 
     #region Listeners
     private void rollButtonListener() {
-        UIEventHub.Instance.call_PrerollStateEnding();
         getTurnTokenVisual().prepForMoving();
         WaitFrames.Instance.beforeAction(
             InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING,
@@ -80,11 +87,9 @@ internal class PrerollState : State {
         );
     }
     private void managePropertiesListener() {
-        UIEventHub.Instance.call_PrerollStateEnding();
         managePropertiesClicked = true;
     }
     private void tradeListener() {
-        UIEventHub.Instance.call_PrerollStateEnding();
         tradeClicked = true;
     }
     #endregion
@@ -176,6 +181,9 @@ internal class PrerollState : State {
     private TokenVisual getTurnTokenVisual() {
         int turnIndex = GameState.game.TurnPlayer.Index;
         return TokenVisualManager.Instance.getTokenVisual(turnIndex);
+    }
+    private void escapeListener() {
+        goToEscapeMenu = true;
     }
     #endregion
 }

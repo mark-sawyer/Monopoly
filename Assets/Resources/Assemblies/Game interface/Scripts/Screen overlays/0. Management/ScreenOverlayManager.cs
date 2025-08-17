@@ -18,6 +18,7 @@ public class ScreenOverlayManager : MonoBehaviour {
     [SerializeField] private GameObject buildingsAuctionManager;
     [SerializeField] private GameObject resolveMortgage;
     [SerializeField] private GameObject winnerAnnouncement;
+    [SerializeField] private GameObject escapeMenu;
     #endregion
     #region Private attributes
     [SerializeField] private GameObject[] chancePrefabs;
@@ -62,6 +63,7 @@ public class ScreenOverlayManager : MonoBehaviour {
         events.sub_AuctionBuildingsBegins((BuildingType bt) => startScreenOverlay(buildingsAuctionManager, bt, 1));
         events.sub_ResolveMortgage((PlayerInfo pl, PropertyInfo pr) => startScreenOverlay(resolveMortgage, pl, pr, alpha));
         events.sub_WinnerAnnounced((PlayerInfo winner) => startScreenOverlay(winnerAnnouncement, winner, alpha));
+        events.sub_EscapeMenu(() => startScreenOverlay(escapeMenu, alpha));
     }
     #endregion
 

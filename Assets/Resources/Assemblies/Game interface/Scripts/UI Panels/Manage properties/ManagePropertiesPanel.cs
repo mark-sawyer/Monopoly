@@ -18,6 +18,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
     private PlayerInfo selectedPlayer;
     private float offScreenY;
     private float onScreenY;
+    private List<ManagePropertiesTokenIcon> tokenIcons;
     #endregion
     #region Numeric constants
     private const float VERTICAL_PROPORTION = 800f / 1080f;
@@ -54,10 +55,10 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
         setScaleAndPosition();
         IsRegularRefreshMode = true;
-        ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(() => drop(GameState.game.TurnPlayer));
-        ManagePropertiesEventHub.Instance.sub_BackButtonPressed(raise);
-        AuctionEventHub.Instance.sub_AuctionRemainingBuildingsButtonClicked(raiseForAuction);
-        AuctionEventHub.Instance.sub_AuctionBuildingsBackButtonClicked(() => drop(selectedPlayer));
+        ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(() => dropFromPreroll(GameState.game.TurnPlayer));
+        ManagePropertiesEventHub.Instance.sub_BackButtonPressed(backButtonPressed);
+        AuctionEventHub.Instance.sub_AuctionRemainingBuildingsButtonClicked(() => StartCoroutine(raiseCoroutine()));
+        AuctionEventHub.Instance.sub_AuctionBuildingsBackButtonClicked(() => dropFromPreroll(selectedPlayer));
     }
     #endregion
 
@@ -68,30 +69,21 @@ public class ManagePropertiesPanel : MonoBehaviour {
         get { return selectedPlayer; }
         set {
             selectedPlayer = value;
+            foreach (ManagePropertiesTokenIcon mpTokenIcon in tokenIcons) {
+                if (mpTokenIcon.PlayerInfo == selectedPlayer) mpTokenIcon.select();
+                else mpTokenIcon.deselect();
+            }
             moneyAdjuster.adjustMoneyQuietly(value);
             moneyAdjuster.interruptWobbling();
         }
     }
     public BuildingType BuildingTypeAuctioned { get; set; }
     public bool IsRegularRefreshMode { get; private set; }
-    public ManagePropertiesTokenIcon getManagePropertiesTokenIcon(PlayerInfo playerInfo) {
-        ManagePropertiesTokenIcon returnManagePropertiesTokenIcon = null;
-        for (int i = 0; i < GameState.game.ActivePlayers.Count(); i++) {
-            Transform child = tokenIconContainerRT.GetChild(i);
-            ManagePropertiesTokenIcon managePropertiesTokenIcon = child.GetChild(0).GetComponent<ManagePropertiesTokenIcon>();
-            PlayerInfo thisPlayerInfo = managePropertiesTokenIcon.PlayerInfo;
-            if (thisPlayerInfo == playerInfo) {
-                returnManagePropertiesTokenIcon = managePropertiesTokenIcon;
-                break;
-            }
-        }
-        return returnManagePropertiesTokenIcon;
-    }
     public IEnumerator returnForBuildingPlacement(PlayerInfo auctionWinner) {
-        foreach (PlayerInfo activePlayer in GameState.game.ActivePlayers) {
-            ManagePropertiesTokenIcon managePropertiesTokenIcon = getManagePropertiesTokenIcon(activePlayer);
-            managePropertiesTokenIcon.setForBuildingAuctionWinner(auctionWinner);
+        foreach (ManagePropertiesTokenIcon mpTokenIcon in tokenIcons) {
+            mpTokenIcon.disableRaycaster();
         }
+        SelectedPlayer = auctionWinner;
         IsRegularRefreshMode = false;
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualClear();
         backButton.interactable = false;
@@ -102,9 +94,8 @@ public class ManagePropertiesPanel : MonoBehaviour {
     public void resetAfterBuildingPlacement() {
         IsRegularRefreshMode = true;
         backButton.interactable = true;
-        foreach (PlayerInfo activePlayer in GameState.game.ActivePlayers) {
-            ManagePropertiesTokenIcon managePropertiesTokenIcon = getManagePropertiesTokenIcon(activePlayer);
-            managePropertiesTokenIcon.setForRegularSelection();
+        foreach (ManagePropertiesTokenIcon mpTokenIcon in tokenIcons) {
+            mpTokenIcon.enableRaycaster();
         }
     }
     #endregion
@@ -112,46 +103,43 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
 
     #region private
-    private void drop(PlayerInfo selectectedPlayer) {
-        void setTokenIcons(PlayerInfo selectedPlayer) {
-            ManagePropertiesTokenIcon getComponent(int i) {
-                return tokenIconContainerRT.GetChild(i).GetChild(0).GetComponent<ManagePropertiesTokenIcon>();
-            }
+    private void dropFromPreroll(PlayerInfo selectectedPlayer) {
+        tokenIcons = getTokenIcons();
+        SelectedPlayer = GameState.game.TurnPlayer;
 
-            IEnumerable<PlayerInfo> activePlayers = GameState.game.ActivePlayers;
-            for (int i = 0; i < GameConstants.MAX_PLAYERS; i++) {
-                if (i < activePlayers.Count()) {
-                    PlayerInfo activePlayer = activePlayers.ElementAt(i);
-                    ManagePropertiesTokenIcon managePropertiesTokenIcon = getComponent(i);
-                    managePropertiesTokenIcon.setup(activePlayer);
-                    if (activePlayer == selectedPlayer) {
-                        managePropertiesTokenIcon.selectQuietly();
-                    }
-                    else {
-                        managePropertiesTokenIcon.deselect();
-                    }
-                }
-                else tokenIconContainerRT.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-
-
-        setTokenIcons(selectectedPlayer);
         UIEventHub.Instance.call_FadeScreenCoverIn(1f);
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectectedPlayer, IsRegularRefreshMode);
         UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisual);
         StartCoroutine(dropCoroutine(true));
     }
-    private void adjustMoneyVisual(PlayerInfo playerInfo) {
-        moneyAdjuster.adjustMoney(playerInfo);
-    }
-    private void raise() {
+    private void backButtonPressed() {
+        tokenIcons = null;
         UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisual);
         UIEventHub.Instance.call_FadeScreenCoverOut();
         StartCoroutine(raiseCoroutine());
     }
-    private void raiseForAuction() {
-        StartCoroutine(raiseCoroutine());
+    private void adjustMoneyVisual(PlayerInfo playerInfo) {
+        moneyAdjuster.adjustMoney(playerInfo);
+    }
+    private List<ManagePropertiesTokenIcon> getTokenIcons() {
+        ManagePropertiesTokenIcon getComponent(int i) {
+            return tokenIconContainerRT.GetChild(i).GetChild(0).GetComponent<ManagePropertiesTokenIcon>();
+        }
+
+
+        List<ManagePropertiesTokenIcon> tokenIcons = new();
+        IEnumerable<PlayerInfo> activePlayers = GameState.game.ActivePlayers;
+        for (int i = 0; i < GameConstants.MAX_PLAYERS; i++) {
+            if (i < activePlayers.Count()) {
+                PlayerInfo activePlayer = activePlayers.ElementAt(i);
+                ManagePropertiesTokenIcon managePropertiesTokenIcon = getComponent(i);
+                managePropertiesTokenIcon.setup(activePlayer);
+                tokenIcons.Add(managePropertiesTokenIcon);
+            }
+            else tokenIconContainerRT.GetChild(i).gameObject.SetActive(false);
+        }
+
+        return tokenIcons;
     }
     #endregion
 

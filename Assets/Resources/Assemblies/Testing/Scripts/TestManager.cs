@@ -4,12 +4,15 @@ public class TestManager : MonoBehaviour {
     private void Awake() {
         int playerNum = 5;
         GameFactory gameFactory = new GameFactory();
-        gameFactory.makeTestGame(playerNum, 50000);
+        gameFactory.makeTestGame(playerNum, 10000);
         GameState.game = gameFactory.GameStateInfo;
         GameDataUpdater gameDataUpdater = new GameDataUpdater(gameFactory.GamePlayer);
     }
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            UIEventHub.Instance.call_EscapeClicked();
+        }
+        else if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
             DataUIPipelineEventHub.Instance.call_MoneyAdjustment(GameState.game.TurnPlayer, 50);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad9)) {

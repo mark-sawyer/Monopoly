@@ -31,6 +31,7 @@ public class PlayerBeingEliminated : MonoBehaviour {
         yield return WaitFrames.Instance.frames(10);
 
         SoundOnlyEventHub.Instance.call_DramaticWail();
+        StartCoroutine(removeTokenFromBoard());
         StartCoroutine(becomeSicklyPanelColour());
         StartCoroutine(becomeSicklyTokenColours());
         StartCoroutine(rotateToken());
@@ -49,6 +50,13 @@ public class PlayerBeingEliminated : MonoBehaviour {
 
 
     #region Coroutines
+    private IEnumerator removeTokenFromBoard() {
+        PlayerPanel playerPanel = GetComponent<PlayerPanel>();
+        PlayerInfo playerInfo = playerPanel.PlayerInfo;
+        int index = playerInfo.Index;
+        TokenVisual tokenVisual = TokenVisualManager.Instance.getTokenVisual(index);
+        yield return tokenVisual.removeFromBoard();
+    }
     private IEnumerator pulseOffAllPropertyIcons() {
         foreach (PropertyGroupIcon propertyGroupIcon in propertyGroupIcons) {
             if (!propertyGroupIcon.IsOn) continue;

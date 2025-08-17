@@ -23,6 +23,7 @@ public class UIEventHub : ScriptableObject {
     [SerializeField] private GameEvent allExpiredPropertyVisualsUpdated;
     [SerializeField] private GameEvent playerEliminatedAnimationOver;
     [SerializeField] private GameEvent soundButtonClicked;
+    [SerializeField] private GameEvent escapeClicked;
 
 
 
@@ -60,6 +61,7 @@ public class UIEventHub : ScriptableObject {
     public void call_AllExpiredPropertyVisualsUpdated() => allExpiredPropertyVisualsUpdated.invoke();
     public void call_PlayerEliminatedAnimationOver() => playerEliminatedAnimationOver.invoke();
     public void call_SoundButtonClicked() => soundButtonClicked.invoke();
+    public void call_EscapeClicked() => escapeClicked.invoke();
     #endregion
 
 
@@ -83,6 +85,7 @@ public class UIEventHub : ScriptableObject {
     public void sub_AllExpiredPropertyVisualsUpdated(Action a) => allExpiredPropertyVisualsUpdated.Listeners += a;
     public void sub_PlayerEliminatedAnimationOver(Action a) => playerEliminatedAnimationOver.Listeners += a;
     public void sub_SoundButtonClicked(Action a) => soundButtonClicked.Listeners += a;
+    public void sub_EscapeClicked(Action a) => escapeClicked.Listeners += a;
     #endregion
 
 
@@ -97,5 +100,6 @@ public class UIEventHub : ScriptableObject {
     public void unsub_TradingPlayersConfirmed(Action a) => tradingPlayersConfirmed.Listeners -= a;
     public void unsub_AllExpiredPropertyVisualsUpdated(Action a) => allExpiredPropertyVisualsUpdated.Listeners -= a;
     public void unsub_PlayerEliminatedAnimationOver(Action a) => playerEliminatedAnimationOver.Listeners += a;
+    public void unsub_EscapeClicked(Action a) => escapeClicked.Listeners += a;
     #endregion
 }

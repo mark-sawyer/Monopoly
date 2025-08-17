@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -167,7 +168,7 @@ public class TokenVisual : MonoBehaviour {
         }
         #endregion
     }
-    #region Editor references
+    #region Internal references
     [SerializeField] private SpriteRenderer tokenSpriteRenderer;
     [SerializeField] private SpriteRenderer silouhetteSpriteRenderer;
     #endregion
@@ -244,6 +245,28 @@ public class TokenVisual : MonoBehaviour {
         SpaceVisual currentSpace = CurrentSpace;
         beginScaleChange(currentSpace.getScale(PlayerInfo));
         tokenMover.changeAttractivePoint(currentSpace.getMinorPoint(playerInfo));
+    }
+    public IEnumerator removeFromBoard() {
+        Func<float, float> getAlpha = LinearValue.getFunc(1f, 0f, FrameConstants.DYING_PLAYER);
+
+        Color tokenColour = tokenColours.TokenColour;
+        Color silouhetteColour = tokenColours.OutlineColour;
+        for (int i = 1; i <= FrameConstants.DYING_PLAYER; i++) {
+            float alpha = getAlpha(i);
+            tokenColour.a = alpha;
+            silouhetteColour.a = alpha;
+            tokenSpriteRenderer.color = tokenColour;
+            silouhetteSpriteRenderer.color = silouhetteColour;
+            yield return null;
+        }
+
+        for (int i = 0; i < GameConstants.TOTAL_SPACES; i++) {
+            SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(i);
+            spaceVisual.alertRemainingTokensToMove();
+        }
+
+        tokenMover.changeAttractivePoint(Vector3.zero);
+        transform.position = Vector3.zero;
     }
     #endregion
 

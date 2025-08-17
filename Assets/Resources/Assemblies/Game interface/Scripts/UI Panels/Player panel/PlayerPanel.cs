@@ -19,6 +19,7 @@ public class PlayerPanel : MonoBehaviour {
 
 
     #region public
+    public PlayerInfo PlayerInfo => playerInfo;
     public PropertyGroupIcon[] PropertyGroupIcons => propertyGroupIcons;
     public bool NeedsMoneyUpdate {
         get {

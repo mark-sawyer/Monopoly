@@ -34,7 +34,10 @@ internal class TradeState : State {
 
     #region private
     private void backButtonListening() {
-        backButtonPressed = true;
+        WaitFrames.Instance.beforeAction(
+            FrameConstants.SCREEN_COVER_TRANSITION,
+            () => backButtonPressed = true
+        );        
     }
     private void tradeFinalisedListening() {
         tradeFinalised = true;

@@ -33,7 +33,7 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
 
     }
     private void Update() {
-        if (Selected) return;
+        if (IsSelected) return;
 
         float currentScale = transform.parent.localScale.x;
         float difference = goalScale - currentScale;
@@ -46,19 +46,19 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
 
     #region Interfaces
     public void OnPointerEnter(PointerEventData eventData) {
-        if (Selected) return;
+        if (IsSelected) return;
 
         setAlphaOfCover(HOVER_COLOUR);
         goalScale = SELECTED_SCALE;
     }
     public void OnPointerExit(PointerEventData eventData) {
-        if (Selected) return;
+        if (IsSelected) return;
 
         setAlphaOfCover(UNSELECTED_COLOUR);
         goalScale = 1f;
     }
     public void OnPointerClick(PointerEventData eventData) {
-        if (Selected || wipeInProgress) return;
+        if (IsSelected || wipeInProgress) return;
 
         selectFromIconClick();
     }
@@ -72,9 +72,9 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         this.playerInfo = playerInfo;
         tokenIcon.setup(playerInfo.Token, playerInfo.Colour);
     }
-    public void selectQuietly() {
-        ManagePropertiesPanel.Instance.SelectedPlayer = playerInfo;
+    public void select() {
         canvas.sortingOrder = 2;
+        goalScale = 1f;
         setAlphaOfCover(0f);
     }
     public void deselect() {
@@ -82,14 +82,10 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         goalScale = 1f;
         setAlphaOfCover(UNSELECTED_COLOUR);
     }
-    public void setForBuildingAuctionWinner(PlayerInfo auctionWinner) {
-        if (auctionWinner == playerInfo) selectQuietly();
-        else {
-            deselect();
-            graphicRaycaster.enabled = false;
-        }
+    public void disableRaycaster() {
+        graphicRaycaster.enabled = false;
     }
-    public void setForRegularSelection() {
+    public void enableRaycaster() {
         graphicRaycaster.enabled = true;
     }
     #endregion
@@ -117,12 +113,7 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         transform.parent.localScale = new Vector3(SELECTED_SCALE, SELECTED_SCALE, SELECTED_SCALE);
     }
     private void selectFromIconClick() {
-        PlayerInfo priorSelectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
-        ManagePropertiesTokenIcon priorIcon = ManagePropertiesPanel.Instance.getManagePropertiesTokenIcon(priorSelectedPlayer);
-        priorIcon.deselect();
-        ManagePropertiesPanel.Instance.SelectedPlayer = playerInfo;
-        canvas.sortingOrder = 2;
-        setAlphaOfCover(0f);
+        ManagePropertiesPanel.Instance.SelectedPlayer = PlayerInfo;
         StartCoroutine(pulse());
         ManagePropertiesEventHub.Instance.call_WipeToCommence(playerInfo);
         wipeInProgress = true;
@@ -131,6 +122,6 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
             () => wipeInProgress = false
         );
     }
-    private bool Selected => ManagePropertiesPanel.Instance.SelectedPlayer == playerInfo;    
+    private bool IsSelected => ManagePropertiesPanel.Instance.SelectedPlayer == playerInfo;    
     #endregion
 }

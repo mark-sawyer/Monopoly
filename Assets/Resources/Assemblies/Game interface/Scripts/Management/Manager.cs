@@ -23,6 +23,16 @@ public class Manager : MonoBehaviour {
 
 
 
+    #region MonoBehaviour
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            UIEventHub.Instance.call_EscapeClicked();
+        }
+    }
+    #endregion
+
+
+
     #region public
     public void startGame(List<Token> tokens, List<PlayerColour> colours) {
         GameFactory gameFactory = new GameFactory();

@@ -20,6 +20,7 @@ public class SoundOnlyEventHub : ScriptableObject {
     [SerializeField] private GameEvent flourish;
     [SerializeField] private IntEvent risingBom;
     [SerializeField] private GameEvent brickLaying;
+    [SerializeField] private GameEvent dub;
 
 
 
@@ -55,6 +56,7 @@ public class SoundOnlyEventHub : ScriptableObject {
     public void call_Flourish() => flourish.invoke();
     public void call_RisingBom(int i) => risingBom.invoke(i);
     public void call_BrickLaying() => brickLaying.invoke();
+    public void call_Dub() => dub.invoke();
     #endregion
 
 
@@ -75,5 +77,6 @@ public class SoundOnlyEventHub : ScriptableObject {
     public void sub_Flourish(Action a) => flourish.Listeners += a;
     public void sub_RisingBom(Action<int> a) => risingBom.Listeners += a;
     public void sub_BrickLaying(Action a) => brickLaying.Listeners += a;
+    public void sub_Dub(Action a) => dub.Listeners += a;
     #endregion
 }

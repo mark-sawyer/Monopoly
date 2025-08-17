@@ -30,6 +30,7 @@ public class SoundPlayer : MonoBehaviour {
     [SerializeField] private AudioClip flourish;
     [SerializeField] private AudioClip[] risingBoms;
     [SerializeField] private AudioClip brickLaying;
+    [SerializeField] private AudioClip dub;
     #endregion
 
 
@@ -57,6 +58,7 @@ public class SoundPlayer : MonoBehaviour {
         soundEvents.sub_Flourish(play_Flourish);
         soundEvents.sub_RisingBom(play_Bom);
         soundEvents.sub_BrickLaying(play_BrickLaying);
+        soundEvents.sub_Dub(play_Dub);
 
         uiEvents.sub_CardDrop(play_CardDrop);
         uiEvents.sub_MoneyAppearOrDisappear(play_PaperSound);
@@ -128,5 +130,6 @@ public class SoundPlayer : MonoBehaviour {
         playSound(risingBoms[i - 1]);
     }
     private void play_BrickLaying() => playSound(brickLaying);
+    private void play_Dub() => playSound(dub);
     #endregion
 }
