@@ -18,6 +18,7 @@ public class UnplacedOwnedIcon : DraggableGhostSource {
         int ghostIndex = transform.childCount - 1;
         Transform ghostTransform = transform.GetChild(ghostIndex);
         ghostTransform.SetParent(transform.parent);
+        TradePanel.Instance.getToBeTradedColumn(playerInfo).toggleHighlightSquare(true);
         gameObject.SetActive(false);
     }
     #endregion

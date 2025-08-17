@@ -30,7 +30,7 @@ public class OwnedIconSetup {
         if (tradableInfo is PropertyInfo propertyInfo) {
             if (propertyInfo is EstateInfo estateInfo) setupEstate(estateInfo);
             else if (propertyInfo is UtilityInfo utilityInfo) setupUtility(utilityInfo);
-            else setupRailroad();
+            else setupRailroad(propertyInfo.IsMortgaged);
         }
         else {
             setupCard((CardInfo)tradableInfo);
@@ -48,11 +48,11 @@ public class OwnedIconSetup {
         Color backgroundColour = estateGroupColours.MainColour.Colour;
         Color textBorderColour = estateGroupColours.HighlightColour.Colour;
 
-        ownedIconIconManager.setupHouse(textBorderColour);
+        ownedIconIconManager.setupHouse(textBorderColour, estateInfo.IsMortgaged);
         setColours(backgroundColour, textBorderColour);
     }
-    private void setupRailroad() {
-        ownedIconIconManager.setupTrain();
+    private void setupRailroad(bool isMortgaged) {
+        ownedIconIconManager.setupTrain(isMortgaged);
         setColours(
             netc.RailroadBackgroundColour,
             netc.RailroadTextBorderColour
@@ -64,12 +64,12 @@ public class OwnedIconSetup {
         Color backgroundColour;
         Color textBorderColour;
         if (utilityType == UtilityType.WATER) {
-            ownedIconIconManager.setupWater();
+            ownedIconIconManager.setupWater(utilityInfo.IsMortgaged);
             backgroundColour = netc.WaterBackgroundColour;
             textBorderColour = netc.WaterTextBorderColour;
         }
         else {
-            ownedIconIconManager.setupElectricity();
+            ownedIconIconManager.setupElectricity(utilityInfo.IsMortgaged);
             backgroundColour = netc.ElectricityBackgroundColour;
             textBorderColour = netc.ElectricityTextBorderColour;
         }

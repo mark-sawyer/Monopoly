@@ -9,14 +9,25 @@ public class TradePanel : MonoBehaviour {
 
 
 
+    #region Singleton boilerplate
+    public static TradePanel Instance { get; private set; }
+    private void OnEnable() {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+    private void OnDestroy() {
+        if (Instance == this) Instance = null;
+        TradeEventHub.Instance.unsub_TradeChanged(callNewProposedTrade);
+        TradeEventHub.Instance.unsub_HandshakeComplete(finaliseTrade);
+    }
+    #endregion
+
+
+
     #region MonoBehaviour
     private void Start() {
         TradeEventHub.Instance.sub_TradeChanged(callNewProposedTrade);
         TradeEventHub.Instance.sub_HandshakeComplete(finaliseTrade);
-    }
-    private void OnDestroy() {
-        TradeEventHub.Instance.unsub_TradeChanged(callNewProposedTrade);
-        TradeEventHub.Instance.unsub_HandshakeComplete(finaliseTrade);
     }
     #endregion
 
@@ -29,6 +40,10 @@ public class TradePanel : MonoBehaviour {
 
         leftSide.setup(leftPlayerInfo);
         rightSide.setup(rightPlayerInfo);
+    }
+    public ToBeTradedColumn getToBeTradedColumn(PlayerInfo playerInfo) {
+        if (playerInfo == leftPlayer) return leftSide.ToBeTradedColumn;
+        else return rightSide.ToBeTradedColumn;
     }
     #endregion
 

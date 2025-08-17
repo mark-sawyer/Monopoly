@@ -24,6 +24,7 @@ public class PlacedOwnedIcon : DraggableGhostSource {
         emptySpace.SetActive(true);
         gameObject.SetActive(false);
         toBeTradedColumn.shiftIconsUp();
+        toBeTradedColumn.toggleHighlightSquare(true);
         tradeEventHub.call_TradeChanged();
     }
     #endregion

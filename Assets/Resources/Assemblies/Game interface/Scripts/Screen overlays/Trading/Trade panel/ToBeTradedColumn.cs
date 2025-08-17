@@ -44,6 +44,24 @@ public class ToBeTradedColumn : MonoBehaviour {
     public int inputMoney() {
         return tradeMoneyInput.getEnteredInput();
     }
+    public void toggleHighlightSquare(bool toggle) {
+        if (toggle) {
+            foreach (ToBeTradedSpace toBeTradedSpace in toBeTradedSpaces) {
+                if (toBeTradedSpace.ReceiverOn) {
+                    toBeTradedSpace.toggleHighlight(true);
+                    break;
+                }
+            }
+        }
+        else {
+            foreach (ToBeTradedSpace toBeTradedSpace in toBeTradedSpaces) {
+                if (toBeTradedSpace.HighlightOn) {
+                    toBeTradedSpace.toggleHighlight(false);
+                    break;
+                }
+            }
+        }
+    }
     #endregion
 
 

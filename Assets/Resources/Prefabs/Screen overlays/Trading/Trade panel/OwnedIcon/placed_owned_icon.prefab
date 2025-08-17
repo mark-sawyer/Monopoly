@@ -7,9 +7,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1338472779467147042, guid: bf1e00ff2f742aa43ab99bbbfae0e6cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815741403850736149, guid: bf1e00ff2f742aa43ab99bbbfae0e6cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4906626976296706810, guid: bf1e00ff2f742aa43ab99bbbfae0e6cc, type: 3}
       propertyPath: m_Name
-      value: owned_icon_placed
+      value: placed_owned_icon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5824494050735465396, guid: bf1e00ff2f742aa43ab99bbbfae0e6cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418840839449478846, guid: bf1e00ff2f742aa43ab99bbbfae0e6cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074838134590202058, guid: bf1e00ff2f742aa43ab99bbbfae0e6cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8599287723070438871, guid: bf1e00ff2f742aa43ab99bbbfae0e6cc, type: 3}
       propertyPath: m_Pivot.x
@@ -119,6 +139,7 @@ MonoBehaviour:
   backgroundColourImage: {fileID: 5201002203436832291}
   iconGetter: {fileID: 5265602934119264158}
   squarePanelTransform: {fileID: 7194589331636519315}
+  toBeTradedColumn: {fileID: 0}
 --- !u!114 &5201002203436832291 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2725554155404321763, guid: bf1e00ff2f742aa43ab99bbbfae0e6cc, type: 3}
@@ -138,7 +159,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed07ba4b0ba7f5f4e9b68f5281e7ff76, type: 3}
+  m_Script: {fileID: 11500000, guid: f2bbc8f599097fc4ba6313b982bca4ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6317317335636660413 stripped

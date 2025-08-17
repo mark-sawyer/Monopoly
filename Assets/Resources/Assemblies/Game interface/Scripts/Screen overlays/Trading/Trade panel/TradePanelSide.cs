@@ -12,6 +12,7 @@ public class TradePanelSide : MonoBehaviour {
 
 
     #region public
+    public ToBeTradedColumn ToBeTradedColumn => toBeTradedColumn;
     public List<TradableInfo> ProposedTradables => toBeTradedColumn.getProposedTradables();
     public int InputMoney => toBeTradedColumn.inputMoney();
     public bool AgreeCompressed => !agreeButton.interactable;
