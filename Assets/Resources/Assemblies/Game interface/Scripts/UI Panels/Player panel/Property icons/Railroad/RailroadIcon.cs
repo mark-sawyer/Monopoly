@@ -20,7 +20,35 @@ public class RailroadIcon : PropertyGroupIcon {
 
 
     #region MonoBehaviour
-    private void Start() {
+    //private void Start() {
+    //    railroadGroupInfo = (RailroadGroupInfo)railroadGroupSO;
+    //    propertyInfos = new PropertyInfo[4] {
+    //        railroadGroupInfo.getRailroadInfo(0),
+    //        railroadGroupInfo.getRailroadInfo(1),
+    //        railroadGroupInfo.getRailroadInfo(2),
+    //        railroadGroupInfo.getRailroadInfo(3)
+    //    };
+    //
+    //    Color iconColour = propertyGroupIconColour.Colour;
+    //    iconColour.a = ZeroPropertiesAlpha;
+    //    trainImage.color = iconColour;
+    //
+    //    Color panelColour = propertyGroupPanelColour.Colour;
+    //    panelColour.a = ZeroPropertiesAlpha;
+    //    updatePanelColour(panelColour);
+    //
+    //    railroadIconState = new OtherPropertyGroupIconState(propertyInfos);
+    //    for (int i = 0; i < 4; i++) {
+    //        railroadHighlights[i].setup(railroadGroupInfo.getRailroadInfo(i), PlayerInfo);
+    //    }
+    //}
+    #endregion
+
+
+
+    #region PropertyGroupIcon
+    public override void setup(PlayerInfo playerInfo) {
+        PlayerInfo = playerInfo;
         railroadGroupInfo = (RailroadGroupInfo)railroadGroupSO;
         propertyInfos = new PropertyInfo[4] {
             railroadGroupInfo.getRailroadInfo(0),
@@ -41,12 +69,8 @@ public class RailroadIcon : PropertyGroupIcon {
         for (int i = 0; i < 4; i++) {
             railroadHighlights[i].setup(railroadGroupInfo.getRailroadInfo(i), PlayerInfo);
         }
+        updateIcon();
     }
-    #endregion
-
-
-
-    #region PropertyGroupIcon
     public override IEnumerator fadeAway() {
         Color panelColour = transform.GetChild(0).GetChild(0).GetComponent<Image>().color;
         Color trainColour = trainImage.color;

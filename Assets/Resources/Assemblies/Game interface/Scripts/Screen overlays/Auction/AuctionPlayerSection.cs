@@ -7,6 +7,7 @@ public class AuctionPlayerSection : MonoBehaviour {
     [SerializeField] private BidInput bidInput;
     [SerializeField] private BidButton bidButton;
     [SerializeField] private GameObject highlightPanel;
+    [SerializeField] private PropertyGroupIconSection propertyGroupIconSection;
     private PlayerInfo playerInfo;
 
 
@@ -29,6 +30,7 @@ public class AuctionPlayerSection : MonoBehaviour {
         moneyAdjuster.adjustMoneyQuietly(playerInfo);
         bidInput.setup(playerInfo);
         bidButton.setup(playerInfo);
+        propertyGroupIconSection.setup(playerInfo);
         setupHighlight();
     }
     #endregion

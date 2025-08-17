@@ -12,13 +12,14 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
 
 
     #region public
-    public PlayerInfo PlayerInfo => playerInfo;
+    public PlayerInfo PlayerInfo {
+        get {  return playerInfo; }
+        protected set {  playerInfo = value; }
+    }
     public abstract bool NeedsToUpdate { get; }
     public abstract bool IsOn { get; }
     public abstract IEnumerator fadeAway();
-    public void setup(PlayerInfo playerInfo) {
-        this.playerInfo = playerInfo;
-    }
+    public abstract void setup(PlayerInfo playerInfo);
     public IEnumerator pulseAndUpdate() {
         yield return WaitFrames.Instance.frames(10);  // Helps to make it time nicer with the pop sound.
         yield return pulseAndChangeIcon(updateIcon);

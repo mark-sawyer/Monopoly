@@ -148,7 +148,7 @@ public class PlayerPanelManager : MonoBehaviour {
     private void updatePropertyIcon(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         int playerIndex = playerInfo.Index;
         PlayerPanel playerPanel = getPlayerPanel(playerIndex);
-        StartCoroutine(playerPanel.updatePropertyIconVisual(playerInfo, propertyInfo));
+        StartCoroutine(playerPanel.PropertyGroupIconSection.updatePropertyIconVisual(playerInfo, propertyInfo));
     }
     private void updateAllExpiredPropertyIcons() {
         List<PropertyGroupIcon> iconsToUpdate = new();
@@ -157,7 +157,7 @@ public class PlayerPanelManager : MonoBehaviour {
             if (!playerInfo.IsActive) continue;
 
             PlayerPanel playerPanel = playerPanels[i];
-            List<PropertyGroupIcon> needingUpdateOnThisPanel = playerPanel.propertyGroupIconsNeedingAnUpdate();
+            List<PropertyGroupIcon> needingUpdateOnThisPanel = playerPanel.PropertyGroupIconSection.propertyGroupIconsNeedingAnUpdate();
             foreach (PropertyGroupIcon PGI in needingUpdateOnThisPanel) iconsToUpdate.Add(PGI);
         }
 
@@ -206,16 +206,16 @@ public class PlayerPanelManager : MonoBehaviour {
         UIEventHub.Instance.call_UpdateExpiredBoardVisuals();
     }
     private IEnumerator updateIconsFromTradeSimultaneously(PlayerInfo playerOne, PlayerInfo playerTwo) {
-        PropertyGroupIcon[] getIcons(PlayerInfo playerInfo) {
+        PropertyGroupIconSection getIcons(PlayerInfo playerInfo) {
             PlayerPanel playerPanel = getPlayerPanel(playerInfo.Index);
-            return playerPanel.PropertyGroupIcons;
+            return playerPanel.PropertyGroupIconSection;
         }
-        PropertyGroupIcon[] iconsOne = getIcons(playerOne);
-        PropertyGroupIcon[] iconsTwo = getIcons(playerTwo);
+        PropertyGroupIconSection groupIconsOne = getIcons(playerOne);
+        PropertyGroupIconSection groupIconsTwo = getIcons(playerTwo);
         for (int i = 0; i < 10; i++) {
-            PropertyGroupIcon iconOne = iconsOne[i];
+            PropertyGroupIcon iconOne = groupIconsOne.getIcon(i);
             if (!iconOne.NeedsToUpdate) continue;
-            PropertyGroupIcon iconTwo = iconsTwo[i];
+            PropertyGroupIcon iconTwo = groupIconsTwo.getIcon(i);
 
             SoundOnlyEventHub.Instance.call_AppearingPop();
             StartCoroutine(iconOne.pulseAndUpdate());

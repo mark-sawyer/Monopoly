@@ -15,7 +15,27 @@ public class UtilityIcon : PropertyGroupIcon {
 
 
     #region MonoBehaviour
-    private void Start() {
+    //private void Start() {
+    //    utilityGroupInfo = (UtilityGroupInfo)utilityGroupSO;
+    //    propertyInfos = new PropertyInfo[2] {
+    //        utilityGroupInfo.getUtilityInfo(0),
+    //        utilityGroupInfo.getUtilityInfo(1)
+    //    };
+    //    iconColourSetter.setup(ZeroPropertiesAlpha);
+    //    iconColourSetter.setColourOff(UtilityType.ELECTRICITY);
+    //    iconColourSetter.setColourOff(UtilityType.WATER);
+    //    Color panelColour = propertyGroupPanelColour.Colour;
+    //    panelColour.a = ZeroPropertiesAlpha;
+    //    updatePanelColour(panelColour);
+    //    utilityIconState = new OtherPropertyGroupIconState(propertyInfos);
+    //}
+    #endregion
+
+
+
+    #region PropertyGroupIcon
+    public override void setup(PlayerInfo playerInfo) {
+        PlayerInfo = playerInfo;
         utilityGroupInfo = (UtilityGroupInfo)utilityGroupSO;
         propertyInfos = new PropertyInfo[2] {
             utilityGroupInfo.getUtilityInfo(0),
@@ -28,12 +48,8 @@ public class UtilityIcon : PropertyGroupIcon {
         panelColour.a = ZeroPropertiesAlpha;
         updatePanelColour(panelColour);
         utilityIconState = new OtherPropertyGroupIconState(propertyInfos);
+        updateIcon();
     }
-    #endregion
-
-
-
-    #region PropertyGroupIcon
     public override bool NeedsToUpdate {
         get {
             OtherPropertyGroupIconState newState = new OtherPropertyGroupIconState(propertyInfos, PlayerInfo);

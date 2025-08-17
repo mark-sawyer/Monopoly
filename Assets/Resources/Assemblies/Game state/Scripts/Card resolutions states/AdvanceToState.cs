@@ -9,6 +9,7 @@ internal class AdvanceToState : State {
     #region State
     public override void enterState() {
         tokenSettled = false;
+        UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
 
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         AdvanceToCardInfo advanceToCardInfo = (AdvanceToCardInfo)GameState.game.DrawnCard.CardMechanicInfo;

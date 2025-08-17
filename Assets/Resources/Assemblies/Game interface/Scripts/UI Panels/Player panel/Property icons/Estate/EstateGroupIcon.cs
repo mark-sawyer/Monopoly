@@ -25,7 +25,24 @@ public class EstateGroupIcon : PropertyGroupIcon {
 
 
     #region MonoBehaviour
-    private void Start() {
+    //private void Start() {
+    //    estateGroupInfo = EstateGroupDictionary.Instance.lookupInfo(estateColourEnum);
+    //    estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateColourEnum);
+    //    Color estateColour = estateGroupColours.MainColour.Colour;
+    //    estateColour.a = ZeroPropertiesAlpha;
+    //    updatePanelColour(estateColour);
+    //    estateGroupIconState = new EstateGroupIconState(estateGroupInfo);
+    //    for (int i = 0; i < estateHighlights.Length; i++) {
+    //        estateHighlights[i].setup(estateGroupInfo.getEstateInfo(i), PlayerInfo);
+    //    }
+    //}
+    #endregion
+
+
+
+    #region PropertyGroupIcon
+    public override void setup(PlayerInfo playerInfo) {
+        PlayerInfo = playerInfo;
         estateGroupInfo = EstateGroupDictionary.Instance.lookupInfo(estateColourEnum);
         estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateColourEnum);
         Color estateColour = estateGroupColours.MainColour.Colour;
@@ -33,14 +50,10 @@ public class EstateGroupIcon : PropertyGroupIcon {
         updatePanelColour(estateColour);
         estateGroupIconState = new EstateGroupIconState(estateGroupInfo);
         for (int i = 0; i < estateHighlights.Length; i++) {
-            estateHighlights[i].setup(estateGroupInfo.getEstateInfo(i), PlayerInfo);
+            estateHighlights[i].setup(estateGroupInfo.getEstateInfo(i), playerInfo);
         }
+        updateIcon();
     }
-    #endregion
-
-
-
-    #region PropertyGroupIcon
     public override bool NeedsToUpdate {
         get {
             EstateGroupIconState newState = new EstateGroupIconState(estateGroupInfo, PlayerInfo);

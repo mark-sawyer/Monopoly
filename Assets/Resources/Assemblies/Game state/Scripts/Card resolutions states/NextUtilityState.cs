@@ -27,7 +27,8 @@ internal class NextUtilityState : State {
         DataEventHub.Instance.call_CardResolved();
     }
     public override bool exitConditionMet() {
-        return goToResolveDebt || goToLandedOnSpace;
+        return goToResolveDebt
+            || goToLandedOnSpace;
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
