@@ -57,7 +57,6 @@ internal class PrerollState : State {
             || goToEscapeMenu;
     }
     public override void exitState() {
-        UIEventHub.Instance.call_PrerollStateEnding();
 
         UIPipelineEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.unsub_ManagePropertiesOpened(managePropertiesListener);
@@ -80,6 +79,7 @@ internal class PrerollState : State {
 
     #region Listeners
     private void rollButtonListener() {
+        UIEventHub.Instance.call_PrerollStateEnding();
         getTurnTokenVisual().prepForMoving();
         WaitFrames.Instance.beforeAction(
             InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING,
@@ -87,10 +87,16 @@ internal class PrerollState : State {
         );
     }
     private void managePropertiesListener() {
+        UIEventHub.Instance.call_PrerollStateEnding();
         managePropertiesClicked = true;
     }
     private void tradeListener() {
+        UIEventHub.Instance.call_PrerollStateEnding();
         tradeClicked = true;
+    }
+    private void escapeListener() {
+        UIEventHub.Instance.call_PrerollStateEnding();
+        goToEscapeMenu = true;
     }
     #endregion
 
@@ -181,9 +187,6 @@ internal class PrerollState : State {
     private TokenVisual getTurnTokenVisual() {
         int turnIndex = GameState.game.TurnPlayer.Index;
         return TokenVisualManager.Instance.getTokenVisual(turnIndex);
-    }
-    private void escapeListener() {
-        goToEscapeMenu = true;
     }
     #endregion
 }
