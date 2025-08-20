@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TestManager : MonoBehaviour {
     private void Awake() {
-        int playerNum = 5;
+        int playerNum = 3;
         GameFactory gameFactory = new GameFactory();
         gameFactory.makeTestGame(playerNum, 10000);
         GameState.game = gameFactory.GameStateInfo;

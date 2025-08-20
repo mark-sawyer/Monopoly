@@ -22,7 +22,13 @@ public class DoublesTickboxes : MonoBehaviour {
     #region private
     private void checkForDoubles() {
         DiceInfo diceInfo = GameState.game.DiceInfo;
-        if (diceInfo.RolledDoubles) addTickToNextTickbox();
+        if (diceInfo.RolledDoubles) {
+            addTickToNextTickbox();
+            int doublesCount = diceInfo.DoublesInARow;
+            if (doublesCount < 3) {
+                SoundOnlyEventHub.Instance.call_DoublesDing(doublesCount);
+            }
+        }
     }
     private void addTickToNextTickbox() {
         DoublesTickbox doublesTickbox = doublesTickboxArray.First(x => !x.IsTicked);

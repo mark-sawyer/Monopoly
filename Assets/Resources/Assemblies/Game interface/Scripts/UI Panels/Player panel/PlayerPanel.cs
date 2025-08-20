@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerPanel : MonoBehaviour {
-    //[SerializeField] private PropertyGroupIcon[] propertyGroupIcons;
     [SerializeField] private PropertyGroupIconSection propertyGroupIconSection;
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private MoneyAdjuster moneyAdjuster;
     [SerializeField] private Image highlightImage;
     [SerializeField] private GOOJFIcon chanceGOOJFIcon;
     [SerializeField] private GOOJFIcon ccGOOJFIcon;
+    [SerializeField] private Canvas thisCanvas;
     private PlayerInfo playerInfo;
     private Dictionary<CardType, GOOJFIcon> GOOJFIconDict;
 
@@ -60,6 +60,9 @@ public class PlayerPanel : MonoBehaviour {
     public bool needsGOOJFIconAdjusted(CardType cardType) {
         return playerInfo.hasGOOJFCardOfType(cardType)
             ^ GOOJFIconDict[cardType].IsOn;
+    }
+    public void toggleOverScreenCover(bool toggle) {
+        thisCanvas.sortingOrder = toggle ? 2 : 0;
     }
     #endregion
 }

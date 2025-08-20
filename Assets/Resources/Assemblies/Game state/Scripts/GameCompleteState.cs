@@ -8,7 +8,10 @@ internal class GameCompleteState : State {
         ScreenOverlayEventHub.Instance.call_WinnerAnnounced(winner);
     }
     public override bool exitConditionMet() {
-        return false;
+        return Input.GetKeyDown(KeyCode.Escape);
+    }
+    public override void exitState() {
+        Application.Quit();
     }
     public override State getNextState() {
         throw new System.NotImplementedException();

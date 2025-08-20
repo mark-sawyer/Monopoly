@@ -104,11 +104,15 @@ internal class PrerollState : State {
 
     #region private
     private void resolveRoll() {
-        if (!GameState.game.TurnPlayer.InJail) {
+        if (GameState.game.TurnPlayer.InJail) {
+            DataEventHub.Instance.call_TurnPlayerWillLoseTurn();
+            resolveJailRoll();
+        }
+        else {
             UIEventHub.Instance.call_DoublesTickBoxUpdate();
 
             bool rolledDoubles = GameState.game.DiceInfo.RolledDoubles;
-            bool threeInARow = GameState.game.DiceInfo.ThreeDoublesInARow;
+            bool threeInARow = GameState.game.DiceInfo.DoublesInARow == 3;
 
             if (!rolledDoubles) {
                 DataEventHub.Instance.call_TurnPlayerWillLoseTurn();
@@ -122,14 +126,10 @@ internal class PrerollState : State {
                 goToJail = true;
             }
         }
-        else {
-            DataEventHub.Instance.call_TurnPlayerWillLoseTurn();
-            resolveJailRoll();
-        }
     }
     private void resolveJailRoll() {
+        int incorrectSoundBufferFrames = 15;
         void doublesRolled() {
-            SoundOnlyEventHub.Instance.call_CorrectOutcome();
             DataUIPipelineEventHub.Instance.call_LeaveJail();
 
             WaitFrames.Instance.beforeAction(
@@ -146,28 +146,38 @@ internal class PrerollState : State {
         }
         void nonDoublesTurnOneTwo() {
             SoundOnlyEventHub.Instance.call_IncorrectOutcome();
-            int jailIndex = GameConstants.JAIL_SPACE_INDEX;
-            getTurnTokenVisual().moveTokenDirectlyToSpace(jailIndex, jailIndex);
-
             WaitFrames.Instance.beforeAction(
-                FrameConstants.TOKEN_SCALING + 3,
-                () => { goToPreroll = true; }
+                incorrectSoundBufferFrames,
+                () => {
+                    int jailIndex = GameConstants.JAIL_SPACE_INDEX;
+                    getTurnTokenVisual().moveTokenDirectlyToSpace(jailIndex, jailIndex);
+
+                    WaitFrames.Instance.beforeAction(
+                        FrameConstants.TOKEN_SCALING + 3,
+                        () => { goToPreroll = true; }
+                    );
+                }
             );
         }
         void nonDoublesTurnThree() {
             SoundOnlyEventHub.Instance.call_IncorrectOutcome();
-            DataUIPipelineEventHub.Instance.call_LeaveJail();
-            DataEventHub.Instance.call_PlayerIncurredDebt(
-                GameState.game.TurnPlayer,
-                GameState.game.BankCreditor,
-                GameConstants.PRICE_FOR_LEAVING_JAIL
-            );
-
             WaitFrames.Instance.beforeAction(
-                FrameConstants.WAIT_FOR_LEAVING_JAIL,
+                incorrectSoundBufferFrames,
                 () => {
-                    DataEventHub.Instance.call_SetJailDebtBool(GameState.game.TurnPlayer, true);
-                    goToResolveDebt = true;
+                    DataUIPipelineEventHub.Instance.call_LeaveJail();
+                    DataEventHub.Instance.call_PlayerIncurredDebt(
+                        GameState.game.TurnPlayer,
+                        GameState.game.BankCreditor,
+                        GameConstants.PRICE_FOR_LEAVING_JAIL
+                    );
+
+                    WaitFrames.Instance.beforeAction(
+                        FrameConstants.WAIT_FOR_LEAVING_JAIL,
+                        () => {
+                            DataEventHub.Instance.call_SetJailDebtBool(GameState.game.TurnPlayer, true);
+                            goToResolveDebt = true;
+                        }
+                    );
                 }
             );
         }

@@ -21,6 +21,9 @@ public class SoundOnlyEventHub : ScriptableObject {
     [SerializeField] private IntEvent risingBom;
     [SerializeField] private GameEvent brickLaying;
     [SerializeField] private GameEvent dub;
+    [SerializeField] private GameEvent buildingPut;
+    [SerializeField] private GameEvent wipeSound;
+    [SerializeField] private IntEvent doublesDing;
 
 
 
@@ -57,6 +60,9 @@ public class SoundOnlyEventHub : ScriptableObject {
     public void call_RisingBom(int i) => risingBom.invoke(i);
     public void call_BrickLaying() => brickLaying.invoke();
     public void call_Dub() => dub.invoke();
+    public void call_BuildingPut() => buildingPut.invoke();
+    public void call_WipeSound() => wipeSound.invoke();
+    public void call_DoublesDing(int count) => doublesDing.invoke(count);
     #endregion
 
 
@@ -78,5 +84,8 @@ public class SoundOnlyEventHub : ScriptableObject {
     public void sub_RisingBom(Action<int> a) => risingBom.Listeners += a;
     public void sub_BrickLaying(Action a) => brickLaying.Listeners += a;
     public void sub_Dub(Action a) => dub.Listeners += a;
+    public void sub_BuildingPut(Action a) => buildingPut.Listeners += a;
+    public void sub_WipeSound(Action a) => wipeSound.Listeners += a;
+    public void sub_DoublesDing(Action<int> a) => doublesDing.Listeners += a;
     #endregion
 }

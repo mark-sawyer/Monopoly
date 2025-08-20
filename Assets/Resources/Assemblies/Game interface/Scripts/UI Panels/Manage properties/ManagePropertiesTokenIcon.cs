@@ -73,12 +73,12 @@ public class ManagePropertiesTokenIcon : MonoBehaviour, IPointerClickHandler, IP
         tokenIcon.setup(playerInfo.Token, playerInfo.Colour);
     }
     public void select() {
-        canvas.sortingOrder = 2;
+        canvas.sortingOrder = 3;
         goalScale = 1f;
         setAlphaOfCover(0f);
     }
     public void deselect() {
-        canvas.sortingOrder = 1;
+        canvas.sortingOrder = 2;
         goalScale = 1f;
         setAlphaOfCover(UNSELECTED_COLOUR);
     }

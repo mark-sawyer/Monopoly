@@ -3,23 +3,33 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DieVisual : MonoBehaviour {
-    [SerializeField] private int dieIndex;
     [SerializeField] private Image image;
     [SerializeField] private Sprite[] settledSprites;
     [SerializeField] private Sprite[] rollingSprites;
+    private int framesPerImage;
+    private int imagesBeforeSettling;
 
 
 
-    #region Public
-    public void startDieRoll(int framesPerImage, int imagesBeforeSettling) {
-        StartCoroutine(rollDieAnimation(framesPerImage, imagesBeforeSettling));
+    #region MonoBehaviour
+    private void Start() {
+        framesPerImage = InterfaceConstants.DIE_FRAMES_PER_IMAGE;
+        imagesBeforeSettling = InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING;
+}
+    #endregion
+
+
+
+    #region public
+    public void startDieRoll(int dieValue) {
+        StartCoroutine(rollDieAnimation(dieValue));
     }
     #endregion
 
 
 
     #region private
-    private IEnumerator rollDieAnimation(int framesPerImage, int imagesBeforeSettling) {
+    private IEnumerator rollDieAnimation(int dieValue) {
         int lastRoll = -1;
         for (int i = 0; i < framesPerImage * imagesBeforeSettling; i++) {
             if (i % framesPerImage == 0) {
@@ -32,7 +42,7 @@ public class DieVisual : MonoBehaviour {
             }
             yield return null;
         }
-        image.sprite = settledSprites[GameState.game.DiceInfo.getDieValue(dieIndex) - 1];
+        image.sprite = settledSprites[dieValue - 1];
     }
     #endregion
 }

@@ -16,7 +16,6 @@ internal class AuctionPropertyState : State {
         PropertyInfo propertyLandedOn = ((PropertySpaceInfo)GameState.game.TurnPlayer.SpaceInfo).PropertyInfo;
         propertyInfos.Enqueue(propertyLandedOn);
         ScreenOverlayEventHub.Instance.call_AuctionsBegin(propertyInfos);
-        SoundOnlyEventHub.Instance.call_OtherChime();
     }
     public override bool exitConditionMet() {
         return auctionOver;

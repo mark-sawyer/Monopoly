@@ -60,8 +60,6 @@ public class RDEstateSection : MonoBehaviour {
         setButtonColour();
         refreshVisual();
     }
-
-
     public void refreshVisual() {
         sellOrMortgageBuildingMono.adjustToAppropriateOption();
         buildingIcons.updateIcons();

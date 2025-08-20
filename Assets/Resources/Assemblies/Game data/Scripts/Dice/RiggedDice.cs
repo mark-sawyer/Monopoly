@@ -17,9 +17,15 @@ internal class RiggedDice : DiceInterface, DiceValueStorer {
     public int getDieValue(int i) {
         return diceValues[i];
     }
+    public int[] getNonTurnDiceRoll() {
+        return new int[2] {
+            Random.Range(1, 7),
+            Random.Range(1, 7)
+        };
+    }
     public int TotalValue => diceValues[0] + diceValues[1];
     public bool RolledDoubles => lastThreeRolls[0].x == lastThreeRolls[0].y;
-    public bool ThreeDoublesInARow => lastThreeRolls.All(x => x[0] == x[1]);
+    public int DoublesInARow => lastThreeRolls.Count(x => x[0] == x[1]);
     #endregion
 
 

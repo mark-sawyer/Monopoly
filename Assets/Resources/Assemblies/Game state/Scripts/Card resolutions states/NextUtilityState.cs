@@ -23,7 +23,7 @@ internal class NextUtilityState : State {
         SpaceInfo newSpace = SpaceVisualManager.Instance.getSpaceVisual(newSpaceIndex).SpaceInfo;
         utilityInfo = (UtilityInfo)((PropertySpaceInfo)newSpace).PropertyInfo;
 
-        DataUIPipelineEventHub.Instance.call_TurnPlayerMovedToSpace(newSpace, oldSpaceIndex);
+        DataUIPipelineEventHub.Instance.call_TurnPlayerMovedAlongBoard(oldSpaceIndex, spacesToMove);
         DataEventHub.Instance.call_CardResolved();
     }
     public override bool exitConditionMet() {
@@ -47,10 +47,17 @@ internal class NextUtilityState : State {
         bool tenTimesDiceRentRequired = utilityInfo.IsBought && utilityInfo.Owner != GameState.game.TurnPlayer;
         if (tenTimesDiceRentRequired) {
             PlayerInfo owner = utilityInfo.Owner;
-            int rent = 10 * GameState.game.DiceInfo.TotalValue;
+            int[] nonTurnRoll = GameState.game.DiceInfo.getNonTurnDiceRoll();
+            int rent = 10 * (nonTurnRoll[0] + nonTurnRoll[1]);
             DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
-            SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)GameState.game.TurnPlayer.DebtInfo;
-            ScreenOverlayEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
+            UIEventHub.Instance.call_NonTurnDiceRoll(nonTurnRoll[0], nonTurnRoll[1]);
+            WaitFrames.Instance.beforeAction(
+                InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING + 70,
+                () => {
+                    SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)GameState.game.TurnPlayer.DebtInfo;
+                    ScreenOverlayEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
+                }
+            );
         }
         else {
             goToLandedOnSpace = true;

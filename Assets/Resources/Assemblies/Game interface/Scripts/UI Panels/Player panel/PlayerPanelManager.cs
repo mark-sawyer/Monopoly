@@ -64,6 +64,7 @@ public class PlayerPanelManager : MonoBehaviour {
             UIEventHub uiEvents = UIEventHub.Instance;
             ManagePropertiesEventHub managePropertiesEvents = ManagePropertiesEventHub.Instance;
             TradeEventHub tradeEvents = TradeEventHub.Instance;
+            ScreenOverlayEventHub screenEvents = ScreenOverlayEventHub.Instance;
 
 
 
@@ -86,7 +87,11 @@ public class PlayerPanelManager : MonoBehaviour {
 
             uiPipelineEvents.sub_PlayerEliminated(eliminatePlayer);
 
-            ScreenOverlayEventHub.Instance.sub_WinnerAnnounced(removeHighlight);
+            screenEvents.sub_PurchaseQuestion((PlayerInfo pl, PropertyInfo pr) => bringPlayerPanelOverScreenCover(pl));
+            screenEvents.sub_PurchaseYesClicked(bringBackPlayerPanelAfterFade);
+            screenEvents.sub_PurchaseNoClicked(bringBackPlayerPanelImmediately);
+
+            screenEvents.sub_WinnerAnnounced(removeHighlight);
         }
 
 
@@ -182,6 +187,25 @@ public class PlayerPanelManager : MonoBehaviour {
         for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
             getPlayerPanel(i).toggleHighlightImage(false);
         }
+    }
+    private void bringPlayerPanelOverScreenCover(PlayerInfo playerInfo) {
+        PlayerPanel playerPanel = playerPanels[playerInfo.Index];
+        playerPanel.toggleOverScreenCover(true);
+    }
+    private void bringBackPlayerPanelAfterFade() {
+        WaitFrames.Instance.beforeAction(
+            FrameConstants.SCREEN_COVER_TRANSITION,
+            () => {
+                PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+                PlayerPanel playerPanel = playerPanels[turnPlayer.Index];
+                playerPanel.toggleOverScreenCover(false);
+            }
+        );
+    }
+    private void bringBackPlayerPanelImmediately() {
+        PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+        PlayerPanel playerPanel = playerPanels[turnPlayer.Index];
+        playerPanel.toggleOverScreenCover(false);
     }
     #endregion
 

@@ -22,7 +22,7 @@ internal class NextRailroadState : State {
         SpaceInfo newSpace = SpaceVisualManager.Instance.getSpaceVisual(newSpaceIndex).SpaceInfo;
         railroadInfo = (RailroadInfo)((PropertySpaceInfo)newSpace).PropertyInfo;
 
-        DataUIPipelineEventHub.Instance.call_TurnPlayerMovedToSpace(newSpace, oldSpaceIndex);
+        DataUIPipelineEventHub.Instance.call_TurnPlayerMovedAlongBoard(oldSpaceIndex, spacesToMove);
         DataEventHub.Instance.call_CardResolved();
 
     }

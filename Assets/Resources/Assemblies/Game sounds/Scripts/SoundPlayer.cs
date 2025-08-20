@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour {
@@ -31,6 +32,14 @@ public class SoundPlayer : MonoBehaviour {
     [SerializeField] private AudioClip[] risingBoms;
     [SerializeField] private AudioClip brickLaying;
     [SerializeField] private AudioClip dub;
+    [SerializeField] private AudioClip unlockAndSqueak;
+    [SerializeField] private AudioClip tinyPut;
+    [SerializeField] private AudioClip wipe;
+    [SerializeField] private AudioClip congratulations;
+    [SerializeField] private AudioClip winner;
+    [SerializeField] private AudioClip applause;
+    [SerializeField] private AudioClip ding;
+    [SerializeField] private AudioClip dingDing;
     #endregion
 
 
@@ -39,7 +48,7 @@ public class SoundPlayer : MonoBehaviour {
     private void Start() {
         SoundOnlyEventHub soundEvents = SoundOnlyEventHub.Instance;
         UIEventHub uiEvents = UIEventHub.Instance;
-        UIPipelineEventHub uiPipelineEventHub = UIPipelineEventHub.Instance;
+        UIPipelineEventHub uiPipelineEvents = UIPipelineEventHub.Instance;
         ScreenOverlayEventHub screenEvents = ScreenOverlayEventHub.Instance;
 
         soundEvents.sub_ButtonDown(play_buttonDown);
@@ -59,15 +68,20 @@ public class SoundPlayer : MonoBehaviour {
         soundEvents.sub_RisingBom(play_Bom);
         soundEvents.sub_BrickLaying(play_BrickLaying);
         soundEvents.sub_Dub(play_Dub);
+        soundEvents.sub_BuildingPut(play_TinyPut);
+        soundEvents.sub_WipeSound(play_Wipe);
+        soundEvents.sub_DoublesDing(play_DoublesDing);
 
         uiEvents.sub_CardDrop(play_CardDrop);
         uiEvents.sub_MoneyAppearOrDisappear(play_PaperSound);
         uiEvents.sub_UpdateUIMoney(play_MoneyChing);
+        uiEvents.sub_NonTurnDiceRoll(play_DiceSound);
 
-        uiPipelineEventHub.sub_RollButtonClicked(play_DiceSound);
-        uiPipelineEventHub.sub_MoneyAdjustment(play_MoneyChing);
-        uiPipelineEventHub.sub_MoneyBetweenPlayers(play_MoneyChing);
-        uiPipelineEventHub.sub_MoneyRaisedForDebt(play_MoneyChing);
+        uiPipelineEvents.sub_RollButtonClicked(play_DiceSound);
+        uiPipelineEvents.sub_MoneyAdjustment(play_MoneyChing);
+        uiPipelineEvents.sub_MoneyBetweenPlayers(play_MoneyChing);
+        uiPipelineEvents.sub_MoneyRaisedForDebt(play_MoneyChing);
+        uiPipelineEvents.sub_LeaveJail(play_UnlockAndSqueak);
 
         screenEvents.sub_PlayerNumberSelection(play_QuestionChime);
         screenEvents.sub_PlayerNumberConfirmed(play_QuestionChime);
@@ -78,6 +92,7 @@ public class SoundPlayer : MonoBehaviour {
         screenEvents.sub_IncomeTaxQuestion(play_QuestionChime);
         screenEvents.sub_ResolveMortgage(play_QuestionChime);
         screenEvents.sub_ResolveDebt(play_DunDuuuuuuun);
+        screenEvents.sub_WinnerAnnounced(play_Congratulations);
 
         uiEvents.sub_SoundButtonClicked(toggleMusic);
     }
@@ -89,6 +104,13 @@ public class SoundPlayer : MonoBehaviour {
     private void playSound(AudioClip sound) {
         soundEffectAudioSource.PlayOneShot(sound);
     }
+    private IEnumerator playSoundAndWait(AudioClip sound) {
+        soundEffectAudioSource.clip = sound;
+        soundEffectAudioSource.Play();
+        while (soundEffectAudioSource.isPlaying) {
+            yield return null;
+        }
+    }
     private void toggleMusic() {
         musicAudioSource.enabled = !musicAudioSource.enabled;
     }
@@ -98,6 +120,7 @@ public class SoundPlayer : MonoBehaviour {
 
     #region Event listeners
     private void play_DiceSound() => playSound(diceSounds.getRandom());
+    private void play_DiceSound(int x, int y) => playSound(diceSounds.getRandom());
     private void play_PaperSound() => playSound(paperSounds.getRandom());
     private void play_DramaticWail() => playSound(wailSounds.getRandom());
 
@@ -131,5 +154,28 @@ public class SoundPlayer : MonoBehaviour {
     }
     private void play_BrickLaying() => playSound(brickLaying);
     private void play_Dub() => playSound(dub);
+    private void play_UnlockAndSqueak() => playSound(unlockAndSqueak);
+    private void play_TinyPut() => playSound(tinyPut);
+    private void play_Wipe() => playSound(wipe);
+    private void play_Congratulations(PlayerInfo playerInfo) {
+        IEnumerator congratulationsSequence(AudioClip tokenSound, AudioClip colourSound) {
+            yield return playSoundAndWait(applause);
+            yield return playSoundAndWait(congratulations);
+            yield return playSoundAndWait(colourSound);
+            yield return playSoundAndWait(tokenSound);
+            yield return playSoundAndWait(winner);
+        }
+
+        Token token = playerInfo.Token;
+        PlayerColour colour = playerInfo.Colour;
+        AudioClip tokenSound = TokenSoundDictionary.Instance.getTokenSound(token);
+        AudioClip colourSound = TokenSoundDictionary.Instance.getColourSound(colour);
+        StartCoroutine(congratulationsSequence(tokenSound, colourSound));
+    }
+    private void play_DoublesDing(int doublesCount) {
+        if (doublesCount == 1) playSound(ding);
+        else if (doublesCount == 2) playSound(dingDing);
+        else throw new System.Exception("Doubles count should only be one or two for ding sounds.");
+    }
     #endregion
 }

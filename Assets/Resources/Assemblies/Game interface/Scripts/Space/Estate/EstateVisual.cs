@@ -92,13 +92,25 @@ public class EstateVisual : SpaceVisual {
         numberOfHouses = toggle ? numberOfHouses + 1 : numberOfHouses - 1;
         int index = toggle ? numberOfHouses - 1 : numberOfHouses;
         BoardBuilding houseBuilding = houseBuildings[index];
-        if (toggle) houseBuilding.appear();
-        else houseBuilding.disappear();
+        if (toggle) {
+            houseBuilding.appear();
+            SoundOnlyEventHub.Instance.call_BuildingPut();
+        }
+        else {
+            houseBuilding.disappear();
+            SoundOnlyEventHub.Instance.call_BuildingPut();
+        }
     }
     private void toggleHotel(bool toggle) {
         hasHotel = toggle;
-        if (toggle) hotelBuilding.appear();
-        else hotelBuilding.disappear();
+        if (toggle) {
+            hotelBuilding.appear();
+            SoundOnlyEventHub.Instance.call_BuildingPut();
+        }
+        else {
+            hotelBuilding.disappear();
+            SoundOnlyEventHub.Instance.call_BuildingPut();
+        }
     }
     #endregion
 }

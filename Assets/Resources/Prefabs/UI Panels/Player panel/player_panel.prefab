@@ -2236,6 +2236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 200405009205858165}
   - component: {fileID: 5481195786920480388}
+  - component: {fileID: 5110772457047949141}
   - component: {fileID: 7561904683906288804}
   - component: {fileID: 3624071680396084375}
   m_Layer: 5
@@ -2276,6 +2277,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7478890726560055293}
   m_CullTransparentMesh: 1
+--- !u!223 &5110772457047949141
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7478890726560055293}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!114 &7561904683906288804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2294,6 +2316,7 @@ MonoBehaviour:
   highlightImage: {fileID: 282546716941159747}
   chanceGOOJFIcon: {fileID: 1467400002195675405}
   ccGOOJFIcon: {fileID: 6705819742113393823}
+  thisCanvas: {fileID: 5110772457047949141}
 --- !u!114 &3624071680396084375
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -22,6 +22,7 @@ public class ManagePropertiesWipe : MonoBehaviour {
     private IEnumerator wipeCoroutine(PlayerInfo playerInfo) {
         float width = rt.rect.width;
         int wipeFrames = FrameConstants.MANAGE_PROPERTIES_WIPE_UP;
+        SoundOnlyEventHub.Instance.call_WipeSound();
         for (int i = 1; i <= FrameConstants.MANAGE_PROPERTIES_WIPE_UP; i++) {
             float height = LinearValue.exe(i, 0f, MAX_HEIGHT, wipeFrames);
             rt.sizeDelta = new Vector2(width, height);
@@ -33,6 +34,7 @@ public class ManagePropertiesWipe : MonoBehaviour {
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(playerInfo, regularRefresh);
         yield return null;
 
+        SoundOnlyEventHub.Instance.call_WipeSound();
         for (int i = 1; i <= wipeFrames; i++) {
             float height = LinearValue.exe(i, MAX_HEIGHT, 0f, wipeFrames);
             rt.sizeDelta = new Vector2(width, height);

@@ -55,7 +55,7 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
         canvas.overrideSorting = true;
         canvas.sortingOrder = 1;
         for (int i = 1; i <= 20; i++) {
-            float scale = getScale(i);
+             float scale = getScale(i);
             transform.localScale = new Vector3(scale, scale, scale);
             if (i == 5) iconUpdate();
             yield return null;

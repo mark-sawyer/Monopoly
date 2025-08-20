@@ -95,6 +95,7 @@ public abstract class AuctionManager<T> : ScreenOverlay<T> {
         auctionPanelParentRT.anchoredPosition = new Vector2(0f, auctionHeight + 150f);
     }
     protected IEnumerator drop() {
+        SoundOnlyEventHub.Instance.call_OtherChime();
         float auctionHeight = getScaledAuctionHeight();
         float canvasHeight = rt.rect.height;
         float gap = (canvasHeight - auctionHeight) / 2f;

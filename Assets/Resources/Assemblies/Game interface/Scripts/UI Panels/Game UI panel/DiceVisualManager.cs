@@ -8,9 +8,16 @@ public class DiceVisualManager : MonoBehaviour {
 
     private void Start() {
         UIPipelineEventHub.Instance.sub_RollButtonClicked(startDiceRoll);
+        UIEventHub.Instance.sub_NonTurnDiceRoll(startDiceRoll);
     }
     private void startDiceRoll() {
-        die1.startDieRoll(InterfaceConstants.DIE_FRAMES_PER_IMAGE, InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING);
-        die2.startDieRoll(InterfaceConstants.DIE_FRAMES_PER_IMAGE, InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING);
+        DiceInfo diceInfo = GameState.game.DiceInfo;
+        die1.startDieRoll(diceInfo.getDieValue(0));
+        die2.startDieRoll(diceInfo.getDieValue(1));
+    }
+    private void startDiceRoll(int value1, int value2) {
+        DiceInfo diceInfo = GameState.game.DiceInfo;
+        die1.startDieRoll(value1);
+        die2.startDieRoll(value2);
     }
 }

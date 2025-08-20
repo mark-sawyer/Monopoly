@@ -1,11 +1,13 @@
 using UnityEngine;
 
 public class RightClickManager : MonoBehaviour {
+    [SerializeField] private GameObject deedParent;
     [SerializeField] private EstateDeed estateDeed;
     [SerializeField] private RailroadDeed railroadDeed;
     [SerializeField] private UtilityDeed utilityDeed;
     [SerializeField] private TokenIcon tokenIcon;
-    private bool inPreroll;
+    [SerializeField] private GameObject mortgagedText;
+    private bool canShowDeeds;
     private PropertyInfo currentlyShown;
     GameObject shownDeed;
 
@@ -13,11 +15,13 @@ public class RightClickManager : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        UIEventHub.Instance.sub_PrerollStateStarting(() => inPreroll = true);
-        UIEventHub.Instance.sub_PrerollStateEnding(() => inPreroll = false);
+        UIEventHub.Instance.sub_PrerollStateStarting(prerollCheckForToggleOn);
+        UIEventHub.Instance.sub_PrerollStateEnding(toggleShowingDeedsOff);
+        CameraEventHub.Instance.sub_RotationStarted(toggleShowingDeedsOff);
+        CameraEventHub.Instance.sub_RotationFinished(toggleShowingDeedsOn);
     }
     private void Update() {
-        if (!inPreroll) return;
+        if (!canShowDeeds) return;
 
         if (Input.GetMouseButton(1)) {
             Vector3 mousePos = Input.mousePosition;
@@ -46,6 +50,18 @@ public class RightClickManager : MonoBehaviour {
 
 
     #region private
+    private void prerollCheckForToggleOn() {
+        CameraController cameraController = CameraController.Instance;
+        if (!cameraController.AutoOn || !cameraController.NeedsToRotate) {
+            canShowDeeds = true;
+        }
+    }
+    private void toggleShowingDeedsOn() {
+        canShowDeeds = true;
+    }
+    private void toggleShowingDeedsOff() {
+        canShowDeeds = false;
+    }
     private void showPropertyDeed(PropertyInfo propertyInfo) {
         void handleDeed() {
             if (propertyInfo is EstateInfo estateInfo) {
@@ -73,23 +89,33 @@ public class RightClickManager : MonoBehaviour {
             tokenIcon.gameObject.SetActive(true);
             tokenIcon.setup(token, colour);
         }
+        void handleMortgagedText() {
+            if (propertyInfo.IsMortgaged) {
+                mortgagedText.SetActive(true);
+            }
+        }
 
 
         if (propertyInfo == currentlyShown) return;
 
         currentlyShown = propertyInfo;
+        deedParent.SetActive(true);
         estateDeed.gameObject.SetActive(false);
         railroadDeed.gameObject.SetActive(false);
         utilityDeed.gameObject.SetActive(false);
         tokenIcon.gameObject.SetActive(false);
+        mortgagedText.SetActive(false);
 
         handleDeed();
         handleToken();
+        handleMortgagedText();
     }
     private void clearShownCheck() {
         if (currentlyShown != null) {
+            deedParent.SetActive(false);
             shownDeed.SetActive(false);
             tokenIcon.gameObject.SetActive(false);
+            mortgagedText.SetActive(false);
             shownDeed = null;
             currentlyShown = null;
         }

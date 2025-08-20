@@ -19,7 +19,7 @@ internal class PostTradeState : State {
         TradeEventHub.Instance.unsub_AllVisualsUpdatedAfterTradeFinalised(updateAnimationsOverListener);
     }
     public override State getNextState() {
-        return allStates.getState<PrerollState>();
+        return allStates.getState<ResolveMortgageState>();
     }
     #endregion
 

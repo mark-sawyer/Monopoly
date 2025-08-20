@@ -14,7 +14,6 @@ internal class ResolveMortgageState : State {
     public override void enterState() {
         allMortgagesResolved = false;
         goToResolveDebt = false;
-
         ScreenOverlayEventHub.Instance.sub_KeepMortgageClicked(keepClickedListener);
         ScreenOverlayEventHub.Instance.sub_UnmortgageClicked(unmortgageClickedListener);
 

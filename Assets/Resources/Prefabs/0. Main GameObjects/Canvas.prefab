@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 434723041072109441}
   - component: {fileID: 6999467703191923608}
   - component: {fileID: 4338543229989040814}
-  - component: {fileID: 6005680405489549880}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -104,67 +103,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6005680405489549880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1423333350712307158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f10688801db2ff44a0a9c67689a0113, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfPlayers: {fileID: 606758849790308142, guid: 7dbb717baf958be4b9415bb499aa10d4, type: 3}
-  tokenSelection: {fileID: 6847497366482895096, guid: f3075821a3680d641ac706842b031768, type: 3}
-  incomeTaxPrefab: {fileID: 3442082075229922575, guid: 0aba535f26865804d8a80444771af625, type: 3}
-  purchaseQuestionPrefab: {fileID: 3442082075229922575, guid: a5eff3b5040c5544792f1c76786733b7, type: 3}
-  spinningPolicemanPrefab: {fileID: 5747658771908631661, guid: 53c3f0a8d879d7b4783fe1b660d5bb43, type: 3}
-  cardFlipperPrefab: {fileID: 5990134229566539415, guid: 7bab94859a1bd5240860caa30acd92ab, type: 3}
-  debtorCreditor: {fileID: 6849593130023212710, guid: 862d290830f890f408b41e53f88e8406, type: 3}
-  luxuryTax: {fileID: 8865176980054825071, guid: 641744745916cf84390428d7de3fea64, type: 3}
-  unaffordableProperty: {fileID: 6615851678906542999, guid: 169dba743aade1343a249bcaf6281d27, type: 3}
-  tradingCharacterSelection: {fileID: 589119595726871286, guid: 7f7abe864685c6b42bbb4c4eb2d13fd8, type: 3}
-  resolveDebtPanel: {fileID: 3034832219258218296, guid: e5864143f32694a40bcb724dba57b2d4, type: 3}
-  propertiesAuctionManager: {fileID: 1021329754576127324, guid: 33a1396e5f10a65489c480096653cd35, type: 3}
-  buildingsAuctionManager: {fileID: 2588845486966642975, guid: 8aa64d621b7357040ace3dc069ffd83b, type: 3}
-  resolveMortgage: {fileID: 3442082075229922575, guid: 3d635fb9e185688458c45cb79651c5c6, type: 3}
-  winnerAnnouncement: {fileID: 414191427996210567, guid: d638a18aaf2bb3f48a3e7e0e2a7fe276, type: 3}
-  escapeMenu: {fileID: 6321674258858224885, guid: fecfb7c3c48c0bd4f9b336d062b363ac, type: 3}
-  chancePrefabs:
-  - {fileID: 2947730523039505564, guid: 90c14442e70b1fc4a99e8114018b9d4e, type: 3}
-  - {fileID: 2947730523039505564, guid: f3413fb7b55298443b7954240f111b20, type: 3}
-  - {fileID: 2947730523039505564, guid: 2d42c2c32e52e184780a497182c69df8, type: 3}
-  - {fileID: 2947730523039505564, guid: f3348168c0292664b9109ff0aab513f5, type: 3}
-  - {fileID: 2947730523039505564, guid: 7ef6090bb0419a84e83f4596b1d1fc59, type: 3}
-  - {fileID: 2947730523039505564, guid: 18f15f160577dde41a3b0db90d184def, type: 3}
-  - {fileID: 2947730523039505564, guid: d09864221c04bc54797b40696235f661, type: 3}
-  - {fileID: 2947730523039505564, guid: 2333c1a1356d60a4ab674ef8cc89e65b, type: 3}
-  - {fileID: 2947730523039505564, guid: ed2ef4183759c434281f0b6c10268c87, type: 3}
-  - {fileID: 2947730523039505564, guid: 5321cd75d55252f448d6a3d4c4635ea4, type: 3}
-  - {fileID: 2947730523039505564, guid: cb2d1aead9dce8f4ea293fa4cd4dc46e, type: 3}
-  - {fileID: 2947730523039505564, guid: 2a529dcd1b7d5fc44a57de463aa8f80a, type: 3}
-  - {fileID: 2947730523039505564, guid: db12f83b33a8d554f9a677d4fb87c2cf, type: 3}
-  - {fileID: 2947730523039505564, guid: cd048910fc949c94bb82d1d7d0f47ba8, type: 3}
-  - {fileID: 2947730523039505564, guid: 819e68004b417874da4f1ae7d89945e6, type: 3}
-  communityChestPrefabs:
-  - {fileID: 8162811863746969174, guid: a3d5b22b116d28645a188f8c0b29e58c, type: 3}
-  - {fileID: 8906147099261937458, guid: 4268d0574d526c2408aa9f0aa2dd8280, type: 3}
-  - {fileID: 1894734638559025250, guid: 2d2f8d7aa7279574a846e12cdbf486c4, type: 3}
-  - {fileID: 5119209626009892242, guid: 35f105a1ac9ffdb4fbbba918d4b82895, type: 3}
-  - {fileID: 8266462099456496176, guid: caaeee6a2b8052844a49133d8a7146fb, type: 3}
-  - {fileID: 7582290715923790400, guid: 846562cdafd0d0a44876d68d5dd9fdb3, type: 3}
-  - {fileID: 6205312853235554991, guid: 65b31db59200c20409137d1860a2a5cd, type: 3}
-  - {fileID: 547096342961864623, guid: 3cac598772dec1442b5a372b6f79ed5c, type: 3}
-  - {fileID: 5020498451962769093, guid: 89442d0a453d22b4abef14feb6c4df2c, type: 3}
-  - {fileID: 7611375926069600830, guid: f52c293325b68784faebe51bc7adeb43, type: 3}
-  - {fileID: 8845972918956256385, guid: e4e8824647f8ab44b90a9b7abe7fa456, type: 3}
-  - {fileID: 2648125125910709598, guid: 6c0fe2cc29b77394688d7f27d844704b, type: 3}
-  - {fileID: 2958452345454670711, guid: ee60a58c714a3954aa1183b77b5921fc, type: 3}
-  - {fileID: 5915383855866561231, guid: 9ccd4189758f3624b96a06ad766212cf, type: 3}
-  - {fileID: 6497583332892685588, guid: d57e7c1a1d7113a4b8f95acddffa6297, type: 3}
-  - {fileID: 7628197036368909357, guid: 631af9a921c816c408e167e50c7e01f0, type: 3}
 --- !u!1001 &2067652768087626389
 PrefabInstance:
   m_ObjectHideFlags: 0
