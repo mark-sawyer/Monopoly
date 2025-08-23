@@ -61,7 +61,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rt: {fileID: 2242163720445050542}
   okButton: {fileID: 7596882731869700915}
-  okButtonClicked: {fileID: 11400000, guid: 9e00ad819c8c6ab48a3273fbab91e684, type: 2}
 --- !u!1 &7596882731214454136
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,21 +281,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: cf223574c9472a74e84d4f551f9f9f18, type: 2}
-        m_TargetAssemblyTypeName: SoundEvent, GameInterface
-        m_MethodName: play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 9e00ad819c8c6ab48a3273fbab91e684, type: 2}
-        m_TargetAssemblyTypeName: GameEvent, GameInterface
-        m_MethodName: invoke
+      - m_Target: {fileID: 11400000, guid: a8250605728587f499465150f5a3795c, type: 2}
+        m_TargetAssemblyTypeName: ScreenOverlayFunctionEventHub, GameEvents
+        m_MethodName: call_RemoveScreenOverlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

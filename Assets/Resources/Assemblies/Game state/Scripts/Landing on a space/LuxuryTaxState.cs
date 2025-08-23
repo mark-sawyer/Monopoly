@@ -7,20 +7,20 @@ internal class LuxuryTaxState : State {
 
     #region
     public override void enterState() {
-        ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
+        ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
         animationOver = false;
         DataEventHub.Instance.call_PlayerIncurredDebt(
             GameState.game.TurnPlayer,
             GameState.game.BankCreditor,
             GameConstants.LUXURY_TAX
         );
-        ScreenOverlayEventHub.Instance.call_LuxuryTaxAnimationBegins();
+        ScreenOverlayStarterEventHub.Instance.call_LuxuryTaxAnimationBegins();
     }
     public override bool exitConditionMet() {
         return animationOver;
     }
     public override void exitState() {
-        ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
+        ScreenOverlayFunctionEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
     }
     public override State getNextState() {
         return allStates.getState<ResolveDebtState>();

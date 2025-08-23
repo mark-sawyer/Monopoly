@@ -1,38 +1,52 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/RaiseMoneyState")]
 internal class RaiseMoneyState : State {
-    private bool panelRemoved;
+    private bool goToEliminatePlayer;
+    private bool goToPostRaiseMoney;
 
 
 
     #region State
     public override void enterState() {
-        panelRemoved = false;
-        ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(panelRemovedListener);
+        goToEliminatePlayer = false;
+        goToPostRaiseMoney = false;
+        ResolveDebtEventHub.Instance.sub_DeclareBankruptcyButtonClicked(bankruptcyClicked);
+        ResolveDebtEventHub.Instance.sub_DebtResolved(debtResolved);
+
 
         DebtInfo debtInfo = GameState.game.PlayerInDebt.DebtInfo;
-        ScreenOverlayEventHub.Instance.call_ResolveDebt(debtInfo);
+        ScreenOverlayStarterEventHub.Instance.call_ResolveDebt(debtInfo);
     }
     public override bool exitConditionMet() {
-        return panelRemoved;
+        return goToEliminatePlayer
+            || goToPostRaiseMoney;
     }
     public override void exitState() {
-        ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(panelRemovedListener);
+        ResolveDebtEventHub.Instance.unsub_DeclareBankruptcyButtonClicked(bankruptcyClicked);
+        ResolveDebtEventHub.Instance.unsub_DebtResolved(debtResolved);
     }
     public override State getNextState() {
-        return allStates.getState<PostRaiseMoneyState>();
+        if (goToEliminatePlayer) return allStates.getState<EliminatePlayerState>();
+        if (goToPostRaiseMoney) return allStates.getState<PostRaiseMoneyState>();
+
+        throw new System.Exception();
     }
     #endregion
 
 
 
     #region private
-    private void panelRemovedListener() {
+    private void bankruptcyClicked() {
+        WaitFrames.Instance.beforeAction(
+            FrameConstants.SCREEN_COVER_TRANSITION + 30,
+            () => goToEliminatePlayer = true
+        );
+    }
+    private void debtResolved() {
         WaitFrames.Instance.beforeAction(
             FrameConstants.SCREEN_COVER_TRANSITION,
-            () => panelRemoved = true
+            () => goToPostRaiseMoney = true
         );
     }
     #endregion

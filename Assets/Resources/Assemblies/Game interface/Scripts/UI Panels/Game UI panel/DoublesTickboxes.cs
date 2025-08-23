@@ -26,7 +26,7 @@ public class DoublesTickboxes : MonoBehaviour {
             addTickToNextTickbox();
             int doublesCount = diceInfo.DoublesInARow;
             if (doublesCount < 3) {
-                SoundOnlyEventHub.Instance.call_DoublesDing(doublesCount);
+                SoundPlayer.Instance.play_DoublesDing(doublesCount);
             }
         }
     }

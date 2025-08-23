@@ -92,10 +92,10 @@ public abstract class AuctionManager<T> : ScreenOverlay<T> {
     }
     protected void movePanelToStartingPosition() {
         float auctionHeight = getScaledAuctionHeight();
-        auctionPanelParentRT.anchoredPosition = new Vector2(0f, auctionHeight + 150f);
+        auctionPanelParentRT.anchoredPosition = new Vector2(0f, auctionHeight + InterfaceConstants.STANDARD_HEIGHT_ABOVE_SCREEN);
     }
     protected IEnumerator drop() {
-        SoundOnlyEventHub.Instance.call_OtherChime();
+        SoundPlayer.Instance.play_OtherChime();
         float auctionHeight = getScaledAuctionHeight();
         float canvasHeight = rt.rect.height;
         float gap = (canvasHeight - auctionHeight) / 2f;

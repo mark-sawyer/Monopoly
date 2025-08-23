@@ -10,18 +10,18 @@ internal class MoveTokenToJailState : State {
     public override void enterState() {
         tokenSettled = false;
 
-        ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
+        ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
 
         DataEventHub.Instance.call_TurnPlayerWillLoseTurn();
-        ScreenOverlayEventHub.Instance.call_SpinningPoliceman();
+        ScreenOverlayStarterEventHub.Instance.call_SpinningPoliceman();
     }
     public override bool exitConditionMet() {
         return tokenSettled;
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
-        ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
+        ScreenOverlayFunctionEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
     }
     public override State getNextState() {
         return allStates.getState<PrerollState>();

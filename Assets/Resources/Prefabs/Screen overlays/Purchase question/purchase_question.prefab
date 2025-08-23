@@ -29,15 +29,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1569337700254324577}
+  - {fileID: 624397712932185250}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 150}
+  m_SizeDelta: {x: 1920, y: 533}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2831286533816228541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,7 +52,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   purchaseText: {fileID: 3442082075917985112}
   tokenIcon: {fileID: 5226957929243277730}
-  droppedQuestionRT: {fileID: 1569337700254324577}
   middleRT: {fileID: 624397712932185250}
 --- !u!1 &3442082075917985114
 GameObject:
@@ -250,7 +249,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3843779364044578787}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -258,50 +257,13 @@ RectTransform:
   - {fileID: 2576197948644057478}
   - {fileID: 3442082075917985113}
   - {fileID: 3442082076651068121}
-  m_Father: {fileID: 1569337700254324577}
+  m_Father: {fileID: 3442082075229922574}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 852.32, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &6972361317731459949
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1569337700254324577}
-  m_Layer: 5
-  m_Name: question_section_long
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1569337700254324577
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6972361317731459949}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 624397712932185250}
-  m_Father: {fileID: 3442082075229922574}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 956.5}
-  m_SizeDelta: {x: 1920, y: 533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1693428270101657126
 PrefabInstance:
@@ -445,7 +407,7 @@ PrefabInstance:
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 044d3fe905e11664287091a3e1f40a19, type: 2}
+      objectReference: {fileID: 11400000, guid: a8250605728587f499465150f5a3795c, type: 2}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -468,7 +430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ScreenAnimationEventHub, GameEvents
+      value: ScreenOverlayFunctionEventHub, GameEvents
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -627,7 +589,7 @@ PrefabInstance:
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 044d3fe905e11664287091a3e1f40a19, type: 2}
+      objectReference: {fileID: 11400000, guid: a8250605728587f499465150f5a3795c, type: 2}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -650,7 +612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ScreenAnimationEventHub, GameEvents
+      value: ScreenOverlayFunctionEventHub, GameEvents
       objectReference: {fileID: 0}
     - target: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName

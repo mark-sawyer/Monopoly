@@ -8,6 +8,7 @@ public class SpinningPoliceman : ScreenOverlay {
     private const int TOTAL_ROTATIONS = 5;
 
     public override void appear() {
+        SoundPlayer.Instance.play_Whistle();
         StartCoroutine(STOP());
     }
     private IEnumerator STOP() {
@@ -35,6 +36,6 @@ public class SpinningPoliceman : ScreenOverlay {
             );
             yield return null;
         }
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
     }
 }

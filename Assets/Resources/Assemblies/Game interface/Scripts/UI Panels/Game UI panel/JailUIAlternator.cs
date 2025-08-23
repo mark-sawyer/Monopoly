@@ -13,6 +13,7 @@ public class JailUIAlternator : MonoBehaviour {
 
         uiEvents.sub_PrerollStateStarting(setMode);
         uiPipelineEvents.sub_LeaveJail(setMode);
+        uiPipelineEvents.sub_LeaveJail(leaveJailSound);
         uiPipelineEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => setMode());
     }
     #endregion
@@ -29,6 +30,9 @@ public class JailUIAlternator : MonoBehaviour {
             doublesGameObject.SetActive(true);
             jailOptionsGameObject.SetActive(false);
         }
+    }
+    private void leaveJailSound() {
+        SoundPlayer.Instance.play_UnlockAndSqueak();
     }
     #endregion
 }

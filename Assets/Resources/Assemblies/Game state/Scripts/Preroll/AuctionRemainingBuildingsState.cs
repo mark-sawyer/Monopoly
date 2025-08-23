@@ -15,8 +15,8 @@ internal class AuctionRemainingBuildingsState : State {
         AuctionEventHub.Instance.sub_AuctionBuildingsBackButtonClicked(backButtonListening);
 
         BuildingType buildingType = ManagePropertiesPanel.Instance.BuildingTypeAuctioned;
-        ScreenOverlayEventHub.Instance.call_AuctionBuildingsBegins(buildingType);
-        SoundOnlyEventHub.Instance.call_OtherChime();
+        ScreenOverlayStarterEventHub.Instance.call_AuctionBuildingsBegins(buildingType);
+        SoundPlayer.Instance.play_OtherChime();
     }
     public override bool exitConditionMet() {
         return auctionOver
@@ -41,7 +41,7 @@ internal class AuctionRemainingBuildingsState : State {
         auctionOver = true;
     }
     private void backButtonListening() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlayKeepCover();
         AccompanyingVisualSpawner.Instance.removeObjectAndResetPosition();
         WaitFrames.Instance.beforeAction(
             FrameConstants.MANAGE_PROPERTIES_DROP,

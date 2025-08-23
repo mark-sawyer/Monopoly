@@ -18,7 +18,8 @@ public interface PlayerInfo : Creditor {
     public int HousesOwned { get; }
     public int HotelsOwned { get; }
     public IEnumerable<TradableInfo> TradableInfos { get; }
-    public bool CanRaiseMoney { get; }
+    public bool HasATradable { get; }
+    public bool HasAnUnmortgagedProperty { get; }
     public bool HasAnUnresolvedMortgage { get; }
     public PropertyInfo UnresolvedMortgageProperty { get; }
     public bool hasGOOJFCardOfType(CardType cardType);

@@ -86,6 +86,10 @@ internal class Game : GameStateInfo, GamePlayer {
 
 
     #region GamePlayer
+    public void adjustPlayerMoney(PlayerInfo playerInfo, int difference) {
+        Player player = (Player)playerInfo;
+        player.adjustMoney(difference);
+    }
     public void rollDice() {
         dice.roll();
     }
@@ -184,9 +188,13 @@ internal class Game : GameStateInfo, GamePlayer {
         int paid = amount >= owed ? owed : amount;
         player.payDebt(paid);
     }
-    public void adjustPlayerMoney(PlayerInfo playerInfo, int difference) {
-        Player player = (Player)playerInfo;
-        player.adjustMoney(difference);
+    public void payDebtWithTradedMoney(PlayerInfo debtor) {
+        Player player = (Player)debtor;
+        Debt debt = player.Debt;
+        int owed = debt.TotalOwed;
+        int money = player.Money;
+        int paid = money > owed ? owed : money;
+        player.payDebt(paid);
     }
     public void tradePlayerMoney(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount) {
         ((Player)losingPlayer).adjustMoney(-amount);

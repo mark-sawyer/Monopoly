@@ -32,38 +32,39 @@ public class ScreenOverlayManager : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        ScreenOverlayEventHub events = ScreenOverlayEventHub.Instance;
+        ScreenOverlayStarterEventHub starters = ScreenOverlayStarterEventHub.Instance;
+        ScreenOverlayFunctionEventHub functions = ScreenOverlayFunctionEventHub.Instance;
         initialiseChanceDictionary();
         initialiseCommunityChestyDictionary();
         float alpha = InterfaceConstants.SCREEN_ANIMATION_COVER_ALPHA;
 
-        events.sub_RemoveScreenOverlay(removeScreenOverlay);
-        events.sub_RemoveScreenOverlayKeepCover(removeOverlayKeepCover);
+        functions.sub_RemoveScreenOverlay(removeScreenOverlay);
+        functions.sub_RemoveScreenOverlayKeepCover(removeOverlayKeepCover);
 
-        events.sub_PlayerNumberSelection(() => startScreenOverlay(numberOfPlayers, alpha));
-        events.sub_PlayerNumberConfirmed((int players) => startScreenOverlay(tokenSelection, players, alpha));
-        events.sub_SpinningPoliceman(() => startScreenOverlay(spinningPolicemanPrefab, alpha));
-        events.sub_IncomeTaxQuestion((PlayerInfo playerInfo) => startScreenOverlay(incomeTaxPrefab, playerInfo, alpha));
-        events.sub_PurchaseQuestion((PlayerInfo playerInfo, PropertyInfo propertyInfo) => {
+        starters.sub_PlayerNumberSelection(() => startScreenOverlay(numberOfPlayers, alpha));
+        starters.sub_PlayerNumberConfirmed((int players) => startScreenOverlay(tokenSelection, players, alpha));
+        starters.sub_SpinningPoliceman(() => startScreenOverlay(spinningPolicemanPrefab, alpha));
+        starters.sub_IncomeTaxQuestion((PlayerInfo playerInfo) => startScreenOverlay(incomeTaxPrefab, playerInfo, alpha));
+        starters.sub_PurchaseQuestion((PlayerInfo playerInfo, PropertyInfo propertyInfo) => {
             startScreenOverlay(purchaseQuestionPrefab, playerInfo, propertyInfo, alpha);
         });
-        events.sub_CardShown(() => {
+        starters.sub_CardShown(() => {
             CardInfo cardInfo = GameState.game.DrawnCard;
             GameObject cardPrefab;
             if (cardInfo.CardType == CardType.CHANCE) cardPrefab = chanceIDToPrefabDictionary[cardInfo.ID];
             else cardPrefab = communityChestIDToPrefabDictionary[cardInfo.ID];
             startScreenOverlay(cardFlipperPrefab, cardPrefab, alpha);
         });
-        events.sub_PayingRentAnimationBegins((DebtInfo debtInfo) => startScreenOverlay(debtorCreditor, debtInfo, alpha));
-        events.sub_LuxuryTaxAnimationBegins(() => startScreenOverlay(luxuryTax, alpha));
-        events.sub_UnaffordableProperty((PropertyInfo propertyInfo) => startScreenOverlay(unaffordableProperty, propertyInfo, alpha));
-        events.sub_TradeOpened(() => startScreenOverlay(tradingCharacterSelection, alpha));
-        events.sub_ResolveDebt((DebtInfo debtInfo) => startScreenOverlay(resolveDebtPanel, debtInfo, 1));
-        events.sub_AuctionsBegin((Queue<PropertyInfo> propertyInfos) => startScreenOverlay(propertiesAuctionManager, propertyInfos, 1));
-        events.sub_AuctionBuildingsBegins((BuildingType bt) => startScreenOverlay(buildingsAuctionManager, bt, 1));
-        events.sub_ResolveMortgage((PlayerInfo pl, PropertyInfo pr) => startScreenOverlay(resolveMortgage, pl, pr, alpha));
-        events.sub_WinnerAnnounced((PlayerInfo winner) => startScreenOverlay(winnerAnnouncement, winner, alpha));
-        events.sub_EscapeMenu(() => startScreenOverlay(escapeMenu, alpha));
+        starters.sub_PayingRentAnimationBegins((DebtInfo debtInfo) => startScreenOverlay(debtorCreditor, debtInfo, alpha));
+        starters.sub_LuxuryTaxAnimationBegins(() => startScreenOverlay(luxuryTax, alpha));
+        starters.sub_UnaffordableProperty((PropertyInfo propertyInfo) => startScreenOverlay(unaffordableProperty, propertyInfo, alpha));
+        starters.sub_TradeOpened(() => startScreenOverlay(tradingCharacterSelection, alpha));
+        starters.sub_ResolveDebt((DebtInfo debtInfo) => startScreenOverlay(resolveDebtPanel, debtInfo, 1));
+        starters.sub_AuctionsBegin((Queue<PropertyInfo> propertyInfos) => startScreenOverlay(propertiesAuctionManager, propertyInfos, 1));
+        starters.sub_AuctionBuildingsBegins((BuildingType bt) => startScreenOverlay(buildingsAuctionManager, bt, 1));
+        starters.sub_ResolveMortgage((PlayerInfo pl, PropertyInfo pr) => startScreenOverlay(resolveMortgage, pl, pr, alpha));
+        starters.sub_WinnerAnnounced((PlayerInfo winner) => startScreenOverlay(winnerAnnouncement, winner, alpha));
+        starters.sub_EscapeMenu(() => startScreenOverlay(escapeMenu, alpha));
     }
     #endregion
 

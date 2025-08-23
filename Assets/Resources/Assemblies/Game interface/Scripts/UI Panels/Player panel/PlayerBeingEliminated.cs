@@ -26,11 +26,11 @@ public class PlayerBeingEliminated : MonoBehaviour {
     public IEnumerator eliminatePlayerSequence() {
         yield return pulseOffAllPropertyIcons();
 
-        SoundOnlyEventHub.Instance.call_Punch();
+        SoundPlayer.Instance.play_Punch();
         yield return pulseToken();
         yield return WaitFrames.Instance.frames(10);
 
-        SoundOnlyEventHub.Instance.call_DramaticWail();
+        SoundPlayer.Instance.play_DramaticWail();
         StartCoroutine(removeTokenFromBoard());
         StartCoroutine(becomeSicklyPanelColour());
         StartCoroutine(becomeSicklyTokenColours());
@@ -61,7 +61,7 @@ public class PlayerBeingEliminated : MonoBehaviour {
         foreach (PropertyGroupIcon propertyGroupIcon in propertyGroupIcons) {
             if (!propertyGroupIcon.IsOn) continue;
 
-            SoundOnlyEventHub.Instance.call_AppearingPop();
+            SoundPlayer.Instance.play_Pop();
             yield return propertyGroupIcon.pulseAndTurnOff();
         }
     }

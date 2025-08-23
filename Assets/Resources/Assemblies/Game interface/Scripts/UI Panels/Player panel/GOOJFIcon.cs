@@ -39,7 +39,7 @@ public class GOOJFIcon : MonoBehaviour {
         }
 
 
-        SoundOnlyEventHub.Instance.call_AppearingPop();
+        SoundPlayer.Instance.play_Pop();
         yield return WaitFrames.Instance.frames(10);
         image.enabled = true;
         for (int i = 1; i <= 20; i++) {
@@ -55,7 +55,7 @@ public class GOOJFIcon : MonoBehaviour {
         }
 
 
-        SoundOnlyEventHub.Instance.call_AppearingPop();
+        SoundPlayer.Instance.play_Pop();
         yield return WaitFrames.Instance.frames(10);
         for (int i = 1; i <= 10; i++) {
             float scale = getScale(i);

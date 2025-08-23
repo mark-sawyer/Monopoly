@@ -45,6 +45,7 @@ public class GameDataUpdater {
         pipelineHub.sub_SingleCreditorDebtReduced(reduceDebt);
         pipelineHub.sub_MultiCreditorDebtReduced(reduceDebt);
         pipelineHub.sub_MoneyRaisedForDebt(payDebtFromMoneyRaised);
+        pipelineHub.sub_TradeMoneyPaidToDebt(payDebtWithTradedMoney);
         pipelineHub.sub_PlayerEliminated(eliminatePlayer);
     }
     #endregion
@@ -69,6 +70,9 @@ public class GameDataUpdater {
     }
     private void payDebtFromMoneyRaised(PlayerInfo debtor, int moneyRaised) {
         gamePlayer.payDebtFromMoneyRaised(debtor, moneyRaised);
+    }
+    private void payDebtWithTradedMoney(PlayerInfo debtor) {
+        gamePlayer.payDebtWithTradedMoney(debtor);
     }
     private void rollDice() {
         gamePlayer.rollDice();

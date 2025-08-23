@@ -8,12 +8,13 @@ public class TradingPlayerSelectionRow : MonoBehaviour {
 
 
 
-    public void displayCharacters(IEnumerable<PlayerInfo> activePlayers) {
-        int players = activePlayers.Count();
+    #region public
+    public void displayCharacters(IEnumerable<PlayerInfo> tradingPlayers) {
+        int players = tradingPlayers.Count();
         int i = 0;
         float gap = getGap();
         float xShift = getXShift(players, gap);
-        foreach (PlayerInfo playerInfo in activePlayers) {
+        foreach (PlayerInfo playerInfo in tradingPlayers) {
             GameObject ghostSourceInstance = Instantiate(ghostSourcePrefab, transform);
             RectTransform ghostSourceRT = (RectTransform)ghostSourceInstance.transform;
             TokenIcon tokenIcon = ghostSourceInstance.GetComponent<TokenIcon>();
@@ -23,9 +24,11 @@ public class TradingPlayerSelectionRow : MonoBehaviour {
             i++;
         }
     }
+    #endregion
 
 
 
+    #region private
     private float getGap() {
         float width = prefabRT.rect.width;
         return width * 0.2f;
@@ -37,4 +40,5 @@ public class TradingPlayerSelectionRow : MonoBehaviour {
         float fullWidth = widthFromTokens + widthFromGaps;
         return fullWidth / 2f;
     }
+    #endregion
 }

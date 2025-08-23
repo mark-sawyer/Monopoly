@@ -37,7 +37,7 @@ public class PropertyGroupIconSection : MonoBehaviour {
         }
 
         PropertyGroupIcon propertyGroupIcon = getPropertyGroupIcon();
-        SoundOnlyEventHub.Instance.call_AppearingPop();
+        SoundPlayer.Instance.play_Pop();
         yield return propertyGroupIcon.pulseAndUpdate();
     }
     public List<PropertyGroupIcon> propertyGroupIconsNeedingAnUpdate() {

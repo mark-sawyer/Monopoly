@@ -12,8 +12,8 @@ public class TokenSelection : ScreenOverlay<int> {
         tokenReceiverSpawner.setup(numberOfPlayers);
     }
     public override void appear() {
+        SoundPlayer.Instance.play_QuestionChime();
         ScreenOverlayDropper screenOverlayDropper = new ScreenOverlayDropper((RectTransform)transform);
-        screenOverlayDropper.adjustSize();
         StartCoroutine(screenOverlayDropper.drop());
     }
     #endregion
@@ -22,8 +22,8 @@ public class TokenSelection : ScreenOverlay<int> {
 
     #region public
     public void backClicked() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover();
-        ScreenOverlayEventHub.Instance.call_PlayerNumberSelection();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlayKeepCover();
+        ScreenOverlayStarterEventHub.Instance.call_PlayerNumberSelection();
     }
     #endregion
 }

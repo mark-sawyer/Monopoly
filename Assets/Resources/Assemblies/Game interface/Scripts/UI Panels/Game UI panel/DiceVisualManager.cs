@@ -11,11 +11,13 @@ public class DiceVisualManager : MonoBehaviour {
         UIEventHub.Instance.sub_NonTurnDiceRoll(startDiceRoll);
     }
     private void startDiceRoll() {
+        SoundPlayer.Instance.play_DiceSound();
         DiceInfo diceInfo = GameState.game.DiceInfo;
         die1.startDieRoll(diceInfo.getDieValue(0));
         die2.startDieRoll(diceInfo.getDieValue(1));
     }
     private void startDiceRoll(int value1, int value2) {
+        SoundPlayer.Instance.play_DiceSound();
         DiceInfo diceInfo = GameState.game.DiceInfo;
         die1.startDieRoll(value1);
         die2.startDieRoll(value2);

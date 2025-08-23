@@ -20,14 +20,14 @@ public class TokenReceiver : GhostReceiver {
 
     #region GhostReceiver
     public override void receiveGhost(DraggableGhost ghost) {
-        SoundOnlyEventHub.Instance.call_Put();
+        SoundPlayer.Instance.play_Put();
         TokenDraggableGhost tokenGhost = (TokenDraggableGhost)ghost;
         token = tokenGhost.Token;
         upButton.interactable = true;
         downButton.interactable = true;
         tokenIcon.gameObject.SetActive(true);
         tokenIcon.setup(token, colour);
-        ScreenOverlayEventHub.Instance.call_SelectedTokensChanged();
+        ScreenOverlayFunctionEventHub.Instance.call_SelectedTokensChanged();
     }
     #endregion
 
@@ -39,14 +39,14 @@ public class TokenReceiver : GhostReceiver {
         colourInt = (colourInt - 1).mod(8);
         colour = (PlayerColour)colourInt;
         tokenIcon.setup(token, colour);
-        ScreenOverlayEventHub.Instance.call_SelectedTokensChanged();
+        ScreenOverlayFunctionEventHub.Instance.call_SelectedTokensChanged();
     }
     public void colourDown() {
         int colourInt = (int)colour;
         colourInt = (colourInt + 1).mod(8);
         colour = (PlayerColour)colourInt;
         tokenIcon.setup(token, colour);
-        ScreenOverlayEventHub.Instance.call_SelectedTokensChanged();
+        ScreenOverlayFunctionEventHub.Instance.call_SelectedTokensChanged();
     }
     #endregion
 }

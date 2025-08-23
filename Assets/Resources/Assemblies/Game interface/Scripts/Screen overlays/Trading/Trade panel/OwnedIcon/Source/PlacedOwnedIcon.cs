@@ -15,7 +15,7 @@ public class PlacedOwnedIcon : DraggableGhostSource {
 
     #region DraggableGhostSource
     protected override void reactToCreatingGhost() {
-        SoundOnlyEventHub.Instance.call_Take();
+        SoundPlayer.Instance.play_Take();
         Transform parent = transform.parent;
         int ghostIndex = transform.childCount - 1;
         Transform ghostTransform = transform.GetChild(ghostIndex);

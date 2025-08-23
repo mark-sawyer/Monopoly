@@ -11,10 +11,10 @@ public class GoButton : MonoBehaviour {
 
     #region MonoBehaviour
     private void Start() {
-        ScreenOverlayEventHub.Instance.sub_SelectedTokensChanged(updateInteractable);
+        ScreenOverlayFunctionEventHub.Instance.sub_SelectedTokensChanged(updateInteractable);
     }
     private void OnDestroy() {
-        ScreenOverlayEventHub.Instance.unsub_SelectedTokensChanged(updateInteractable);
+        ScreenOverlayFunctionEventHub.Instance.unsub_SelectedTokensChanged(updateInteractable);
     }
     #endregion
 
@@ -25,7 +25,7 @@ public class GoButton : MonoBehaviour {
         List<Token> tokens = getTokens();
         List<PlayerColour> colours = getColours();
         Manager.Instance.startGame(tokens, colours);
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
     }
     #endregion
 
@@ -33,21 +33,23 @@ public class GoButton : MonoBehaviour {
 
     #region private
     private void updateInteractable() {
+        bool isInteractable() {
+            int[] encodings = new int[tokenReceiverParent.childCount];
+            for (int i = 0; i < tokenReceiverParent.childCount; i++) {
+                TokenIcon tokenIcon = getTokenIcon(i);
+                if (isDisabled(tokenIcon)) return false;
+                int tokenInt = (int)tokenIcon.Token;
+                int colourInt = 8 * (int)tokenIcon.Colour;
+                encodings[i] = tokenInt + colourInt;
+            }
+            return encodings.Length == encodings.Distinct().Count();
+        }
+
+
         button.interactable = isInteractable();
     }
-    private bool isInteractable() {
-        int[] encodings = new int[tokenReceiverParent.childCount];
-        for (int i = 0; i < tokenReceiverParent.childCount; i++) {
-            TokenIcon tokenIcon = getTokenIcon(i);
-            if (isDisabled(tokenIcon)) return false;
-            int tokenInt = (int)tokenIcon.Token;
-            int colourInt = 8 * (int)tokenIcon.Colour;
-            encodings[i] = tokenInt + colourInt;
-        }
-        return encodings.Length == encodings.Distinct().Count();
-    }    
     private TokenIcon getTokenIcon(int i) {
-        return tokenReceiverParent.GetChild(i).GetChild(1).GetComponent<TokenIcon>();
+        return tokenReceiverParent.GetChild(i).GetChild(1).GetChild(0).GetComponent<TokenIcon>();
     }
     private bool isDisabled(TokenIcon tokenIcon) {
         return !tokenIcon.gameObject.activeSelf;

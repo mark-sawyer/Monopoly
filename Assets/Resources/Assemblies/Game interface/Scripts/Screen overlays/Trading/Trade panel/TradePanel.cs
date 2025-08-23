@@ -60,7 +60,7 @@ public class TradePanel : MonoBehaviour {
     private void finaliseTrade() {
         if (!TradeConditionsMet) return;  // Defensive check in case the proposed trade was adjusted on the last frame.
 
-        SoundOnlyEventHub.Instance.call_Flourish();
+        SoundPlayer.Instance.play_Flourish();
         DataUIPipelineEventHub.Instance.call_TradeLockedIn();
     }
     private void callNewProposedTrade() {

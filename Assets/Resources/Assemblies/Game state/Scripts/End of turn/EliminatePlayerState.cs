@@ -16,12 +16,22 @@ internal class EliminatePlayerState : State {
         toResolveDebt = false;
         toAssetAuctioning = false;
         gameComplete = false;
-
+        UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(uiUpdatesPreEliminationOver);
         UIEventHub.Instance.sub_PlayerEliminatedAnimationOver(afterPlayerEliminatedAnimation);
-        UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(afterVisualsUpdated);
 
-        eliminatedPlayer = GameState.game.PlayerInDebt;
-        DataUIPipelineEventHub.Instance.call_PlayerEliminated(eliminatedPlayer);
+
+
+        PlayerInfo[] playersNeedingMoneyUIUpdate = PlayerPanelManager.Instance.getPlayersNeedingMoneyUIUpdate();
+        if (playersNeedingMoneyUIUpdate.Length > 0) {
+            UIEventHub.Instance.call_UpdateUIMoney(playersNeedingMoneyUIUpdate);
+            WaitFrames.Instance.beforeAction(
+                FrameConstants.MONEY_UPDATE,
+                () => UIEventHub.Instance.call_UpdateExpiredPropertyVisuals()
+            );
+        }
+        else {
+            UIEventHub.Instance.call_UpdateExpiredPropertyVisuals();
+        }
     }
     public override bool exitConditionMet() {
         return toResolveDebt
@@ -30,7 +40,7 @@ internal class EliminatePlayerState : State {
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_PlayerEliminatedAnimationOver(afterPlayerEliminatedAnimation);
-        UIEventHub.Instance.unsub_AllExpiredPropertyVisualsUpdated(afterVisualsUpdated);
+        UIEventHub.Instance.unsub_AllExpiredPropertyVisualsUpdated(afterAssetRedistribution);
     }
     public override State getNextState() {
         if (toResolveDebt) return allStates.getState<ResolveDebtState>();
@@ -44,17 +54,28 @@ internal class EliminatePlayerState : State {
 
 
     #region private
+    private void uiUpdatesPreEliminationOver() {
+        WaitFrames.Instance.beforeAction(
+            50,
+            () => {
+                eliminatedPlayer = GameState.game.PlayerInDebt;
+                DataUIPipelineEventHub.Instance.call_PlayerEliminated(eliminatedPlayer);
+                UIEventHub.Instance.unsub_AllExpiredPropertyVisualsUpdated(uiUpdatesPreEliminationOver);
+                UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(afterAssetRedistribution);
+            }
+        );
+    }
     private void afterPlayerEliminatedAnimation() {
         DebtInfo debtInfo = GameState.game.BankInfo.EliminatedPlayerDebt;
-        IEnumerable<TradableInfo> tradableInfos = GameState.game.BankInfo.EliminatedPlayerAssets;
+        IEnumerable<TradableInfo> eliminatedPlayerAssets = GameState.game.BankInfo.EliminatedPlayerAssets;
 
 
         if (GameState.game.ActivePlayers.Count() == 1) gameComplete = true;
-        else if (tradableInfos.Count() == 0) toResolveDebt = true;
+        else if (eliminatedPlayerAssets.Count() == 0) toResolveDebt = true;
         else if (debtInfo is SingleCreditorDebtInfo singleCreditorDebtInfo && singleCreditorDebtInfo.Creditor is PlayerInfo creditorPlayer) {
             DataEventHub.Instance.call_TradeCommenced(eliminatedPlayer, creditorPlayer);
             DataUIPipelineEventHub.Instance.call_TradeUpdated(
-                tradableInfos.ToList(),
+                eliminatedPlayerAssets.ToList(),
                 new List<TradableInfo>(),
                 null,
                 0
@@ -63,16 +84,16 @@ internal class EliminatePlayerState : State {
             UIEventHub.Instance.call_UpdateExpiredPropertyVisuals();
         }
         else {
-            List<CardInfo> cardInfos = tradableInfos.OfType<CardInfo>().ToList();
+            List<CardInfo> cardInfos = eliminatedPlayerAssets.OfType<CardInfo>().ToList();
             foreach (CardInfo cardInfo in cardInfos) {
                 DataEventHub.Instance.call_CardReturned(cardInfo);
             }
-            int properties = tradableInfos.Count(x => x is PropertyInfo);
+            int properties = eliminatedPlayerAssets.Count(x => x is PropertyInfo);
             if (properties > 0) toAssetAuctioning = true;
             else toResolveDebt = true;
         }
     }
-    private void afterVisualsUpdated() {
+    private void afterAssetRedistribution() {
         toResolveDebt = true;
     }
     #endregion

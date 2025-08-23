@@ -79,6 +79,7 @@ public class RentAnimation : ScreenOverlay<DebtInfo> {
         screenAnimationSizeAdjuster.adjustChildrenSize();
     }
     public override void appear() {
+        SoundPlayer.Instance.play_UhOh();
         float width = ((RectTransform)transform).rect.width;
         StartCoroutine(moveToken(debtorRT, 2 * width / 5f));
         StartCoroutine(moveToken(creditorRT, -2 * width / 5f));
@@ -133,7 +134,7 @@ public class RentAnimation : ScreenOverlay<DebtInfo> {
             for (int i = 0; i < 20; i++) yield return null;
         }
         for (int i = 0; i < MONEY_THROW_FRAMES + 50; i++) yield return null;
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
     }
     private IEnumerator moveMoneyNote(Transform moneyTransform, int amount) {
         void adjustCreditorScale(float paymentReceived) {
@@ -157,7 +158,7 @@ public class RentAnimation : ScreenOverlay<DebtInfo> {
         float xStart = debtorRT.localPosition.x;
         float xEnd = creditorRT.localPosition.x;
 
-        UIEventHub.Instance.call_MoneyAppearOrDisappear();
+        SoundPlayer.Instance.play_PaperSound();
         moneyTransform.localPosition = new Vector3(xStart, yStart, 0f);
 
         Matrix3x3 mat = new Matrix3x3(
@@ -181,7 +182,7 @@ public class RentAnimation : ScreenOverlay<DebtInfo> {
             yield return null;
         }
 
-        UIEventHub.Instance.call_MoneyAppearOrDisappear();
+        SoundPlayer.Instance.play_PaperSound();
         adjustCreditorScale(amount);
         paid += amount;
         paidText.text = "$" + paid.ToString();

@@ -5,7 +5,7 @@ using UnityEngine;
 internal class GameCompleteState : State {
     public override void enterState() {
         PlayerInfo winner = GameState.game.ActivePlayers.ElementAt(0);
-        ScreenOverlayEventHub.Instance.call_WinnerAnnounced(winner);
+        ScreenOverlayStarterEventHub.Instance.call_WinnerAnnounced(winner);
     }
     public override bool exitConditionMet() {
         return Input.GetKeyDown(KeyCode.Escape);

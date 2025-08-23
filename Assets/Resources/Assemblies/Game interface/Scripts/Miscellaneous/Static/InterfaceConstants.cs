@@ -8,4 +8,5 @@ public static class InterfaceConstants {
     public const int DIE_IMAGES_BEFORE_SETTLING = 7;
     public const float SCREEN_ANIMATION_COVER_ALPHA = 220f / 255f;
     public const float SCALE_FOR_MOVING_TOKEN = 3f;
+    public const int STANDARD_HEIGHT_ABOVE_SCREEN = 150;
 }

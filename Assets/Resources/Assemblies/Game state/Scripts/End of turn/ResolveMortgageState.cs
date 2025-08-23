@@ -14,8 +14,8 @@ internal class ResolveMortgageState : State {
     public override void enterState() {
         allMortgagesResolved = false;
         goToResolveDebt = false;
-        ScreenOverlayEventHub.Instance.sub_KeepMortgageClicked(keepClickedListener);
-        ScreenOverlayEventHub.Instance.sub_UnmortgageClicked(unmortgageClickedListener);
+        ScreenOverlayFunctionEventHub.Instance.sub_KeepMortgageClicked(keepClickedListener);
+        ScreenOverlayFunctionEventHub.Instance.sub_UnmortgageClicked(unmortgageClickedListener);
 
 
 
@@ -25,7 +25,7 @@ internal class ResolveMortgageState : State {
         }
         else {
             unresolvedProperty = unresolvedPlayer.UnresolvedMortgageProperty;
-            ScreenOverlayEventHub.Instance.call_ResolveMortgage(unresolvedPlayer, unresolvedProperty);
+            ScreenOverlayStarterEventHub.Instance.call_ResolveMortgage(unresolvedPlayer, unresolvedProperty);
         }
     }
     public override bool exitConditionMet() {
@@ -33,8 +33,8 @@ internal class ResolveMortgageState : State {
             || goToResolveDebt;
     }
     public override void exitState() {
-        ScreenOverlayEventHub.Instance.unsub_KeepMortgageClicked(keepClickedListener);
-        ScreenOverlayEventHub.Instance.unsub_UnmortgageClicked(unmortgageClickedListener);
+        ScreenOverlayFunctionEventHub.Instance.unsub_KeepMortgageClicked(keepClickedListener);
+        ScreenOverlayFunctionEventHub.Instance.unsub_UnmortgageClicked(unmortgageClickedListener);
         unresolvedPlayer = null;
         unresolvedProperty = null;
     }
@@ -49,13 +49,13 @@ internal class ResolveMortgageState : State {
 
     #region private
     private void keepClickedListener() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
         DataEventHub.Instance.call_MortgageIsResolved(unresolvedPlayer, unresolvedProperty);
         DataEventHub.Instance.call_PlayerIncurredDebt(unresolvedPlayer, GameState.game.BankCreditor, unresolvedProperty.RetainMortgageCost);
         goToResolveDebt = true;
     }
     private void unmortgageClickedListener() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
         DataEventHub.Instance.call_MortgageIsResolved(unresolvedPlayer, unresolvedProperty);
         DataEventHub.Instance.call_PropertyUnmortgaged(unresolvedProperty);
         DataEventHub.Instance.call_PlayerIncurredDebt(unresolvedPlayer, GameState.game.BankCreditor, unresolvedProperty.UnmortgageCost);

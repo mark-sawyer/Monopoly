@@ -1,10 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "State/ResolveTurnState")]
+[CreateAssetMenu(menuName = "State/ResolveDebtState")]
 internal class ResolveDebtState : State {
     private bool allDebtsResolved;
     private bool debtsRemaining;
-    private bool playerBankrupt;
     private bool goToRaiseMoney;
 
 
@@ -14,7 +13,6 @@ internal class ResolveDebtState : State {
         allDebtsResolved = false;
         debtsRemaining = false;
         goToRaiseMoney = false;
-        playerBankrupt = false;
 
 
         PlayerInfo playerInDebt = GameState.game.PlayerInDebt;
@@ -28,8 +26,7 @@ internal class ResolveDebtState : State {
     public override bool exitConditionMet() {
         return allDebtsResolved
             || debtsRemaining
-            || goToRaiseMoney
-            || playerBankrupt;
+            || goToRaiseMoney;
     }
     public override State getNextState() {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
@@ -42,7 +39,6 @@ internal class ResolveDebtState : State {
         }
         if (debtsRemaining) return this;
         if (goToRaiseMoney) return allStates.getState<RaiseMoneyState>();
-        if (playerBankrupt) return allStates.getState<EliminatePlayerState>();
 
         throw new System.Exception();
     }
@@ -53,23 +49,14 @@ internal class ResolveDebtState : State {
     #region private
     private void resolveDebt(PlayerInfo debtor, DebtInfo debtInfo) {
         void handleDebtRemaining(int paid) {
-            if (debtor.CanRaiseMoney && paid > 0) {
+            if (paid > 0) {
                 WaitFrames.Instance.beforeAction(
                     FrameConstants.MONEY_UPDATE + 50,
                     () => goToRaiseMoney = true
                 );
             }
-            else if (debtor.CanRaiseMoney) {
-                goToRaiseMoney = true;
-            }
-            else if (paid > 0) {
-                WaitFrames.Instance.beforeAction(
-                    FrameConstants.MONEY_UPDATE + 50,
-                    () => playerBankrupt = true
-                );
-            }
             else {
-                playerBankrupt = true;
+                goToRaiseMoney = true;
             }
         }
         void confirmWhetherMoreDebts() {
@@ -81,7 +68,7 @@ internal class ResolveDebtState : State {
 
         int money = debtor.Money;
         int owed = debtInfo.TotalOwed;
-        int paid = money - owed >= 0 ? owed : money;
+        int paid = money > owed ? owed : money;
         if (paid > 0) {
             if (debtInfo is SingleCreditorDebtInfo) {
                 DataUIPipelineEventHub.Instance.call_SingleCreditorDebtReduced(debtor, paid);

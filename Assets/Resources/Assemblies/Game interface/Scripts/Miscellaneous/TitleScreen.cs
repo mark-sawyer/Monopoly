@@ -11,7 +11,7 @@ public class TitleScreen : MonoBehaviour {
 
     #region public
     public void startClicked() {
-        ScreenOverlayEventHub.Instance.call_PlayerNumberSelection();
+        ScreenOverlayStarterEventHub.Instance.call_PlayerNumberSelection();
         Destroy(gameObject);
     }
     public void quitClicked() {

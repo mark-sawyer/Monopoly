@@ -20,7 +20,7 @@ internal class AssetAuctioningState : State {
         }
         List<PropertyInfo> propertyInfos = tradableInfos.OfType<PropertyInfo>().ToList();
         Queue<PropertyInfo> propertiesQueue = new Queue<PropertyInfo>(propertyInfos);
-        ScreenOverlayEventHub.Instance.call_AuctionsBegin(propertiesQueue);
+        ScreenOverlayStarterEventHub.Instance.call_AuctionsBegin(propertiesQueue);
     }
     public override bool exitConditionMet() {
         return auctionsOver;
@@ -37,7 +37,7 @@ internal class AssetAuctioningState : State {
 
     #region private
     private void auctionsOverListening() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlayKeepCover();
         auctionsOver = true;
     }
     #endregion

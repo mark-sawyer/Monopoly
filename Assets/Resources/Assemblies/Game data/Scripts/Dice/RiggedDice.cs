@@ -2,14 +2,13 @@ using System.Linq;
 using UnityEngine;
 
 internal class RiggedDice : DiceInterface, DiceValueStorer {
-    private int[] storedValues = new int[2] { 1, 1 };
+    private int[] storedValues = new int[2] { 1, 0 };
+    private int[] diceValues = new int[2];
     private Vector2Int[] lastThreeRolls = new Vector2Int[3] {
-        // Initialising to non-doubles to avoid triggering ThreeDoublesInARow.
         new Vector2Int(-99, -88),
         new Vector2Int(-99, -88),
         new Vector2Int(-99, -88)
     };
-    private int[] diceValues = new int[2];
 
 
 

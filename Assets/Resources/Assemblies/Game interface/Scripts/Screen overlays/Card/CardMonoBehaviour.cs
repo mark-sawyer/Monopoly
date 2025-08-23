@@ -14,7 +14,7 @@ public class CardMonoBehaviour : MonoBehaviour {
         StartCoroutine(rotation());
         WaitFrames.Instance.beforeAction(
             FrameConstants.CARD_FLIP - 10,
-            UIEventHub.Instance.call_CardDrop
+            SoundPlayer.Instance.play_CardDrop
         );
         WaitFrames.Instance.beforeAction(
             FrameConstants.CARD_FLIP,

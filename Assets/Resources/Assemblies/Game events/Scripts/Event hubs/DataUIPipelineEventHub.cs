@@ -25,6 +25,7 @@ public class DataUIPipelineEventHub : ScriptableObject {
     [SerializeField] private PlayerIntEvent singleCreditorDebtReduced;
     [SerializeField] private PlayerIntEvent multiCreditorDebtReduced;
     [SerializeField] private PlayerIntEvent moneyRaisedForDebt;
+    [SerializeField] private PlayerEvent tradeMoneyPaidToDebt;
     [SerializeField] private PlayerEvent playerEliminated;
 
 
@@ -55,10 +56,6 @@ public class DataUIPipelineEventHub : ScriptableObject {
     public void call_MoneyAdjustment(PlayerInfo playerInfo, int adjustment) {
         moneyAdjustment.invoke(playerInfo, adjustment);
         uiPipelineEvents.MoneyAdjustment.invoke(playerInfo);
-    }
-    public void call_MoneyBetweenPlayers(PlayerInfo losingPlayer, PlayerInfo gainingPlayer, int amount) {
-        moneyBetweenPlayers.invoke(losingPlayer, gainingPlayer, amount);
-        uiPipelineEvents.MoneyBetweenPlayers.invoke(losingPlayer, gainingPlayer);
     }
     public void call_TurnPlayerMovedAlongBoard(int startingIndex, int spacesMoved) {
         turnPlayerMovedAlongBoard.invoke(spacesMoved);
@@ -130,6 +127,10 @@ public class DataUIPipelineEventHub : ScriptableObject {
         moneyRaisedForDebt.invoke(debtor, moneyRaised);
         uiPipelineEvents.MoneyRaisedForDebt.invoke();
     }
+    public void call_TradeMoneyPaidToDebt(PlayerInfo debtor) {
+        tradeMoneyPaidToDebt.invoke(debtor);
+        uiPipelineEvents.MoneyRaisedForDebt.invoke();
+    }
     public void call_PlayerEliminated(PlayerInfo eliminatedPlayer) {
         playerEliminated.invoke(eliminatedPlayer);
         uiPipelineEvents.PlayerEliminated.invoke(eliminatedPlayer);
@@ -158,6 +159,7 @@ public class DataUIPipelineEventHub : ScriptableObject {
     internal void sub_SingleCreditorDebtReduced(Action<PlayerInfo, int> a) => singleCreditorDebtReduced.Listeners += a;
     internal void sub_MultiCreditorDebtReduced(Action<PlayerInfo, int> a) => multiCreditorDebtReduced.Listeners += a; 
     internal void sub_MoneyRaisedForDebt(Action<PlayerInfo, int> a) => moneyRaisedForDebt.Listeners += a;
+    internal void sub_TradeMoneyPaidToDebt(Action<PlayerInfo> a) => tradeMoneyPaidToDebt.Listeners += a;
     internal void sub_PlayerEliminated(Action<PlayerInfo> a) => playerEliminated.Listeners += a;
     #endregion
 }

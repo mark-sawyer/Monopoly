@@ -15,6 +15,7 @@ public class LuxuryTaxAnimation : ScreenOverlay {
 
 
     public override void appear() {
+        SoundPlayer.Instance.play_MupMooo();
         canvasWidth = ((RectTransform)transform.parent).rect.width;
         StartCoroutine(rollRingAcross());
         StartCoroutine(growAndShrinkText(luxuryTaxTextTransform));
@@ -24,7 +25,7 @@ public class LuxuryTaxAnimation : ScreenOverlay {
         );
         WaitFrames.Instance.beforeAction(
             ANIMATION_FRAMES + 20,
-            () => ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay()
+            () => ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay()
         );
     }
     private IEnumerator rollRingAcross() {

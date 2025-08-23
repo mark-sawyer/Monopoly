@@ -3,7 +3,6 @@ using UnityEngine;
 
 internal class Dice : DiceInterface {
     private Vector2Int[] lastThreeRolls = new Vector2Int[3] {
-        // Initialising to non-doubles to avoid triggering ThreeDoublesInARow.
         new Vector2Int(-99, -88),
         new Vector2Int(-99, -88),
         new Vector2Int(-99, -88)

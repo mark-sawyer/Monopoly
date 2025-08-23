@@ -61,15 +61,16 @@ public class AuctionBuildingsManager : AuctionManager<BuildingType> {
             yield return ManagePropertiesPanel.Instance.returnForBuildingPlacement(BiddingPlayer);
             yield return WaitFrames.Instance.frames(60);
             DataUIPipelineEventHub.Instance.call_MoneyAdjustment(BiddingPlayer, -CurrentBid);
+            SoundPlayer.Instance.play_MoneyChing();
             yield return WaitFrames.Instance.frames(FrameConstants.MONEY_UPDATE);
             ManagePropertiesEventHub.Instance.call_WipeToCommence(BiddingPlayer);
             yield return WaitFrames.Instance.frames(FrameConstants.MANAGE_PROPERTIES_WIPE_UP * 2 + 2);
             AuctionEventHub.Instance.call_AllAuctionsFinished();
-            ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover();
+            ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlayKeepCover();
         }
 
 
-        SoundOnlyEventHub.Instance.call_Flourish();
+        SoundPlayer.Instance.play_Flourish();
         for (int i = 0; i < AuctionPanelParentRT.childCount; i++) {
             Destroy(AuctionPanelParentRT.GetChild(i).gameObject);
         }

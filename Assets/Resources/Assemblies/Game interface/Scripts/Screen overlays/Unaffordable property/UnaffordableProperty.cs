@@ -10,7 +10,7 @@ public class UnaffordableProperty : ScreenOverlay<PropertyInfo> {
 
     #region ScreenAnimation
     public override void appear() {
-        SoundOnlyEventHub.Instance.call_IncorrectOutcome();
+        SoundPlayer.Instance.play_IncorrectSound();
         StartCoroutine(shakeText());
     }
     public override void setup(PropertyInfo propertyInfo) {
@@ -38,7 +38,7 @@ public class UnaffordableProperty : ScreenOverlay<PropertyInfo> {
         }
         WaitFrames.Instance.beforeAction(
             50,
-            () => ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover()
+            () => ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlayKeepCover()
         );
     }
 }

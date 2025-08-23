@@ -28,7 +28,7 @@ internal class PlaceAuctionedBuildingsState : State {
         WaitFrames.Instance.beforeAction(
             100,
             () => {
-                SoundOnlyEventHub.Instance.call_OtherChime();
+                SoundPlayer.Instance.play_OtherChime();
                 ManagePropertiesPanel.Instance.resetAfterBuildingPlacement();
                 PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
                 ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer, true);

@@ -9,16 +9,16 @@ internal class EscapeMenuState : State {
     #region State
     public override void enterState() {
         continueClicked = false;
-        ScreenOverlayEventHub.Instance.sub_ContinueClicked(continueClickedListener);
+        ScreenOverlayFunctionEventHub.Instance.sub_ContinueClicked(continueClickedListener);
 
-        SoundOnlyEventHub.Instance.call_Dub();
-        ScreenOverlayEventHub.Instance.call_EscapeMenu();
+
+        ScreenOverlayStarterEventHub.Instance.call_EscapeMenu();
     }
     public override bool exitConditionMet() {
         return continueClicked;
     }
     public override void exitState() {
-        ScreenOverlayEventHub.Instance.unsub_ContinueClicked(continueClickedListener);
+        ScreenOverlayFunctionEventHub.Instance.unsub_ContinueClicked(continueClickedListener);
     }
     public override State getNextState() {
         return allStates.getState<PrerollState>();

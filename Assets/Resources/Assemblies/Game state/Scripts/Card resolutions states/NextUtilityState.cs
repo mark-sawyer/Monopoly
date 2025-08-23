@@ -13,7 +13,7 @@ internal class NextUtilityState : State {
         goToLandedOnSpace = false;
 
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
-        ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
+        ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
 
 
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
@@ -32,7 +32,7 @@ internal class NextUtilityState : State {
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
-        ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
+        ScreenOverlayFunctionEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
     }
     public override State getNextState() {
         if (goToResolveDebt) return allStates.getState<ResolveDebtState>();
@@ -55,7 +55,7 @@ internal class NextUtilityState : State {
                 InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING + 70,
                 () => {
                     SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)GameState.game.TurnPlayer.DebtInfo;
-                    ScreenOverlayEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
+                    ScreenOverlayStarterEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
                 }
             );
         }

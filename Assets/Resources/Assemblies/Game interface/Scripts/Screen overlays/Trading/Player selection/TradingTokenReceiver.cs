@@ -12,7 +12,7 @@ public class TradingTokenReceiver : GhostReceiver {
     #region public
     public PlayerInfo PlayerInfo => playerInfo;
     public override void receiveGhost(DraggableGhost ghost) {
-        SoundOnlyEventHub.Instance.call_Put();
+        SoundPlayer.Instance.play_Put();
         TokenIconGhost tokenIconGhost = (TokenIconGhost)ghost;
         Token token = tokenIconGhost.Token;
         PlayerColour colour = tokenIconGhost.Colour;
@@ -22,9 +22,8 @@ public class TradingTokenReceiver : GhostReceiver {
         if (playerInfo == otherTradingTokenReceiver.PlayerInfo) {
             otherTradingTokenReceiver.removeIcon();
         }
-        UIEventHub.Instance.call_TradingPlayerPlaced();
+        TradeEventHub.Instance.call_TradingPlayerPlaced();
     }
-    public override bool canReceiveThisGhost(DraggableGhost ghost) => true;
     #endregion
 
 

@@ -94,22 +94,22 @@ public class EstateVisual : SpaceVisual {
         BoardBuilding houseBuilding = houseBuildings[index];
         if (toggle) {
             houseBuilding.appear();
-            SoundOnlyEventHub.Instance.call_BuildingPut();
+            SoundPlayer.Instance.play_TinyPut();
         }
         else {
             houseBuilding.disappear();
-            SoundOnlyEventHub.Instance.call_BuildingPut();
+            SoundPlayer.Instance.play_TinyPut();
         }
     }
     private void toggleHotel(bool toggle) {
         hasHotel = toggle;
         if (toggle) {
             hotelBuilding.appear();
-            SoundOnlyEventHub.Instance.call_BuildingPut();
+            SoundPlayer.Instance.play_TinyPut();
         }
         else {
             hotelBuilding.disappear();
-            SoundOnlyEventHub.Instance.call_BuildingPut();
+            SoundPlayer.Instance.play_TinyPut();
         }
     }
     #endregion

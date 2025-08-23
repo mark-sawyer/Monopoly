@@ -7,8 +7,6 @@ public class ResolveMortgage : ScreenOverlay<PlayerInfo, PropertyInfo> {
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private TextMeshProUGUI unmortgageCostText;
     [SerializeField] private TextMeshProUGUI keepMortgagedCostText;
-    private PlayerInfo playerInfo;
-    private PropertyInfo propertyInfo;
 
 
 
@@ -21,18 +19,16 @@ public class ResolveMortgage : ScreenOverlay<PlayerInfo, PropertyInfo> {
 
 
     #region ScreenOverlay
-    public override void appear() {
+    public override void setup(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
         tokenIcon.setup(playerInfo.Token, playerInfo.Colour);
-        AccompanyingVisualSpawner.Instance.spawnAndMove(middleSectionRT, propertyInfo);
         unmortgageCostText.text = "$" + propertyInfo.UnmortgageCost.ToString();
         keepMortgagedCostText.text = "$" + propertyInfo.RetainMortgageCost.ToString();
-        ScreenOverlayDropper screenOverlayDropper = new ScreenOverlayDropper(RT);
-        screenOverlayDropper.adjustSize();
-        StartCoroutine(screenOverlayDropper.drop());
+        AccompanyingVisualSpawner.Instance.spawnAndMove(middleSectionRT, propertyInfo);
     }
-    public override void setup(PlayerInfo playerInfo, PropertyInfo propertyInfo) {
-        this.playerInfo = playerInfo;
-        this.propertyInfo = propertyInfo;
+    public override void appear() {
+        SoundPlayer.Instance.play_QuestionChime();
+        ScreenOverlayDropper screenOverlayDropper = new ScreenOverlayDropper(RT);
+        StartCoroutine(screenOverlayDropper.drop());
     }
     #endregion
 }

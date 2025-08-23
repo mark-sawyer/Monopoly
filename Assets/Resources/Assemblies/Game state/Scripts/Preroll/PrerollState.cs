@@ -26,7 +26,7 @@ internal class PrerollState : State {
         void subscribeToEvents() {
             UIPipelineEventHub.Instance.sub_RollButtonClicked(rollButtonListener);
             ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(managePropertiesListener);
-            ScreenOverlayEventHub.Instance.sub_TradeOpened(tradeListener);
+            ScreenOverlayStarterEventHub.Instance.sub_TradeOpened(tradeListener);
             UIEventHub.Instance.sub_EscapeClicked(escapeListener);
         }
         void adjustTurnPlayer() {
@@ -57,10 +57,9 @@ internal class PrerollState : State {
             || goToEscapeMenu;
     }
     public override void exitState() {
-
         UIPipelineEventHub.Instance.unsub_RollButtonClicked(rollButtonListener);
         ManagePropertiesEventHub.Instance.unsub_ManagePropertiesOpened(managePropertiesListener);
-        ScreenOverlayEventHub.Instance.unsub_TradeOpened(tradeListener);
+        ScreenOverlayStarterEventHub.Instance.unsub_TradeOpened(tradeListener);
         UIEventHub.Instance.unsub_EscapeClicked(escapeListener);
     }
     public override State getNextState() {
@@ -145,7 +144,7 @@ internal class PrerollState : State {
             );
         }
         void nonDoublesTurnOneTwo() {
-            SoundOnlyEventHub.Instance.call_IncorrectOutcome();
+            SoundPlayer.Instance.play_IncorrectSound();
             WaitFrames.Instance.beforeAction(
                 incorrectSoundBufferFrames,
                 () => {
@@ -160,7 +159,7 @@ internal class PrerollState : State {
             );
         }
         void nonDoublesTurnThree() {
-            SoundOnlyEventHub.Instance.call_IncorrectOutcome();
+            SoundPlayer.Instance.play_IncorrectSound();
             WaitFrames.Instance.beforeAction(
                 incorrectSoundBufferFrames,
                 () => {

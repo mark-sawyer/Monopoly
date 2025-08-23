@@ -15,7 +15,7 @@ internal class AuctionPropertyState : State {
         Queue<PropertyInfo> propertyInfos = new();
         PropertyInfo propertyLandedOn = ((PropertySpaceInfo)GameState.game.TurnPlayer.SpaceInfo).PropertyInfo;
         propertyInfos.Enqueue(propertyLandedOn);
-        ScreenOverlayEventHub.Instance.call_AuctionsBegin(propertyInfos);
+        ScreenOverlayStarterEventHub.Instance.call_AuctionsBegin(propertyInfos);
     }
     public override bool exitConditionMet() {
         return auctionOver;
@@ -32,7 +32,7 @@ internal class AuctionPropertyState : State {
 
     #region private
     private void auctionOverListening() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlayKeepCover();
         auctionOver = true;
     }
     #endregion

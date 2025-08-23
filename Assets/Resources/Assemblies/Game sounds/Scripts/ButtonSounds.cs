@@ -10,11 +10,11 @@ public class ButtonSounds : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     #region Implementing
     public void OnPointerDown(PointerEventData eventData) {
         if (!button.interactable) return;
-        SoundOnlyEventHub.Instance.call_ButtonDown();
+        SoundPlayer.Instance.play_ButtonDown();
     }
     public void OnPointerUp(PointerEventData eventData) {
         if (!button.interactable) return;
-        SoundOnlyEventHub.Instance.call_ButtonUp();
+        SoundPlayer.Instance.play_ButtonUp();
     }
     #endregion
 }

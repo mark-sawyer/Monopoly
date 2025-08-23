@@ -22,6 +22,11 @@ public class AuctionPropertiesManager : AuctionManager<Queue<PropertyInfo>> {
 
 
     #region ScreenOverlay
+    public override void setup(Queue<PropertyInfo> propertiesQueue) {
+        this.propertiesQueue = propertiesQueue;
+        currentlyBeingAuctioned = propertiesQueue.Dequeue();
+        AuctionEventHub.Instance.sub_AuctionFinished(auctionFinished);
+    }
     public override void appear() {
         composePanel(GameState.game.ActivePlayers.ToList());
         scalePanel();
@@ -30,11 +35,6 @@ public class AuctionPropertiesManager : AuctionManager<Queue<PropertyInfo>> {
         }
         movePanelToStartingPosition();
         StartCoroutine(drop());
-    }
-    public override void setup(Queue<PropertyInfo> propertiesQueue) {
-        this.propertiesQueue = propertiesQueue;
-        currentlyBeingAuctioned = propertiesQueue.Dequeue();
-        AuctionEventHub.Instance.sub_AuctionFinished(auctionFinished);
     }
     #endregion
 
@@ -51,7 +51,7 @@ public class AuctionPropertiesManager : AuctionManager<Queue<PropertyInfo>> {
             }
 
 
-            SoundOnlyEventHub.Instance.call_Flourish();
+            SoundPlayer.Instance.play_Flourish();
             for (int i = 0; i < AuctionPanelParentRT.childCount; i++) {
                 Destroy(AuctionPanelParentRT.GetChild(i).gameObject);
             }

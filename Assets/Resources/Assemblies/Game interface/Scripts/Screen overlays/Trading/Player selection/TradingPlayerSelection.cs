@@ -16,22 +16,19 @@ public class TradingPlayerSelection : ScreenOverlay {
     #endregion
     [SerializeField] private GameObject tradePanelPrefab;
     private GameObject tradePanelInstance;
-    private ScreenOverlayDropper screenOverlayDropper;
 
 
 
     #region MonoBehaviour
     private void OnEnable() {
-        screenOverlayDropper = new ScreenOverlayDropper(droppingQuestionRT);
-        screenOverlayDropper.adjustSize();
-        UIEventHub.Instance.sub_TradingPlayerPlaced(adjustTextButtonToggle);
-        UIEventHub.Instance.sub_TradingPlayersConfirmed(createTradePanel);
+        TradeEventHub.Instance.sub_TradingPlayerPlaced(adjustTextButtonToggle);
+        TradeEventHub.Instance.sub_TradingPlayersConfirmed(createTradePanel);
         UIPipelineEventHub.Instance.sub_TradeTerminated(removeTradeDisplay);
         UIPipelineEventHub.Instance.sub_TradeLockedIn(removeTradeDisplay);
     }
     private void OnDestroy() {
-        UIEventHub.Instance.unsub_TradingPlayerPlaced(adjustTextButtonToggle);
-        UIEventHub.Instance.unsub_TradingPlayersConfirmed(createTradePanel);
+        TradeEventHub.Instance.unsub_TradingPlayerPlaced(adjustTextButtonToggle);
+        TradeEventHub.Instance.unsub_TradingPlayersConfirmed(createTradePanel);
         UIPipelineEventHub.Instance.unsub_TradeTerminated(removeTradeDisplay);
         UIPipelineEventHub.Instance.unsub_TradeLockedIn(removeTradeDisplay);
     }
@@ -41,8 +38,10 @@ public class TradingPlayerSelection : ScreenOverlay {
 
     #region ScreenAnimation
     public override void appear() {
+        SoundPlayer.Instance.play_OtherChime();
         IEnumerable<PlayerInfo> activePlayers = GameState.game.ActivePlayers;
         tradingCharacterSelectionRow.displayCharacters(activePlayers);
+        ScreenOverlayDropper screenOverlayDropper = new ScreenOverlayDropper(droppingQuestionRT);
         StartCoroutine(screenOverlayDropper.drop());
         StartCoroutine(dropBackButton());
     }
@@ -74,10 +73,9 @@ public class TradingPlayerSelection : ScreenOverlay {
         void moveObjects() {
             Destroy(droppingQuestionRT.gameObject);
             RectTransform tradePanelRT = (RectTransform)tradePanelInstance.transform;
-            ScreenOverlayDropper dqf = new ScreenOverlayDropper(tradePanelRT);
-            dqf.adjustSize();
+            ScreenOverlayDropper screenOverlayDropper = new ScreenOverlayDropper(tradePanelRT);
             IEnumerator dropSequence() {
-                yield return dqf.drop();
+                yield return screenOverlayDropper.drop();
                 backButton.interactable = true;
             }
             StartCoroutine(dropSequence());
@@ -89,6 +87,7 @@ public class TradingPlayerSelection : ScreenOverlay {
         tradePanelInstance = createTradePanel(playerOne, playerTwo);
         moveObjects();
         UIEventHub.Instance.call_FadeScreenCoverIn(1f);
+        SoundPlayer.Instance.play_TradeChime();
         backButton.interactable = false;
     }
     private IEnumerator dropBackButton() {
@@ -107,7 +106,7 @@ public class TradingPlayerSelection : ScreenOverlay {
         backButton.interactable = true;
     }
     private void removeTradeDisplay() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
     }
     #endregion
 }

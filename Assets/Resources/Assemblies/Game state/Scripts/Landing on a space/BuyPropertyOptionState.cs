@@ -12,20 +12,20 @@ internal class BuyPropertyOptionState : State {
         purchaseAccepted = false;
         purchaseDeclined = false;
 
-        ScreenOverlayEventHub.Instance.sub_PurchaseYesClicked(yesClicked);
-        ScreenOverlayEventHub.Instance.sub_PurchaseNoClicked(noClicked);
+        ScreenOverlayFunctionEventHub.Instance.sub_PurchaseYesClicked(yesClicked);
+        ScreenOverlayFunctionEventHub.Instance.sub_PurchaseNoClicked(noClicked);
 
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
         PropertyInfo propertyInfo = ((PropertySpaceInfo)GameState.game.TurnPlayer.SpaceInfo).PropertyInfo;
-        ScreenOverlayEventHub.Instance.call_PurchaseQuestion(playerInfo, propertyInfo);
+        ScreenOverlayStarterEventHub.Instance.call_PurchaseQuestion(playerInfo, propertyInfo);
     }
     public override bool exitConditionMet() {
         return purchaseAccepted
             || purchaseDeclined;
     }
     public override void exitState() {
-        ScreenOverlayEventHub.Instance.unsub_PurchaseYesClicked(yesClicked);
-        ScreenOverlayEventHub.Instance.unsub_PurchaseNoClicked(noClicked);
+        ScreenOverlayFunctionEventHub.Instance.unsub_PurchaseYesClicked(yesClicked);
+        ScreenOverlayFunctionEventHub.Instance.unsub_PurchaseNoClicked(noClicked);
     }
     public override State getNextState() {
         if (purchaseAccepted) return allStates.getState<PrerollState>();
@@ -40,7 +40,7 @@ internal class BuyPropertyOptionState : State {
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         PropertyInfo propertyInfo = ((PropertySpaceInfo)turnPlayer.SpaceInfo).PropertyInfo;
         DataUIPipelineEventHub.Instance.call_MoneyAdjustment(turnPlayer, -propertyInfo.Cost);
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlay();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
         AccompanyingVisualSpawner.Instance.removeObjectAndResetPosition();
         WaitFrames.Instance.beforeAction(
             FrameConstants.MONEY_UPDATE,
@@ -51,7 +51,7 @@ internal class BuyPropertyOptionState : State {
         );
     }
     private void noClicked() {
-        ScreenOverlayEventHub.Instance.call_RemoveScreenOverlayKeepCover();
+        ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlayKeepCover();
         purchaseDeclined = true;
     }
     #endregion

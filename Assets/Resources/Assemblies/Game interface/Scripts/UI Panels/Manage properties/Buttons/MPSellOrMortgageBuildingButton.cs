@@ -14,6 +14,7 @@ public class MPSellOrMortgageBuildingButton : SellOrMortgageBuildingButton {
 
 
         PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
+        SoundPlayer.Instance.play_MoneyChing();
         if (CurrentMode == ButtonMode.SELL) sellClicked(selectedPlayer);
         else mortgageClicked(selectedPlayer);
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer, true);

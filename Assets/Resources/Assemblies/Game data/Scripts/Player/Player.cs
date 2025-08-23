@@ -1,6 +1,8 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
+using UnityEngine;
 
 internal class Player : PlayerInfo {
     private Game game;
@@ -37,14 +39,23 @@ internal class Player : PlayerInfo {
     internal Space Space => space;
     internal Debt Debt => debt;
     internal void obtainProperty(Property property) {
+        if (properties.Contains(property)) {
+            throw new InvalidOperationException($"Player {colour} {token} already owns {property.Name}.");
+        }
         properties.Add(property);
         property.changeOwner(this);
         if (property.IsMortgaged) {
+            if (unresolvedMortgages.Contains(property)) {
+                throw new InvalidOperationException(
+                    $"Player {colour} {token} already has {property.Name} in their unresolved mortgages."
+                );
+            }
             unresolvedMortgages.Add(property);
         }
     }
     internal void removeProperty(Property property) {
         properties.Remove(property);
+        unresolvedMortgages.Remove(property);
         property.changeOwner(null);
     }
     internal void adjustMoney(int difference) {
@@ -143,7 +154,8 @@ internal class Player : PlayerInfo {
         }
     }
     public IEnumerable<TradableInfo> TradableInfos => getTradablesList();
-    public bool CanRaiseMoney => properties.Any(x => !x.IsMortgaged);
+    public bool HasATradable => getTradablesList().Count > 0;
+    public bool HasAnUnmortgagedProperty => properties.Any(x => !x.IsMortgaged);
     public bool HasAnUnresolvedMortgage => unresolvedMortgages.Count > 0;
     public PropertyInfo UnresolvedMortgageProperty => unresolvedMortgages[0];
     public bool hasGOOJFCardOfType(CardType cardType) {

@@ -9,35 +9,19 @@ internal class PostRaiseMoneyState : State {
 
     #region State
     public override void enterState() {
-        PlayerInfo[] getPlayersNeedingUIUpdate() {
-            PlayerPanelManager playerPanelManager = PlayerPanelManager.Instance;
-            List<PlayerInfo> playersToUpdate = new List<PlayerInfo>();
-            for (int i = 0; i < GameState.game.NumberOfPlayers; i++) {
-                PlayerInfo playerInfo = GameState.game.getPlayerInfo(i);
-                if (!playerInfo.IsActive) continue;
-
-                PlayerPanel playerPanel = playerPanelManager.getPlayerPanel(i);
-                if (!playerPanel.NeedsMoneyUpdate) continue;
-
-                playersToUpdate.Add(playerInfo);
-            }
-            return playersToUpdate.ToArray();
-        }
-
-
         updateAnimationsOver = false;
         UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(updateAnimationsOverListener);
 
-        PlayerInfo[] playersNeedingUIUpdate = getPlayersNeedingUIUpdate();
-        if (playersNeedingUIUpdate.Length > 0) {
-            UIEventHub.Instance.call_UpdateUIMoney(playersNeedingUIUpdate);
+        PlayerInfo[] playersNeedingMoneyUIUpdate = PlayerPanelManager.Instance.getPlayersNeedingMoneyUIUpdate();
+        if (playersNeedingMoneyUIUpdate.Length > 0) {
+            UIEventHub.Instance.call_UpdateUIMoney(playersNeedingMoneyUIUpdate);
             WaitFrames.Instance.beforeAction(
                 FrameConstants.MONEY_UPDATE,
-                () => UIEventHub.Instance.call_UpdateExpiredPropertyVisuals()
+                () => UIEventHub.Instance.call_UpdateIconsAfterResolveDebt()
             );
         }
         else {
-            UIEventHub.Instance.call_UpdateExpiredPropertyVisuals();
+            UIEventHub.Instance.call_UpdateIconsAfterResolveDebt();
         }
     }
     public override bool exitConditionMet() {

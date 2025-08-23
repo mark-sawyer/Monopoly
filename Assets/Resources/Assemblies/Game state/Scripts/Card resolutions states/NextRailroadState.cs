@@ -13,7 +13,7 @@ internal class NextRailroadState : State {
         goToLandedOnSpace = false;
 
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
-        ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
+        ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
 
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         int oldSpaceIndex = turnPlayer.SpaceIndex;
@@ -31,7 +31,7 @@ internal class NextRailroadState : State {
     }
     public override void exitState() {
         UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
-        ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
+        ScreenOverlayFunctionEventHub.Instance.unsub_RemoveScreenOverlay(animationOverCalled);
     }
     public override State getNextState() {
         if (goToResolveDebt) return allStates.getState<ResolveDebtState>();
@@ -49,7 +49,7 @@ internal class NextRailroadState : State {
             int rent = 2 * railroadInfo.Rent;
             DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
             SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)GameState.game.TurnPlayer.DebtInfo;
-            ScreenOverlayEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
+            ScreenOverlayStarterEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
         }
         else {
             goToLandedOnSpace = true;

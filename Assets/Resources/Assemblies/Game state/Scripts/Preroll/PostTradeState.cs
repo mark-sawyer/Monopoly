@@ -10,6 +10,8 @@ internal class PostTradeState : State {
     public override void enterState() {
         updateAnimationsOver = false;
         TradeEventHub.Instance.sub_AllVisualsUpdatedAfterTradeFinalised(updateAnimationsOverListener);
+
+
         TradeEventHub.Instance.call_UpdateVisualsAfterTradeFinalised();
     }
     public override bool exitConditionMet() {

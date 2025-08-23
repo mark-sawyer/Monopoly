@@ -17,16 +17,16 @@ internal class DrawCardState : State {
         CardInfo cardInfo = GameState.game.DrawnCard;
         CardMechanicInfo cardMechanicInfo = cardInfo.CardMechanicInfo;
 
-        if (cardMechanicInfo is GoToJailCardInfo) SoundOnlyEventHub.Instance.call_Whistle();
-        else SoundOnlyEventHub.Instance.call_CardDrawn();
-        ScreenOverlayEventHub.Instance.call_CardShown();
-        ScreenOverlayEventHub.Instance.sub_RemoveScreenOverlay(screenAnimationRemoved);
+        if (cardMechanicInfo is GoToJailCardInfo) SoundPlayer.Instance.play_Whistle();
+        else SoundPlayer.Instance.play_CardDrawn();
+        ScreenOverlayStarterEventHub.Instance.call_CardShown();
+        ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlay(screenAnimationRemoved);
     }
     public override bool exitConditionMet() {
         return okClicked;
     }
     public override void exitState() {
-        ScreenOverlayEventHub.Instance.unsub_RemoveScreenOverlay(screenAnimationRemoved);
+        ScreenOverlayFunctionEventHub.Instance.unsub_RemoveScreenOverlay(screenAnimationRemoved);
     }
     public override State getNextState() {
         CardMechanicInfo cardMechanicInfo = GameState.game.DrawnCard.CardMechanicInfo;

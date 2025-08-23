@@ -2,27 +2,25 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/UnaffordablePropertyState")]
 internal class UnaffordablePropertyState : State {
-    private ScreenOverlayEventHub screenAnimationEvents;
     private bool animationOver;
 
 
 
     #region State
     public override void enterState() {
-        if (screenAnimationEvents == null) screenAnimationEvents = ScreenOverlayEventHub.Instance;
         animationOver = false;
-        screenAnimationEvents.sub_RemoveScreenOverlayKeepCover(animationOverListening);
+        ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlayKeepCover(animationOverListening);
 
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         PropertySpaceInfo propertySpaceInfo = (PropertySpaceInfo)turnPlayer.SpaceInfo;
         PropertyInfo propertyInfo = propertySpaceInfo.PropertyInfo;
-        ScreenOverlayEventHub.Instance.call_UnaffordableProperty(propertyInfo);
+        ScreenOverlayStarterEventHub.Instance.call_UnaffordableProperty(propertyInfo);
     }
     public override bool exitConditionMet() {
         return animationOver;
     }
     public override void exitState() {
-        screenAnimationEvents.unsub_RemoveScreenOverlayKeepCover(animationOverListening);
+        ScreenOverlayFunctionEventHub.Instance.unsub_RemoveScreenOverlayKeepCover(animationOverListening);
     }
     public override State getNextState() {
         return allStates.getState<AuctionPropertyState>();

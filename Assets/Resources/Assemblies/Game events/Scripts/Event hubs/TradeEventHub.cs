@@ -10,6 +10,8 @@ public class TradeEventHub : ScriptableObject {
     [SerializeField] private GameEvent handshakeComplete;
     [SerializeField] private GameEvent updateVisualsAfterTradeFinalised;
     [SerializeField] private GameEvent allVisualsUpdatedAfterTradeFinalised;
+    [SerializeField] private GameEvent tradingPlayersConfirmed;
+    [SerializeField] private GameEvent tradingPlayerPlaced;
 
 
 
@@ -35,6 +37,8 @@ public class TradeEventHub : ScriptableObject {
     public void call_HandshakeComplete() => handshakeComplete.invoke();
     public void call_UpdateVisualsAfterTradeFinalised() => updateVisualsAfterTradeFinalised.invoke();
     public void call_AllVisualsUpdatedAfterTradeFinalised() => allVisualsUpdatedAfterTradeFinalised.invoke();
+    public void call_TradingPlayerPlaced() => tradingPlayerPlaced.invoke();
+    public void call_TradingPlayersConfirmed() => tradingPlayersConfirmed.invoke();
     #endregion
 
 
@@ -46,6 +50,8 @@ public class TradeEventHub : ScriptableObject {
     public void sub_HandshakeComplete(Action a) => handshakeComplete.Listeners += a;
     public void sub_UpdateVisualsAfterTradeFinalised(Action a) => updateVisualsAfterTradeFinalised.Listeners += a;
     public void sub_AllVisualsUpdatedAfterTradeFinalised(Action a) => allVisualsUpdatedAfterTradeFinalised.Listeners += a;
+    public void sub_TradingPlayersConfirmed(Action a) => tradingPlayersConfirmed.Listeners += a;
+    public void sub_TradingPlayerPlaced(Action a) => tradingPlayerPlaced.Listeners += a;
     #endregion
 
 
@@ -56,5 +62,7 @@ public class TradeEventHub : ScriptableObject {
     public void unsub_NumberedButtonClicked(Action<int> a) => numberedButtonClicked.Listeners -= a;
     public void unsub_HandshakeComplete(Action a) => handshakeComplete.Listeners -= a;
     public void unsub_AllVisualsUpdatedAfterTradeFinalised(Action a) => allVisualsUpdatedAfterTradeFinalised.Listeners -= a;
+    public void unsub_TradingPlayersConfirmed(Action a) => tradingPlayersConfirmed.Listeners -= a;
+    public void unsub_TradingPlayerPlaced(Action a) => tradingPlayerPlaced.Listeners -= a;
     #endregion
 }

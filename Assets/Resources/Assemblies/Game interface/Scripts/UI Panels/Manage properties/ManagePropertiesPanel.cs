@@ -55,10 +55,10 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
         setScaleAndPosition();
         IsRegularRefreshMode = true;
-        ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(() => dropFromPreroll(GameState.game.TurnPlayer));
+        ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(() => drop(GameState.game.TurnPlayer));
         ManagePropertiesEventHub.Instance.sub_BackButtonPressed(backButtonPressed);
         AuctionEventHub.Instance.sub_AuctionRemainingBuildingsButtonClicked(() => StartCoroutine(raiseCoroutine()));
-        AuctionEventHub.Instance.sub_AuctionBuildingsBackButtonClicked(() => dropFromPreroll(selectedPlayer));
+        AuctionEventHub.Instance.sub_AuctionBuildingsBackButtonClicked(() => drop(selectedPlayer));
     }
     #endregion
 
@@ -103,18 +103,16 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
 
     #region private
-    private void dropFromPreroll(PlayerInfo selectectedPlayer) {
+    private void drop(PlayerInfo selectectedPlayer) {
         tokenIcons = getTokenIcons();
         SelectedPlayer = GameState.game.TurnPlayer;
-
+        
         UIEventHub.Instance.call_FadeScreenCoverIn(1f);
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectectedPlayer, IsRegularRefreshMode);
-        UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisual);
         StartCoroutine(dropCoroutine(true));
     }
     private void backButtonPressed() {
         tokenIcons = null;
-        UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisual);
         UIEventHub.Instance.call_FadeScreenCoverOut();
         StartCoroutine(raiseCoroutine());
     }
@@ -147,7 +145,8 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
     #region Moving coroutines
     private IEnumerator raiseCoroutine() {
-        SoundOnlyEventHub.Instance.call_Swoop();
+        SoundPlayer.Instance.play_Swoop();
+        UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisual);
         float length = offScreenY - onScreenY;
         for (int i = 1; i <= FrameConstants.MANAGE_PROPERTIES_DROP; i++) {
             float yPos = LinearValue.exe(i, onScreenY, offScreenY, FrameConstants.MANAGE_PROPERTIES_DROP);
@@ -157,7 +156,8 @@ public class ManagePropertiesPanel : MonoBehaviour {
         rt.anchoredPosition = new Vector2(0f, offScreenY);
     }
     private IEnumerator dropCoroutine(bool backButtonOnAtEnd) {
-        SoundOnlyEventHub.Instance.call_Swoop();
+        SoundPlayer.Instance.play_Swoop();
+        UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisual);
         float length = offScreenY - onScreenY;
         for (int i = 1; i <= FrameConstants.MANAGE_PROPERTIES_DROP; i++) {
             float yPos = LinearValue.exe(i, offScreenY, onScreenY, FrameConstants.MANAGE_PROPERTIES_DROP);
