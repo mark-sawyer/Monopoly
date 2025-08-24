@@ -48,6 +48,7 @@ public class IncomeTaxQuestion : ScreenOverlay<PlayerInfo> {
     private void completeQuestion(int moneyLost) {
         DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.BankCreditor, moneyLost);
         ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
+        ScreenOverlayFunctionEventHub.Instance.call_IncomeTaxAnswered();
     }
     #endregion
 }

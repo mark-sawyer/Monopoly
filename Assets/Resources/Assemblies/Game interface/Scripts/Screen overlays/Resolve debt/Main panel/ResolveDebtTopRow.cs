@@ -68,8 +68,21 @@ public class ResolveDebtTopRow : MonoBehaviour {
         moneyAdjusterInUse = debtRemainingEveryone;
     }
     private void adjustPanelAfterPayment() {
-        SoundPlayer.Instance.play_MoneyChing();
-        moneyAdjusterInUse.adjustMoney(debtInfo);
+        void adjust() {
+            SoundPlayer.Instance.play_MoneyChing();
+            moneyAdjusterInUse.adjustMoney(debtInfo);
+        }
+
+
+        if (!OffScreen) adjust();
+        else {
+            WaitFrames.Instance.beforeAction(
+                FrameConstants.MANAGE_PROPERTIES_DROP
+                + 20,
+                adjust
+            );
+        }
     }
+    private bool OffScreen => ((RectTransform)transform.parent.parent.parent.parent).anchoredPosition.y > 10;
     #endregion
 }

@@ -8,10 +8,6 @@ public class DeclareBankruptcyButton : MonoBehaviour {
 
 
     #region MonoBehaviour
-    private void Start() {
-        ResolveDebtEventHub.Instance.sub_ResolveDebtVisualRefresh(checkInteractability);
-        checkInteractability();
-    }
     private void OnDestroy() {
         ResolveDebtEventHub.Instance.unsub_ResolveDebtVisualRefresh(checkInteractability);
     }
@@ -22,6 +18,8 @@ public class DeclareBankruptcyButton : MonoBehaviour {
     #region public
     public void setup(PlayerInfo debtor) {
         this.debtor = debtor;
+        ResolveDebtEventHub.Instance.sub_ResolveDebtVisualRefresh(checkInteractability);
+        checkInteractability();
     }
     #endregion
 

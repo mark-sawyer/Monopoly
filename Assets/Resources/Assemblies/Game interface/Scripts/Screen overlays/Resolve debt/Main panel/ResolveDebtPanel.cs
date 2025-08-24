@@ -43,6 +43,7 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
         foreach (RDOtherPropertyGroupSection otherPropertyGroupSection in otherPropertyGroupSections) {
             otherPropertyGroupSection.setup(debtInfo.DebtorInfo);
         }
+        ResolveDebtEventHub.Instance.call_ResolveDebtVisualRefresh();
     }
     public override void appear() {
         IEnumerator firstAppear(ScreenOverlayDropper screenOverlayDropper) {
@@ -72,14 +73,17 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
         StartCoroutine(reappear());
     }
     public void appearFromTradeComplete() {
-        IEnumerator reappear() {
+        IEnumerator reappear(bool moneyWasExchanged) {
             ResolveDebtEventHub.Instance.call_PanelInTransit();
             yield return lowerResolveDebts();
-            yield return WaitFrames.Instance.frames(40);
+            yield return WaitFrames.Instance.frames(20);
+            if (moneyWasExchanged) yield return WaitFrames.Instance.frames(FrameConstants.MONEY_UPDATE);
             ResolveDebtEventHub.Instance.call_ResolveDebtPanelLowered();
-
-
-            checkIfRaisingMoneyOver();
+            if (debtInfo.Paid) {
+                yield return WaitFrames.Instance.frames(50);
+                ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
+                ResolveDebtEventHub.Instance.call_DebtResolved();
+            }
         }
 
 
@@ -92,7 +96,7 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
         ResolveDebtEventHub.Instance.unsub_ResolveDebtVisualRefresh(checkIfRaisingMoneyOver);
         ResolveDebtEventHub.Instance.call_ResolveDebtVisualRefresh();
         ResolveDebtEventHub.Instance.sub_ResolveDebtVisualRefresh(checkIfRaisingMoneyOver);
-        StartCoroutine(reappear());
+        StartCoroutine(reappear(tradeInfo.MoneyWasExchanged));
     }
     #endregion
 
@@ -100,9 +104,7 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
 
     #region private
     private void checkIfRaisingMoneyOver() {
-        PlayerInfo debtor = debtInfo.DebtorInfo;
-        bool debtPaid = debtor.DebtInfo == null;
-        if (debtPaid) {
+        if (debtInfo.Paid) {
             WaitFrames.Instance.beforeAction(
                 FrameConstants.MONEY_UPDATE + 50,
                 () => {
@@ -153,7 +155,6 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
             yield return null;
         }
         rt.anchoredPosition = Vector2.zero;
-        ResolveDebtEventHub.Instance.call_ResolveDebtPanelLowered();
     }
     #endregion
 }

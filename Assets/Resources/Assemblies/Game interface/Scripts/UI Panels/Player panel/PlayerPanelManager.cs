@@ -90,8 +90,13 @@ public class PlayerPanelManager : MonoBehaviour {
             uiPipelineEvents.sub_PlayerEliminated(eliminatePlayer);
 
             overlayStarterEvents.sub_PurchaseQuestion((PlayerInfo pl, PropertyInfo pr) => bringPlayerPanelOverScreenCover(pl));
+            overlayStarterEvents.sub_IncomeTaxQuestion((PlayerInfo pl) => bringPlayerPanelOverScreenCover(pl));
+            overlayStarterEvents.sub_ResolveMortgage((PlayerInfo pl, PropertyInfo pr) => bringPlayerPanelOverScreenCover(pl));
             overlayFunctionEvents.sub_PurchaseYesClicked(bringBackPlayerPanelAfterFade);
             overlayFunctionEvents.sub_PurchaseNoClicked(bringBackPlayerPanelImmediately);
+            overlayFunctionEvents.sub_IncomeTaxAnswered(bringBackPlayerPanelAfterFade);
+            overlayFunctionEvents.sub_UnmortgageClicked(bringBackPlayerPanelAfterFade);
+            overlayFunctionEvents.sub_KeepMortgageClicked(bringBackPlayerPanelAfterFade);
 
             overlayStarterEvents.sub_WinnerAnnounced(removeHighlight);
         }
@@ -190,13 +195,15 @@ public class PlayerPanelManager : MonoBehaviour {
     }
     private void adjustMoneyVisuals(PlayerInfo playerOne, PlayerInfo playerTwo) {
         SoundPlayer.Instance.play_MoneyChing();
-        adjustMoneyVisual(playerOne);
-        adjustMoneyVisual(playerTwo);
+        getPlayerPanel(playerOne.Index).adjustMoney(playerOne);
+        getPlayerPanel(playerTwo.Index).adjustMoney(playerTwo);
     }
     private void adjustMoneyVisuals(PlayerInfo[] players) {
         SoundPlayer.Instance.play_MoneyChing();
         foreach (PlayerInfo playerInfo in players) {
-            adjustMoneyVisual(playerInfo);
+            int index = playerInfo.Index;
+            PlayerPanel playerPanel = getPlayerPanel(index);
+            playerPanel.adjustMoney(playerInfo);
         }
     }
     #endregion

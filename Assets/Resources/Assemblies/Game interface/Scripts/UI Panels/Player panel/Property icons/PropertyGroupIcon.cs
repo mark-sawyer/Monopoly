@@ -53,7 +53,7 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
     }
     private IEnumerator pulseAndChangeIcon(Action iconUpdate) {
         canvas.overrideSorting = true;
-        canvas.sortingOrder = 1;
+        canvas.sortingOrder = 3;
         for (int i = 1; i <= 20; i++) {
              float scale = getScale(i);
             transform.localScale = new Vector3(scale, scale, scale);

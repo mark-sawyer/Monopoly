@@ -50,7 +50,7 @@ public class AuctionRemainingBuildingsButton : MonoBehaviour {
         int playersCapableOfAddingRemaining = 0;
         foreach (PlayerInfo playerInfo in activePlayers) {
             int capableOfAdding = playerInfo.buildingsCanAdd(buildingType);
-            if (capableOfAdding >= remaining && playerInfo.Money > 0) playersCapableOfAddingRemaining++;
+            if (capableOfAdding >= remaining) playersCapableOfAddingRemaining++;
             if (playersCapableOfAddingRemaining == 2) {
                 canPressButton = true;
                 break;

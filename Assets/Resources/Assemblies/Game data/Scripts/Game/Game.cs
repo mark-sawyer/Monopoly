@@ -351,11 +351,19 @@ internal class Game : GameStateInfo, GamePlayer {
     }
     private Player[] initialisePlayers(int playerNum, int startingMoney) {
         Player[] players = new Player[playerNum];
+        int[] codes = new int[playerNum];
+        while (codes.Distinct().Count() != playerNum && playerNum != 1) {
+            codes = codes.Select(x => UnityEngine.Random.Range(0, 64)).ToArray();
+            int distinct = codes.Distinct().Count();
+        }
         for (int i = 0; i < playerNum; i++) {
+            int code = codes[i];
+            int tokenInt = code % 8;
+            int colourInt = code / 8;
             players[i] = new Player(
                 spaces[0],
-                (Token)UnityEngine.Random.Range(0, 8),
-                (PlayerColour)UnityEngine.Random.Range(0, 8),
+                (Token)tokenInt,
+                (PlayerColour)colourInt,
                 startingMoney,
                 this
             );

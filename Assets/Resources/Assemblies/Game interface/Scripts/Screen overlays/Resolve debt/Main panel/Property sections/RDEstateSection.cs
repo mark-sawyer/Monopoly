@@ -21,7 +21,7 @@ public class RDEstateSection : MonoBehaviour {
 
 
     public EstateInfo EstateInfo => (EstateInfo)estateSO;
-    public void setup(PlayerInfo debtor, EstateGroupColours estateGroupColours) {
+    public void setup(PlayerInfo debtor) {
         void setEstateReferences() {
             sellOrMortgageBuildingMono.setup(debtor, EstateInfo);
             buildingIcons.setup(EstateInfo);
@@ -31,33 +31,35 @@ public class RDEstateSection : MonoBehaviour {
             sellPriceText.text = "$" + EstateInfo.BuildingSellCost.ToString();
             mortgagePriceText.text = "$" + EstateInfo.MortgageValue.ToString();
         }
-        void setTitleStripImageColour() {
+        void setTitleStripImageColour(EstateGroupColours estateGroupColours) {
             Color titleStripColour = estateGroupColours.MainColour.Colour;
             titleStripImage.color = titleStripColour;
         }
-        void setBackgroundImageColour() {
+        void setBackgroundImageColour(EstateGroupColours estateGroupColours) {
             Color backgroundColour = estateGroupColours.BackgroundColour.Colour;
             backgroundImage.color = backgroundColour;
         }
-        void setRingBorderColour() {
+        void setRingBorderColour(EstateGroupColours estateGroupColours) {
             Color highlightColour = estateGroupColours.HighlightColour.Colour;
             PanelRecolourer panelRecolourer = new PanelRecolourer(squarePanelTransform);
             panelRecolourer.recolour(highlightColour);
         }
-        void setButtonColour() {
+        void setButtonColour(EstateGroupColours estateGroupColours) {
             Color buttonColour = estateGroupColours.HighlightColour.Colour;
             PanelRecolourer panelRecolourer = new PanelRecolourer(buttonColourPanelTransform);
             panelRecolourer.recolour(buttonColour);
         }
 
 
-
+        EstateGroupColours estateGroupColours = EstateGroupDictionary.Instance.lookupColour(EstateInfo.EstateColour);
         setEstateReferences();
         setTexts();
-        setTitleStripImageColour();
-        setBackgroundImageColour();
-        setRingBorderColour();
-        setButtonColour();
+        setTitleStripImageColour(estateGroupColours);
+        setBackgroundImageColour(estateGroupColours);
+        setRingBorderColour(estateGroupColours);
+        setButtonColour(estateGroupColours);
+    }
+    public void refreshVisual() {
         sellOrMortgageBuildingMono.adjustToAppropriateOption();
         buildingIcons.updateIcons();
     }

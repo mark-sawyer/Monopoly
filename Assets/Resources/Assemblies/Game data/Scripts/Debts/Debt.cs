@@ -7,4 +7,5 @@ internal interface Debt : DebtInfo {
 public interface DebtInfo {
     public PlayerInfo DebtorInfo { get; }
     public int TotalOwed { get; }
+    public bool Paid { get; }
 }

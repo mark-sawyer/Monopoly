@@ -27,6 +27,7 @@ internal class SingleCreditorDebt : Debt, SingleCreditorDebtInfo {
     public PlayerInfo DebtorInfo => debtor;
     public Creditor Creditor => creditor;
     public int TotalOwed => owed;
+    public bool Paid => owed == 0;
     #endregion
 }
 

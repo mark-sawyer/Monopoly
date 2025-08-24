@@ -8,11 +8,8 @@ public class ResolveDebtTradeButton : MonoBehaviour {
 
 
     #region MonoBehaviour
-    private void Start() {
-        ResolveDebtEventHub.Instance.sub_ResolveDebtPanelLowered(turnOnButton);
-    }
     private void OnDestroy() {
-        ResolveDebtEventHub.Instance.unsub_ResolveDebtPanelLowered(turnOnButton);
+        ResolveDebtEventHub.Instance.unsub_ResolveDebtVisualRefresh(checkInteractability);
     }
     #endregion
 
@@ -20,6 +17,7 @@ public class ResolveDebtTradeButton : MonoBehaviour {
 
     #region public
     public void setup(PlayerInfo debtor) {
+        ResolveDebtEventHub.Instance.sub_ResolveDebtVisualRefresh(checkInteractability);
         this.debtor = debtor;
     }
     #endregion
@@ -27,7 +25,7 @@ public class ResolveDebtTradeButton : MonoBehaviour {
 
 
     #region private
-    private void turnOnButton() {
+    private void checkInteractability() {
         button.interactable = debtor.DebtInfo != null;
     }
     #endregion

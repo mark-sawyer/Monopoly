@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 internal class Player : PlayerInfo {
@@ -168,19 +167,19 @@ internal class Player : PlayerInfo {
     public bool HasLostTurn { get; internal set; }
     public bool ToMoveAfterJailDebtResolving { get; internal set; }
     public int buildingsCanAdd(BuildingType buildingType) {
-        List<EstateGroup> estateGroupsWithMonopolies = properties
-            .OfType<Estate>()
-            .Select(x => x.EstateGroupInfo)
-            .Distinct()
-            .Where(x => x.propertiesOwnedByPlayer(this) == x.NumberOfPropertiesInGroup)
-            .Cast<EstateGroup>()
-            .ToList();
-
+        List<EstateGroup> sortedEstateGroupsWithMonopolies = sortedListOfEstateGroupsWithMonopolies();
         int canAdd = 0;
-        foreach (EstateGroup estateGroup in estateGroupsWithMonopolies) {
-            canAdd += buildingType == BuildingType.HOUSE
+        int tempMoney = money;
+        foreach (EstateGroup estateGroup in sortedEstateGroupsWithMonopolies) {
+            int couldPlace = buildingType == BuildingType.HOUSE
                 ? estateGroup.housesPlayerCanAdd(this)
                 : estateGroup.hotelsPlayerCanAdd(this);
+            int canAfford = tempMoney / estateGroup.BuildingCost;
+            int willAdd = couldPlace < canAfford ? couldPlace : canAfford;
+            int willCost = willAdd * estateGroup.BuildingCost;
+            canAdd += willAdd;
+            tempMoney -= willCost;
+            if (tempMoney < estateGroup.BuildingCost) break;
         }
 
         return canAdd;
@@ -202,6 +201,16 @@ internal class Player : PlayerInfo {
         }
         tradables.Sort((a, b) => a.TradableOrderID.CompareTo(b.TradableOrderID));
         return tradables;
+    }
+    private List<EstateGroup> sortedListOfEstateGroupsWithMonopolies() {
+        return properties
+            .OfType<Estate>()
+            .Select(x => x.EstateGroupInfo)
+            .OfType<EstateGroup>()
+            .Distinct()
+            .Where(eg => eg.propertiesOwnedByPlayer(this) == eg.NumberOfPropertiesInGroup)
+            .OrderBy(eg => (int)eg.EstateColour)
+            .ToList();
     }
     #endregion
 }

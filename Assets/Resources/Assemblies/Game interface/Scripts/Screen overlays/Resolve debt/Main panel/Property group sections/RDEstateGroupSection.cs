@@ -10,7 +10,6 @@ public class RDEstateGroupSection : MonoBehaviour {
     [SerializeField] private Transform sellAllBuildingsButtonColourTransform;
     private const float NO_PROPERTIES_ALPHA = 0.25f;
     private PlayerInfo debtor;
-    private EstateGroupColours estateGroupColours;
     private EstateGroupInfo estateGroupInfo;
 
 
@@ -26,12 +25,12 @@ public class RDEstateGroupSection : MonoBehaviour {
     #region public
     public void setup(PlayerInfo debtor) {
         this.debtor = debtor;
-        estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateColour);
         estateGroupInfo = EstateGroupDictionary.Instance.lookupInfo(estateColour);
         sellAllBuildingsButton.setup(estateGroupInfo, debtor);
+        foreach (RDEstateSection estateSection in estateSections) {
+            estateSection.setup(debtor);
+        }
         ResolveDebtEventHub.Instance.sub_ResolveDebtVisualRefresh(refreshVisuals);
-
-        refreshVisuals();
     }
     #endregion
 
@@ -48,7 +47,7 @@ public class RDEstateGroupSection : MonoBehaviour {
             EstateInfo estateInfo = estateSection.EstateInfo;
             if (debtor.ownsProperty(estateInfo)) {
                 estateSection.gameObject.SetActive(true);
-                estateSection.setup(debtor, estateGroupColours);
+                estateSection.refreshVisual();
             }
             else {
                 estateSection.gameObject.SetActive(false);
@@ -56,6 +55,7 @@ public class RDEstateGroupSection : MonoBehaviour {
         }
     }
     private void setPanelColour() {
+        EstateGroupColours estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateColour);
         Color panelColour = estateGroupColours.PanelColour.Colour;
         PanelRecolourer panelRecolourer = new PanelRecolourer(panelTransform);
 

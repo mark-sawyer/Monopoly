@@ -12,6 +12,7 @@ public class ScreenOverlayFunctionEventHub : ScriptableObject {
     [SerializeField] private GameEvent unmortgageClicked;
     [SerializeField] private GameEvent selectedTokensChanged;
     [SerializeField] private GameEvent continueClicked;
+    [SerializeField] private GameEvent incomeTaxAnswered;
 
 
 
@@ -39,6 +40,7 @@ public class ScreenOverlayFunctionEventHub : ScriptableObject {
     public void call_UnmortgageClicked() => unmortgageClicked.invoke();
     public void call_SelectedTokensChanged() => selectedTokensChanged.invoke();
     public void call_ContinueClicked() => continueClicked.invoke();
+    public void call_IncomeTaxAnswered() => incomeTaxAnswered.invoke();
     #endregion
 
 
@@ -52,6 +54,7 @@ public class ScreenOverlayFunctionEventHub : ScriptableObject {
     public void sub_UnmortgageClicked(Action a) => unmortgageClicked.Listeners += a;
     public void sub_SelectedTokensChanged(Action a) => selectedTokensChanged.Listeners += a;
     public void sub_ContinueClicked(Action a) => continueClicked.Listeners += a;
+    public void sub_IncomeTaxAnswered(Action a) => incomeTaxAnswered.Listeners += a;
     #endregion
 
 

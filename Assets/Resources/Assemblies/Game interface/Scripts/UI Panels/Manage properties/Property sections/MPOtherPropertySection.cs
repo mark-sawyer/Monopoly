@@ -54,6 +54,7 @@ public class MPOtherPropertySection : MPPropertySection {
 
     #region public
     public void buttonClicked() {
+        SoundPlayer.Instance.play_MoneyChing();
         PlayerInfo selectedPlayer = ManagePropertiesPanel.Instance.SelectedPlayer;
         if (propertyInfo.IsMortgaged) {
             DataEventHub.Instance.call_PropertyUnmortgaged(propertyInfo);

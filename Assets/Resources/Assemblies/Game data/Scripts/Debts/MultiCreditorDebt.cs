@@ -44,6 +44,7 @@ internal class MultiCreditorDebt : Debt, MultiCreditorDebtInfo {
     public IEnumerable<PlayerInfo> Creditors => creditors;
     public int TotalOwed => individuallyOwed.Sum();
     public int[] IndividuallyOwed => individuallyOwed;
+    public bool Paid => individuallyOwed.Sum() == 0;
     #endregion
 
 

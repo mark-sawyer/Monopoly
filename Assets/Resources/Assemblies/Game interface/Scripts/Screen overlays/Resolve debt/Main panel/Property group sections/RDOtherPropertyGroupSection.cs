@@ -23,8 +23,6 @@ public class RDOtherPropertyGroupSection : MonoBehaviour {
     public void setup(PlayerInfo debtor) {
         this.debtor = debtor;
         ResolveDebtEventHub.Instance.sub_ResolveDebtVisualRefresh(refreshVisuals);
-
-        refreshVisuals();
     }
     public void refreshVisuals() {
         turnOnOwnedSections();

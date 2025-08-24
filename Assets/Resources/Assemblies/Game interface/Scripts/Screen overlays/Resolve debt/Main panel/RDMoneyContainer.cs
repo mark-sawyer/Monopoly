@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using static PlasticGui.LaunchDiffParameters;
 
 [ExecuteAlways]
 public class RDMoneyContainer : MonoBehaviour {
