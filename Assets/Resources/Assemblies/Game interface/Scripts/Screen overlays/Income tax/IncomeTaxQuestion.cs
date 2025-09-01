@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IncomeTaxQuestion : ScreenOverlay<PlayerInfo> {
     [SerializeField] private TokenIcon tokenIcon;
     [SerializeField] private QuestionCircle questionCircle;
     [SerializeField] private TenPercentButton tenPercentButtonText;
+    [SerializeField] private Button twoHundredButton;
+    [SerializeField] private Button tenPercentButton;
     private PlayerInfo player;
     private const int WAITED_FRAMES = 150;
 
@@ -25,20 +28,20 @@ public class IncomeTaxQuestion : ScreenOverlay<PlayerInfo> {
 
     #region public
     public void twoHundredClicked() {
-        questionCircle.enabled = false;
-        int amount = GameState.game.TurnPlayer.IncomeTaxAmount;
+        disableUI();
+        int amount = player.IncomeTaxAmount;
         tenPercentButtonText.updateText(amount);
         if (amount > 200) SoundPlayer.Instance.play_CorrectSound();
         else SoundPlayer.Instance.play_IncorrectSound();
         WaitFrames.Instance.beforeAction(WAITED_FRAMES, completeQuestion, 200);
     }
     public void tenPercentClicked() {
-        questionCircle.enabled = false;
-        int amount = GameState.game.TurnPlayer.IncomeTaxAmount;
+        disableUI();
+        int amount = player.IncomeTaxAmount;
         tenPercentButtonText.updateText(amount);
         if (amount <= 200) SoundPlayer.Instance.play_CorrectSound();
         else SoundPlayer.Instance.play_IncorrectSound();
-        WaitFrames.Instance.beforeAction(WAITED_FRAMES, completeQuestion, player.IncomeTaxAmount);
+        WaitFrames.Instance.beforeAction(WAITED_FRAMES, completeQuestion, amount);
     }
     #endregion
 
@@ -46,9 +49,14 @@ public class IncomeTaxQuestion : ScreenOverlay<PlayerInfo> {
 
     #region private
     private void completeQuestion(int moneyLost) {
-        DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, GameState.game.BankCreditor, moneyLost);
+        DataEventHub.Instance.call_PlayerIncurredDebt(player, GameState.game.BankCreditor, moneyLost);
         ScreenOverlayFunctionEventHub.Instance.call_RemoveScreenOverlay();
         ScreenOverlayFunctionEventHub.Instance.call_IncomeTaxAnswered();
+    }
+    private void disableUI() {
+        twoHundredButton.interactable = false;
+        tenPercentButton.interactable = false;
+        questionCircle.enabled = false;
     }
     #endregion
 }

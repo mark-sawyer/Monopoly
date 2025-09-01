@@ -16,7 +16,6 @@ internal class AuctionRemainingBuildingsState : State {
 
         BuildingType buildingType = ManagePropertiesPanel.Instance.BuildingTypeAuctioned;
         ScreenOverlayStarterEventHub.Instance.call_AuctionBuildingsBegins(buildingType);
-        SoundPlayer.Instance.play_OtherChime();
     }
     public override bool exitConditionMet() {
         return auctionOver

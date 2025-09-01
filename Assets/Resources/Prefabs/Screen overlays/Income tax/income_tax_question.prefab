@@ -190,6 +190,8 @@ MonoBehaviour:
   tokenIcon: {fileID: 1374728115555470472}
   questionCircle: {fileID: 4676986694871467397}
   tenPercentButtonText: {fileID: 6566801403166145237}
+  twoHundredButton: {fileID: 7054459587940126973}
+  tenPercentButton: {fileID: 6458873238118137486}
 --- !u!1 &3442082075917985114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,6 +1082,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4054646366065154876, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
   m_PrefabInstance: {fileID: 1693428270101657126}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7054459587940126973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
+  m_PrefabInstance: {fileID: 1693428270101657126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8a792feebb19054a9f09a8bc28b226a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2935263259459890885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1518,6 +1531,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6458873238118137486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8531574251600635611, guid: 7525890710bd29143a2298f2b012aa07, type: 3}
+  m_PrefabInstance: {fileID: 3442082075648759893}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693428270133724008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8a792feebb19054a9f09a8bc28b226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5492516180598895794

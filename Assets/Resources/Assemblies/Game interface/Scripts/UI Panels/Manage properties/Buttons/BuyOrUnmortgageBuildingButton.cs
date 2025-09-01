@@ -50,50 +50,57 @@ public class BuyOrUnmortgageBuildingButton : MonoBehaviour {
     }
     public void adjustToAppropriateOption(PlayerInfo playerInfo) {
         int money = playerInfo.Money;
+        bool buttonStatus;
+
         if (estateInfo.IsMortgaged) {
             toggleMode(ButtonMode.UNMORTGAGE);
             int unmortgageCost = estateInfo.UnmortgageCost;
             bool canAfford = unmortgageCost <= money;
-            button.interactable = canAfford;
+            buttonStatus = canAfford;
         }
         else {
             toggleMode(ButtonMode.BUY);
             int buildingCost = estateInfo.BuildingCost;
             bool canAfford = buildingCost <= money;
-            button.interactable = canAfford && estateInfo.CanAddBuilding;
+            buttonStatus = canAfford && estateInfo.CanAddBuilding;
+        }
+
+        if (ManagePropertiesWipe.Instance.WipeInProgress && buttonStatus == true) {
+            button.interactable = false;
+            ManagePropertiesEventHub.Instance.sub_PanelUnpaused(correctStatusAfterWipe);
+        }
+        else {
+            button.interactable = buttonStatus;
         }
     }
     public void adjustForBuildingPlacementMode(PlayerInfo playerInfo, BuildingType buildingType) {
-        void handleHousePlacement() {
-            if (estateInfo.CanAddBuilding && estateInfo.BuildingCount < 4) {
-                toggleMode(ButtonMode.PLACE_BUILDING);
-                button.interactable = true;
-            }
-            else {
-                toggleMode(ButtonMode.BUY);
-                button.interactable = false;
-            }
-        }
-        void handleHotelPlacement() {
-            if (estateInfo.CanAddBuilding && estateInfo.BuildingCount == 4) {
-                toggleMode(ButtonMode.PLACE_BUILDING);
-                button.interactable = true;
-            }
-            else {
-                toggleMode(ButtonMode.BUY);
-                button.interactable = false;
-            }
-        }
-
-
         if (estateInfo.IsMortgaged) {
             toggleMode(ButtonMode.UNMORTGAGE);
             button.interactable = false;
             return;
         }
         
-        if (buildingType == BuildingType.HOUSE) handleHousePlacement();
-        else handleHotelPlacement();
+        bool buttonStatus;
+        bool canPlaceRelevantBuilding = buildingType == BuildingType.HOUSE
+            ? estateInfo.CanAddBuilding && estateInfo.BuildingCount < 4
+            : estateInfo.CanAddBuilding && estateInfo.BuildingCount == 4;
+        if (canPlaceRelevantBuilding) {
+            toggleMode(ButtonMode.PLACE_BUILDING);
+            buttonStatus = true;
+        }
+        else {
+            toggleMode(ButtonMode.BUY);
+            buttonStatus = false;
+        }
+
+
+        if (ManagePropertiesWipe.Instance.WipeInProgress && buttonStatus == true) {
+            button.interactable = false;
+            ManagePropertiesEventHub.Instance.sub_PanelUnpaused(correctStatusAfterWipe);
+        }
+        else {
+            button.interactable = buttonStatus;
+        }
     }
     #endregion
 
@@ -121,6 +128,10 @@ public class BuyOrUnmortgageBuildingButton : MonoBehaviour {
             if (estateInfo.BuildingCount == 4) placeBuildingText.text = "PLACE HOTEL";
             else placeBuildingText.text = "PLACE HOUSE";
         }
+    }
+    private void correctStatusAfterWipe() {
+        button.interactable = true;
+        ManagePropertiesEventHub.Instance.unsub_PanelUnpaused(correctStatusAfterWipe);
     }
     #endregion
 }

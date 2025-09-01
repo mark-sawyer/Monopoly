@@ -14,6 +14,7 @@ public class JailUIAlternator : MonoBehaviour {
         uiEvents.sub_PrerollStateStarting(setMode);
         uiPipelineEvents.sub_LeaveJail(setMode);
         uiPipelineEvents.sub_LeaveJail(leaveJailSound);
+        uiPipelineEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => leaveJailSound());
         uiPipelineEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => setMode());
     }
     #endregion

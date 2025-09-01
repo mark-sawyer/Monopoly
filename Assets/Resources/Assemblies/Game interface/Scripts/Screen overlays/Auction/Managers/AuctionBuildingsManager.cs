@@ -44,7 +44,8 @@ public class AuctionBuildingsManager : AuctionManager<BuildingType> {
         }
 
 
-        composePanel(getParticipatingPlayers());
+        List<PlayerInfo> participatingPlayers = getParticipatingPlayers();
+        composePanel(participatingPlayers);
         scalePanel();
         AccompanyingVisualSpawner.Instance.spawnAndMove(AuctionPanelParentRT, buildingType);
         movePanelToStartingPosition();

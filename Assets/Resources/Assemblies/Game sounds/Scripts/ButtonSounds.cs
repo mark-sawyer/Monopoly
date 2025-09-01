@@ -9,11 +9,15 @@ public class ButtonSounds : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     #region Implementing
     public void OnPointerDown(PointerEventData eventData) {
-        if (!button.interactable) return;
+        bool notLeft = eventData.button != PointerEventData.InputButton.Left;
+        bool buttonOff = !button.interactable;
+        if (notLeft || buttonOff) return;
         SoundPlayer.Instance.play_ButtonDown();
     }
     public void OnPointerUp(PointerEventData eventData) {
-        if (!button.interactable) return;
+        bool notLeft = eventData.button != PointerEventData.InputButton.Left;
+        bool buttonOff = !button.interactable;
+        if (notLeft || buttonOff) return;
         SoundPlayer.Instance.play_ButtonUp();
     }
     #endregion

@@ -13,11 +13,14 @@ internal class GoToJailCardState : State {
 
         int startingIndex = GameState.game.TurnPlayer.SpaceIndex;
         DataUIPipelineEventHub.Instance.call_TurnPlayerSentToJail(startingIndex);
-
         DataEventHub.Instance.call_TurnPlayerWillLoseTurn();
+        DataEventHub.Instance.call_CardResolved();
     }
     public override bool exitConditionMet() {
         return tokenSettled;
+    }
+    public override void exitState() {
+        UIEventHub.Instance.unsub_TokenSettled(heardTokenSettle);
     }
     public override State getNextState() {
         return allStates.getState<PrerollState>();

@@ -25,6 +25,8 @@ public class AutoButton : MonoBehaviour {
 
     #region private
     private void toggleAuto(bool toggle) {
+        if (autoOn == toggle) return;
+
         autoOn = toggle;
         if (toggle) {
             UIEventHub.Instance.unsub_PrerollStateStarting(turnOnButton);

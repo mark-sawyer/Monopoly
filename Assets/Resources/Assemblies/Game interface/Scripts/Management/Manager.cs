@@ -24,6 +24,9 @@ public class Manager : MonoBehaviour {
 
 
     #region MonoBehaviour
+    private void Awake() {
+        Screen.SetResolution(1920, 1080, FullScreenMode.ExclusiveFullScreen);
+    }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             UIEventHub.Instance.call_EscapeClicked();

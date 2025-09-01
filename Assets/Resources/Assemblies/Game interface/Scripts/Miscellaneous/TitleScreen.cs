@@ -5,6 +5,9 @@ public class TitleScreen : MonoBehaviour {
     private void Start() {
         UIEventHub.Instance.sub_StartGameClicked(startClicked);
     }
+    private void OnDestroy() {
+        UIEventHub.Instance.unsub_StartGameClicked(startClicked);
+    }
     #endregion
 
 

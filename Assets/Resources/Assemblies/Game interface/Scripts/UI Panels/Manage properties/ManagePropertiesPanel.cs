@@ -57,7 +57,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
         IsRegularRefreshMode = true;
         ManagePropertiesEventHub.Instance.sub_ManagePropertiesOpened(() => drop(GameState.game.TurnPlayer));
         ManagePropertiesEventHub.Instance.sub_BackButtonPressed(backButtonPressed);
-        AuctionEventHub.Instance.sub_AuctionRemainingBuildingsButtonClicked(() => StartCoroutine(raiseCoroutine()));
+        AuctionEventHub.Instance.sub_AuctionRemainingBuildingsButtonClicked(raise);
         AuctionEventHub.Instance.sub_AuctionBuildingsBackButtonClicked(() => drop(selectedPlayer));
     }
     #endregion
@@ -89,7 +89,7 @@ public class ManagePropertiesPanel : MonoBehaviour {
         backButton.interactable = false;
         auctionHousesButton.interactable = false;
         auctionHotelsButton.interactable = false;
-        yield return dropCoroutine(false);
+        yield return dropCoroutine();
     }
     public void resetAfterBuildingPlacement() {
         IsRegularRefreshMode = true;
@@ -105,16 +105,19 @@ public class ManagePropertiesPanel : MonoBehaviour {
     #region private
     private void drop(PlayerInfo selectectedPlayer) {
         tokenIcons = getTokenIcons();
-        SelectedPlayer = GameState.game.TurnPlayer;
-        
+        SelectedPlayer = selectectedPlayer;
+
         UIEventHub.Instance.call_FadeScreenCoverIn(1f);
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectectedPlayer, IsRegularRefreshMode);
-        StartCoroutine(dropCoroutine(true));
+        StartCoroutine(dropCoroutine());
+    }
+    private void raise() {
+        StartCoroutine(raiseCoroutine());
     }
     private void backButtonPressed() {
         tokenIcons = null;
         UIEventHub.Instance.call_FadeScreenCoverOut();
-        StartCoroutine(raiseCoroutine());
+        raise();
     }
     private void adjustMoneyVisual(PlayerInfo playerInfo) {
         moneyAdjuster.adjustMoney(playerInfo);
@@ -144,18 +147,9 @@ public class ManagePropertiesPanel : MonoBehaviour {
 
 
     #region Moving coroutines
-    private IEnumerator raiseCoroutine() {
-        SoundPlayer.Instance.play_Swoop();
-        UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisual);
-        float length = offScreenY - onScreenY;
-        for (int i = 1; i <= FrameConstants.MANAGE_PROPERTIES_DROP; i++) {
-            float yPos = LinearValue.exe(i, onScreenY, offScreenY, FrameConstants.MANAGE_PROPERTIES_DROP);
-            rt.anchoredPosition = new Vector2(0f, yPos);
-            yield return null;
-        }
-        rt.anchoredPosition = new Vector2(0f, offScreenY);
-    }
-    private IEnumerator dropCoroutine(bool backButtonOnAtEnd) {
+    private IEnumerator dropCoroutine() {
+        ManagePropertiesEventHub.Instance.call_PanelPaused();
+
         SoundPlayer.Instance.play_Swoop();
         UIPipelineEventHub.Instance.sub_MoneyAdjustment(adjustMoneyVisual);
         float length = offScreenY - onScreenY;
@@ -165,7 +159,23 @@ public class ManagePropertiesPanel : MonoBehaviour {
             yield return null;
         }
         rt.anchoredPosition = new Vector2(0f, onScreenY);
-        backButton.interactable = backButtonOnAtEnd;
+
+        ManagePropertiesEventHub.Instance.call_PanelUnpaused();
+    }
+    private IEnumerator raiseCoroutine() {
+        ManagePropertiesEventHub.Instance.call_PanelPaused();
+
+        SoundPlayer.Instance.play_Swoop();
+        UIPipelineEventHub.Instance.unsub_MoneyAdjustment(adjustMoneyVisual);
+        float length = offScreenY - onScreenY;
+        for (int i = 1; i <= FrameConstants.MANAGE_PROPERTIES_DROP; i++) {
+            float yPos = LinearValue.exe(i, onScreenY, offScreenY, FrameConstants.MANAGE_PROPERTIES_DROP);
+            rt.anchoredPosition = new Vector2(0f, yPos);
+            yield return null;
+        }
+        rt.anchoredPosition = new Vector2(0f, offScreenY);
+
+        ManagePropertiesEventHub.Instance.call_PanelUnpaused();
     }
     #endregion
 }

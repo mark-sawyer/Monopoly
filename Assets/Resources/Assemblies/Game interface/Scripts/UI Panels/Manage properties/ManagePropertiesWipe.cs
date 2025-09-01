@@ -4,22 +4,46 @@ using UnityEngine;
 public class ManagePropertiesWipe : MonoBehaviour {
     [SerializeField] private RectTransform rt;
     private const float MAX_HEIGHT = 600f;
+    private bool wipeInProgress;
 
 
 
-    #region MonoBehaviour
-    private void Start() {
-        ManagePropertiesEventHub.Instance.sub_WipeToCommence(wipe);
+    #region Singleton boilerplate
+    public static ManagePropertiesWipe Instance { get; private set; }
+    private void OnEnable() {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+    private void OnDestroy() {
+        if (Instance == this) Instance = null;
     }
     #endregion
 
 
 
     #region MonoBehaviour
+    private void Start() {
+        ManagePropertiesEventHub.Instance.sub_WipeToCommence(wipe);
+        wipeInProgress = false;
+    }
+    #endregion
+
+
+
+    #region public
+    public bool WipeInProgress => wipeInProgress;
     public void wipe(PlayerInfo playerInfo) {
         StartCoroutine(wipeCoroutine(playerInfo));
     }
+    #endregion
+
+
+
+    #region private
     private IEnumerator wipeCoroutine(PlayerInfo playerInfo) {
+        ManagePropertiesEventHub.Instance.call_PanelPaused();
+
+        wipeInProgress = true;
         float width = rt.rect.width;
         int wipeFrames = FrameConstants.MANAGE_PROPERTIES_WIPE_UP;
         SoundPlayer.Instance.play_Wipe();
@@ -41,6 +65,9 @@ public class ManagePropertiesWipe : MonoBehaviour {
             yield return null;
         }
         rt.sizeDelta = new Vector2(width, 0f);
+        wipeInProgress = false;
+
+        ManagePropertiesEventHub.Instance.call_PanelUnpaused();
     }
     #endregion
 }

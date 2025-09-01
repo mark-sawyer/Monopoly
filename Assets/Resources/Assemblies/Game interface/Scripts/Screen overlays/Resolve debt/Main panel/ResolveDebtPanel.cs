@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
@@ -64,7 +63,6 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
     #region public
     public void appearFromTradeBack() {
         IEnumerator reappear() {
-            ResolveDebtEventHub.Instance.call_PanelInTransit();
             yield return lowerResolveDebts();
             ResolveDebtEventHub.Instance.call_ResolveDebtPanelLowered();
         }
@@ -122,10 +120,6 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
     }
     private IEnumerator tradeSelectionCoroutine() {
         IEnumerator raiseResolveDebts() {
-            SoundPlayer.Instance.play_Swoop();
-            RectAnchorPivotMover rectAnchorPivotMover = new RectAnchorPivotMover(rt);
-            rectAnchorPivotMover.moveAnchors(new Vector2(0.5f, 1f));
-            rectAnchorPivotMover.movePivot(new Vector2(0.5f, 0f));
             float startY = rt.anchoredPosition.y;
             float endY = InterfaceConstants.STANDARD_HEIGHT_ABOVE_SCREEN;
             Func<float, float> getY = LinearValue.getFunc(startY, endY, FrameConstants.MANAGE_PROPERTIES_DROP);
@@ -137,6 +131,12 @@ public class ResolveDebtPanel : ScreenOverlay<DebtInfo> {
             rt.anchoredPosition = new Vector2(0f, InterfaceConstants.STANDARD_HEIGHT_ABOVE_SCREEN);
         }
 
+
+        ResolveDebtEventHub.Instance.call_PanelInTransit();
+        SoundPlayer.Instance.play_Swoop();
+        RectAnchorPivotMover rectAnchorPivotMover = new RectAnchorPivotMover(rt);
+        rectAnchorPivotMover.moveAnchors(new Vector2(0.5f, 1f));
+        rectAnchorPivotMover.movePivot(new Vector2(0.5f, 0f));
         yield return raiseResolveDebts();
         GameObject instance = Instantiate(raiseMoneyTradeSelectionPrefab, transform.parent);
         RaiseMoneyTradeSelection raiseMoneyTradeSelection = instance.GetComponent<RaiseMoneyTradeSelection>();

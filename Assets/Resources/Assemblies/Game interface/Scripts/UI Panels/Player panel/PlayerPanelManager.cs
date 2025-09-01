@@ -159,16 +159,16 @@ public class PlayerPanelManager : MonoBehaviour {
         WaitFrames.Instance.beforeAction(
             FrameConstants.SCREEN_COVER_TRANSITION,
             () => {
-                PlayerInfo turnPlayer = GameState.game.TurnPlayer;
-                PlayerPanel playerPanel = playerPanels[turnPlayer.Index];
-                playerPanel.toggleOverScreenCover(false);
+                foreach (PlayerPanel playerPanel in playerPanels) {
+                    playerPanel.toggleOverScreenCover(false);
+                }
             }
         );
     }
     private void bringBackPlayerPanelImmediately() {
-        PlayerInfo turnPlayer = GameState.game.TurnPlayer;
-        PlayerPanel playerPanel = playerPanels[turnPlayer.Index];
-        playerPanel.toggleOverScreenCover(false);
+        foreach (PlayerPanel playerPanel in playerPanels) {
+            playerPanel.toggleOverScreenCover(false);
+        }
     }
     #endregion
     #region Money updates

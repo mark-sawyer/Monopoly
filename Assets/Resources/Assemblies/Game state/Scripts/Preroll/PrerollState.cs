@@ -160,6 +160,7 @@ internal class PrerollState : State {
         }
         void nonDoublesTurnThree() {
             SoundPlayer.Instance.play_IncorrectSound();
+            DataEventHub.Instance.call_SetJailDebtBool(GameState.game.TurnPlayer, true);
             WaitFrames.Instance.beforeAction(
                 incorrectSoundBufferFrames,
                 () => {
@@ -173,7 +174,6 @@ internal class PrerollState : State {
                     WaitFrames.Instance.beforeAction(
                         FrameConstants.WAIT_FOR_LEAVING_JAIL,
                         () => {
-                            DataEventHub.Instance.call_SetJailDebtBool(GameState.game.TurnPlayer, true);
                             goToResolveDebt = true;
                         }
                     );

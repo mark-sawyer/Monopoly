@@ -33,9 +33,8 @@ public class TokenVisual : MonoBehaviour {
             transform = tokenVisual.transform;
             playerInfo = tokenVisual.playerInfo;
             goMajorPoint = SpaceVisualManager.Instance.getSpaceVisual(0).getMajorPoint(GameState.game.TurnPlayer);
-            UIPipelineEventHub uiPipelineEvents = UIPipelineEventHub.Instance;
-            uiPipelineEvents.sub_LeaveJail(tokenOnJailSpaceChanged);
-            uiPipelineEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => tokenOnJailSpaceChanged());
+            UIPipelineEventHub.Instance.sub_LeaveJail(tokenOnJailSpaceChanged);
+            UIPipelineEventHub.Instance.sub_UseGOOJFCardButtonClicked(tokenOnJailSpaceChanged);
             attractivePoint = transform.position;
         }
         public void update() {
@@ -146,12 +145,23 @@ public class TokenVisual : MonoBehaviour {
             transform.position = transform.position + velocity * FRAME_TIME;
         }
         private void tokenOnJailSpaceChanged() {
-            if (playerInfo.SpaceIndex != GameConstants.JAIL_SPACE_INDEX) return;
+            SpaceInfo spaceInfo = playerInfo.SpaceInfo;
+            if (spaceInfo == null) {
+                UIPipelineEventHub.Instance.unsub_LeaveJail(tokenOnJailSpaceChanged);
+                UIPipelineEventHub.Instance.unsub_UseGOOJFCardButtonClicked(tokenOnJailSpaceChanged);
+                return;
+            }
+            if (spaceInfo.Index != GameConstants.JAIL_SPACE_INDEX) {
+                return;
+            }
 
 
             SpaceVisual spaceVisual = SpaceVisualManager.Instance.getSpaceVisual(GameConstants.JAIL_SPACE_INDEX);
             tokenVisual.beginScaleChange(spaceVisual.getScale(playerInfo));
             attractivePoint = spaceVisual.getMinorPoint(playerInfo);
+        }
+        private void tokenOnJailSpaceChanged(CardType ct) {
+            tokenOnJailSpaceChanged();
         }
         private Vector3 directionVector() {
             return attractivePoint - transform.position;
@@ -285,6 +295,7 @@ public class TokenVisual : MonoBehaviour {
             transform.localScale = new Vector3(targetScale, targetScale, targetScale);
         }
 
+        StopAllCoroutines();
         StartCoroutine(changeScale(targetScale));
     }
     private void setSprites() {

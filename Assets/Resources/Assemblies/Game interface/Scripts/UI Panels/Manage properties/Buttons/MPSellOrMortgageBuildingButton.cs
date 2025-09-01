@@ -24,6 +24,14 @@ public class MPSellOrMortgageBuildingButton : SellOrMortgageBuildingButton {
 
 
     #region public
+    public override void adjustToAppropriateOption() {
+        base.adjustToAppropriateOption();
+        bool appropriateOption = Button.interactable;
+        if (ManagePropertiesWipe.Instance.WipeInProgress && appropriateOption == true) {
+            Button.interactable = false;
+            ManagePropertiesEventHub.Instance.sub_PanelUnpaused(correctStatusAfterWipe);
+        }
+    }
     public void adjustForBuildingPlacementMode() {
         if (EstateInfo.BuildingCount > 0) {
             toggleMode(ButtonMode.SELL);
@@ -33,6 +41,15 @@ public class MPSellOrMortgageBuildingButton : SellOrMortgageBuildingButton {
             toggleMode(ButtonMode.MORTGAGE);
             Button.interactable = false;
         }
+    }
+    #endregion
+
+
+
+    #region private
+    private void correctStatusAfterWipe() {
+        Button.interactable = true;
+        ManagePropertiesEventHub.Instance.unsub_PanelUnpaused(correctStatusAfterWipe);
     }
     #endregion
 }

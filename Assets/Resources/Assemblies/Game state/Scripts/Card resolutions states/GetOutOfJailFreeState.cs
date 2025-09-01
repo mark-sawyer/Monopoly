@@ -2,23 +2,25 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/GetOutOfJailFreeState")]
 internal class GetOutOfJailFreeState : State {
-    private bool cardResolveInvoked;
+    private bool cardResolvedInvoked;
 
 
 
     #region State
     public override void enterState() {
-        cardResolveInvoked = false;
+        cardResolvedInvoked = false;
         CardInfo cardInfo = GameState.game.DrawnCard;
-        //WaitFrames.Instance.exe(40, pop.play);
-        WaitFrames.Instance.beforeAction(50, () => {
-            DataUIPipelineEventHub.Instance.call_PlayerGetsGOOJFCard(GameState.game.TurnPlayer, cardInfo);
-            DataEventHub.Instance.call_CardResolved();
-            cardResolveInvoked = true;
-        });
+        WaitFrames.Instance.beforeAction(
+            50,
+            () => {
+                DataUIPipelineEventHub.Instance.call_PlayerGetsGOOJFCard(GameState.game.TurnPlayer, cardInfo);
+                DataEventHub.Instance.call_CardResolved();
+                cardResolvedInvoked = true;
+            }
+        );
     }
     public override bool exitConditionMet() {
-        return cardResolveInvoked;
+        return cardResolvedInvoked;
     }
     public override State getNextState() {
         return allStates.getState<PrerollState>();

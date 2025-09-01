@@ -17,6 +17,9 @@ public class MPOtherPropertySection : MPPropertySection {
         propertyInfo = PropertyInfo;
     }
     public override void refreshRegularVisual(PlayerInfo playerInfo) {
+        bool buttonStatus;
+
+
         if (propertyInfo.IsMortgaged) {
             buttonText.text = "UNMORTGAGE " + propertyTypeString;
             moneyText.text = "$" + propertyInfo.UnmortgageCost.ToString();
@@ -25,13 +28,22 @@ public class MPOtherPropertySection : MPPropertySection {
             int unmortgageCost = propertyInfo.UnmortgageCost;
             int money = selectedPlayer.Money;
             bool canAfford = money >= unmortgageCost;
-            button.interactable = canAfford;
+            buttonStatus = canAfford;
         }
         else {
             buttonText.text = "MORTGAGE " + propertyTypeString;
             moneyText.text = "$" + propertyInfo.MortgageValue.ToString();
             mortgagedGameObject.SetActive(false);
-            button.interactable = true;
+            buttonStatus = true;
+        }
+
+
+        if (ManagePropertiesWipe.Instance.WipeInProgress && buttonStatus == true) {
+            button.interactable = false;
+            ManagePropertiesEventHub.Instance.sub_PanelUnpaused(correctStatusAfterWipe);
+        }
+        else {
+            button.interactable = buttonStatus;
         }
     }
     public override void refreshBuildingPlacementVisual(PlayerInfo playerInfo) {
@@ -67,6 +79,15 @@ public class MPOtherPropertySection : MPPropertySection {
 
         bool regularRefresh = ManagePropertiesPanel.Instance.IsRegularRefreshMode;
         ManagePropertiesEventHub.Instance.call_ManagePropertiesVisualRefresh(selectedPlayer, regularRefresh);
+    }
+    #endregion
+
+
+
+    #region private
+    private void correctStatusAfterWipe() {
+        button.interactable = true;
+        ManagePropertiesEventHub.Instance.unsub_PanelUnpaused(correctStatusAfterWipe);
     }
     #endregion
 }

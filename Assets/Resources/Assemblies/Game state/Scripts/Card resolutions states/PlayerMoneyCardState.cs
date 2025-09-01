@@ -9,6 +9,8 @@ internal class PlayerMoneyCardState : State {
         int subtracted = pmdCardInfo.SubtractedFromOtherPlayers;
         if (subtracted > 0) othersGiveMoney(subtracted);
         else turnPlayerGivesMoney(-subtracted);
+
+        DataEventHub.Instance.call_CardResolved();
     }
     public override bool exitConditionMet() {
         return true;

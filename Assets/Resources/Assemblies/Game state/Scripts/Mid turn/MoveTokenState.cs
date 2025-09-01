@@ -8,11 +8,13 @@ internal class MoveTokenState : State {
 
     #region GameState
     public override void enterState() {
+        tokenSettled = false;
+        UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
+
+
         int startingIndex = GameState.game.TurnPlayer.SpaceIndex;
         int diceValues = GameState.game.DiceInfo.TotalValue;
         DataUIPipelineEventHub.Instance.call_TurnPlayerMovedAlongBoard(startingIndex, diceValues);
-        tokenSettled = false;
-        UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
     }
     public override bool exitConditionMet() {
         return tokenSettled;

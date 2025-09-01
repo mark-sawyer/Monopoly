@@ -34,14 +34,12 @@ internal class ManagePropertiesState : State {
 
     #region private
     private void backButtonListening() {
-        SoundPlayer.Instance.play_Swoop();
         WaitFrames.Instance.beforeAction(
             FrameConstants.MANAGE_PROPERTIES_DROP,
             () => managePropertiesPanelRaised = true
         );
     }
     private void auctionBuildingsButtonListening() {
-        SoundPlayer.Instance.play_Swoop();
         WaitFrames.Instance.beforeAction(
             FrameConstants.MANAGE_PROPERTIES_DROP,
             () => auctionBuildingsButtonClicked = true

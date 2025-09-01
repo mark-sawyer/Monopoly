@@ -40,10 +40,13 @@ public class PrerollButton : MonoBehaviour {
     }
     private void turnOffWhileLeavingJail() {
         button.interactable = false;
-        WaitFrames.Instance.beforeAction(
-            FrameConstants.WAIT_FOR_LEAVING_JAIL,
-            () => { button.interactable = true; }
-        );
+        bool turnPlayerIncurredJailDebt = GameState.game.TurnPlayer.ToMoveAfterJailDebtResolving;
+        if (!turnPlayerIncurredJailDebt) {
+            WaitFrames.Instance.beforeAction(
+                FrameConstants.WAIT_FOR_LEAVING_JAIL,
+                () => button.interactable = true
+            );
+        }
     }
     private bool rotatingOrAboutTo() {
         return isRotating ||

@@ -26,7 +26,10 @@ internal class EstateGroup : ScriptableObject, EstateGroupInfo {
         if (propertiesOwnedByPlayer(player) < NumberOfPropertiesInGroup) return 0;
         if (MortgageExists) return 0;
 
-        return estates.Count(x => x.BuildingCount == 4);
+        int fullHousesEstates = estates.Count(x => x.BuildingCount == 4);
+        if (HotelExists) return fullHousesEstates;
+        else if (fullHousesEstates == NumberOfPropertiesInGroup) return NumberOfPropertiesInGroup;
+        else return 0;
     }
     #endregion
 

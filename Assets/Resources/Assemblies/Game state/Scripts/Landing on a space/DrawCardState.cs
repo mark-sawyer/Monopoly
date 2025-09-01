@@ -9,6 +9,8 @@ internal class DrawCardState : State {
     #region GameState
     public override void enterState() {
         okClicked = false;
+        ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlay(screenAnimationRemoved);
+
         PlayerInfo playerInfo = GameState.game.TurnPlayer;
         CardSpaceInfo cardSpaceInfo = (CardSpaceInfo)playerInfo.SpaceInfo;
         CardType cardType = cardSpaceInfo.CardType;
@@ -20,7 +22,6 @@ internal class DrawCardState : State {
         if (cardMechanicInfo is GoToJailCardInfo) SoundPlayer.Instance.play_Whistle();
         else SoundPlayer.Instance.play_CardDrawn();
         ScreenOverlayStarterEventHub.Instance.call_CardShown();
-        ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlay(screenAnimationRemoved);
     }
     public override bool exitConditionMet() {
         return okClicked;
