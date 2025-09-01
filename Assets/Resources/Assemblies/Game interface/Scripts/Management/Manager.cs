@@ -25,7 +25,18 @@ public class Manager : MonoBehaviour {
 
     #region MonoBehaviour
     private void Awake() {
-        Screen.SetResolution(1920, 1080, FullScreenMode.ExclusiveFullScreen);
+        Resolution[] resolutions = Screen.resolutions;
+        Resolution target = resolutions[resolutions.Length - 1];
+
+        float targetAspect = 16f / 9f;
+        float actualAspect = (float)target.width / target.height;
+        if (Mathf.Abs(actualAspect - targetAspect) > 0.01f) {
+            int width = Mathf.RoundToInt(target.height * targetAspect);
+            Screen.SetResolution(width, target.height, FullScreenMode.ExclusiveFullScreen, target.refreshRate);
+        }
+        else {
+            Screen.SetResolution(target.width, target.height, FullScreenMode.ExclusiveFullScreen, target.refreshRate);
+        }
     }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {

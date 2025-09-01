@@ -9,11 +9,13 @@ public class IncomeTaxQuestion : ScreenOverlay<PlayerInfo> {
     [SerializeField] private Button tenPercentButton;
     private PlayerInfo player;
     private const int WAITED_FRAMES = 150;
+    private bool questionAnswered;
 
 
 
     #region ScreenAnimation
     public override void setup(PlayerInfo player) {
+        questionAnswered = false;
         this.player = player;
         tokenIcon.setup(player.Token, player.Colour);
     }
@@ -28,14 +30,20 @@ public class IncomeTaxQuestion : ScreenOverlay<PlayerInfo> {
 
     #region public
     public void twoHundredClicked() {
+        if (questionAnswered) return;
+
+        questionAnswered = true;
         disableUI();
-        int amount = player.IncomeTaxAmount;
-        tenPercentButtonText.updateText(amount);
-        if (amount > 200) SoundPlayer.Instance.play_CorrectSound();
+        int tenPercent = player.IncomeTaxAmount;
+        tenPercentButtonText.updateText(tenPercent);
+        if (tenPercent > 200) SoundPlayer.Instance.play_CorrectSound();
         else SoundPlayer.Instance.play_IncorrectSound();
         WaitFrames.Instance.beforeAction(WAITED_FRAMES, completeQuestion, 200);
     }
     public void tenPercentClicked() {
+        if (questionAnswered) return;
+
+        questionAnswered = true;
         disableUI();
         int amount = player.IncomeTaxAmount;
         tenPercentButtonText.updateText(amount);
