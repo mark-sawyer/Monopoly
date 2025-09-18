@@ -47,15 +47,17 @@ public abstract class PropertyGroupIcon : MonoBehaviour {
 
 
     #region private
-    private float getScale(float x) {
-        if (x <= 5) return 1f + 0.2f * x;
-        else return 2f - (1f / 15f) * (x - 5f);
-    }
     private IEnumerator pulseAndChangeIcon(Action iconUpdate) {
+        float getScale(float x) {
+            if (x <= 5) return 1f + 0.2f * x;
+            else return 2f - (1f / 15f) * (x - 5f);
+        }
+
+
         canvas.overrideSorting = true;
         canvas.sortingOrder = 3;
         for (int i = 1; i <= 20; i++) {
-             float scale = getScale(i);
+            float scale = getScale(i);
             transform.localScale = new Vector3(scale, scale, scale);
             if (i == 5) iconUpdate();
             yield return null;

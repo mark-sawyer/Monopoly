@@ -168,6 +168,7 @@ internal class Game : GameStateInfo, GamePlayer {
         player.removeUnresolvedMortgage(propertyInfo);
     }
     public void incurDebt(PlayerInfo debtor, Creditor creditor, int owed) {
+        if (owed == 0) return;
         Player debtorPlayer = (Player)debtor;
         debtorPlayer.incurDebt(creditor, owed);
     }

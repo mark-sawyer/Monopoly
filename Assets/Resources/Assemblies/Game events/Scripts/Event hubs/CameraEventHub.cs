@@ -44,4 +44,11 @@ public class CameraEventHub : ScriptableObject {
     public void sub_RotationStarted(Action a) => rotationStarted.Listeners += a;
     public void sub_RotationFinished(Action a) => rotationFinished.Listeners += a;
     #endregion
+
+
+
+    #region Unsubscribing
+    public void unsub_RotationStarted(Action a) => rotationStarted.Listeners -= a;
+    public void unsub_RotationFinished(Action a) => rotationFinished.Listeners -= a;
+    #endregion
 }

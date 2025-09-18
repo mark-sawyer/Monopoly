@@ -49,11 +49,9 @@ public class PlayerPanel : MonoBehaviour {
         bool offButShouldBeOn = playerInfo.hasGOOJFCardOfType(cardType) && !GOOJFIconDict[cardType].IsOn;
 
         if (offButShouldBeOn) {
-            SoundPlayer.Instance.play_Pop();
             yield return GOOJFIconDict[cardType].enable(true);
         }
         else {
-            SoundPlayer.Instance.play_Pop();
             yield return GOOJFIconDict[cardType].enable(false);
         }
     }

@@ -28,6 +28,9 @@ internal class IncomeTaxState : State {
 
 
     private void screenAnimationRemoved() {
-        questionAnswered = true;
+        WaitFrames.Instance.beforeAction(
+            FrameConstants.SCREEN_COVER_TRANSITION,
+            () => questionAnswered = true
+        );
     }
 }

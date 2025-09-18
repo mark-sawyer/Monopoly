@@ -26,11 +26,11 @@ internal class EliminatePlayerState : State {
             UIEventHub.Instance.call_UpdateUIMoney(playersNeedingMoneyUIUpdate);
             WaitFrames.Instance.beforeAction(
                 FrameConstants.MONEY_UPDATE,
-                () => UIEventHub.Instance.call_UpdateExpiredPropertyVisuals()
+                () => UIEventHub.Instance.call_UpdateExpiredIconVisuals()
             );
         }
         else {
-            UIEventHub.Instance.call_UpdateExpiredPropertyVisuals();
+            UIEventHub.Instance.call_UpdateExpiredIconVisuals();
         }
     }
     public override bool exitConditionMet() {
@@ -55,15 +55,10 @@ internal class EliminatePlayerState : State {
 
     #region private
     private void uiUpdatesPreEliminationOver() {
-        WaitFrames.Instance.beforeAction(
-            50,
-            () => {
-                eliminatedPlayer = GameState.game.PlayerInDebt;
-                DataUIPipelineEventHub.Instance.call_PlayerEliminated(eliminatedPlayer);
-                UIEventHub.Instance.unsub_AllExpiredPropertyVisualsUpdated(uiUpdatesPreEliminationOver);
-                UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(afterAssetRedistribution);
-            }
-        );
+        eliminatedPlayer = GameState.game.PlayerInDebt;
+        DataUIPipelineEventHub.Instance.call_PlayerEliminated(eliminatedPlayer);
+        UIEventHub.Instance.unsub_AllExpiredPropertyVisualsUpdated(uiUpdatesPreEliminationOver);
+        UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(afterAssetRedistribution);
     }
     private void afterPlayerEliminatedAnimation() {
         DebtInfo debtInfo = GameState.game.BankInfo.EliminatedPlayerDebt;
@@ -81,7 +76,7 @@ internal class EliminatePlayerState : State {
                 0
             );
             DataUIPipelineEventHub.Instance.call_TradeLockedIn();
-            UIEventHub.Instance.call_UpdateExpiredPropertyVisuals();
+            UIEventHub.Instance.call_UpdateExpiredIconVisuals();
         }
         else {
             List<CardInfo> cardInfos = eliminatedPlayerAssets.OfType<CardInfo>().ToList();

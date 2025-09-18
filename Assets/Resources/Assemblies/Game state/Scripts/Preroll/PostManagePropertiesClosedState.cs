@@ -11,7 +11,7 @@ internal class PostManagePropertiesClosedState : State {
     public override void enterState() {
         updateAnimationsOver = false;
         UIEventHub.Instance.sub_AllExpiredPropertyVisualsUpdated(updateAnimationsOverListener);
-        UIEventHub.Instance.call_UpdateExpiredPropertyVisuals();
+        UIEventHub.Instance.call_UpdateExpiredIconVisuals();
     }
     public override bool exitConditionMet() {
         return updateAnimationsOver;

@@ -89,8 +89,10 @@ internal class Player : PlayerInfo {
         turnInJail++;
     }
     internal Card handBackGOOJFCard(CardType cardType) {
-        Card getOutOfJailFreeCard = getOutOfJailFreeCards.First(x => x.CardType == cardType);
-        getOutOfJailFreeCards.Remove(getOutOfJailFreeCard);
+        Card getOutOfJailFreeCard = getOutOfJailFreeCards.FirstOrDefault(x => x.CardType == cardType);
+        if (getOutOfJailFreeCard != null) {  
+            getOutOfJailFreeCards.Remove(getOutOfJailFreeCard);
+        }  // May already be cleared if player is eliminated.
         return getOutOfJailFreeCard;
     }
     internal void eliminateSelf() {

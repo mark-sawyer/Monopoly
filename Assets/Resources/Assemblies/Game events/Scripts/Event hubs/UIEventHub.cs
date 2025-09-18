@@ -14,7 +14,7 @@ public class UIEventHub : ScriptableObject {
     [SerializeField] private GameEvent prerollStateEnding;
     [SerializeField] private PlayerArrayEvent updateUIMoney;
     [SerializeField] private PlayerPropertyEvent playerPropertyAdjustment;
-    [SerializeField] private GameEvent updateExpiredPropertyVisuals;
+    [SerializeField] private GameEvent updateExpiredIconVisuals;
     [SerializeField] private GameEvent updateIconsAfterResolveDebt;
     [SerializeField] private GameEvent updateExpiredBoardVisuals;
     [SerializeField] private GameEvent allExpiredPropertyVisualsUpdated;
@@ -50,7 +50,7 @@ public class UIEventHub : ScriptableObject {
     public void call_PrerollStateEnding() => prerollStateEnding.invoke();
     public void call_UpdateUIMoney(PlayerInfo[] players) => updateUIMoney.invoke(players);
     public void call_PlayerPropertyAdjustment(PlayerInfo pl, PropertyInfo pr) => playerPropertyAdjustment.invoke(pl, pr);  // Subscribed to in UI pipeline
-    public void call_UpdateExpiredPropertyVisuals() => updateExpiredPropertyVisuals.invoke();
+    public void call_UpdateExpiredIconVisuals() => updateExpiredIconVisuals.invoke();
     public void call_UpdateIconsAfterResolveDebt() => updateIconsAfterResolveDebt.invoke();
     public void call_UpdateExpiredBoardVisuals() => updateExpiredBoardVisuals.invoke();
     public void call_AllExpiredPropertyVisualsUpdated() => allExpiredPropertyVisualsUpdated.invoke();
@@ -71,7 +71,7 @@ public class UIEventHub : ScriptableObject {
     public void sub_PrerollStateStarting(Action a) => prerollStateStarting.Listeners += a;
     public void sub_PrerollStateEnding(Action a) => prerollStateEnding.Listeners += a;
     public void sub_UpdateUIMoney(Action<PlayerInfo[]> a) => updateUIMoney.Listeners += a;
-    public void sub_UpdateExpiredPropertyVisuals(Action a) => updateExpiredPropertyVisuals.Listeners += a;
+    public void sub_UpdateExpiredIconVisuals(Action a) => updateExpiredIconVisuals.Listeners += a;
     public void sub_UpdateIconsAfterResolveDebt(Action a) => updateIconsAfterResolveDebt.Listeners += a;
     public void sub_UpdateExpiredBoardVisuals(Action a) => updateExpiredBoardVisuals.Listeners += a;
     public void sub_AllExpiredPropertyVisualsUpdated(Action a) => allExpiredPropertyVisualsUpdated.Listeners += a;

@@ -11,9 +11,9 @@ internal class NextRailroadState : State {
     public override void enterState() {
         goToResolveDebt = false;
         goToLandedOnSpace = false;
-
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
         ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
+
 
         PlayerInfo turnPlayer = GameState.game.TurnPlayer;
         int oldSpaceIndex = turnPlayer.SpaceIndex;
@@ -21,6 +21,7 @@ internal class NextRailroadState : State {
         int newSpaceIndex = (oldSpaceIndex + spacesToMove) % GameConstants.TOTAL_SPACES;
         SpaceInfo newSpace = SpaceVisualManager.Instance.getSpaceVisual(newSpaceIndex).SpaceInfo;
         railroadInfo = (RailroadInfo)((PropertySpaceInfo)newSpace).PropertyInfo;
+
 
         DataUIPipelineEventHub.Instance.call_TurnPlayerMovedAlongBoard(oldSpaceIndex, spacesToMove);
         DataEventHub.Instance.call_CardResolved();
@@ -43,12 +44,13 @@ internal class NextRailroadState : State {
 
     #region private
     private void heardTokenSettle() {
-        bool doubleRentRequired = railroadInfo.IsBought && railroadInfo.Owner != GameState.game.TurnPlayer;
+        PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+        bool doubleRentRequired = railroadInfo.IsBought && !railroadInfo.IsMortgaged && railroadInfo.Owner != turnPlayer;
         if (doubleRentRequired) {
             PlayerInfo owner = railroadInfo.Owner;
             int rent = 2 * railroadInfo.Rent;
-            DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
-            SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)GameState.game.TurnPlayer.DebtInfo;
+            DataEventHub.Instance.call_PlayerIncurredDebt(turnPlayer, owner, rent);
+            SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)turnPlayer.DebtInfo;
             ScreenOverlayStarterEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
         }
         else {

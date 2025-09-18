@@ -83,7 +83,7 @@ public class PlayerPanelManager : MonoBehaviour {
             uiPipelineEvents.sub_PlayerGetsGOOJFCard(updateGOOJFCardIcon);
             uiPipelineEvents.sub_UseGOOJFCardButtonClicked((CardType ct) => updateGOOJFCardIcon(GameState.game.TurnPlayer, ct));
 
-            uiEvents.sub_UpdateExpiredPropertyVisuals(updateAllExpiredPropertyIcons);
+            uiEvents.sub_UpdateExpiredIconVisuals(updateAllExpiredPropertyIcons);
             uiEvents.sub_UpdateIconsAfterResolveDebt(updateIconsAfterResolveDebt);
             tradeEvents.sub_UpdateVisualsAfterTradeFinalised(updateVisualsAfterTrade);
 
@@ -219,12 +219,29 @@ public class PlayerPanelManager : MonoBehaviour {
         StartCoroutine(playerPanel.toggleGOOJFIcon(cardType));
     }
     private void updateAllExpiredPropertyIcons() {
-        IEnumerator updateIconsInSequence(List<PropertyGroupIcon> iconsToUpdate) {
+        IEnumerator updatePropertyIconsInSequence(List<PropertyGroupIcon> iconsToUpdate) {
             foreach (PropertyGroupIcon propertyGroupIcon in iconsToUpdate) {
                 SoundPlayer.Instance.play_Pop();
                 yield return propertyGroupIcon.pulseAndUpdate();
             }
+        }
+        IEnumerator updateGOOJFCardIconsInSequence() {
+            for (int i = 0; i < transform.childCount; i++) {
+                PlayerInfo playerInfo = GameState.game.getPlayerInfo(i);
+                if (!playerInfo.IsActive) continue;
 
+                PlayerPanel playerPanel = playerPanels[i];
+                if (playerPanel.needsGOOJFIconAdjusted(CardType.CHANCE)) {
+                    yield return playerPanel.toggleGOOJFIcon(CardType.CHANCE);
+                }
+                if (playerPanel.needsGOOJFIconAdjusted(CardType.COMMUNITY_CHEST)) {
+                    yield return playerPanel.toggleGOOJFIcon(CardType.COMMUNITY_CHEST);
+                }
+            }
+        }
+        IEnumerator updateIconsInSequence(List<PropertyGroupIcon> iconsToUpdate) {
+            yield return updatePropertyIconsInSequence(iconsToUpdate);
+            yield return updateGOOJFCardIconsInSequence();
             yield return WaitFrames.Instance.frames(30);
             UIEventHub.Instance.call_UpdateExpiredBoardVisuals();
         }
@@ -236,7 +253,7 @@ public class PlayerPanelManager : MonoBehaviour {
             if (!playerInfo.IsActive) continue;
 
             PlayerPanel playerPanel = playerPanels[i];
-            List<PropertyGroupIcon> needingUpdateOnThisPanel = playerPanel.PropertyGroupIconSection.propertyGroupIconsNeedingAnUpdate();
+            List<PropertyGroupIcon> needingUpdateOnThisPanel = playerPanel.PropertyGroupIconSection.propertyGroupIconsNeedingAnUpdate();            
             foreach (PropertyGroupIcon PGI in needingUpdateOnThisPanel) iconsToUpdate.Add(PGI);
         }
         StartCoroutine(updateIconsInSequence(iconsToUpdate));

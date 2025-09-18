@@ -27,16 +27,21 @@ public class Manager : MonoBehaviour {
     private void Awake() {
         Resolution[] resolutions = Screen.resolutions;
         Resolution target = resolutions[resolutions.Length - 1];
-
+        
         float targetAspect = 16f / 9f;
         float actualAspect = (float)target.width / target.height;
+        int refresh = 60;
         if (Mathf.Abs(actualAspect - targetAspect) > 0.01f) {
             int width = Mathf.RoundToInt(target.height * targetAspect);
-            Screen.SetResolution(width, target.height, FullScreenMode.ExclusiveFullScreen, target.refreshRate);
+            Screen.SetResolution(width, target.height, FullScreenMode.ExclusiveFullScreen, refresh);
         }
         else {
-            Screen.SetResolution(target.width, target.height, FullScreenMode.ExclusiveFullScreen, target.refreshRate);
+            Screen.SetResolution(target.width, target.height, FullScreenMode.ExclusiveFullScreen, refresh);
         }
+    }
+    private void Start() {
+        QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = -1;
     }
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {

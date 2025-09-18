@@ -29,6 +29,9 @@ internal class LuxuryTaxState : State {
 
 
     private void animationOverCalled() {
-        animationOver = true;
+        WaitFrames.Instance.beforeAction(
+            FrameConstants.SCREEN_COVER_TRANSITION,
+            () => animationOver = true
+        );
     }
 }

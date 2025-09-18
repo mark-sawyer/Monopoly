@@ -24,22 +24,6 @@ public class EstateGroupIcon : PropertyGroupIcon {
 
 
 
-    #region MonoBehaviour
-    //private void Start() {
-    //    estateGroupInfo = EstateGroupDictionary.Instance.lookupInfo(estateColourEnum);
-    //    estateGroupColours = EstateGroupDictionary.Instance.lookupColour(estateColourEnum);
-    //    Color estateColour = estateGroupColours.MainColour.Colour;
-    //    estateColour.a = ZeroPropertiesAlpha;
-    //    updatePanelColour(estateColour);
-    //    estateGroupIconState = new EstateGroupIconState(estateGroupInfo);
-    //    for (int i = 0; i < estateHighlights.Length; i++) {
-    //        estateHighlights[i].setup(estateGroupInfo.getEstateInfo(i), PlayerInfo);
-    //    }
-    //}
-    #endregion
-
-
-
     #region PropertyGroupIcon
     public override void setup(PlayerInfo playerInfo) {
         PlayerInfo = playerInfo;
@@ -115,7 +99,7 @@ public class EstateGroupIcon : PropertyGroupIcon {
         setText();
         foreach (EstateHighlight estateHighlight in estateHighlights) estateHighlight.setHighlight();
         goldRing.SetActive(hasMonopoly);
-        hotelIcon.SetActive(hotelExists && minBuildings == maxBuildings);
+        hotelIcon.SetActive(hasMonopoly && hotelExists && minBuildings == maxBuildings);
         mortgageM.SetActive(mortgageCount == estatesInGroup);
     }
     protected override void updateOff() {

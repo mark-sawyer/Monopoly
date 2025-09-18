@@ -11,7 +11,6 @@ internal class NextUtilityState : State {
     public override void enterState() {
         goToResolveDebt = false;
         goToLandedOnSpace = false;
-
         UIEventHub.Instance.sub_TokenSettled(heardTokenSettle);
         ScreenOverlayFunctionEventHub.Instance.sub_RemoveScreenOverlay(animationOverCalled);
 
@@ -22,6 +21,7 @@ internal class NextUtilityState : State {
         int newSpaceIndex = (oldSpaceIndex + spacesToMove) % GameConstants.TOTAL_SPACES;
         SpaceInfo newSpace = SpaceVisualManager.Instance.getSpaceVisual(newSpaceIndex).SpaceInfo;
         utilityInfo = (UtilityInfo)((PropertySpaceInfo)newSpace).PropertyInfo;
+
 
         DataUIPipelineEventHub.Instance.call_TurnPlayerMovedAlongBoard(oldSpaceIndex, spacesToMove);
         DataEventHub.Instance.call_CardResolved();
@@ -44,17 +44,18 @@ internal class NextUtilityState : State {
 
     #region private
     private void heardTokenSettle() {
-        bool tenTimesDiceRentRequired = utilityInfo.IsBought && utilityInfo.Owner != GameState.game.TurnPlayer;
+        PlayerInfo turnPlayer = GameState.game.TurnPlayer;
+        bool tenTimesDiceRentRequired = utilityInfo.IsBought && !utilityInfo.IsMortgaged && utilityInfo.Owner != turnPlayer;
         if (tenTimesDiceRentRequired) {
             PlayerInfo owner = utilityInfo.Owner;
             int[] nonTurnRoll = GameState.game.DiceInfo.getNonTurnDiceRoll();
             int rent = 10 * (nonTurnRoll[0] + nonTurnRoll[1]);
-            DataEventHub.Instance.call_PlayerIncurredDebt(GameState.game.TurnPlayer, owner, rent);
+            DataEventHub.Instance.call_PlayerIncurredDebt(turnPlayer, owner, rent);
             UIEventHub.Instance.call_NonTurnDiceRoll(nonTurnRoll[0], nonTurnRoll[1]);
             WaitFrames.Instance.beforeAction(
                 InterfaceConstants.DIE_FRAMES_PER_IMAGE * InterfaceConstants.DIE_IMAGES_BEFORE_SETTLING + 70,
                 () => {
-                    SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)GameState.game.TurnPlayer.DebtInfo;
+                    SingleCreditorDebtInfo debtInfo = (SingleCreditorDebtInfo)turnPlayer.DebtInfo;
                     ScreenOverlayStarterEventHub.Instance.call_PayingRentAnimationBegins(debtInfo);
                 }
             );

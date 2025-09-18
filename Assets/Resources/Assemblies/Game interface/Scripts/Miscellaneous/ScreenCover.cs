@@ -20,9 +20,11 @@ public class ScreenCover : MonoBehaviour {
 
     #region private
     private void startFadeIn(float goalAlpha) {
+        StopAllCoroutines();
         StartCoroutine(fadeIn(goalAlpha));
     }
     private void startFadeOut() {
+        StopAllCoroutines();
         StartCoroutine(fadeOut());
     }
     private IEnumerator fadeIn(float goalAlpha) {
